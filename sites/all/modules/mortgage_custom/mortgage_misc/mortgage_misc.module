@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Main file for the Mortagage landing module, which containg logics for adding random blocks to welcome page.
+ * 
+ * @ingroup mortgage_landing
+ */

@@ -1,0 +1,5 @@
+name = Mortgage Landing 
+description = Customization for Welcome Page.
+package = Mortgage Custom
+core = 7.x
+version = 7.x
