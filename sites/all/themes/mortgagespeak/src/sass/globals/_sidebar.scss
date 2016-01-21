@@ -54,9 +54,10 @@ $assets-path: '../..';
     float: left;
     padding: 0 0 0 10px;
     a {
-      font-size: 12px;
+      font-size: 11px;
     }
     .regi-link {
+      margin: 0 0 3px;
       span {
         margin: 0 8px 0 0;
         padding: 0 8px 0 0;
@@ -68,6 +69,13 @@ $assets-path: '../..';
     }
     .login-link {
       a {
+        float: left;
+        width: 100%;
+        padding: 3px 0;
+        border: 1px solid #86898D;
+        color: #86898D;
+        font-size: 12px;
+        text-align: center;
         @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
       }
     }

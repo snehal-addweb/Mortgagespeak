@@ -53,6 +53,8 @@ textarea:focus {
         margin: 0;
         .form-item {
           clear: none;
+          width: -webkit-calc(50% - 15px);
+          width: -moz-calc(50% - 15px);
           width: calc(50% - 15px);
           margin: 0 30px 0 0;
           padding: 0;
@@ -93,6 +95,14 @@ textarea:focus {
     width: auto;
     margin: 0;
     padding: 0 0 20px 20px;
+    .btn {
+      padding: 10px 30px;
+      border: none;
+      background-color: $blue-light-font;
+      color: $white;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
   }
   .register-bottom-text {
     float: left;
