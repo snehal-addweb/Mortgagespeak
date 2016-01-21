@@ -73,6 +73,14 @@
  * @ingroup templates
  */
 ?>
+<div class="top-header-blue-bg"> 
+  <?php if (!empty($page['top_header'])): ?>
+    <div>
+      <?php print render($page['top_header']); ?>
+    </div>
+  <?php endif; ?>
+</div>
+
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
   <div class="<?php print $container_class; ?>">
     <div class="navbar-header">
