@@ -58,6 +58,16 @@ $small-mobile-portrait: 360px;
 /* End */
 
 /* Mixin - groups of css declarations */
+@mixin width($value, $value1) {
+  width: -webkit-calc($value - $value1);
+  width:    -moz-calc($value - $value1);
+  width:         calc($value - $value1);
+}
+@mixin widthplus($value, $value1) {
+  width: -webkit-calc($value + $value1);
+  width:    -moz-calc($value + $value1);
+  width:         calc($value + $value1);
+}
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;

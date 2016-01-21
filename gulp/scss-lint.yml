@@ -28,6 +28,8 @@ linters:
     enabled: false
 
   DuplicateProperty:
+    exclude:
+      - '../**/_variable.scss'
     enabled: true
 
   ElsePlacement:
@@ -287,6 +289,8 @@ linters:
 
   SpaceAfterPropertyColon:
     enabled: true
+    exclude:
+      - '../**/_variable.scss'
     style: one_space # or 'no_space', or 'at_least_one_space', or 'aligned'
 
   SpaceAfterPropertyName:
