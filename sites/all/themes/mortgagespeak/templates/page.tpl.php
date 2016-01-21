@@ -122,7 +122,7 @@
   </div>
 </header>
 
-<div class="main-container container-fluid <?php /*print $container_class;*/ ?>">
+<div class="main-container container-fluid p0 <?php /*print $container_class;*/ ?>">
 
   <header role="banner" id="page-header">
     <?php if (!empty($site_slogan)): ?>
@@ -132,10 +132,9 @@
     <?php print render($page['header']); ?>
   </header> <!-- /#page-header -->
 
-  <div class="row">
-
+  <div class="row m0">
     <?php if (!empty($page['sidebar_first'])): ?>
-      <aside class="col-sm-3" role="complementary">
+      <aside class="left-sidebar col-lg-2 col-md-2 col-sm-2 col-xs-12 p0" role="complementary">
         <?php print render($page['sidebar_first']); ?>
       </aside>  <!-- /#sidebar-first -->
     <?php endif; ?>
@@ -165,12 +164,12 @@
     </section>
 
     <?php if (!empty($page['sidebar_second'])): ?>
-      <aside class="col-sm-3" role="complementary">
+      <aside class="right-sidebar col-lg-2 col-md-2 col-sm-2 col-xs-12 p0" role="complementary">
         <?php print render($page['sidebar_second']); ?>
       </aside>  <!-- /#sidebar-second -->
     <?php endif; ?>
-
   </div>
+
 </div>
 
 <?php if (!empty($page['footer'])): ?>

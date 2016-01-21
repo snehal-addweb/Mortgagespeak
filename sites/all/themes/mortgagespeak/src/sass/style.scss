@@ -9,18 +9,24 @@
 /* Import of variables created for site */
 @import 'globals/variable';
 @import 'globals/header';
+@import 'globals/sidebar';
 @import 'globals/footer';
 @import 'components/fonts';
 @import 'layout/forms';
 /* Import to provide cross-browser mixins for CSS properties introduced in CSS3 */
 //@import 'compass/css3';
 
+
 /**
- * 
+ * Common code
  */
-.main-container.container-fluid {
-  padding: 0;
-  > row {
-    margin: 0;
-  }
+.p0 { padding: 0; }
+.m0 { margin: 0; }
+
+
+/**
+ * Main content area
+ */
+.content-area {
+  padding: 15px 0 0 15px;
 }
