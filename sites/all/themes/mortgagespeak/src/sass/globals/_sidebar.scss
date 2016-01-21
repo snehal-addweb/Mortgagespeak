@@ -1,0 +1,115 @@
+/**
+ * @file
+ * SCSS file to generate CSS.
+ *
+ * Sidebar SCSS.
+ */
+
+
+$assets-path: '../..';
+/* Import to basic elements created for site */
+@import '../components/fonts';
+@import 'variable';
+
+
+/**
+ * Left sidebar
+ */
+.left-sidebar {
+  border-right: 1px solid $border;
+  border-bottom: 1px solid $border;
+  background-color: $white;
+  .well {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    @include border-radius(0);
+    @include box-shadow(none);
+  }
+}
+
+/* Logo section */
+#block-block-1 {
+  float: left;
+  display: block;
+  width: 100%;
+}
+.main-logo-container {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid $border;
+  .logo-left {
+    float: left;
+    .logo {
+      img {
+        float: left;
+        height: 65px;
+        width: 65px;
+      }
+    }
+  }
+  .logo-right {
+    float: left;
+    padding: 0 0 0 10px;
+    a {
+      font-size: 12px;
+    }
+    .regi-link {
+      span {
+        margin: 0 8px 0 0;
+        padding: 0 8px 0 0;
+        border-right: 1px solid $gray;
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+    .login-link {
+      a {
+        @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
+      }
+    }
+  }
+}
+/* End */
+
+/* Menu links */
+#block-views-news-groups-sidebar-term-block {
+  float: left;
+  width: 100%;
+  .block-title {
+    margin: 0;
+    padding: 12px 10px;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    font-size: 16px;
+  }
+  .view {
+    float: left;
+    width: 100%;
+    .view-content {
+      float: left;
+      width: 100%;
+      padding: 0 0 0 10px;
+      background-color: $gray-light;
+      .views-row {
+        float: left;
+        width: 100%;
+        a {
+          float: left;
+          width: 100%;
+          padding: 5px;
+          border-bottom: 1px solid $border;
+          color: $black;
+          font-size: 14px;
+        }
+        &:last-child {
+          a { border-bottom: none; }
+        }
+      }
+    }
+  }
+}
+/* End */

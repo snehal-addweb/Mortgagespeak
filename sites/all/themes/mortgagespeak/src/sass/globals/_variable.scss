@@ -30,10 +30,19 @@ $url-lato-black: url('../fonts/lato/Lato-Black.woff');
 $url-opensans-light: url('../fonts/opensans/OpenSans-Light.woff');
 
 /* Color code */
-$white: #FFF;
-$black: #000;
-$blue: #2E8CF0;
-$border: #D7D7D7;
+$white:           #FFF;
+$black:           #000;
+$gray:            #CCC;
+$gray-light:      #F2F2F2;
+$gray-light-f4:   #F4F4F4;
+$blue:            #2E8CF0;
+$blue-font:       #126EDC;
+$blue-light-font: #4CA9FF;
+$green-dark:      #2D8E44;
+$green-font:      #0CAB0E;
+$green-light:     #D0F3A6;
+$border:          #D7D7D7;
+$border-cont:     #EFEFEF;
 
 
 /**
@@ -80,4 +89,11 @@ $small-mobile-portrait: 360px;
      -moz-transition: $value;
       -ms-transition: $value;
           transition: $value;
+}
+@mixin background($value, $value2, $value3, $value4) {
+  background: $value;
+  background: -moz-linear-gradient(top, $value 0%, $value2 50%, $value3 51%, $value4 100%);
+  background: -webkit-linear-gradient(top, $value 0%, $value2 50%, $value3 51%, $value4 100%);
+  background: linear-gradient(to bottom, $value 0%, $value2 50%, $value3 51%, $value4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$value', endColorstr='$value4',GradientType=0);
 }
