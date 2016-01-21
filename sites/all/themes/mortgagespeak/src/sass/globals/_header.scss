@@ -1,0 +1,15 @@
+/**
+ * @file
+ * SCSS file to generate CSS.
+ *
+ * Header SCSS.
+ */
+
+$assets-path: '../..';
+/* Import to basic elements created for site */
+@import '../components/fonts';
+@import 'variable';
+
+/**
+ * Header
+ */

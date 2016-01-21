@@ -1,0 +1,16 @@
+/**
+ * @file
+ * SCSS file to generate CSS.
+ *
+ * Layout SCSS.
+ */
+
+
+/* Import of variables created for site */
+@import 'globals/variable';
+@import 'globals/header';
+@import 'globals/footer';
+@import 'components/fonts';
+@import 'layout/forms';
+/* Import to provide cross-browser mixins for CSS properties introduced in CSS3 */
+//@import 'compass/css3';

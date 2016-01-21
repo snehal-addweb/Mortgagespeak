@@ -219,7 +219,7 @@ $databases = array (
     array (
       'database' => 'mortgagespeak',
       'username' => 'root',
-      'password' => 'root',
+      'password' => '',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
