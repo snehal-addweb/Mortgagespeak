@@ -5,4 +5,106 @@
  * Form SCSS
  */
 
-/* Button design */
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+input[type='tel'],
+textarea {
+  @include box-shadow(none);
+}
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+input[type='number']:focus,
+input[type='tel']:focus,
+textarea:focus {
+  border-color: $gray;
+  @include box-shadow(0 0 5px #999);
+}
+
+
+
+/**
+ * Register page
+ */
+#user-register-form {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid $border-cont;
+  .register-text {
+    margin: -1px -1px 20px;
+    padding: 12px 18px;
+    border: 1px solid $border;
+    background-color: $gray-light-f4;
+    font-size: 12px;
+  }
+  .register-container {
+    .form-item {
+      max-width: 540px;
+      width: 100%;
+      margin: 0 0 20px;
+      padding: 0 20px;
+      .form-item {
+        padding: 0;
+      }
+      > .row {
+        margin: 0;
+        .form-item {
+          clear: none;
+          width: calc(50% - 15px);
+          margin: 0 30px 0 0;
+          padding: 0;
+          &.form-item-pass-pass2 {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .field-name-field-news-topics {
+      > .form-item {
+        float: left;
+        width: 100%;
+      }
+      .control-label {
+        width: 100%;
+        margin: 0 0 20px;
+        font-size: 12px;
+        font-weight: normal;
+      }
+      .form-checkboxes {
+        .form-item {
+          float: left;
+          width: 50%;
+          margin: 0 0 10px;
+          label {
+            float: left;
+            width: 100%;
+            margin: 0;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  .form-actions {
+    float: left;
+    width: auto;
+    margin: 0;
+    padding: 0 0 20px 20px;
+  }
+  .register-bottom-text {
+    float: left;
+    width: auto;
+    padding: 0 20px;
+    font-size: 12px;
+    span {
+      float: left;
+      clear: left;
+    }
+    a {
+      color: $blue-light-font;
+    }
+  }
+}

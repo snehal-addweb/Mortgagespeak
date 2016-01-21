@@ -23,10 +23,16 @@
 .p0 { padding: 0; }
 .m0 { margin: 0; }
 
+/* Typography */
+.green-text { color: $green-font; }
+.blue-text { color: $blue-font; }
+/* End */
+
 
 /**
  * Main content area
  */
 .content-area {
-  padding: 15px 0 0 15px;
+  padding: 15px;
 }
+
