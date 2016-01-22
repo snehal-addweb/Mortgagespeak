@@ -6,3 +6,72 @@
  * 
  * @ingroup mortgage_landing
  */
+
+/**
+* Implements hook_block_info().
+*/
+function mortgage_landing_block_info() {
+  $blocks = array();
+  $blocks['randomtext'] = array(
+    'info' => t('Random text for Welcome page'),
+  );
+  
+  return $blocks;
+}
+/**
+* Implements hook_block_view().
+*/
+function mortgage_landing_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'randomtext':
+      $block['subject'] = '';
+      $block['content'] = mortgage_landing_randomtext_block();
+      break;   
+  }
+  return $block;
+}
+
+function mortgage_landing_randomtext_block(){
+	$output = "MortgageSpeak";
+	$fieldseparator = ",";
+	$lineseparator = "\n";
+	$theme_path = drupal_get_path('theme', 'mortgagespeak');
+	$txtfile = $theme_path. "\welcome.txt";
+
+	if (!file_exists($txtfile)) {
+			print("File not found. Make sure you specified the correct path.\n");
+			exit;
+	}
+
+	$file = fopen($txtfile, "r");
+
+	if (!$file) {
+		print("Error opening data file.\n");
+		exit;
+	}
+
+	$size = filesize($txtfile);
+	if (!$size) {
+		print("File is empty.\n");
+		exit;
+	}
+
+	$txtcontent = fread($file, $size);
+	fclose($file);
+
+	foreach(explode($lineseparator, $txtcontent) as $key => $line) {
+		$text_arr[] = $line;
+	}
+
+	if(isset($text_arr) && !empty($text_arr)){
+		$random_text = array_rand($text_arr,1);
+	}
+
+	$output = '<div class="quote-main-container">
+							<h2>MortgageSpeak</h2>
+							<span>Quote of the day</span>
+							<div>'. $text_arr[$random_text] .'</div>
+						</div>';
+	return $output;
+}

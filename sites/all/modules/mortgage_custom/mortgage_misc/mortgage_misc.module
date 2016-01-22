@@ -2,7 +2,27 @@
 
 /**
  * @file
- * Main file for the Mortagage landing module, which containg logics for adding random blocks to welcome page.
+ * Main file for the Mortagage Misc module, which containg logics for form and node alter.
  * 
- * @ingroup mortgage_landing
+ * @ingroup mortgage_misc
  */
+
+
+function mortgage_misc_menu() {
+  $items['welcome'] = array(
+	  'title' => t('Welcome'),
+		'description' => 'Welcome Page',
+		'type' => MENU_NORMAL_ITEM,
+		'page callback' => 'mortgagespeak_welcome',
+		'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+
+function mortgagespeak_welcome(){
+	global $user;
+	$output = '';
+	return $output;
+}
