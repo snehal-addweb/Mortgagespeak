@@ -38,7 +38,7 @@ $assets-path: '../..';
 .main-logo-container {
   display: inline-block;
   width: 100%;
-  padding: 10px;
+  padding: 10px 8px;
   border-bottom: 1px solid $border;
   .logo-left {
     float: left;
@@ -52,22 +52,48 @@ $assets-path: '../..';
   }
   .logo-right {
     float: left;
-    padding: 0 0 0 10px;
+    width: 94px;
+    padding: 0 0 0 8px;
     a {
       font-size: 11px;
     }
-    .regi-link {
+    .user-welcome {
+      float: left;
+      width: 94px;
       margin: 0 0 3px;
+      font-size: 14px;
+    }
+    .regi-link {
+      float: left;
+      width: 94px;
+      margin: 0 0 7px;
+      .register-link {
+        float: left;
+        width: 100%;
+      }
       span {
-        margin: 0 8px 0 0;
-        padding: 0 8px 0 0;
-        border-right: 1px solid $gray;
+        float: left;
+        width: auto;
+        a {
+          float: left;
+          margin: 0 8px 0 0;
+          padding: 0 8px 0 0;
+          border-right: 1px solid $gray;
+          color: $blue-font;
+          line-height: 10px;
+        }
         &:last-child {
-          border-right: none;
+          a {
+            margin: 0;
+            padding: 0;
+            border-right: none;
+          }
         }
       }
     }
     .login-link {
+      float: left;
+      width: 94px;
       a {
         float: left;
         width: 100%;
@@ -76,7 +102,14 @@ $assets-path: '../..';
         color: #86898D;
         font-size: 12px;
         text-align: center;
+        text-decoration: none;
         @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
+        &:hover {
+          background: #F4F4F4;
+        }
+        &:focus {
+          background: #E8E8E8;
+        }
       }
     }
   }
