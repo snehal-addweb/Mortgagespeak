@@ -37,7 +37,7 @@ function mortgage_landing_randomtext_block(){
 	$fieldseparator = ",";
 	$lineseparator = "\n";
 	$theme_path = drupal_get_path('theme', 'mortgagespeak');
-	$txtfile = $theme_path. "\welcome.txt";
+	$txtfile = $theme_path. "/welcome.txt";
 
 	if (!file_exists($txtfile)) {
 			print("File not found. Make sure you specified the correct path.\n");
