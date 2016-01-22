@@ -28,6 +28,28 @@
 .blue-text { color: $blue-font; }
 /* End */
 
+/* Quotedesign */
+.quote {
+  float: left;
+  width: 100%;
+  font-size: 22px;
+  line-height: 50px;
+  &::before,
+  &::after {
+    display: inline-block;
+    height: 11px;
+    width: 14px;
+    margin: 0 24px 12px 0;
+    background-image: url('../images/quote-start-orange.png');
+    content: '';
+  }
+  &::after {
+    margin: 0 0 12px 24px;
+    background-image: url('../images/quote-end-orange.png');
+  }
+}
+/* End */
+
 
 /**
  * Main content area
@@ -56,7 +78,7 @@
 #block-block-3 {
   display: inline-block;
   width: 100%;
-  margin: 15px 0 0;
+  margin: 15px 0 20px;
   a {
     float: right;
     padding: 10px 25px 10px 40px;
@@ -89,7 +111,7 @@
 /* MortgageSpeak */
 #block-mortgage-landing-randomtext {
   float: left;
-  width: 30%;
+  width: 31%;
   line-height: normal;
 }
 .quote-main-container {
@@ -111,30 +133,18 @@
     font-size: 34px;
     font-weight: bold;
   }
-  > div,
   .quote {
-    float: left;
-    width: 100%;
-    font-size: 22px;
-    line-height: 50px;
-    &::before,
-    &::after {
-      display: inline-block;
-      height: 11px;
-      width: 14px;
-      margin: 0 24px 12px 0;
-      background-image: url('../images/quote-start-orange.png');
-      content: '';
-    }
-    &::after {
-      margin: 0 0 12px 24px;
-      background-image: url('../images/quote-end-orange.png');
-    }
+    padding: 0 40px;
   }
 }
 
 /* Advertisement */
 #block-block-2 {
   float: left;
-  width: 70%;
+  width: 68%;
+  margin: 0 0 0 1%;
+  .ai-node-body-top-banner {
+    border: 1px solid $gray-69;
+    background-color: $gray-69;
+  }
 }
