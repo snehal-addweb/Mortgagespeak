@@ -20,6 +20,7 @@
 /**
  * Common code
  */
+a, a:focus { outline: none; }
 .p0 { padding: 0; }
 .m0 { margin: 0; }
 
@@ -63,6 +64,9 @@
  * Welcome page
  */
 .page-welcome {
+  .top-header {
+    display: none;
+  }
   #navbar {
     display: none;
   }
@@ -146,5 +150,43 @@
   .ai-node-body-top-banner {
     border: 1px solid $gray-69;
     background-color: $gray-69;
+  }
+}
+.ai-node-body-top-banner {
+  border: 1px solid #CCC;
+}
+
+/**
+ * Main menu
+ */
+#block-system-main-menu {
+  display: inline-block;
+  width: 100%;
+  > .block-title {
+    display: none;
+  }
+  ul.menu {
+    display: inline-block;
+    width: 100%;
+    li {
+      float: left;
+      &.active {
+        a {
+          border-top: 2px solid #3383CC;
+          border-bottom: none;
+          background-color: $white;
+        }
+      }
+      a {
+        float: left;
+        margin: 0 -1px 0 0;
+        border: 1px solid $border;
+        background-color: $gray-light-f4;
+        color: #232323;
+        &:hover {
+          background-color: $white;
+        }
+      }
+    }
   }
 }

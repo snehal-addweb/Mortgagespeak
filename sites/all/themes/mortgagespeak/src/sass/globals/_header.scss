@@ -10,11 +10,75 @@ $assets-path: '../..';
 @import '../components/fonts';
 @import 'variable';
 
+
+/**
+ * Top Header
+ */
+.top-header {
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 0;
+  padding: 5px 10px;
+  border: none;
+  background-color: $blue;
+  color: $white;
+  @include border-radius(0);
+  &:empty {
+    padding: 0;
+  }
+  .region-top-header {
+    float: left;
+    width: 100%;
+  }
+}
+#block-block-5 {
+  float: left;
+  p {
+    padding: 3px 0;
+    font-size: 12px;
+  }
+}
+#block-block-6 {
+  float: right;
+  ul {
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      float: left;
+      list-style: none;
+      &.twitter,
+      &.facebook {
+        padding: 0 0 0 10px;
+        a {
+          height: 25px;
+          width: 25px;
+          background-image: url('../images/twitter-icon.png');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          text-indent: -9999px;
+        }
+      }
+      &.facebook a { background-image: url('../images/facebook-icon.png'); }
+      a {
+        float: left;
+        padding: 3px 12px;
+        color: $white;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+
 /**
  * Header
  */
 #navbar {
-  display: block;
+  display: none;
   width: 100%;
   margin: 0;
   border: none;
