@@ -70,8 +70,8 @@ function mortgage_landing_randomtext_block(){
 
 	$output = '<div class="quote-main-container">
 							<h2>MortgageSpeak</h2>
-							<span class="quote">Quote of the day</span>
-							<div>'. $text_arr[$random_text] .'</div>
+							<span>Quote of the day</span>
+							<div class="quote">'. $text_arr[$random_text] .'</div>
 						</div>';
 	return $output;
 }
