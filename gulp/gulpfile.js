@@ -77,4 +77,4 @@ gulp.task('watch', function () {
 
 
 // Default gulp task (Task listed here will run on gulp)
-gulp.task('default', ['js', 'sass', 'watch', 'scss-lint'], function() {}); // 'scss-lint', 'image'
+gulp.task('default', ['js', 'sass', 'watch', 'scss-lint', 'image'], function() {}); // 'scss-lint', 'image'

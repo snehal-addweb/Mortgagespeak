@@ -36,3 +36,105 @@
   padding: 15px;
 }
 
+
+/**
+ * Welcome page
+ */
+.page-welcome {
+  #navbar {
+    display: none;
+  }
+  h1.page-header {
+    display: none;
+  }
+  .main-container {
+    width: 1170px;
+  }
+}
+
+/* Continue to site */
+#block-block-3 {
+  display: inline-block;
+  width: 100%;
+  margin: 15px 0 0;
+  a {
+    float: right;
+    padding: 10px 25px 10px 40px;
+    background-color: $blue;
+    color: $white;
+    font-size: 26px;
+    line-height: normal;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    @include border-radius(5px);
+    &::after {
+      display: inline-block;
+      height: 21px;
+      width: 20px;
+      margin: 0 0 0 30px;
+      background-image: url('../images/arrow-right-white.png');
+      content: '';
+    }
+  }
+  .after-15 {
+    float: right;
+    clear: right;
+    margin: 15px 0 0;
+    color: $gray-64;
+    font-size: 12px;
+  }
+}
+
+/* MortgageSpeak */
+#block-mortgage-landing-randomtext {
+  float: left;
+  width: 30%;
+  line-height: normal;
+}
+.quote-main-container {
+  float: left;
+  width: 100%;
+  color: $gray-64;
+  text-align: center;
+  h2 {
+    float: left;
+    width: 100%;
+    margin: 0;
+    color: $blue;
+    font-size: 32px;
+  }
+  span {
+    float: left;
+    width: 100%;
+    margin: 30px 0 70px;
+    font-size: 34px;
+    font-weight: bold;
+  }
+  > div,
+  .quote {
+    float: left;
+    width: 100%;
+    font-size: 22px;
+    line-height: 50px;
+    &::before,
+    &::after {
+      display: inline-block;
+      height: 11px;
+      width: 14px;
+      margin: 0 24px 12px 0;
+      background-image: url('../images/quote-start-orange.png');
+      content: '';
+    }
+    &::after {
+      margin: 0 0 12px 24px;
+      background-image: url('../images/quote-end-orange.png');
+    }
+  }
+}
+
+/* Advertisement */
+#block-block-2 {
+  float: left;
+  width: 70%;
+}
