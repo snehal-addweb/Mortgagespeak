@@ -28,6 +28,33 @@ textarea:focus {
   padding: 0;
 }
 
+/* Button */
+.btn {
+  border: none;
+  background-color: $blue-light-font;
+  color: $white;
+  outline: none;
+  &:hover {
+    background-color: $blue;
+    color: $white;
+  }
+  &:focus,
+  &:active,
+  &:focus {
+    &:active {
+      background-color: $blue-light-font;
+      color: $white;
+    }
+  }
+}
+/* End */
+
+/* Alert */
+.alert {
+  @include border-radius(0);
+}
+/* End */
+
 /* Custom Checkbox design */
 .input-rc {
   display: inline-block;
@@ -58,6 +85,7 @@ textarea:focus {
  * Register page
  */
 .page-user-register,
+.page-user-login,
 .page-user-password {
   .tabs--primary.nav-tabs {
     display: none;
@@ -67,6 +95,7 @@ textarea:focus {
   }
 }
 #user-register-form,
+#user-login,
 #user-profile-form {
   display: inline-block;
   width: 100%;
@@ -176,6 +205,74 @@ textarea:focus {
     }
     a {
       color: $blue-light-font;
+    }
+  }
+}
+.login-form {
+  .help-block {
+    display: none;
+  }
+  .form-item {
+    display: inline-block;
+  }
+  .login-left {
+    float: left;
+    width: 50%;
+    margin: 30px 0;
+    padding: 0 80px 0 0;
+    border-right: 1px solid $gray;
+    input[type='text'],
+    input[type='email'],
+    input[type='password'] {
+      float: right;
+      max-width: 270px;
+    }
+    .login-title {
+      float: right;
+      clear: both;
+      width: 100%;
+      margin: 0 0 10px;
+      color: $gray;
+      font-size: 12px;
+      text-align: right;
+    }
+    .form-item {
+      margin-bottom: 15px !important;
+      padding-right: 0 !important;
+      .control-label {
+        float: left;
+        width: 90px;
+      }
+    }
+    .form-required { color: #F00; }
+    #edit-submit {
+      float: right;
+      max-width: 270px;
+      width: 100%;
+      padding: 10px 0;
+      font-size: 16px;
+      line-height: normal;
+    }
+    .forget-links {
+      float: left;
+      width: 100%;
+      margin: 30px 0 0;
+      text-align: right;
+      a {
+        color: $blue-light-font;
+      }
+    }
+  }
+  .login-right {
+    float: left;
+    width: 50%;
+    margin: 30px 0;
+    padding: 0 0 0 80px;
+    .register-free {
+      a {
+        color: $blue-light-font;
+        font-size: 16px;
+      }
     }
   }
 }

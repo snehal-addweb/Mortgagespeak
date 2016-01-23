@@ -256,6 +256,23 @@ a {
           .googleplus { background-image: url('../images/google-plus-sm.png'); }
           .email { width: 20px; background-image: url('../images/email-sm.png'); }
         }
+        .flag-saved-articles {
+          float: left;
+          a {
+            float: left;
+            height: 16px;
+            width: 15px;
+            margin: 0 10px 0 0;
+            background-image: url('../images/star-icon.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            text-indent: -9999px;
+          }
+          .flag-throbber {
+            float: left;
+            width: auto;
+          }
+        }
       }
     }
     .views-field-ops {
