@@ -9,7 +9,7 @@ global $base_url;
 print render($form['account']['name']);
 print render($form['account']['mail']);
 print render ($form['account']['pass']);?>
-<span class="news-text">Choose the News Topics To Follow in your "My Page"</span>
+<span class="news-text">Choose News Topics Tracked in Your "My Page":</span>
 <?php print render($form['field_news_topics']);
 
 print drupal_render($form['actions']);
