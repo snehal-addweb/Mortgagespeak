@@ -26,3 +26,9 @@ function mortgagespeak_welcome(){
 	$output = '';
 	return $output;
 }
+
+function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
+ 	if($form_id == 'user_register_form'){
+ 		$form['actions']['submit']['#value'] = 'Register';
+ 	}
+}
