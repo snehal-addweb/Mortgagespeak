@@ -5,15 +5,21 @@
  */
 
 function mortgagespeak_theme(&$existing, $type, $theme, $path){
-  $hooks = array();
+  $items = array();
    // Make user-register.tpl.php available
-  $hooks['user_register_form'] = array (
+  $items['user_register_form'] = array (
      'render element' => 'form',
      'path' => drupal_get_path('theme','mortgagespeak'),
      'template' => 'templates/user-register',
      'preprocess functions' => array('mortgagespeak_preprocess_user_register_form'),
   );
-  return $hooks;
+  $items['user_login'] = array(
+     'render element' => 'form',
+     'path' => drupal_get_path('theme','mortgagespeak'),
+     'template' => 'templates/user-login',
+     'preprocess functions' => array('mortgagespeak_preprocess_user_login'),
+   );
+  return $items;
 }
 
 function mortgagespeak_preprocess_user_register_form(&$vars) {
@@ -21,6 +27,13 @@ function mortgagespeak_preprocess_user_register_form(&$vars) {
   array_shift($args);
   $form_state['build_info']['args'] = $args; 
   $vars['form'] = drupal_build_form('user_register_form', $form_state['build_info']['args']);
+}
+
+function mortgagespeak_preprocess_user_login(&$vars) {
+  $vars['name'] = render($vars['form']['name']);
+  $vars['pass'] = render($vars['form']['pass']);
+  $vars['submit'] = render($vars['form']['actions']['submit']);
+  $vars['rendered'] = drupal_render_children($vars['form']);
 }
 
 function mortgagespeak_preprocess_page(&$variables) {
