@@ -7,7 +7,7 @@
 			<?php print $rendered; // Display hidden elements (required for successful login) ?> 
 			<?php print $submit; // Display submit button ?>
 			<div class="forget-links">
-			    <span class="passlink"><a href="/user/password">Forget?</a></span>
+			    <span class="passlink"><a href="/user/password">Forgot?</a></span>
 			</div>
 		</div>
 		<div class="login-right">
