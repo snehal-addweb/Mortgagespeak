@@ -67,11 +67,15 @@ function mortgage_landing_randomtext_block(){
 	if(isset($text_arr) && !empty($text_arr)){
 		$random_text = array_rand($text_arr,1);
 	}
-
+	$explode_quote = explode('-', $text_arr[$random_text]);
+	if(!isset($explode_quote[1])){
+		$explode_quote[1] = 'Anonymous';
+	}
 	$output = '<div class="quote-main-container">
 							<h2>MortgageSpeak</h2>
 							<span>Quote of the day</span>
-							<div class="quote">'. $text_arr[$random_text] .'</div>
+							<div class="quote">'. $explode_quote[0] .'</div>
+							<span class="quote-author">'.$explode_quote[1].'</span>
 						</div>';
 	return $output;
 }
