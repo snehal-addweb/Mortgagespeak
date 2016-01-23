@@ -53,6 +53,21 @@ a {
     background-image: url('../images/quote-end-orange.png');
   }
 }
+.quote-author {
+  clear: both;
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  padding: 0 40px 0 0;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 400;
+  text-align: right;
+  &::before {
+    display: inline-block;
+    content: '-';
+  }
+}
 /* End */
 
 
@@ -216,12 +231,12 @@ a {
         float: left;
         width: 94px;
         color: #B3B3B3;
-        font-size: 11px;
+        font-size: 12px;
       }
       .field-content {
         float: left;
         color: $blue-font;
-        font-size: 11px;
+        font-size: 12px;
       }
     }
     .views-field-sharethis {
@@ -245,7 +260,7 @@ a {
           .chicklets {
             height: 15px;
             width: 15px;
-            margin: 0 10px 0 0;
+            margin: 0 15px 0 0;
             padding: 0;
             background-position: center;
             background-repeat: no-repeat;
@@ -262,11 +277,14 @@ a {
             float: left;
             height: 16px;
             width: 15px;
-            margin: 0 10px 0 0;
-            background-image: url('../images/star-icon.png');
+            margin: 0 15px 0 0;
+            background-image: url('../images/star-blank-sm.png');
             background-position: center;
             background-repeat: no-repeat;
             text-indent: -9999px;
+            &.flag-action {
+              background-image: url('../images/star-sm.png');
+            }
           }
           .flag-throbber {
             float: left;
@@ -369,6 +387,17 @@ a {
     padding: 0 30px;
     letter-spacing: 1px;
     text-align: left;
+  }
+  .quote-author {
+    clear: both;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 0 40px 0 0;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    text-align: right;
   }
 }
 
