@@ -1,1 +1,1 @@
-jQuery(document).ready(function(){});
+jQuery(document).ready(function(){jQuery('input[type="radio"], input[type="checkbox"]').wrap('<div class="input-rc"></div>'),jQuery(".input-rc").append('<span class="input-rc-span"></span>')});

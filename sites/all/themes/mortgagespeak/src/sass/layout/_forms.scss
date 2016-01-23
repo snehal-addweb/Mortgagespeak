@@ -24,12 +24,50 @@ textarea:focus {
   @include box-shadow(0 0 5px #999);
 }
 
+.checkbox label {
+  padding: 0;
+}
+
+/* Custom Checkbox design */
+.input-rc {
+  display: inline-block;
+  input[type='checkbox'] {
+    display: none;
+    opacity: 0;
+    + .input-rc-span {
+      float: left;
+      display: inline-block;
+      height: 18px;
+      width: 18px;
+      margin: 0 10px -2px 0;
+      background-image: url('../images/checkbox-unchecked.png');
+      background-repeat: no-repeat;
+      cursor: pointer;
+      content: '';
+    }
+    &:checked + .input-rc-span {
+      background-image: url('../images/checkbox-checked.png');
+      background-repeat: no-repeat;
+    }
+  }
+}
+/* End */
 
 
 /**
  * Register page
  */
-#user-register-form {
+.page-user-register,
+.page-user-password {
+  .tabs--primary.nav-tabs {
+    display: none;
+  }
+  h1.page-header {
+    display: none;
+  }
+}
+#user-register-form,
+#user-profile-form {
   display: inline-block;
   width: 100%;
   border: 1px solid $border-cont;
@@ -40,15 +78,63 @@ textarea:focus {
     background-color: $gray-light-f4;
     font-size: 12px;
   }
-  .register-container {
+  .form-item {
+    max-width: 540px;
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 0 20px;
     .form-item {
-      max-width: 540px;
+      margin: 0;
+      padding: 0;
+    }
+    > .row {
+      margin: 0;
+    }
+    > .control-label {
+      margin: 10px 0 0;
+      font-weight: normal;
+    }
+  }
+  fieldset {
+    &.form-wrapper {
+      max-width: calc(100% - 40px);
+      width: 100%;
+      margin: 0 20px 20px;
+      padding: 0;
+    }
+  }
+  .field-name-field-news-topics {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    > .form-item {
+      float: left;
+      width: 100%;
+    }
+    .control-label {
       width: 100%;
       margin: 0 0 20px;
-      padding: 0 20px;
+      font-size: 12px;
+      font-weight: normal;
+    }
+    .form-checkboxes {
       .form-item {
-        padding: 0;
+        float: left;
+        width: 50%;
+        margin: 0 0 10px;
+        label {
+          float: left;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          font-size: 14px;
+        }
       }
+    }
+  }
+  .register-container {
+    .form-item {
       > .row {
         margin: 0;
         .form-item {
@@ -60,31 +146,6 @@ textarea:focus {
           padding: 0;
           &.form-item-pass-pass2 {
             margin-right: 0;
-          }
-        }
-      }
-    }
-    .field-name-field-news-topics {
-      > .form-item {
-        float: left;
-        width: 100%;
-      }
-      .control-label {
-        width: 100%;
-        margin: 0 0 20px;
-        font-size: 12px;
-        font-weight: normal;
-      }
-      .form-checkboxes {
-        .form-item {
-          float: left;
-          width: 50%;
-          margin: 0 0 10px;
-          label {
-            float: left;
-            width: 100%;
-            margin: 0;
-            font-size: 14px;
           }
         }
       }

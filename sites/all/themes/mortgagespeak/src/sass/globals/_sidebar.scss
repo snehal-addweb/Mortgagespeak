@@ -34,8 +34,10 @@ $assets-path: '../..';
   float: left;
   display: block;
   width: 100%;
+  margin: 0 0 -1px;
 }
 .main-logo-container {
+  float: left;
   display: inline-block;
   width: 100%;
   padding: 10px 8px;
@@ -79,7 +81,6 @@ $assets-path: '../..';
           margin: 0 8px 0 0;
           padding: 0 8px 0 0;
           border-right: 1px solid $gray;
-          color: $blue-font;
           line-height: 10px;
         }
         &:last-child {
@@ -106,6 +107,7 @@ $assets-path: '../..';
         @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
         &:hover {
           background: #F4F4F4;
+          color: #333;
         }
         &:focus {
           background: #E8E8E8;
@@ -145,6 +147,7 @@ $assets-path: '../..';
           border-bottom: 1px solid $border;
           color: $black;
           font-size: 14px;
+          &:hover { color: $link-hover; }
         }
         &:last-child {
           a { border-bottom: none; }

@@ -18,8 +18,13 @@
 /**
  * Common code
  */
-a,
-a:focus { outline: none; }
+a {
+  color: $blue-font;
+  outline: none;
+  &:hover { color: $link-hover; }
+  &:focus { outline: none; }
+}
+
 .p0 { padding: 0; }
 .m0 { margin: 0; }
 
@@ -56,13 +61,16 @@ a:focus { outline: none; }
  * Main menu
  */
 #block-system-main-menu {
-  display: inline-block;
+  clear: both;
+  display: block;
   width: 100%;
+  margin: 0 0 20px;
   > .block-title {
     display: none;
   }
   ul.menu {
-    display: inline-block;
+    float: left;
+    display: block;
     width: 100%;
     li {
       float: left;
@@ -181,13 +189,13 @@ a:focus { outline: none; }
         }
       }
     }
-    .views-field-title {
+    .views-field-title,
+    .views-field-php-1 {
       display: inline-block;
       width: 100%;
       margin: 0 0 5px;
       .field-content {
         a {
-          color: $blue-font;
           font-size: 16px;
         }
       }
@@ -277,7 +285,7 @@ a:focus { outline: none; }
   }
   .content-area {
     max-width: 100%;
-    width: 100%
+    width: 100%;
   }
 }
 
@@ -342,12 +350,18 @@ a:focus { outline: none; }
   }
   .quote {
     padding: 0 30px;
-    text-align: left;
     letter-spacing: 1px;
+    text-align: left;
   }
 }
 
 /* Advertisement */
+#block-block-7,
+#block-randomblocks-press-perpesctive {
+  display: block;
+  width: 100%;
+  margin: 0 0 20px;
+}
 #block-block-2 {
   float: left;
   width: 68%;
@@ -360,6 +374,7 @@ a:focus { outline: none; }
 .ai-node-body-top-banner {
   max-width: 970px;
   width: 100%;
+  margin: 0 !important;
   overflow: auto;
   background-color: $gray-light;
 }
