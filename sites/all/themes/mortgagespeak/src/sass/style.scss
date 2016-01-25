@@ -191,6 +191,9 @@ a {
           border-top: 2px solid #3383CC;
           border-bottom: none;
           background-color: $white;
+          &:hover {
+            background-color: $white;
+          }
           &.active {
             &::before {
               background-position: 0 -18px;
@@ -200,6 +203,7 @@ a {
       }
       a {
         float: left;
+        height: 41px;
         margin: 0;
         padding: 10px 22px;
         border-top: 1px solid $border;
@@ -506,7 +510,9 @@ a {
 /* Advertisement */
 #block-block-7,
 #block-randomblocks-press-perpesctive {
-  display: block;
+  display: inline-block;
+  height: 90px;
+  max-width: 970px;
   width: 100%;
   margin: 0 0 20px;
 }
@@ -520,9 +526,10 @@ a {
   }
 }
 .ai-node-body-top-banner {
+  display: inline-block;
+  height: 90px;
   max-width: 970px;
   width: 100%;
   margin: 0 !important;
-  overflow: auto;
   background-color: $gray-light;
 }
