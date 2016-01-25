@@ -68,7 +68,7 @@ $assets-path: '../..';
     .regi-link {
       float: left;
       width: 94px;
-      margin: 0 0 7px;
+      margin: 0 0 9px;
       .register-link {
         float: left;
         width: 100%;
@@ -103,6 +103,7 @@ $assets-path: '../..';
         border: 1px solid #86898D;
         color: #86898D;
         font-size: 12px;
+        line-height: normal;
         text-align: center;
         text-decoration: none;
         @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);

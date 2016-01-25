@@ -98,11 +98,11 @@ a {
       float: left;
       &:nth-child(1) { display: none; }
       &:nth-child(2) {
-        &.active a { border-top-color: #3383CC; color: #3383CC; }
+        &.active a { border-top-color: #3383CC; }
         a {
           max-width: 126px;
           width: 126px;
-          &:hover { border-top-color: #3383CC; color: #3383CC; }
+          &:hover { border-top-color: #3383CC; }
           &::before {
             width: 14px;
             background-image: url('../images/my-page-icon.png');
@@ -110,11 +110,11 @@ a {
         }
       }
       &:nth-child(3) {
-        &.active a { border-top-color: #36BDD9; color: #36BDD9; }
+        &.active a { border-top-color: #36BDD9; }
         a {
           max-width: 128px;
           width: 128px;
-          &:hover { border-top-color: #36BDD9; color: #36BDD9; }
+          &:hover { border-top-color: #36BDD9; }
           &::before {
             width: 23px;
             background-image: url('../images/news-icon.png');
@@ -122,11 +122,11 @@ a {
         }
       }
       &:nth-child(4) {
-        &.active a { border-top-color: #D936D8; color: #D936D8; }
+        &.active a { border-top-color: #D936D8; }
         a {
           max-width: 161px;
           width: 161px;
-          &:hover { border-top-color: #D936D8; color: #D936D8; }
+          &:hover { border-top-color: #D936D8; }
           &::before {
             width: 20px;
             background-image: url('../images/press-release-icon.png');
@@ -134,11 +134,11 @@ a {
         }
       }
       &:nth-child(5) {
-        &.active a { border-top-color: #D95136; color: #D95136; }
+        &.active a { border-top-color: #D95136; }
         a {
           max-width: 122px;
           width: 122px;
-          &:hover { border-top-color: #D95136; color: #D95136; }
+          &:hover { border-top-color: #D95136; }
           &::before {
             width: 15px;
             background-image: url('../images/blog-icon.png');
@@ -146,11 +146,11 @@ a {
         }
       }
       &:nth-child(6) {
-        &.active a { border-top-color: #36D938; color: #36D938; }
+        &.active a { border-top-color: #36D938; }
         a {
           max-width: 143px;
           width: 143px;
-          &:hover { border-top-color: #36D938; color: #36D938; }
+          &:hover { border-top-color: #36D938; }
           &::before {
             width: 9px;
             background-image: url('../images/perspectives-icon.png');
@@ -158,11 +158,11 @@ a {
         }
       }
       &:nth-child(7) {
-        &.active a { border-top-color: #B48864; color: #B48864; }
+        &.active a { border-top-color: #B48864; }
         a {
           max-width: 127px;
           width: 127px;
-          &:hover { border-top-color: #B48864; color: #B48864; }
+          &:hover { border-top-color: #B48864; }
           &::before {
             width: 15px;
             background-image: url('../images/upload-icon.png');
@@ -170,11 +170,11 @@ a {
         }
       }
       &:nth-child(8) {
-        &.active a { border-top-color: #ECC45D; color: #ECC45D; }
+        &.active a { border-top-color: #ECC45D; }
         a {
           max-width: 163px;
           width: 163px;
-          &:hover { border-top-color: #ECC45D; color: #ECC45D; }
+          &:hover { border-top-color: #ECC45D; }
           &::before {
             width: 18px;
             background-image: url('../images/search-icon.png');
@@ -217,7 +217,7 @@ a {
           border-bottom: none;
           background-color: $gray-light-f4;
           &::before {
-            /*background-position: 0 -18px;*/
+            background-position: 0 -18px;
           }
         }
         &::before {
@@ -274,6 +274,9 @@ a {
     margin: 0;
     padding: 20px 10px 10px 94px;
     border-bottom: 1px solid $border-cont;
+    &:last-child {
+      border-bottom: none;
+    }
     .views-field-php {
       position: absolute;
       top: 0;
