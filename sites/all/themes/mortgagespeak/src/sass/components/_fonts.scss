@@ -6,26 +6,8 @@
  */
 
 
-/* Lato fonts */
+/* Tahoma fonts */
 @font-face {
-  font-family: $lato;
-  src: $url-lato;
-}
-@font-face {
-  font-family: $lato-bold;
-  src: $url-lato-bold;
-}
-@font-face {
-  font-family: $lato-light;
-  src: $url-lato-light;
-}
-@font-face {
-  font-family: $lato-black;
-  src: $url-lato-black;
-}
-
-/* OpenSans fonts */
-@font-face {
-  font-family: $opensans-light;
-  src: $url-opensans-light;
+  font-family: $tahoma-regular;
+  src: $url-tahoma;
 }

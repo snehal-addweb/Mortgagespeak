@@ -9,22 +9,15 @@
 /**
  * Font face
  */
-$lato: lato;
-$lato-bold: lato-bold;
-$lato-light: lato-light;
-$lato-black: lato-black;
-$opensans-light: OpenSans-Light;
+$tahoma-regular: 'Tahoma Regular';
 
 
 /**
  * URLs
  */
 
-/* Lato font */
-$url-lato: url('../fonts/lato/Lato-Regular.woff');
-$url-lato-bold: url('../fonts/lato/Lato-Bold.woff');
-$url-lato-light: url('../fonts/lato/Lato-Light.woff');
-$url-lato-black: url('../fonts/lato/Lato-Black.woff');
+/* Tahoma font */
+$url-tahoma: url('../fonts/tahoma-regular.woff');
 
 /* Openscans */
 $url-opensans-light: url('../fonts/opensans/OpenSans-Light.woff');
