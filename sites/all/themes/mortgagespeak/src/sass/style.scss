@@ -98,11 +98,11 @@ a {
       float: left;
       &:nth-child(1) { display: none; }
       &:nth-child(2) {
-        &.active a { border-top-color: #3383CC; }
+        &.active a { border-top-color: #3383CC; @include box-shadow(0 1px 0 0 #3383CC inset); }
         a {
           max-width: 126px;
           width: 126px;
-          &:hover { border-top-color: #3383CC; }
+          &:hover { border-top-color: #3383CC; @include box-shadow(0 1px 0 0 #3383CC inset); }
           &::before {
             width: 14px;
             background-image: url('../images/my-page-icon.png');
@@ -110,11 +110,11 @@ a {
         }
       }
       &:nth-child(3) {
-        &.active a { border-top-color: #36BDD9; }
+        &.active a { border-top-color: #36BDD9; @include box-shadow(0 1px 0 0 #36BDD9 inset); }
         a {
           max-width: 128px;
           width: 128px;
-          &:hover { border-top-color: #36BDD9; }
+          &:hover { border-top-color: #36BDD9; @include box-shadow(0 1px 0 0 #36BDD9 inset); }
           &::before {
             width: 23px;
             background-image: url('../images/news-icon.png');
@@ -122,11 +122,11 @@ a {
         }
       }
       &:nth-child(4) {
-        &.active a { border-top-color: #D936D8; }
+        &.active a { border-top-color: #D936D8; @include box-shadow(0 1px 0 0 #D936D8 inset); }
         a {
           max-width: 161px;
           width: 161px;
-          &:hover { border-top-color: #D936D8; }
+          &:hover { border-top-color: #D936D8; @include box-shadow(0 1px 0 0 #D936D8 inset); }
           &::before {
             width: 20px;
             background-image: url('../images/press-release-icon.png');
@@ -134,11 +134,11 @@ a {
         }
       }
       &:nth-child(5) {
-        &.active a { border-top-color: #D95136; }
+        &.active a { border-top-color: #D95136; @include box-shadow(0 1px 0 0 #D95136 inset); }
         a {
           max-width: 122px;
           width: 122px;
-          &:hover { border-top-color: #D95136; }
+          &:hover { border-top-color: #D95136; @include box-shadow(0 1px 0 0 #D95136 inset); }
           &::before {
             width: 15px;
             background-image: url('../images/blog-icon.png');
@@ -146,11 +146,11 @@ a {
         }
       }
       &:nth-child(6) {
-        &.active a { border-top-color: #36D938; }
+        &.active a { border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset); }
         a {
           max-width: 143px;
           width: 143px;
-          &:hover { border-top-color: #36D938; }
+          &:hover { border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset); }
           &::before {
             width: 9px;
             background-image: url('../images/perspectives-icon.png');
@@ -158,11 +158,11 @@ a {
         }
       }
       &:nth-child(7) {
-        &.active a { border-top-color: #B48864; }
+        &.active a { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
         a {
           max-width: 127px;
           width: 127px;
-          &:hover { border-top-color: #B48864; }
+          &:hover { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
           &::before {
             width: 15px;
             background-image: url('../images/upload-icon.png');
@@ -170,11 +170,11 @@ a {
         }
       }
       &:nth-child(8) {
-        &.active a { border-top-color: #ECC45D; }
+        &.active a { border-top-color: #ECC45D; @include box-shadow(0 1px 0 0 #ECC45D inset); }
         a {
           max-width: 163px;
           width: 163px;
-          &:hover { border-top-color: #ECC45D; }
+          &:hover { border-top-color: #ECC45D; @include box-shadow(0 1px 0 0 #ECC45D inset); }
           &::before {
             width: 18px;
             background-image: url('../images/search-icon.png');
@@ -188,9 +188,10 @@ a {
       }
       &.active {
         a {
-          border-top: 2px solid #3383CC;
+          border-top: 1px solid #3383CC;
           border-bottom: none;
           background-color: $white;
+          @include box-shadow(0 1px 0 0 #3383CC inset);
           &:hover {
             background-color: $white;
           }
@@ -203,9 +204,9 @@ a {
       }
       a {
         float: left;
-        height: 41px;
+        height: 42px;
         margin: 0;
-        padding: 10px 22px;
+        padding: 11px 22px;
         border-top: 1px solid $border;
         border-bottom: 1px solid $border;
         border-left: 1px solid $border;
@@ -213,11 +214,12 @@ a {
         color: $black;
         font-size: 12px;
         &:hover {
-          border-top: 2px solid #3383CC;
+          border-top: 1px solid #3383CC;
           border-bottom: none;
           background-color: $gray-light-f4;
+          @include box-shadow(0 1px 0 0 #3383CC inset);
           &::before {
-            background-position: 0 -18px;
+            background-position: 0 -36px;
           }
         }
         &::before {
@@ -252,14 +254,17 @@ a {
   width: 100%;
   margin: 0;
   padding: 0;
-  border: 1px solid $border-cont;
+  border: 1px solid $gray-light-f4;
   line-height: normal;
   .view-header {
     display: inline-block;
     width: calc(100% + 2px);
-    margin: -1px;
+    margin: -1px -1px 0 -1px;
     padding: 12px 18px;
-    border: 1px solid $border;
+    border-top: 1px solid $border;
+    border-right: 1px solid $border;
+    border-bottom: none;
+    border-left: 1px solid $border;
     background-color: $gray-light-f4;
     font-size: 12px;
   }
@@ -270,10 +275,11 @@ a {
   .content-list {
     position: relative;
     display: inline-block;
+    min-height: 170px;
     width: 100%;
     margin: 0;
     padding: 20px 10px 10px 94px;
-    border-bottom: 1px solid $border-cont;
+    border-top: 1px solid $gray-light-f4;
     &:last-child {
       border-bottom: none;
     }
@@ -349,6 +355,7 @@ a {
       }
     }
     .views-field-sharethis {
+      margin-top: 3px;
       .views-label {
         float: left;
       }
@@ -369,7 +376,7 @@ a {
           .chicklets {
             height: 15px;
             width: 15px;
-            margin: 0 15px 0 0;
+            margin: 0 25px 0 0;
             padding: 0;
             background-position: center;
             background-repeat: no-repeat;
@@ -377,7 +384,7 @@ a {
           .linkedin { background-image: url('../images/linkedin-sm.png'); }
           .facebook { width: 8px; background-image: url('../images/facebook-sm.png'); }
           .twitter { width: 14px; background-image: url('../images/twitter-sm.png'); }
-          .googleplus { background-image: url('../images/google-plus-sm.png'); }
+          .googleplus { width: 22px; background-image: url('../images/google-plus-sm.png'); }
           .email { width: 20px; background-image: url('../images/email-sm.png'); }
         }
         .flag-saved-articles {
@@ -440,12 +447,14 @@ a {
   margin: 15px 0 20px;
   a {
     float: right;
-    padding: 10px 25px 10px 40px;
+    padding: 16px 28px 16px 42px;
     background-color: $blue;
     color: $white;
-    font-size: 26px;
+    font-size: 22px;
     line-height: normal;
     font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 2px;
     text-decoration: none;
     text-transform: uppercase;
     @include border-radius(5px);
@@ -461,7 +470,7 @@ a {
   .after-15 {
     float: right;
     clear: right;
-    margin: 15px 0 0;
+    margin: 13px 0 0;
     color: $gray-64;
     font-size: 12px;
   }
@@ -484,6 +493,8 @@ a {
     margin: -5px 0 0;
     color: $blue;
     font-size: 32px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 2px;
   }
   span {
     float: left;
@@ -491,6 +502,9 @@ a {
     margin: 30px 0 70px;
     font-size: 34px;
     font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 2px;
+    text-transform: capitalize;
   }
   .quote {
     padding: 0 30px;
@@ -513,11 +527,29 @@ a {
 /* Advertisement */
 #block-block-7,
 #block-randomblocks-press-perpesctive {
+  position: relative;
   display: inline-block;
   height: 90px;
   max-width: 970px;
   width: 100%;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
+  &::before {
+    position: absolute;
+    float: right;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: block;
+    height: 5px;
+    width: 83px;
+    margin: 0 0 -11px;
+    background-color: #000;
+    background-image: url('../images/advertisement.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    content: '';
+  }
 }
 #block-block-2 {
   float: left;
