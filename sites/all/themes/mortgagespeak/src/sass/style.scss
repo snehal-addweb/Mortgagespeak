@@ -258,8 +258,10 @@ a {
   line-height: normal;
   .view-header {
     display: inline-block;
+    width: -webkit-calc(100% + 2px);
+    width: -moz-calc(100% + 2px);
     width: calc(100% + 2px);
-    margin: -1px -1px 0 -1px;
+    margin: -1px -1px 0;
     padding: 12px 18px;
     border-top: 1px solid $border;
     border-right: 1px solid $border;
@@ -492,7 +494,7 @@ a {
     width: 100%;
     margin: -5px 0 0;
     color: $blue;
-    font-size: 32px;
+    font-size: 34px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     letter-spacing: 2px;
   }
@@ -500,7 +502,7 @@ a {
     float: left;
     width: 100%;
     margin: 30px 0 70px;
-    font-size: 34px;
+    font-size: 36px;
     font-weight: bold;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     letter-spacing: 2px;
