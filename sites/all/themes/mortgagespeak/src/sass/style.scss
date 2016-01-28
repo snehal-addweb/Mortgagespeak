@@ -134,11 +134,11 @@ a {
         }
       }
       &:nth-child(5) {
-        &.active a { border-top-color: #D95136; @include box-shadow(0 1px 0 0 #D95136 inset); }
+        &.active a { border-top-color: #F8991D; @include box-shadow(0 1px 0 0 #F8991D inset); }
         a {
           max-width: 122px;
           width: 122px;
-          &:hover { border-top-color: #D95136; @include box-shadow(0 1px 0 0 #D95136 inset); }
+          &:hover { border-top-color: #F8991D; @include box-shadow(0 1px 0 0 #F8991D inset); }
           &::before {
             width: 15px;
             background-image: url('../images/blog-icon.png');
@@ -158,11 +158,11 @@ a {
         }
       }
       &:nth-child(7) {
-        &.active a { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
+        &.active a { border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset); }
         a {
           max-width: 127px;
           width: 127px;
-          &:hover { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
+          &:hover { border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset); }
           &::before {
             width: 15px;
             background-image: url('../images/upload-icon.png');
@@ -170,11 +170,11 @@ a {
         }
       }
       &:nth-child(8) {
-        &.active a { border-top-color: #ECC45D; @include box-shadow(0 1px 0 0 #ECC45D inset); }
+        &.active a { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
         a {
           max-width: 163px;
           width: 163px;
-          &:hover { border-top-color: #ECC45D; @include box-shadow(0 1px 0 0 #ECC45D inset); }
+          &:hover { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
           &::before {
             width: 18px;
             background-image: url('../images/search-icon.png');
@@ -215,7 +215,6 @@ a {
         font-size: 12px;
         &:hover {
           border-top: 1px solid #3383CC;
-          border-bottom: none;
           background-color: $gray-light-f4;
           @include box-shadow(0 1px 0 0 #3383CC inset);
           &::before {
@@ -558,7 +557,7 @@ a {
   float: left;
   width: 68%;
   margin: 0 0 0 1%;
-  background-color: #696b6f;
+  background-color: #696B6F;
   .ai-node-body-top-banner {
     border: 1px solid $gray-69;
     background-color: $gray-69;
