@@ -98,89 +98,111 @@ a {
       float: left;
       &:nth-child(1) { display: none; }
       &:nth-child(2) {
-        &.active a { border-top-color: #3383CC; @include box-shadow(0 1px 0 0 #3383CC inset); }
+        &.active a {
+          &::after { background-color: #3383CC; }
+        }
         a {
           max-width: 126px;
           width: 126px;
-          &:hover { border-top-color: #3383CC; @include box-shadow(0 1px 0 0 #3383CC inset); }
+          &:hover { /*border-top-color: #3383CC; @include box-shadow(0 1px 0 0 #3383CC inset);*/ }
           &::before {
             width: 14px;
             background-image: url('../images/my-page-icon.png');
           }
+          &::after { background-color: #3383CC; }
         }
       }
       &:nth-child(3) {
-        &.active a { border-top-color: #36BDD9; @include box-shadow(0 1px 0 0 #36BDD9 inset); }
+        &.active a {
+          &::after { background-color: #36BDD9; }
+        }
         a {
           max-width: 128px;
           width: 128px;
-          &:hover { border-top-color: #36BDD9; @include box-shadow(0 1px 0 0 #36BDD9 inset); }
+          &:hover { /*border-top-color: #36BDD9; @include box-shadow(0 1px 0 0 #36BDD9 inset);*/ }
           &::before {
             width: 23px;
             background-image: url('../images/news-icon.png');
           }
+          &::after { background-color: #36BDD9; }
         }
       }
       &:nth-child(4) {
-        &.active a { border-top-color: #D936D8; @include box-shadow(0 1px 0 0 #D936D8 inset); }
+        &.active a {
+          &::after { background-color: #D936D8; }
+        }
         a {
           max-width: 161px;
           width: 161px;
-          &:hover { border-top-color: #D936D8; @include box-shadow(0 1px 0 0 #D936D8 inset); }
+          &:hover { /*border-top-color: #D936D8; @include box-shadow(0 1px 0 0 #D936D8 inset);*/ }
           &::before {
             width: 20px;
             background-image: url('../images/press-release-icon.png');
           }
+          &::after { background-color: #D936D8; }
         }
       }
       &:nth-child(5) {
-        &.active a { border-top-color: #F8991D; @include box-shadow(0 1px 0 0 #F8991D inset); }
+        &.active a {
+          &::after { background-color: #F8991D; }
+        }
         a {
           max-width: 122px;
           width: 122px;
-          &:hover { border-top-color: #F8991D; @include box-shadow(0 1px 0 0 #F8991D inset); }
+          &:hover { /*border-top-color: #F8991D; @include box-shadow(0 1px 0 0 #F8991D inset);*/ }
           &::before {
             width: 15px;
             background-image: url('../images/blog-icon.png');
           }
+          &::after { background-color: #F8991D; }
         }
       }
       &:nth-child(6) {
-        &.active a { border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset); }
+        &.active a {
+          &::after { background-color: #36D938; }
+        }
         a {
           max-width: 143px;
           width: 143px;
-          &:hover { border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset); }
+          &:hover { /*border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset);*/ }
           &::before {
             width: 9px;
             background-image: url('../images/perspectives-icon.png');
           }
+          &::after { background-color: #36D938; }
         }
       }
       &:nth-child(7) {
-        &.active a { border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset); }
+        &.active a {
+          &::after { background-color: #F8E21C; }
+        }
         a {
           max-width: 127px;
           width: 127px;
-          &:hover { border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset); }
+          &:hover { /*border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset);*/ }
           &::before {
             width: 15px;
             background-image: url('../images/upload-icon.png');
           }
+          &::after { background-color: #F8E21C; }
         }
       }
       &:nth-child(8) {
-        &.active a { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
+        &.active a {
+          &::after { background-color: #B48864; }
+        }
         a {
           max-width: 163px;
           width: 163px;
-          &:hover { border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset); }
+          &:hover { /*border-top-color: #B48864; @include box-shadow(0 1px 0 0 #B48864 inset);*/ }
           &::before {
             width: 18px;
             background-image: url('../images/search-icon.png');
           }
+          &::after { background-color: #B48864; }
         }
       }
+      /* Last child */
       &:last-child {
         a {
           border-right: 1px solid $border;
@@ -199,10 +221,24 @@ a {
             &::before {
               background-position: 0 -18px;
             }
+            &::after {
+              position: absolute;
+              float: left;
+              top: 0;
+              left: 0;
+              z-index: 1;
+              height: 2px;
+              width: -webkit-calc(100% + 2px);
+              width: -moz-calc(100% + 2px);
+              width: calc(100% + 2px);
+              margin: -1px 0 0 -1px;
+              content: '';
+            }
           }
         }
       }
       a {
+        position: relative;
         float: left;
         height: 42px;
         margin: 0;
@@ -219,6 +255,19 @@ a {
           @include box-shadow(0 1px 0 0 #3383CC inset);
           &::before {
             background-position: 0 -36px;
+          }
+          &::after {
+            position: absolute;
+            float: left;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            height: 2px;
+            width: -webkit-calc(100% + 2px);
+            width: -moz-calc(100% + 2px);
+            width: calc(100% + 2px);
+            margin: -1px 0 0 -1px;
+            content: '';
           }
         }
         &::before {
