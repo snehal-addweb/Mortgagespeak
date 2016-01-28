@@ -29,6 +29,28 @@ function mortgagespeak_welcome(){
 
 function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
  	if($form_id == 'user_register_form'){
+		$form['select_all'] = array(
+	    '#type' => 'checkbox',
+	    '#title' => t('Select All'),
+  	);
  		$form['actions']['submit']['#value'] = 'Register';
  	}
+}
+function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_id) {
+  if($form['#form_id'] == 'views_exposed_form' && $form['#id'] == 'views-exposed-form-tracked-news-page'){
+		global $user;
+		$user_topics = '';
+		$user_info = user_load($user->uid);
+		$cnt = 1;
+		$user_news = array('All'=>'All Tracked News');
+		if(isset($user_info->field_news_topics[LANGUAGE_NONE]) && !empty($user_info->field_news_topics[LANGUAGE_NONE])){
+			foreach($user_info->field_news_topics[LANGUAGE_NONE] as $tidKey=>$tidVal){
+				$user_topics = taxonomy_term_load($tidVal['tid']);
+				$user_news[$cnt] = $user_topics->name;
+				$cnt++;
+			}   
+		}
+		$form['field_alpha_news_topics_tid_1']['#options'] = $user_news;
+		$form['field_alpha_news_topics_tid_1']['#value'] = 'All';   	
+  }
 }
