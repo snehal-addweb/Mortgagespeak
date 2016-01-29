@@ -388,6 +388,7 @@ a {
       font-size: 14px;
     }
     .views-field-field-alpha-news-topics,
+    .views-field-field-company-tag,
     .views-field-sharethis {
       display: inline-block;
       width: 100%;
@@ -462,6 +463,92 @@ a {
     .views-field-ops {
       display: inline-block;
       width: 100%;
+    }
+  }
+}
+.page-my-page {
+  .content-lists {
+    .view-header {
+      padding: 5px 18px;
+      border-bottom: 1px solid $border;
+      .pg-number {
+        display: inline-block;
+        width: 65px;
+        padding: 7px 0;
+        color: $gray-69;
+        font-size: 14px;
+      }
+      .main-link-container {
+        display: inline-block;
+        padding: 7px 0;
+        .tracked-news {
+          display: inline-block;
+            padding: 0 10px;
+            border-right: 1px solid $gray-69;
+            &.active{
+              a {
+                color: $gray-69;
+              }
+            }
+            &:last-child {
+              border: none;
+            }
+          a {
+            font-size: 14px;
+          }
+        }
+      }
+      .view-filters {
+        float: right;
+        .views-exposed-widgets {
+          margin: 0;
+          .views-exposed-widget {
+            padding: 0;
+            label {
+              display: inline-block;
+              padding-right: 15px;
+              color: $gray-69;
+              text-transform: capitalize;
+              font-weight: normal;
+              font-size: 14px;
+            }
+            .views-widget {
+              display: inline-block;
+              .form-type-select {
+                position: relative;
+                  &:before {
+                    position: absolute;
+                    z-index: 1;
+                    top: 15px;
+                    right: 15px;
+                    bottom: 0;
+                    left: auto;
+                    width: 10px;
+                    height: 7px;
+                    border: 0;
+                    background: url("../images/gray-down-arrow.png");
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    content: "";
+                  }
+                select {
+                  padding-right: 30px;
+                  border: 1px solid $blue-light-font;
+                  background-color: #ECF4FD;
+                  color: $gray-69;
+                  @include border-radius(0);
+                  @include appearance(none);
+                  @include box-shadow(0 0 0);
+                }
+              }
+              
+            }
+          }
+        }
+        .help-block {
+          display: none;
+        }
+      }
     }
   }
 }

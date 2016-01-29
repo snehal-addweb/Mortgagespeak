@@ -151,6 +151,16 @@ $assets-path: '../..';
           color: $blue-font;
           font-size: 14px;
           &:hover { color: $link-hover; }
+          &.active {
+            margin: -1px 0 0 -10px;
+            padding-left: 15px;
+            width: -webkit-calc(100% + 11px);
+            width: -moz-calc(100% + 11px);
+            width: calc(100% + 11px);
+            border-top: 1px solid $border;
+            background-color: $white;
+            color: $link-hover;
+          }
         }
         &:last-child {
           a { border-bottom: none; }
