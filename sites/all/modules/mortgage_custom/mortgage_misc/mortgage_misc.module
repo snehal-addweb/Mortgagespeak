@@ -52,33 +52,47 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
 	global $user;
 	$user_topics = '';
 	$user_info = user_load($user->uid);
-	$cnt = 1;
 	if($form['#id'] == 'views-exposed-form-tracked-news-page'){
 		$user_news = array('All'=>'All Tracked News');
 		if(isset($user_info->field_news_topics[LANGUAGE_NONE]) && !empty($user_info->field_news_topics[LANGUAGE_NONE])){
 			foreach($user_info->field_news_topics[LANGUAGE_NONE] as $tidKey=>$tidVal){
 				$user_topics = taxonomy_term_load($tidVal['tid']);
-				$user_news[$cnt] = $user_topics->name;
-				$cnt++;
+				$user_news[$tidVal['tid']] = $user_topics->name;
 			}   
 		}
 		$form['field_alpha_news_topics_tid_1']['#options'] = $user_news;
-		$form['field_alpha_news_topics_tid_1']['#value'] = 'All';   	
+		#$form['field_alpha_news_topics_tid_1']['#value'] = 'All';		
+    if(!empty($_REQUEST['field_alpha_news_topics_tid_1']))
+        $form['field_alpha_news_topics_tid_1']['#value'] = $_REQUEST['field_alpha_news_topics_tid_1'];  	
   }
 
-  if($form['#id'] == 'views-exposed-form-tracked-companies-page'){
-  	$user_company = array('All'=>'All Tracked News');
-  	if(isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])){
-			foreach($user_info->field_company_tags[LANGUAGE_NONE] as $tidKey=>$tidVal){
-				$user_tags = taxonomy_term_load($tidVal['tid']);
-				$user_company[$cnt] = $user_tags->name;
-				$cnt++;
-			}   
-		}
-		$form['company_tag']['#options'] = $user_company;
-		$form['company_tag']['#value'] = 'All';
-		$form['company_tag1']['#options'] = $user_company;
-		$form['company_tag1']['#value'] = 'All';
-  }
+	if($form['#id'] == 'views-exposed-form-tracked-companies-page'){    
+    $user_company = array('All'=>'All Tracked News');
+    $user_company1 = array('All'=>'All Tracked News');
+
+    $arrATOM = array('1', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
+    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+
+    if(isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])){
+        foreach($user_info->field_company_tags[LANGUAGE_NONE] as $tidKey=>$tidVal){
+            $user_tags = taxonomy_term_load($tidVal['tid']);
+            if(in_array(strtolower($user_tags->name[0]), $arrATOM)) {
+                $user_company[$tidVal['tid']] = $user_tags->name;
+            }
+            else if(in_array($user_tags->name[0], $arrMTOZ)) {
+                $user_company1[$tidVal['tid']] = $user_tags->name;
+            }
+        }
+    }
+    $form['company_tag']['#options'] = $user_company;    
+    #$form['company_tag']['#value'] = 'All';
+    if(!empty($_REQUEST['company_tag']))
+        $form['company_tag']['#value'] = $_REQUEST['company_tag'];
+
+    $form['company_tag1']['#options'] = $user_company1;
+    #$form['company_tag1']['#value'] = 'All';
+    if(!empty($_REQUEST['company_tag1']))
+        $form['company_tag1']['#value'] = $_REQUEST['company_tag1'];
+ }
   
 }
