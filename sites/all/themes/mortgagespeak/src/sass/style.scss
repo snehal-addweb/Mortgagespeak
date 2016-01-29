@@ -483,18 +483,20 @@ a {
         padding: 7px 0;
         .tracked-news {
           display: inline-block;
+          &.active {
+            a {
+              color: $gray-69;
+            }
+          }
+          a {
+            display: inline-block;
             padding: 0 10px;
             border-right: 1px solid $gray-69;
-            &.active{
-              a {
-                color: $gray-69;
-              }
-            }
-            &:last-child {
-              border: none;
-            }
-          a {
             font-size: 14px;
+            line-height: 14px;
+          }
+          &:last-child a {
+            border: none;
           }
         }
       }
@@ -508,29 +510,29 @@ a {
               display: inline-block;
               padding-right: 15px;
               color: $gray-69;
-              text-transform: capitalize;
-              font-weight: normal;
               font-size: 14px;
+              font-weight: normal;
+              text-transform: capitalize;
             }
             .views-widget {
               display: inline-block;
               .form-type-select {
                 position: relative;
-                  &:before {
-                    position: absolute;
-                    z-index: 1;
-                    top: 15px;
-                    right: 15px;
-                    bottom: 0;
-                    left: auto;
-                    width: 10px;
-                    height: 7px;
-                    border: 0;
-                    background: url("../images/gray-down-arrow.png");
-                    background-position: center center;
-                    background-repeat: no-repeat;
-                    content: "";
-                  }
+                &::before {
+                  position: absolute;
+                  top: 15px;
+                  right: 15px;
+                  bottom: 0;
+                  left: auto;
+                  z-index: 1;
+                  height: 7px;
+                  width: 10px;
+                  border: none;
+                  background: url('../images/gray-down-arrow.png');
+                  background-position: center center;
+                  background-repeat: no-repeat;
+                  content: '';
+                }
                 select {
                   padding-right: 30px;
                   border: 1px solid $blue-light-font;
@@ -541,7 +543,6 @@ a {
                   @include box-shadow(0 0 0);
                 }
               }
-              
             }
           }
         }
