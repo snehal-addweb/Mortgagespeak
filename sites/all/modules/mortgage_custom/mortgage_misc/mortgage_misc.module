@@ -67,8 +67,8 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
   }
 
 	if($form['#id'] == 'views-exposed-form-tracked-companies-page'){    
-    $user_company = array('All'=>'All Tracked News');
-    $user_company1 = array('All'=>'All Tracked News');
+    $user_company = array('All'=>'Company A-M ');
+    $user_company1 = array('All'=>'Company N-Z ');
 
     $arrATOM = array('1', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
     $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
@@ -85,14 +85,21 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
         }
     }
     $form['company_tag']['#options'] = $user_company;    
-    #$form['company_tag']['#value'] = 'All';
-    if(!empty($_REQUEST['company_tag']))
-        $form['company_tag']['#value'] = $_REQUEST['company_tag'];
+    if(!empty($_REQUEST['company_tag'])) {
+      $form['company_tag']['#value'] = $_REQUEST['company_tag'];
+    }
+    else{
+    	$form['company_tag']['#value'] = 'All';
+    }
 
     $form['company_tag1']['#options'] = $user_company1;
-    #$form['company_tag1']['#value'] = 'All';
-    if(!empty($_REQUEST['company_tag1']))
-        $form['company_tag1']['#value'] = $_REQUEST['company_tag1'];
+    if(!empty($_REQUEST['company_tag1'])){
+    	$form['company_tag1']['#value'] = $_REQUEST['company_tag1'];
+    }
+    else{
+    	$form['company_tag1']['#value'] = 'All';
+    }
+        
  }
   
 }
