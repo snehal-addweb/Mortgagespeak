@@ -16,10 +16,22 @@ function mortgage_misc_menu() {
 		'page callback' => 'mortgagespeak_welcome',
 		'access arguments' => array('access content'),
   );
+  $items['my-page/%'] = array(
+	  'title' => t('My Page'),
+		'description' => 'My Page',
+		'page arguments' => array(1),
+		'page callback' => 'mortgagespeak_my_page',
+		'access arguments' => array('access content'),
+	);
 
   return $items;
 }
 
+function mortgagespeak_my_page(){
+	global $user;
+	$output = 'comes';
+	return $output;
+}
 
 function mortgagespeak_welcome(){
 	global $user;
@@ -37,11 +49,11 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
  	}
 }
 function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_id) {
-  if($form['#form_id'] == 'views_exposed_form' && $form['#id'] == 'views-exposed-form-tracked-news-page'){
-		global $user;
-		$user_topics = '';
-		$user_info = user_load($user->uid);
-		$cnt = 1;
+	global $user;
+	$user_topics = '';
+	$user_info = user_load($user->uid);
+	$cnt = 1;
+	if($form['#id'] == 'views-exposed-form-tracked-news-page'){
 		$user_news = array('All'=>'All Tracked News');
 		if(isset($user_info->field_news_topics[LANGUAGE_NONE]) && !empty($user_info->field_news_topics[LANGUAGE_NONE])){
 			foreach($user_info->field_news_topics[LANGUAGE_NONE] as $tidKey=>$tidVal){
@@ -53,4 +65,20 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
 		$form['field_alpha_news_topics_tid_1']['#options'] = $user_news;
 		$form['field_alpha_news_topics_tid_1']['#value'] = 'All';   	
   }
+
+  if($form['#id'] == 'views-exposed-form-tracked-companies-page'){
+  	$user_company = array('All'=>'All Tracked News');
+  	if(isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])){
+			foreach($user_info->field_company_tags[LANGUAGE_NONE] as $tidKey=>$tidVal){
+				$user_tags = taxonomy_term_load($tidVal['tid']);
+				$user_company[$cnt] = $user_tags->name;
+				$cnt++;
+			}   
+		}
+		$form['company_tag']['#options'] = $user_company;
+		$form['company_tag']['#value'] = 'All';
+		$form['company_tag1']['#options'] = $user_company;
+		$form['company_tag1']['#value'] = 'All';
+  }
+  
 }
