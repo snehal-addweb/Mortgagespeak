@@ -64,6 +64,13 @@ $assets-path: '../..';
       width: 94px;
       margin: 0 0 3px;
       font-size: 14px;
+      span {
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
     .regi-link {
       float: left;

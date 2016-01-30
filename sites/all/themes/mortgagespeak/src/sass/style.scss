@@ -383,7 +383,7 @@ a {
     .views-field-body {
       display: inline-block;
       width: 100%;
-      margin: 0 0 10px;
+      margin: 0 0 15px;
       color: #505050;
       font-size: 14px;
     }
@@ -505,7 +505,7 @@ a {
         .views-exposed-widgets {
           margin: 0;
           .views-exposed-widget {
-            padding: 0;
+            padding: 0 0 0 10px;
             label {
               display: inline-block;
               padding-right: 15px;
