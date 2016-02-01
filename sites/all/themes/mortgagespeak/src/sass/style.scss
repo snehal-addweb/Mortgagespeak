@@ -413,15 +413,15 @@ a {
       .field-content {
         .sharethis-wrapper {
           float: left;
-          > span {
+          span {
             float: left;
             margin: 0;
             padding: 0;
-            > span {
-              float: left;
-              width: auto !important;
-              margin: 0;
-              padding: 0;
+            background: transparent;
+            a {
+              img {
+                display: none;
+              }
             }
           }
           .chicklets {
