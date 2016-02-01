@@ -10,6 +10,7 @@
 <?php $rows = $view->style_plugin->rendered_fields; ?>
 <?php 
 	global $base_url;
+	global $user;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 ?>
 <?php if (!empty($title)): ?>
