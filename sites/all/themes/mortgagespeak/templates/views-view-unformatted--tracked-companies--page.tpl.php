@@ -10,6 +10,7 @@
 <?php $rows = $view->style_plugin->rendered_fields; ?>
 <?php 
 	global $base_url;
+	global $user;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 ?>
 <?php if (!empty($title)): ?>
@@ -56,12 +57,12 @@
 			</div>  
 		</div> 
 
-		<?php ?>
+		<?php if(in_array('News Intelligence', $user->roles) || in_array('administrator', $user->roles)) {?>
 			<div class="views-field views-field-field-company-tag">    
 				<span class="views-label views-label-field-company-tag">Company: </span>    
 				<div class="field-content"><?php print $row['field_company_tag']; ?></div>  
 			</div><?php
-		?>
+		 } ?>
 
 		<div class="views-field views-field-sharethis">    
 		  <span class="views-label views-label-sharethis">More: </span>    
