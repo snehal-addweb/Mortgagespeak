@@ -413,30 +413,29 @@ a {
       .field-content {
         .sharethis-wrapper {
           float: left;
-          span {
+          span.chicklets {
             float: left;
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            a {
-              img {
-                display: none;
-              }
-            }
-          }
-          .chicklets {
             height: 15px;
             width: 15px;
             margin: 0 25px 0 0;
             padding: 0;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: transparent;
+            a {
+              display: inline-block;
+              height: 100%;
+              width: 100%;
+              background-position: center;
+              background-repeat: no-repeat;
+              img {
+                display: none;
+              }
+            }
+            .linkedinshare { background-image: url('../images/linkedin-sm.png'); }
+            .facebook { width: 8px; background-image: url('../images/facebook-sm.png'); }
+            .twitter-share-button { width: 14px; background-image: url('../images/twitter-sm.png'); }
+            .google { width: 22px; background-image: url('../images/google-plus-sm.png'); }
+            .email { width: 20px; background-image: url('../images/email-sm.png'); }
           }
-          .linkedin { background-image: url('../images/linkedin-sm.png'); }
-          .facebook { width: 8px; background-image: url('../images/facebook-sm.png'); }
-          .twitter { width: 14px; background-image: url('../images/twitter-sm.png'); }
-          .googleplus { width: 22px; background-image: url('../images/google-plus-sm.png'); }
-          .email { width: 20px; background-image: url('../images/email-sm.png'); }
         }
         .flag-saved-articles {
           float: left;
