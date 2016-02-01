@@ -94,4 +94,5 @@
 			</span>  
 		</div> 
   </div>
+  <div class="popup-container"><?php print views_embed_view('popup_views','block_1', $nid); ?></div>
 <?php endforeach; ?>
