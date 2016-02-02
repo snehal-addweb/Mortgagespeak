@@ -284,3 +284,15 @@ textarea:focus {
     }
   }
 }
+#user-register-form {
+  .register-container {
+    .control-label {
+      .form-required { display: none; }
+    }
+    .field-type-taxonomy-term-reference {
+      > .form-item {
+        > .control-label { display: none; }
+      }
+    }
+  }
+}
