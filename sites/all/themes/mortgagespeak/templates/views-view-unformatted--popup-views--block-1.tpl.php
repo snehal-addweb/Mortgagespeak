@@ -23,9 +23,9 @@
 <div class="popup-header">
 	<div class="popup-title">Excerpt Time-Saver</div>
 	<div class="tooltips">
-		<div>What's this?</div>
+		<div>( What's this? )</div>
 	</div>
-	<a href="#">Close</a>
+	<a href="#" class="close-popup">x</a>
 </div>
 	<?php foreach ($rows as $id => $row): 
 		$title = $row['title'];
@@ -47,39 +47,41 @@
 				<a href="<?php print $url;?>" target="_blank"><?php print $title; ?>
 				</a>
 			</div> 
-			<div class="views-field views-field-body">
-			    <span class="field-content">
-			    	<?php print $row['field_pop_up']; ?>
-			    </span>
+
+			<div class="views-field views-field-sharethis">
+				<div class="sharethis-content">
+				  <span class="field-content">
+					  <div class="sharethis-wrapper">
+
+							<span class="chicklets linkedin">
+								<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" class="linkedinshare"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+							</span>
+
+							<span class="chicklets facebook">
+								<a href='http://www.facebook.com/sharer.php?u=<?php print $url; ?>&t=<?php echo $title; ?>' class="facebook"><img src="/sites/all/themes/mortgage_new_theme/images/facebook1.png" /></a>
+							</span>
+
+							<span class="chicklets twitter">
+								<a href="https://twitter.com/share?&text=<?php print $strFinal; ?>&url=<?php print $url; ?>" class="twitter-share-button" data-via="MortgageSpeak" data-count="none"><img src="/sites/all/themes/mortgage_new_theme/images/twitter1.png" /></a>
+							</span>
+
+							<span class="chicklets googleplus">
+								<a href="https://plus.google.com/share?url=<?php print ($url); ?>&body=<?php print $body; ?>" class="google"><img src="/sites/all/themes/mortgage_new_theme/images/google1.png" /></a>
+							</span>
+
+							<span class="chicklets email">
+								<a href='mailto:Article@MortgageSpeak.com?subject=<?php echo $title; ?>&body=I wanted to share this article with you: <?php print ($url. '     ' .$body); ?>' class="email" target="_blank"><img src="/sites/all/themes/mortgage_new_theme/images/mail1.png" /></a>
+							</span>
+						</div> 
+						 <!-- Flag link-->
+						 <?php print $row['ops'];?>
+					</span>
+				</div>
 			</div>
-			<div class="views-field views-field-sharethis">    
-			  <span class="views-label views-label-sharethis">More: </span>    
-			  <span class="field-content">
-				  <div class="sharethis-wrapper">
-
-						<span class="chicklets linkedin">
-							<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" class="linkedinshare"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
-						</span>
-
-						<span class="chicklets facebook">
-							<a href='http://www.facebook.com/sharer.php?u=<?php print $url; ?>&t=<?php echo $title; ?>' class="facebook"><img src="/sites/all/themes/mortgage_new_theme/images/facebook1.png" /></a>
-						</span>
-
-						<span class="chicklets twitter">
-							<a href="https://twitter.com/share?&text=<?php print $strFinal; ?>&url=<?php print $url; ?>" class="twitter-share-button" data-via="MortgageSpeak" data-count="none"><img src="/sites/all/themes/mortgage_new_theme/images/twitter1.png" /></a>
-						</span>
-
-						<span class="chicklets googleplus">
-							<a href="https://plus.google.com/share?url=<?php print ($url); ?>&body=<?php print $body; ?>" class="google"><img src="/sites/all/themes/mortgage_new_theme/images/google1.png" /></a>
-						</span>
-
-						<span class="chicklets email">
-							<a href='mailto:Article@MortgageSpeak.com?subject=<?php echo $title; ?>&body=I wanted to share this article with you: <?php print ($url. '     ' .$body); ?>' class="email" target="_blank"><img src="/sites/all/themes/mortgage_new_theme/images/mail1.png" /></a>
-						</span>
-					</div> 
-					 <!-- Flag link-->
-					 <?php print $row['ops'];?>
-				</span>  
+			<div class="views-field views-field-body">
+				<span class="field-content quote">
+					<?php print $row['field_pop_up']; ?>
+				</span>
 			</div> 
 			<div class="custom-ads"><?php print render($block['content']); ?></div>
 	  </div>
