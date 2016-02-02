@@ -36,8 +36,8 @@
 
 		<div class="views-field views-field views-field-title">        
 			<span class="field-content">
-				<a href="<?php print $base_url;?>/popup-views/<?php print $nid;?>" class="simple-dialog" rel="width:900;resizable:false;position:[center,60]" name="block-views-popup-views-block-1" title="My Dialog Title"><?php print $title; ?></a>
-		</div> 
+				<?php print $title; ?>
+		</div>
 
 		<div class="views-field views-field-body">
 	    <span class="field-content">
@@ -65,19 +65,19 @@
 			  <div class="sharethis-wrapper">
 
 					<span class="chicklets linkedin">
-						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" class="linkedinshare"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" target="_blank" class="linkedinshare"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
 					</span>
 
 					<span class="chicklets facebook">
-						<a href='http://www.facebook.com/sharer.php?u=<?php print $url; ?>&t=<?php echo $title; ?>' class="facebook"><img src="/sites/all/themes/mortgage_new_theme/images/facebook1.png" /></a>
+						<a href='http://www.facebook.com/sharer.php?u=<?php print $url; ?>&t=<?php echo $title; ?>' target="_blank" class="facebook"><img src="/sites/all/themes/mortgage_new_theme/images/facebook1.png" /></a>
 					</span>
 
 					<span class="chicklets twitter">
-						<a href="https://twitter.com/share?&text=<?php print $strFinal; ?>&url=<?php print $url; ?>" class="twitter-share-button" data-via="MortgageSpeak" data-count="none"><img src="/sites/all/themes/mortgage_new_theme/images/twitter1.png" /></a>
+						<a href="https://twitter.com/share?&text=<?php print $strFinal; ?>&url=<?php print $url; ?>" target="_blank" class="twitter-share-button" data-via="MortgageSpeak" data-count="none"><img src="/sites/all/themes/mortgage_new_theme/images/twitter1.png" /></a>
 					</span>
 
 					<span class="chicklets googleplus">
-						<a href="https://plus.google.com/share?url=<?php print ($url); ?>&body=<?php print $body; ?>" class="google"><img src="/sites/all/themes/mortgage_new_theme/images/google1.png" /></a>
+						<a href="https://plus.google.com/share?url=<?php print ($url); ?>&body=<?php print $body; ?>" target="_blank" class="google"><img src="/sites/all/themes/mortgage_new_theme/images/google1.png" /></a>
 					</span>
 
 					<span class="chicklets email">
@@ -87,6 +87,7 @@
 				 <!-- Flag link-->
 				 <?php print $row['ops'];?>
 			</span>  
-		</div> 
+		</div>
+		<div class="views-popup-container"><?php print views_embed_view('popup_views','block_1', $nid); ?></div> 
   </div>
 <?php endforeach; ?>

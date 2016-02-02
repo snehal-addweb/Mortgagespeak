@@ -8,8 +8,8 @@
 
 
 <?php $rows = $view->style_plugin->rendered_fields; 
-//$block = block_load('block',8);
-//$output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));
+
+    $block = module_invoke('block', 'block_view', '8');    
 ?>
 <?php 
 	global $base_url;
@@ -20,6 +20,13 @@
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
 <div class="popup-main-container">
+<div class="popup-header">
+	<div class="popup-title">Excerpt Time-Saver</div>
+	<div class="tooltips">
+		<div>What's this?</div>
+	</div>
+	<a href="#">Close</a>
+</div>
 	<?php foreach ($rows as $id => $row): 
 		$title = $row['title'];
 		$body = $row['body'];
@@ -36,6 +43,10 @@
 		?>
 
 	  <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
+			<div class="views-field views-field views-field-title">        
+				<a href="<?php print $url;?>" target="_blank"><?php print $title; ?>
+				</a>
+			</div> 
 			<div class="views-field views-field-body">
 			    <span class="field-content">
 			    	<?php print $row['field_pop_up']; ?>
@@ -70,7 +81,7 @@
 					 <?php print $row['ops'];?>
 				</span>  
 			</div> 
+			<div class="custom-ads"><?php print render($block['content']); ?></div>
 	  </div>
 	<?php endforeach; ?>
-	<div class="custom-ads"><?php print "Google Ads"; ?></div>
 </div>
