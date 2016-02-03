@@ -541,13 +541,17 @@ a {
                   margin-right: 0;
                 }
               }
+              .flag-saved-articles {
+                a {
+                  margin: 0 0 0 25px;
+                }
+              }
             }
           }
           .views-field-body {
-            margin: 0 0 5px;
+            margin: 0;
             padding: 20px;
             border-top: 1px solid $gray;
-            border-bottom: 1px solid $gray;
             background-color: $gray-light-f4;
             vertical-align: top;
             .field-content {
@@ -559,6 +563,11 @@ a {
                 margin-bottom: 0;
               }
             }
+          }
+          .custom-ads {
+            padding: 5px 0;
+            border-bottom: 1px solid $gray;
+            background-color: $gray-light-f4;
           }
         }
       }
