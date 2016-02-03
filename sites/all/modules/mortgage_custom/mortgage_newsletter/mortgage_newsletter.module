@@ -1,0 +1,672 @@
+<?php
+
+/*
+    implements hook_menu() to create handle newletter hook
+*/
+function mortgage_newsletter_menu() {
+  $items['testnewsletter'] = array(
+    'type' => MENU_CALLBACK,
+    'title' => 'Select User List Form', //page title
+    'description' => 'A form to select list of users to generate newsletter.',
+    'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+    'page arguments' => array('select_user_list_form'), //put the name of the form here
+    'access arguments' => array('access content')
+  );
+ 
+  $items['weekly_newsletter'] = array(
+  'type' => MENU_CALLBACK,
+  'title' => 'Select User List Form', //page title
+  'description' => 'A form to select list of users to generate newsletter.',
+  'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+  'page arguments' => array('select_user_list_form'), //put the name of the form here
+  'access arguments' => array('access content')
+  );
+  
+  $items['adduser'] = array(
+    'title' => 'Newletter Edit Form',
+    'page callback' => 'newsletter_edit_forms',
+    'access callback' => TRUE,
+  );
+ 
+  return $items;
+}
+
+
+/* 
+    This function is used to select users list for newsletter
+*/
+function select_user_list_form($form, &$form_state){
+  drupal_set_title("Newsletter Form");
+
+  $query = db_select('users', 'u');
+  $query->fields('u', array('uid','name'));
+  $query->condition('u.status','1','=');
+  $query->orderBy('name', 'ASC');
+  $result = $query->execute(); 
+  while($record = $result->fetchAssoc()) {
+    $uid[$record['uid']] = $record['name'];
+  }  
+  
+  $multiple = 20;
+  $form['select_user'] = array(
+    '#type' => 'select',
+    '#title' => t('Select User'),
+    '#options' => $uid,
+    '#multiple' => $multiple, 
+    #'#size' => $multiple ? min(12, count($uid)) : 0,
+    '#size' => 0
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+  );
+  return $form;
+}
+
+
+function newsletter_edit_forms(){
+  $content ="";
+  $content .= render(drupal_get_form('newsletter_add_usercustom_form'));
+  // $content .= render(drupal_get_form('newsletter_remove_usercustom_form'));
+  $content .= render(drupal_get_form('subscription_list_form'));
+  return $content;
+}
+
+function select_user_list_form_validate($form, &$form_state) {
+  if(empty($form_state['values']['select_user'])) {
+    form_set_error('user', t('select user from dropdowm.'));
+  }
+}
+
+function select_user_list_form_submit($form, &$form_state) {
+  global $base_url;
+
+  $debug = false;
+  $body = '';
+  $pass = '';
+
+  $abbrTimeZone = "CST";
+  date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
+  $today              = strtotime("00:00:01");
+  $yesterday          = strtotime("-1 day", $today);
+  $current            = strtotime("now");
+  
+  $arrNewsList = array();
+  $url_pressrelease = 'http://' .$_SERVER['HTTP_HOST'];
+
+  foreach($form_state['values']['select_user'] as $key => $vals) {    
+    $userid = $vals;
+    $user = user_load($userid);
+
+    if($debug) {
+      print("<pre> :: User ::");
+      print_r($user);
+      print("</pre>");
+    }
+
+    switch($user->name) {
+      case "Forsythe Appraisals":
+        $pass = "Forsythe@1234";
+        break;
+      case "Valocity":
+        $pass = "Valocity@1234";
+        break;
+      case "FAF":
+        $user->name = "#FAF#";
+        $pass = "#FAF@1234#";
+        break;
+      case "Data Tree":
+        $pass = "DataTree@1234";
+        break;
+      case "Global DMS":
+        $pass = "GlobalDMS@1234";
+        break;
+      case "a la mode-mn":
+        $pass = "alamode-mn@1234";
+        break;
+      case "Profundity":
+        $pass = "Crispy1";
+        break;
+      case "RGA Public Relations":
+        $pass = "RGA@1234";
+        break;
+      case "Platinum":
+        $pass = "Platinum@1234";
+        break;
+      case "Pro Teck":
+        $pass = "ProTeck@1234";
+        break;
+      case "Pro Teck JD Team":
+        $pass = "Pro Teck JD Team1234";
+        break;
+      case "Pro Teck SB Team":
+        $pass = "Pro Teck SB Team1234";
+        break;
+      case "Pro Teck DH Team":
+        $pass = "Pro Teck DH Team1234";
+        break;
+      case "mahipal":
+        $pass = "mahipal";
+        break;
+      case "MortgageFlex":
+        $pass = "MortgageFlex32207";
+        break;
+      case "Valocity-BT":
+        $pass = "Valocity-BT@1234";
+        break;
+      case "Forsythe-BT":
+        $pass = "Forsythe@1234";
+        break;
+      case "mercuryvmp":
+        $pass = "mercuryvmp@1234";
+        break;
+    }
+
+    #################################################################
+    # Fetch Selected Newstopics related content section start....
+    #################################################################
+    $arr_user_news_topics = array();
+    if(!empty($user->field_news_topics)) {
+      foreach($user->field_news_topics['und'] as $key => $val) {
+        $arr_user_news_topics[] = $val['tid'];
+      }
+    }    
+
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_alpha_news_topics', 'fnt', 'fnt.entity_id = n.nid');
+    $query->fields('n', array('nid'));
+    $query->condition('n.type', 'alpha_content', '=');
+    $query->condition('n.created', array($today, $current), 'BETWEEN');
+
+    if(!empty($arr_user_news_topics))
+      $query->condition('fnt.field_alpha_news_topics_tid', $arr_user_news_topics, 'IN');
+
+    $query->orderBy('n.created', 'DESC');    
+    $result = $query->execute();
+
+    $arr_user_news_topics_nids = array();
+    if($result->rowCount() != 0){
+      $i = 1;        
+      while ($record = $result->fetchAssoc()) {
+        $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
+      }    
+    }
+    #################################################################
+    # Fetch Selected Newstopics related content section end....
+    #################################################################
+
+    #################################################################
+    # Fetch Selected Company Tags related content section start....
+    #################################################################
+    $arr_user_company_tags = array();
+    if(!empty($user->field_company_tag)) {
+      foreach($user->field_company_tag['und'] as $key => $val) {
+        $arr_user_company_tags[] = $val['tid'];
+      }
+    }
+
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
+    $query->fields('n', array('nid'));
+    $query->condition('n.type', 'alpha_content', '=');
+    $query->condition('n.created', array($today, $current), 'BETWEEN');
+
+    if(!empty($arr_user_company_tags))
+      $query->condition('fct.field_company_tag_tid', $arr_user_company_tags, 'IN');
+
+    $query->orderBy('n.created', 'DESC');    
+    $result = $query->execute();
+
+    $arr_user_company_tags_nids = array();
+    if($result->rowCount() != 0){
+      $i = 1;        
+      while ($record = $result->fetchAssoc()) {
+        $arr_user_company_tags_nids[$record['nid']] = $record['nid'];
+      }    
+    }    
+    #################################################################
+    # Fetch Selected Company Tags related content section end....
+    #################################################################
+
+    #######################################################################
+    # Fetch Selected Perspective & Press Release content section start....
+    ########################################################################    
+    $query = db_select('node', 'n');    
+    $query->fields('n', array('nid'));
+    $query->join('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
+    $query->condition('n.type', 'alpha_content', '=');
+    $query->condition('n.created', array($today, $current), 'BETWEEN');
+
+    $query->orderBy('n.created', 'DESC');    
+    $result = $query->execute();
+
+    $arr_perspective_content = array();
+    if($result->rowCount() != 0){
+      $i = 1;        
+      while ($record = $result->fetchAssoc()) {
+        $arr_perspective_content[$record['nid']] = $record['nid'];
+      }    
+    }    
+
+    $query = db_select('node', 'n');
+    $query->join('field_data_field_assign_customas', 'fac', 'fac.entity_id = n.nid');
+    $query->fields('n', array('nid'));
+    $query->condition('n.type', 'alpha_content', '=');
+    $query->condition('n.created', array($today, $current), 'BETWEEN');
+
+    $query->orderBy('n.created', 'DESC');    
+    $result = $query->execute();
+
+    $arr_press_releases = array();
+    if($result->rowCount() != 0){
+      $i = 1;        
+      while ($record = $result->fetchAssoc()) {
+        $arr_press_releases[$record['nid']] = $record['nid'];
+      }    
+    }        
+    #################################################################
+    # Fetch Selected Perspective & Press Release content section start....
+    #################################################################
+
+
+    #################################################################
+    # Debug Variables section start....
+    #################################################################
+    if($debug) {
+      print("<pre> :: arr_user_company_tags ::");
+      print_r($arr_user_company_tags);
+      print("</pre>");
+
+      print("<pre> :: arr_user_news_topics ::");
+      print_r($arr_user_news_topics);
+      print("</pre>"); 
+
+      print("<pre> :: arr_user_company_tags_nids ::");
+      print_r($arr_user_company_tags_nids);
+      print("</pre>");
+
+      print("<pre> :: arr_user_news_topics_nids ::");
+      print_r($arr_user_news_topics_nids);
+      print("</pre>");
+
+      print("<pre> :: arr_perspective_content ::");
+      print_r($arr_perspective_content);
+      print("</pre>");
+
+      print("<pre> :: arr_press_releases ::");
+      print_r($arr_press_releases);
+      print("</pre>");
+    }
+    #################################################################
+    # Debug Variables section end....
+    #################################################################
+
+
+    #################################################################
+    # Create Newsletter Node/Content section start....
+    #################################################################
+    $node = new StdClass();
+    $node->type = 'simplenews';
+    $node->status = 1;
+    $node->uid = 1;
+    $node->language = LANGUAGE_NONE; 
+    $node->title = "Newsletter";
+    $node->body['und'][0]['format'] = 2; 
+
+    # Template Main Section Start...
+    $body .= '<table class="tbl-lvl-1" style="max-width:800px; width:800px; margin:0 auto; border-spacing:0; border-collapse:collapse; font-family:Arial; font-size:12px; border:none; ">
+      <tbody style="width:100%;">';
+
+      # Template Header Section Start...
+      $body .= '<tr class="header tr-lvl-1" style=" width: 100%; background-color: #4273b4; color:#fff;">
+          <td style="padding: 0; width: 100%; ">
+            <table class="tbl-lvl-2" style="border-spacing:0; border-collapse:collapse;  width:100%; padding: 20px">
+              <tbody style="width:100%;">
+                <tr class="tr-lvl-2" style="width:100%; display:block; padding: 10px">
+                  <td class="td-lvl-2" width="100">
+                    <img src="'. $base_url .'/files/ms.png"  alt="Mortagage" style="">
+                  </td>
+                  <td class="td-lvl-2" style="width:550px;">
+                    <table class="tbl-lvl-3" style="border-spacing:0; border-collapse:collapse;">
+                      <tr>
+                        <td style="font-size:22px; color:#fff;">NEWS INTELLIGENCE NEWSLETTER</td>
+                      </tr>
+                      <tr>
+                        <td style="color:#fff; font-family: arial; font-size:13px;">-powered by MortgageSpeak.com</td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="td-lvl-2" style="text-align:right">
+                    <table class="tbl-lvl-3" style="border-spacing:0; border-collapse:collapse;">
+                      <tr>
+                        <td style="color: #fff; font-family: arial; font-size:12px; ">'. date("F") .'&nbsp;'.date("j").',&nbsp;'.date("Y").'</td>
+                      </tr>
+                      <tr>
+                        <td style="color: #fff; font-family: arial; font-size:12px; text-align:right;">
+                          Contact
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>';
+      # Template Header Section End...
+
+      # Template Sub Header Section Start...
+      $body .= '<tr class="content tr-lvl-1" style=" width: 100%;">
+      <td style="padding: 0; width: 100%; ">
+        <table class="tbl-lvl-2" style="border-spacing:0; border-collapse:collapse;  width:100%;">
+          <tbody style="width:100%; ">
+            <tr class="tr-lvl-2" style="width:100%; ">
+              <td style="width:100%; background-color: #e8e8e8; padding: 20px;">
+                <table class="tbl-lvl-3" style="border-spacing:0; border-collapse:collapse;  width:100%;  display: inline-block; ">
+                  <tbody style="width:100%; ">
+                    <tr class="tr-lvl-3" style="width:100%; display:inline-block; margin-bottom:50px; ">
+                      <td style="width:100%; background-color: #fff; padding: 20px; border-radius:10px; ">
+                        <table class="tbl-lvl-4" style="border-spacing:0; border-collapse:collapse; width:100%;">
+                          <tbody style="width:100%; ">
+                            <tr class="tr-lvl-4" style="width: 100%; text-align: center;">
+                              <td style="width:100%; border-bottom:2px solid #f07a22;  margin-bottom: 20px; padding:10px 0; font-family:arial;color:#666666;font-size:14px;">Uniting your Client, Competitor, Prospect and Business Line news.</td>
+                            </tr>
+                            <tr class="tr-lvl-4" style="width: 100%;">
+                              <td style="width:100%; border-bottom:2px solid #f07a22; margin-bottom: 20px; padding:10px 0;">
+                                <table style="width:100%; padding:10px 0; border-spacing:0; border-collapse:collapse;">
+                                  <thead style="width:100%; ">
+                                    <tr style="width:100%; ">
+                                      <th style="width:600px; text-align:left; font-family: arial; font-size:13px;">Rushing</th>
+                                      <th style="width:60px; text-align:centerl font-family: arial; font-size:13px;">Yards</th>
+                                      <th style="width:60px; text-align:center; font-family: arial; font-size:13px;">YTD</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody style="width:100%; ">
+                                    <tr style="width:100%; background-color: #e4e4e4; ">
+                                      <td style="width:600px; padding:5px 0; font-family: arial; font-size:13px; color:#666;">Ameer Abdullah</td>
+                                      <td style="width:60px; padding:5px 0; font-family: arial; font-size:13px; text-align:center; color:#666;">8</td>
+                                      <td style="width:60px; padding:5px 0; font-family: arial; font-size:13px; text-align:center;color:#666;">12</td>
+                                    </tr>
+                                    <tr style="width:100%; ">
+                                      <td style="width:600px; padding:5px 0; font-family: arial; font-size:13px; color:#666;">Theo Riddick (#1)</td>
+                                      <td style="width:60px; padding:5px 0; font-family: arial; font-size:13px; text-align:center; color:#666;">4</td>
+                                      <td style="width:60px; padding:5px 0; font-family: arial; font-size:13px; text-align:center; color:#666;">4</td>
+                                    </tr>
+                                    <tr style="width:100%; ">
+                                      <td style="width:600px; padding:5px 0; font-family: arial; font-size:13px;color:#666;">Theo Riddick (#2)</td>
+                                      <td style="width:60px; padding:5px 0; font-family: arial; font-size:13px; text-align:center;color:#666;">4</td>
+                                      <td style="width:60px; padding:5px 0; font-family: arial; font-size:13px; text-align:center; color:#666;">8</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>';
+      # Template Sub Header Section End... 
+
+      # Template Body Section Start...
+      $body .= '<tr class="tr-lvl-3" style="width:100%; ">
+        <td style="width:100%; background-color: #fff; padding: 20px; border-radius:10px ">
+          <table class="tbl-lvl-4" style="border-spacing:0; border-collapse:collapse;  width:100%; border-collapse:10px; border-radius:10px">
+            <tbody style="width:100%; ">';
+
+            # Template Body Section Username & Password Start...
+            $body .= '<tr class="tr-lvl-4">
+                      <td style="width:100%; background-color:#e4edfd; padding:15px;">
+                        <table class="tbl-lvl-5" style="border-spacing:0; border-collapse:collapse; width: 100%;">
+                          <tr class="tr-lvl-5">
+                            <td>
+                              <a href="#" style="font-weight:bold; text-decoration:none; font-size:12px; color:#4c99ee; text-align:left; line-height:normal">
+                                <table class="tbl-lvl-6">
+                                  <tr class="tr-lvl-6"><td style="font-weight:bold; text-decoration:none; font-size:12px; color:#4c99ee; text-align:left; line-height:normal">Have a client call or prospect visit?</td></tr>
+                                  <tr class="tr-lvl-6"><td style="font-weight:bold; text-decoration:none; font-size:12px; color:#4c99ee; text-align:left; line-height:normal">Log in and read their latest news</td></tr>
+                                </table>
+                              </a>
+                            </td>
+                            <td>
+                              <table class="tbl-lvl-6">
+                                <tr class="tr-lvl-6">
+                                  <td style="color:#666666; font-family:arial; font-size:13px;">UN</td>
+                                  <td style="color:#666666; font-family:arial; font-size:13px;">' . $user->name . '</td>
+                                </tr>
+                                <tr>
+                                  <td style="color:#666666; font-family:arial; font-size:13px;">PW</td>
+                                  <td style="color:#666666; font-family:arial; font-size:13px;">' . $pass . '</td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>';
+            # Template Body Section Username & Password End...
+
+            # Template Body Section News Intelligence and User Tracked Companies Start...
+            if(!empty($arr_user_news_topics_nids)) {
+              $body .= '<tr class="tr-lvl-4">
+                  <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
+                    News Intelligence
+                  </td>
+                </tr>
+                <tr class="tr-lvl-4">
+                  <td style="width:100%;">
+                    <table class="tbl-lvl-5">
+                      <tbody>';
+                        foreach($arr_user_company_tags_nids as $node_id => $value) {
+                            $nodeloads = node_load($node_id);
+                            
+                            $nodeTitle = '';
+                            if(!empty($nodeloads->title)) {
+                              $dataTitle = strip_tags($nodeloads->title);
+                              $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                            }
+
+                            $nodedata = '';
+                            if(!empty($nodeloads->body)) {
+                              $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                              $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                            }
+
+
+                            $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                            $url = $urlAlias;
+                            $body .= '<tr class="tr-lvl-5">
+                                <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                  <table>
+                                    <tr class="tr-lvl-6">
+                                      <td style="padding-right:10px;">
+                                        <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                      </td>
+                                      <td style="color:#808080; font-family:arial; font-size:13px;">
+                                        <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
+                                        <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                        <div>' . $nodedata . '</div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>';
+                          }
+
+                          foreach($arr_user_news_topics_nids as $node_id => $value) {
+                            $nodeloads = node_load($node_id);
+
+                            $nodeTitle = '';
+                            if(!empty($nodeloads->title)) {
+                              $dataTitle = strip_tags($nodeloads->title);
+                              $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                            }
+
+                            $nodedata = '';
+                            if(!empty($nodeloads->body)) {
+                              $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                              $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                            }
+
+                            $taxanomyId = $nodeloads->field_alpha_news_topics['und'][0]['tid'];
+                            $taxomony = taxonomy_term_load($taxanomyId);
+                            $taxonomyName = $taxomony->name;
+
+                            $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                            $url = $urlAlias;
+
+                            $body .= '<tr class="tr-lvl-5">
+                                <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                  <table>
+                                    <tr class="tr-lvl-6">
+                                      <td style="padding-right:10px;">
+                                        <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                      </td>
+                                      <td style="color:#808080; font-family:arial; font-size:13px;">
+                                        <div style="font-size:10px; color: #b8b8b8; font-family:arial;">' . $taxonomyName . '</div>
+                                        <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                        <div>' . $nodedata . '</div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>';
+                            }
+              $body .= '</tbody>
+                    </table>
+                  </td>
+                </tr>';
+            }
+            # Template Body Section News Intelligence and User Tracked Companies End... 
+
+            # Template Body Section Press Releases & Perspectives End... 
+            if(!empty($arr_perspective_content) || !empty($arr_press_releases)) {
+              $body .= '<tr class="tr-lvl-4">
+                      <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
+                        Press Releases & Perspectives
+                      </td>
+                    </tr>';
+                if(!empty($arr_perspective_content)) {
+                    $body .= '<tr class="tr-lvl-4">
+                      <td style="width:100%;">
+                        <table class="tbl-lvl-5">
+                          <tbody>';
+                          foreach($arr_perspective_content as $node_id => $value) {
+                            $nodeloads = node_load($node_id);
+                            
+                            $nodeTitle = '';
+                            if(!empty($nodeloads->title)) {
+                              $dataTitle = strip_tags($nodeloads->title);
+                              $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                            }
+
+                            $nodedata = '';
+                            if(!empty($nodeloads->body)) {
+                              $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                              $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                            }
+
+                            $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                            $url = $urlAlias;
+                            $body .= '<tr class="tr-lvl-5">
+                                <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                  <table>
+                                    <tr class="tr-lvl-6">
+                                      <td style="padding-right:10px;">
+                                        <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                      </td>
+                                      <td style="color:#808080; font-family:arial; font-size:13px;">
+                                        <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
+                                        <a href="#" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                        <div>' . $nodedata . '</div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>';
+                          }
+                $body .= '</tbody>
+                        </table>
+                      </td>
+                    </tr>';
+                }
+                if(!empty($arr_press_releases)) {
+                  $body .= '<tr class="tr-lvl-4">
+                          <td style="width:100%;">
+                            <table class="tbl-lvl-5">
+                              <tbody>';
+                              foreach($arr_press_releases as $node_id => $value) {
+                                $nodeloads = node_load($node_id);
+                                
+                                $nodeTitle = '';
+                                if(!empty($nodeloads->title)) {
+                                  $dataTitle = strip_tags($nodeloads->title);
+                                  $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                                }
+
+                                $nodedata = '';
+                                if(!empty($nodeloads->body)) {
+                                  $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                  $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                                }
+
+                                $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                $url = $urlAlias;
+                                $body .= '<tr class="tr-lvl-5">
+                                    <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                      <table>
+                                        <tr class="tr-lvl-6">
+                                          <td style="padding-right:10px;">
+                                            <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                          </td>
+                                          <td style="color:#808080; font-family:arial; font-size:13px;">
+                                            <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
+                                            <a href="#" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                            <div>' . $nodedata . '</div>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>';
+                              }
+                    $body .= '</tbody>
+                            </table>
+                          </td>
+                        </tr>';
+                }
+            }
+            # Template Body Section Press Releases & Perspectives End...
+
+      $body .= '</tbody>
+          </table>
+        </td>
+      </tr>';      
+      # Template Body Section End...
+
+      # Template Sub Header Section Table Closing Start...
+      $body .= '</tbody>
+            </table>
+          </td>
+        </tr>';
+      # Template Sub Header Section Table Closing End...
+
+    # Template Main Section Table Closing Start...
+    $body .= '</tbody>
+    </table>';
+    # Template Main Section Table Closing  End...
+
+    if(1) {
+      print("<pre> :: body ::");
+      print_r($body);
+      print("</pre>");
+    }
+    $node->body['und'][0]['value'] = $body;
+    node_save($node);
+    # Template Main Section End...
+    #################################################################
+    # Create Newsletter Node/Content section end....
+    #################################################################
+
+    echo 'comes here';
+    exit;
+  }
+}
+?>

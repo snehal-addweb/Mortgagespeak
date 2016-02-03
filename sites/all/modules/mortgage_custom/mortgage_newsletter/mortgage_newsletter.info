@@ -1,0 +1,5 @@
+name = Mortgage Newsletter 
+description = Customization of Newsletter.
+package = Mortgage Custom
+core = 7.x
+version = 7.x
