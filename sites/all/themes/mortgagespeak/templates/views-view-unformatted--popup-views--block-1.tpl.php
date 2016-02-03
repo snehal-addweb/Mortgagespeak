@@ -33,9 +33,11 @@
 		$nid = $row['nid'];
 		if(!empty($row['url'])){
 			$url = $row['url'];
+			$title_link = $row['url'];
 		}
 		else{
 			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+			$title_link = drupal_get_path_alias('node/' . $row['nid']);
 		}
 		$strFinal  =  $row['title']. '   ' . $row['body'];
 		$strFinal = str_replace("\"", "'", $strFinal);
@@ -44,7 +46,7 @@
 
 	  <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
 			<div class="views-field views-field views-field-title">        
-				<a href="<?php print $url;?>" target="_blank"><?php print $title; ?>
+				<a href="<?php print $title_link;?>" target="_blank"><?php print $title; ?>
 				</a>
 			</div> 
 
