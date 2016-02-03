@@ -564,6 +564,9 @@ a {
               &::before {
                 margin-bottom: 0;
               }
+              &::after {
+                float: right;
+              }
             }
           }
           .custom-ads {
