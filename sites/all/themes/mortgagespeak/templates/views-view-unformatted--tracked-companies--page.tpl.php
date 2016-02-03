@@ -70,7 +70,7 @@
 			  <div class="sharethis-wrapper">
 
 					<span class="chicklets linkedin">
-						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" class="linkedinshare"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" target="_blank" class="linkedinshare"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
 					</span>
 
 					<span class="chicklets facebook">
@@ -86,12 +86,13 @@
 					</span>
 
 					<span class="chicklets email">
-						<a href='mailto:Article@MortgageSpeak.com?subject=<?php echo $title; ?>&body=I wanted to share this article with you: <?php print ($url. '     ' .$body); ?>' class="email" target="_blank"><img src="/sites/all/themes/mortgage_new_theme/images/mail1.png" /></a>
+						<a href='mailto:Article@MortgageSpeak.com?subject=<?php print $title; ?>&body=I wanted to share this article with you: <?php print ($url. '     ' .$body); ?>' class="email" target="_blank"><img src="/sites/all/themes/mortgage_new_theme/images/mail1.png" /></a>
 					</span>
 				</div> 
 				 <!-- Flag link-->
 				 <?php print $row['ops'];?>
 			</span>  
 		</div> 
+		<div class="views-popup-container"><?php print views_embed_view('popup_views','block_1', $nid); ?></div>
   </div>
 <?php endforeach; ?>
