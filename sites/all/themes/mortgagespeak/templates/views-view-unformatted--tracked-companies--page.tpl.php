@@ -27,8 +27,8 @@
 		$company_image = image_style_url("thumbnail", $img_url);
 	}
 	else{
-		$img_url = $base_url . "/sites/default/files/ms.jpg";
-		$company_image = image_style_url("thumbnail", $img_url);
+		$company_image = $base_url . "/sites/default/files/ms.jpg";
+		//$company_image = image_style_url("thumbnail", $img_url);
 	}
 
 
