@@ -536,6 +536,11 @@ a {
             text-align: center;
             .sharethis-content {
               display: inline-block;
+              .chicklets {
+                &:last-child {
+                  margin-right: 0;
+                }
+              }
             }
           }
           .views-field-body {
