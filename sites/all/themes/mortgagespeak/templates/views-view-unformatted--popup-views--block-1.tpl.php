@@ -35,7 +35,7 @@
 			$url = $row['url'];
 		}
 		else{
-			$url = drupal_get_path_alias('node/' . $row['nid']);
+			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
 		}
 		$strFinal  =  $row['title']. '   ' . $row['body'];
 		$strFinal = str_replace("\"", "'", $strFinal);
