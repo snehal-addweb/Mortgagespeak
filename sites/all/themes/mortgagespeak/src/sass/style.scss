@@ -297,6 +297,7 @@ a {
 }
 
 /* Common Content lists */
+
 .content-lists {
   display: inline-block;
   width: 100%;
@@ -566,7 +567,7 @@ a {
             }
           }
           .custom-ads {
-            padding: 5px 0;
+            padding: 5px 10px;
             border-top: 1px solid $gray;
             background-color: $gray-light-f4;
             .ai-node-body-top-banner {
@@ -576,6 +577,68 @@ a {
               margin-bottom: 1em;
               border: 1px solid $gray;
               vertical-align: top;
+            }
+          }
+        }
+      }
+    }
+  }
+  .view-filters {
+    form {
+      display: inline-block;
+      width: -webkit-calc(100% + 2px);
+      width: -moz-calc(100% + 2px);
+      width: calc(100% + 2px);
+      margin: -1px -1px 0;
+      padding: 5px 18px;
+      border: 1px solid $border;
+      background-color: $gray-light-f4;
+      font-size: 12px;
+      .views-exposed-form {
+        .views-exposed-widgets {
+          margin: 0;
+          .views-exposed-widget {
+            padding: 0;
+            button {
+              margin: 8px 10px 0;
+              padding: 3px 25px 6px;
+              line-height: 10px;
+              vertical-align: top;
+            }
+            &.views-reset-button {
+              button {
+                background-color: transparent;
+                color: $blue-font;
+              }
+            }
+          }
+          #edit-search-api-views-fulltext-wrapper {
+            display: inline-block;
+            max-width: 500px;
+            width: 100%;
+            label {
+              display: inline-block;
+              width: 70px;
+              margin: 0;
+              padding: 8px 0;
+              color: $gray-69;
+              font-size: 13px;
+              font-weight: normal;
+              vertical-align: top;
+            }
+            .views-widget {
+              display: inline-block;
+              width: -webkit-calc(100% - 80px);
+              width: -moz-calc(100% - 80px);
+              width: calc(100% - 80px);
+              vertical-align: middle;
+              input {
+                @include border-radius(0);
+                &:focus {
+                  border-color: $blue-light-font;
+                  @include box-shadow(0 0 0);
+                }
+              }
             }
           }
         }
