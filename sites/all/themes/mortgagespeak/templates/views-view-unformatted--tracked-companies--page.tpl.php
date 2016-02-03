@@ -7,7 +7,8 @@
  ?>
 
 
-<?php $rows = $view->style_plugin->rendered_fields; ?>
+<?php $rows = $view->style_plugin->rendered_fields; 
+?>
 <?php 
 	global $base_url;
 	global $user;
@@ -20,6 +21,17 @@
 	$title = $row['title'];
 	$body = $row['body'];
 	$nid = $row['nid'];
+	$taxo_info = taxonomy_get_term_by_name($row['field_company_tag_1'], $vocabulary = NULL);
+	if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
+		$img_url = $logo->field_large_logo['und'][0]['uri'];
+		$company_image = image_style_url("thumbnail", $img_url);
+	}
+	else{
+		$img_url = $base_url . "/sites/default/files/ms.jpg";
+		$company_image = image_style_url("thumbnail", $img_url);
+	}
+
+
 	if(!empty($row['url'])){
 	$url = $row['url'];
 	}
@@ -32,7 +44,7 @@
 ?>
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
 		<div class="views-field views-field-php">
-			<span class="field-content"><?php print $row['php']; ?></span>
+			<span class="field-content"><img src="<?php print $company_image; ?>" /></span>
 		</div> 
 
 		<div class="views-field views-field-created">
