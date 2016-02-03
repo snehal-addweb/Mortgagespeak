@@ -537,6 +537,7 @@ a {
             .sharethis-content {
               display: inline-block;
               .chicklets {
+                margin-right: 15px;
                 &:last-child {
                   margin-right: 0;
                 }
@@ -566,8 +567,16 @@ a {
           }
           .custom-ads {
             padding: 5px 0;
-            border-bottom: 1px solid $gray;
+            border-top: 1px solid $gray;
             background-color: $gray-light-f4;
+            .ai-node-body-top-banner {
+              display: inline-block;
+              height: auto;
+              width: 100%;
+              margin-bottom: 1em;
+              border: 1px solid $gray;
+              vertical-align: top;
+            }
           }
         }
       }
