@@ -21,10 +21,11 @@
 	$title = $row['title'];
 	$body = $row['body'];
 	$nid = $row['nid'];
-	$taxo_info = taxonomy_get_term_by_name($row['field_company_tag_1'], $vocabulary = NULL);
+	$taxo_info = taxonomy_term_load($row['field_company_tag_1'], $vocabulary = NULL);
+
 	if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
-		$img_url = $logo->field_large_logo['und'][0]['uri'];
-		$company_image = image_style_url("thumbnail", $img_url);
+		$img_url = $taxo_info->field_large_logo['und'][0]['uri'];
+		$company_image = image_style_url("tracked_images", $img_url);
 	}
 	else{
 		$company_image = $base_url . "/sites/default/files/ms.jpg";

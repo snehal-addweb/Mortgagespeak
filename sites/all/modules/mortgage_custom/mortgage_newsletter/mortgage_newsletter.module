@@ -311,7 +311,10 @@ function select_user_list_form_submit($form, &$form_state) {
     $node->uid = 1;
     $node->language = LANGUAGE_NONE; 
     $node->title = "Newsletter";
-    $node->body['und'][0]['format'] = 2; 
+    $node->body['und'][0]['format'] = 2;
+
+    $primg = $base_url.'/sites/default/files/PR.png';
+    $tracked_topicimg = $base_url.'/sites/default/files/Key.png'; 
 
     # Template Main Section Start...
     $body .= '<table class="tbl-lvl-1" style="max-width:800px; width:800px; margin:0 auto; border-spacing:0; border-collapse:collapse; font-family:Arial; font-size:12px; border:none; ">
@@ -445,54 +448,77 @@ function select_user_list_form_submit($form, &$form_state) {
             # Template Body Section Username & Password End...
 
             # Template Body Section News Intelligence and User Tracked Companies Start...
-            if(!empty($arr_user_news_topics_nids)) {
+            if(!empty($arr_user_news_topics_nids) || !empty($arr_user_company_tags_nids)) {
               $body .= '<tr class="tr-lvl-4">
                   <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
                     News Intelligence
                   </td>
-                </tr>
-                <tr class="tr-lvl-4">
-                  <td style="width:100%;">
-                    <table class="tbl-lvl-5">
-                      <tbody>';
-                        foreach($arr_user_company_tags_nids as $node_id => $value) {
+                </tr>';
+                    if(!empty($arr_user_company_tags_nids)) {
+                     $body .= '<tr class="tr-lvl-4">
+                        <td style="width:100%;">
+                          <table class="tbl-lvl-5">
+                            <tbody>';
+                              foreach($arr_user_company_tags_nids as $node_id => $value) {
+                                $nodeloads = node_load($node_id);
+                                if(!empty($row['url'])){
+                                  $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+                                }
+                                else{
+                                  $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                }
+                                
+                                $nodeTitle = '';
+                                if(!empty($nodeloads->title)) {
+                                  $dataTitle = strip_tags($nodeloads->title);
+                                  $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                                }
+
+                                $nodedata = '';
+                                if(!empty($nodeloads->body)) {
+                                  $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                  $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                                }
+
+                                $company_image = '';
+                                if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])){
+                                  $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+                                  $taxo_info = taxonomy_term_load($companyTid);
+                                  if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
+                                    $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
+                                    $company_image = image_style_url("tracked_images", $img_url);
+                                  }
+                                }
+
+                                
+                                $url = $urlAlias;
+                                $body .= '<tr class="tr-lvl-5">
+                                    <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                      <table>
+                                        <tr class="tr-lvl-6">
+                                          <td style="padding-right:10px;">
+                                            <img src="'. $company_image .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                          </td>
+                                          <td style="color:#808080; font-family:arial; font-size:13px;">
+                                            <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
+                                            <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                            <div>' . $nodedata . '</div>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>';
+                              }
+                    }
+                    if(!empty($arr_user_news_topics_nids)) {
+                      foreach($arr_user_news_topics_nids as $node_id => $value) {
                             $nodeloads = node_load($node_id);
-                            
-                            $nodeTitle = '';
-                            if(!empty($nodeloads->title)) {
-                              $dataTitle = strip_tags($nodeloads->title);
-                              $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                            if(!empty($row['url'])){
+                              $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                             }
-
-                            $nodedata = '';
-                            if(!empty($nodeloads->body)) {
-                              $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                              $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                            else{
+                              $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                             }
-
-
-                            $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                            $url = $urlAlias;
-                            $body .= '<tr class="tr-lvl-5">
-                                <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
-                                  <table>
-                                    <tr class="tr-lvl-6">
-                                      <td style="padding-right:10px;">
-                                        <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
-                                      </td>
-                                      <td style="color:#808080; font-family:arial; font-size:13px;">
-                                        <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
-                                        <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
-                                        <div>' . $nodedata . '</div>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>';
-                          }
-
-                          foreach($arr_user_news_topics_nids as $node_id => $value) {
-                            $nodeloads = node_load($node_id);
 
                             $nodeTitle = '';
                             if(!empty($nodeloads->title)) {
@@ -510,7 +536,6 @@ function select_user_list_form_submit($form, &$form_state) {
                             $taxomony = taxonomy_term_load($taxanomyId);
                             $taxonomyName = $taxomony->name;
 
-                            $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                             $url = $urlAlias;
 
                             $body .= '<tr class="tr-lvl-5">
@@ -518,7 +543,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                   <table>
                                     <tr class="tr-lvl-6">
                                       <td style="padding-right:10px;">
-                                        <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                        <img src="'.$tracked_topicimg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
                                       </td>
                                       <td style="color:#808080; font-family:arial; font-size:13px;">
                                         <div style="font-size:10px; color: #b8b8b8; font-family:arial;">' . $taxonomyName . '</div>
@@ -530,6 +555,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                 </td>
                               </tr>';
                             }
+                    }
               $body .= '</tbody>
                     </table>
                   </td>
@@ -571,11 +597,11 @@ function select_user_list_form_submit($form, &$form_state) {
                                   <table>
                                     <tr class="tr-lvl-6">
                                       <td style="padding-right:10px;">
-                                        <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                        <img src="'. $primg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
                                       </td>
                                       <td style="color:#808080; font-family:arial; font-size:13px;">
                                         <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
-                                        <a href="#" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                        <a href="'. $url .'" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
                                         <div>' . $nodedata . '</div>
                                       </td>
                                     </tr>
@@ -610,16 +636,17 @@ function select_user_list_form_submit($form, &$form_state) {
 
                                 $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                                 $url = $urlAlias;
+
                                 $body .= '<tr class="tr-lvl-5">
                                     <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
                                       <table>
                                         <tr class="tr-lvl-6">
                                           <td style="padding-right:10px;">
-                                            <img src="https://ci5.googleusercontent.com/proxy/U91_kX8bE6jRFFg3W5gvQ0kWMbFXGgfgFLTcGHtW_XRtyMl7q8GHouy-uT-SgAuPogzbK8kcX9ytSsX2cL_nG5XvuhiLeD-iFIVeNZSMPIWGxabPQds4iNVWfhd3IKDI=s0-d-e1-ft#http://mortgagespeak.com/files/styles/thumbnail/public/William-Mills_0.png" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                            <img src="'. $primg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
                                           </td>
                                           <td style="color:#808080; font-family:arial; font-size:13px;">
                                             <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
-                                            <a href="#" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                            <a href="'. $url .'" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
                                             <div>' . $nodedata . '</div>
                                           </td>
                                         </tr>
@@ -653,20 +680,20 @@ function select_user_list_form_submit($form, &$form_state) {
     </table>';
     # Template Main Section Table Closing  End...
 
-    if(1) {
+    if($debug) {
       print("<pre> :: body ::");
       print_r($body);
       print("</pre>");
+      exit;
     }
     $node->body['und'][0]['value'] = $body;
     node_save($node);
+    drupal_set_message(t("Newsletter content created succesfully!"));
+    drupal_goto("admin/content");
     # Template Main Section End...
     #################################################################
     # Create Newsletter Node/Content section end....
     #################################################################
-
-    echo 'comes here';
-    exit;
   }
 }
 ?>
