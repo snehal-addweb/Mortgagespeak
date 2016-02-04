@@ -30,6 +30,9 @@ a {
   &:hover { color: $link-hover; }
   &:focus { outline: none; }
 }
+.btn {
+  &:focus { outline: none; }
+}
 
 .p0 { padding: 0; }
 .m0 { margin: 0; }
@@ -297,6 +300,35 @@ a {
 }
 
 /* Common Content lists */
+.view-editors-pick {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 17px 18px;
+  background-color: $green-light;
+  .views-field {
+    display: inline-block;
+    &::before {
+      display: inline-block;
+      height: 16px;
+      width: 79px;
+      margin-right: 50px;
+      background-image: url('../images/editors-pick.png');
+      background-position: center right;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+      content: '';
+    }
+    a {
+      color: $black-light;
+      font-size: 20px;
+      vertical-align: middle;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
 
 .content-lists {
   display: inline-block;
