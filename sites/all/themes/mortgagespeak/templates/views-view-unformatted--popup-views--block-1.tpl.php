@@ -8,7 +8,6 @@
 
 
 <?php $rows = $view->style_plugin->rendered_fields; 
-
     $block = module_invoke('block', 'block_view', '8');    
 ?>
 <?php 
@@ -31,7 +30,11 @@
 		$title = $row['title'];
 		$body = $row['body'];
 		$nid = $row['nid'];
-		if(!empty($row['url'])){
+		if(!empty($row['field_upload_document'])){
+			$title_link = 'https://docs.google.com/viewerng/viewer?url=' .$row['field_upload_document'];
+			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+		}
+		else if(!empty($row['url'])){
 			$url = $row['url'];
 			$title_link = $row['url'];
 		}
