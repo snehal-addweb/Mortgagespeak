@@ -25,10 +25,7 @@
 	<div class="tooltips">
 		<div>( What's this? )</div>
 	</div>
-	<div class="popup-actions">
-		<a href="#" class="min-popup">-</a>
-		<a href="#" class="close-popup">x</a>
-	</div>
+	<a href="#" class="close-popup">x</a>
 </div>
 	<?php foreach ($rows as $id => $row): 
 		$title = $row['title'];
