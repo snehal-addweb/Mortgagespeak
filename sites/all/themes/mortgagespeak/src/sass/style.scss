@@ -619,7 +619,7 @@ a {
     }
   }
   .view-filters {
-    form {
+    #views-exposed-form-search-news-page {
       display: inline-block;
       width: -webkit-calc(100% + 2px);
       width: -moz-calc(100% + 2px);
@@ -636,7 +636,7 @@ a {
             padding: 0;
             button {
               margin: 6px 10px 0;
-              padding: 6px 25px 6px;
+              padding: 6px 25px;
               line-height: 14px;
               vertical-align: middle;
             }
@@ -684,6 +684,7 @@ a {
 .page-my-page {
   .content-lists {
     .view-header {
+      position: relative;
       padding: 5px 18px;
       border-bottom: 1px solid $border;
       .pg-number {
@@ -714,9 +715,16 @@ a {
             border: none;
           }
         }
+        .edit-trackednews {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: 15px 15px 0;
+        }
       }
       .view-filters {
         float: right;
+        padding-right: 30px;
         .views-exposed-widgets {
           margin: 0;
           .views-exposed-widget {
