@@ -34,14 +34,15 @@
 			$title_link = 'https://docs.google.com/viewerng/viewer?url=' .$row['field_upload_document'];
 			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
 		}
-		else if(!empty($row['url'])){
-			$url = $row['url'];
-			$title_link = $row['url'];
+		else if(!empty($row['field_url'])){
+			$url = $row['field_url'];
+			$title_link = $row['field_url'];
 		}
 		else{
 			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
 			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
 		}
+
 		$strFinal  =  $row['title']. '   ' . $row['body'];
 		$strFinal = str_replace("\"", "'", $strFinal);
 		$url = urlencode(html_entity_decode($url, ENT_COMPAT, 'UTF-8'));
