@@ -16,6 +16,7 @@
 
 <?php
 	global $base_url;
+	$body = '';
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 	$url = $fullurl . '/' . drupal_get_path_alias('node/' . $node->nid);
 	if(!empty($node->body['und']) && isset($node->body['und'])){
@@ -43,7 +44,7 @@
 			</div>
 
 			<div class="g-share">
-				<a href="https://plus.google.com/share?url=<?php echo $url; ?>&body=<?php echo $body; ?>" class="prgoogle"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
+				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" class="prgoogle"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
 			</div>
 
 			<div class="contri-content">
@@ -54,7 +55,7 @@
 		<div>
 	</div>	
 	<div class="inner-body">
-		<?php print $node->body['und'][0]['value'];?>
+		<?php print $body;?>
 	</div>
 	<div class="pdf-upload-document"><?php 
 		if(isset($node->field_upload_document['und']) && !empty($node->field_upload_document['und'] )){ ?>
