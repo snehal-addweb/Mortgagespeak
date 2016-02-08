@@ -52,4 +52,13 @@ jQuery(document).ready(function() {
       }
 });
   /* End */
+
+  /* Custom input type file design */
+  jQuery('input[type="file"]').wrap('<div class="input-file"><div class="input-file-sub"></div></div>');
+  jQuery('.input-file').append('<span class="input-file-name">No file chosen</span>');
+  jQuery('.input-file-sub input').change(function() {
+    var filename = jQuery(this).val();
+    jQuery(this).parent().parent().children(".input-file-name").text(filename);
+  });
+  /* End */
 });

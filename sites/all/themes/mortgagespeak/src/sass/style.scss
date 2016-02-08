@@ -623,15 +623,131 @@ a {
   }
   /* Upload page */
   .upload-upper-contain {
+    float: left;
+    padding: 5px 18px;
     label,
     .upload-content,
     .upload-tags {
       float: left;
       width: auto;
+      color: #7C7E81;
+      font-weight: normal;
+      letter-spacing: 1px;
+    }
+    label {
+      margin: 9px 15px 9px 0;
+      &:nth-child(1) {
+        padding-right: 15px;
+        border-right: 1px solid;
+      }
+      &:nth-child(4) {
+        margin-left: 30px;
+      }
+    }
+    .form-select {
+      padding-right: 30px;
+      border: 1px solid $blue-light-font;
+      background-color: #ECF4FD;
+      background-image: url('../images/down-arrow-grey.png');
+      background-position: 90% center;
+      background-repeat: no-repeat;
+      color: #7C7E81;
+      font-size: 12px;
+      outline: none;
+      @include border-radius(0);
+      @include appearance(none);
+      &:hover,
+      &:visited,
+      &:active,
+      &:focus {
+        outline: none;
+        @include box-shadow(none);
+      }
     }
   }
   .upload-below-contain {
     padding: 20px 15px;
+    color: #7C7E81;
+    letter-spacing: 1px;
+    label {
+      font-size: 16px;
+      &:nth-child(3) {
+        margin: 40px 0 15px;
+      }
+    }
+    .form-file {
+      margin-left: 10px;
+      border: none;
+      @include box-shadow(none);
+    }
+    .input-file {
+      margin-left: 20px;
+    }
+    .form-submit {
+      float: left;
+      clear: both;
+      margin: 12px 20px;
+      padding: 3px 75px;
+      background: #14E112 none repeat scroll 0 0;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .description {
+      float: left;
+      width: 100%;
+      margin-left: 20px;
+    }
+  }
+  .upload-email-noti {
+    margin-left: 20px;
+    .webform-component--send-me-a-link {
+      label {
+        float: left;
+      }
+      > .input-rc {
+        display: none;
+      }
+      .description {
+        width: calc(100% - 50px);
+        margin-left: 0;
+      }
+    }
+    .webform-component--email {
+      float: left;
+      clear: both;
+      margin-top: 20px;
+      margin-left: 0;
+      label {
+        font-size: 12px;
+      }
+      input {
+        height: 25px;
+        border-radius: 0;
+        color: #7C7E81;
+        font-size: 12px;
+      }
+    }
+  }
+  .upload-submit {
+    padding-bottom: 25px;
+    .form-submit {
+      float: left;
+      clear: both;
+      margin: 0 35px;
+      padding: 5px 80px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    label {
+      padding-top: 5px;
+      color: #7C7E81;
+      font-weight: normal;
+      a {
+        color: $blue;
+      }
+    }
   }
   /* End */
   .view-filters {
