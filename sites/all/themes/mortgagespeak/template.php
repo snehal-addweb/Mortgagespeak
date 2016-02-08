@@ -13,6 +13,13 @@ function mortgagespeak_theme(&$existing, $type, $theme, $path){
      'template' => 'templates/user-register',
      'preprocess functions' => array('mortgagespeak_preprocess_user_register_form'),
   );
+  
+  $items['user_login_block'] = array(
+     'path' => drupal_get_path('theme','mortgagespeak'),
+     'template' => 'templates/user-login-block',
+     'render element' => 'form',
+  );
+  
   $items['user_login'] = array(
      'render element' => 'form',
      'path' => drupal_get_path('theme','mortgagespeak'),
@@ -30,6 +37,13 @@ function mortgagespeak_preprocess_user_register_form(&$vars) {
 }
 
 function mortgagespeak_preprocess_user_login(&$vars) {
+  $vars['name'] = render($vars['form']['name']);
+  $vars['pass'] = render($vars['form']['pass']);
+  $vars['submit'] = render($vars['form']['actions']['submit']);
+  $vars['rendered'] = drupal_render_children($vars['form']);
+}
+
+function mortgagespeak_preprocess_user_login_block(&$vars) {
   $vars['name'] = render($vars['form']['name']);
   $vars['pass'] = render($vars['form']['pass']);
   $vars['submit'] = render($vars['form']['actions']['submit']);
