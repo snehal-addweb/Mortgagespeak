@@ -21,5 +21,5 @@ print drupal_render($form['form_build_id']);
 print drupal_render($form['form_id']);
 
 ?>
-<div class="register-bottom-text"><span>By Clicking the button, you agree to our terms and conditions</span><span>Already have an account? <a href="<?php print $base_url; ?>/user">Log in here.</a></span></div>
+<div class="register-bottom-text"><span>By Clicking the button, you agree to our <a href="#">terms and conditions</a>.</span><span>Already have an account? <a href="<?php print $base_url; ?>/user">Log in here.</a></span></div>
 </div>

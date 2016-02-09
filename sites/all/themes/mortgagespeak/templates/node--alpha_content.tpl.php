@@ -31,11 +31,11 @@
 		<span>Share this</span>
 		<div class="share-icons">
 			<div class="fb-share">
-				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook"><img src="/sites/all/themes/mortgage_new_theme/images/face-new.png" /></a>
+				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook">fb</a>
 			</div>
 
 			<div class="tw-share">
-				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none"></a>
+				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none">twitter</a>
 			</div>
 
 			<div class="in-share">

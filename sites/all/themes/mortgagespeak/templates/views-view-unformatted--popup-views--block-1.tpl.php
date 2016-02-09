@@ -22,7 +22,8 @@
 <div class="popup-header">
 	<div class="popup-title">Excerpt Time-Saver</div>
 	<div class="tooltips">
-		<div>( What's this? )</div>
+		<div class="whats-this">( What's this? )</div>
+		<div class="tooltip-content">Save time. Article key point.</div>
 	</div>
 	<a href="#" class="close-popup">x</a>
 </div>
