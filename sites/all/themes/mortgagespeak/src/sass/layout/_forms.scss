@@ -96,11 +96,15 @@ textarea:focus {
 }
 #user-register-form,
 #user-login,
-#user-profile-form {
+#user-profile-form,
+.login-upload-page {
   display: inline-block;
   width: 100%;
   border: 1px solid $border-cont;
   .help-block { display: none; }
+  .panels-flexible-region-1-user_register_for_upload {
+    width: 100%;
+  }
   .register-text {
     margin: -1px -1px 20px;
     padding: 12px 18px;
@@ -292,6 +296,57 @@ textarea:focus {
     .field-type-taxonomy-term-reference {
       > .form-item {
         > .control-label { display: none; }
+      }
+    }
+  }
+}
+.login-upload-page {
+  .login-left {
+    border-right: none;
+    > ul {
+      display: none;
+    }
+  }
+  .login-right {
+    max-width: 420px;
+    width: 100%;
+    padding: 15px 42px 20px;
+    border: 2px solid $blue-light-font;
+    color: #00417F;
+    line-height: normal;
+    .upload-benefits {
+      h2 {
+        margin: 0 0 15px;
+        font-size: 24px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        span {
+          color: #017F00;
+        }
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        vertical-align: top;
+        li {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          margin: 0 0 10px;
+          font-size: 15px;
+          vertical-align: top;
+          &::before {
+            position: relative;
+            float: left;
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            margin: 0 30px 0 0;
+            background-image: url('../images/right-sign-blue.png');
+            content: '';
+          }
+        }
       }
     }
   }
