@@ -50,7 +50,12 @@ global $base_url;
 	</div>
 	<div class="upload-below-contain">
 		<label>1. Attach Content</label>
-		<div class="attach-content"><?php print render($form['submitted']['attach_content']);?></div>
+		<div class="attach-content"><?php print render($form['submitted']['attach_content']);?>
+			<div class="description">
+				<div>File must be less than <span>6MB</span></div>
+				<div class="allowed-files">Allowed file types: <span>pdf doc docx</span></div>
+			</div>
+		</div>
 		<label>2. Email Notification/Record</label>
 		<div class="upload-email-noti">
 			<div><?php print render($form['submitted']['send_me_a_link']);?></div>
