@@ -544,6 +544,38 @@ a {
             padding: 3px 0;
             border-bottom: 1px solid $blue-font;
             vertical-align: middle;
+            .whats-this {
+              display: inline-block;
+              cursor: help;
+            }
+            .tooltip-content {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              display: none;
+              margin: -32px 0 0 -150px;
+              padding: 5px 10px;
+              background-color: rgba(42, 42, 42, 1);
+              &::before {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                display: inline-block;
+                height: 5px;
+                width: 10px;
+                margin: 0 0 -5px -5px;
+                background-image: url('../images/down-arrow-tooltips.png');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: auto;
+                content: '';
+              }
+            }
+            &:hover {
+              .tooltip-content {
+                display: inline-block;
+              }
+            }
           }
           .close-popup {
             float: right;
@@ -672,6 +704,8 @@ a {
     label {
       font-size: 16px;
       &:nth-child(3) {
+        display: inline-block;
+        width: 100%;
         margin: 40px 0 15px;
       }
     }
@@ -915,7 +949,29 @@ a {
     }
   }
   .view-empty {
-    display: none;
+    /*.views-field {
+      span {
+        display: none;
+      }
+    }*/
+    .views-field-created,
+    .views-field-title {
+      float: left;
+      height: 20px;
+      max-width: 180px;
+      width: 100%;
+      margin: 20px 0 10px;
+      background-color: #E9ECF1;
+      span {
+        display: none;
+      }
+    }
+    .views-field-title {
+      clear: left;
+      height: 15px;
+      max-width: 175px;
+      margin: 0;
+    }
   }
 }
 /* End */
