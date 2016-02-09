@@ -490,12 +490,12 @@ a {
             height: 16px;
             width: 15px;
             margin: 0 15px 0 0;
-            background-image: url('../images/star-blank-sm.png');
+            background-image: url('../images/star-sm.png');
             background-position: center;
             background-repeat: no-repeat;
             text-indent: -9999px;
             &.flag-action {
-              background-image: url('../images/star-sm.png');
+              background-image: url('../images/star-blank-sm.png');
             }
           }
           .flag-throbber {
