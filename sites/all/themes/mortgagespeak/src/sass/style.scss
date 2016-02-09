@@ -330,6 +330,10 @@ a {
   }
 }
 
+.page-upload .page-header {
+  display: none;
+}
+
 .content-lists,
 .webform-client-form {
   display: inline-block;
@@ -717,6 +721,10 @@ a {
     .input-file {
       margin-left: 20px;
     }
+    .file {
+      float: left;
+      padding: 10px 0 0 20px;
+    }
     .form-submit {
       float: left;
       clear: both;
@@ -731,6 +739,12 @@ a {
       float: left;
       width: 100%;
       margin-left: 20px;
+      a {
+        display: none;
+      }
+      span {
+        font-weight: bold;
+      }
     }
   }
   .upload-email-noti {
@@ -1021,7 +1035,7 @@ a {
       display: inline-block;
       height: 21px;
       width: 20px;
-      margin: 0 0 0 30px;
+      margin: 0 0 -2px 30px;
       background-image: url('../images/arrow-right-white.png');
       content: '';
     }

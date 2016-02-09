@@ -68,8 +68,17 @@ $assets-path: '../..';
         display: inline-block;
         width: 100%;
         overflow: hidden;
+        color: #888;
         text-overflow: ellipsis;
         white-space: nowrap;
+        a {
+          color: $blue-font;
+          font-size: 14px;
+          text-decoration: none;
+          span {
+            float: right;
+          }
+        }
       }
     }
     .regi-link {
