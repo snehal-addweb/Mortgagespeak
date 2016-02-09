@@ -10,47 +10,21 @@
 <?php $rows = $view->style_plugin->rendered_fields; ?>
 <?php 
 	global $base_url;
-	global $user;
-	$user_info = user_load($user->uid);
-	$user_topics = array();
-	if(isset($user_info->field_news_topics) && !empty($user_info->field_news_topics)) {
-		foreach($user_info->field_news_topics[LANGUAGE_NONE] as $topicKey=>$topicVal){
-			$user_topics[$topicVal['tid']] = $topicVal['tid'];
-		}
-	}
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 ?>
-
 <?php if (!empty($title)): ?>
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
-
 <?php foreach ($rows as $id => $row): 
-	$field_topics = array();
 	$title = $row['title'];
 	$body = $row['body'];
 	$nid = $row['nid'];
-	$topics = $row['field_alpha_news_topics_1'];
-	$explode_topics = explode(',', $topics);
-
-	if(isset($row['field_alpha_news_topics_1']) && !empty($row['field_alpha_news_topics_1'])){
-		foreach ($explode_topics as $key => $value) {
-			if(in_array($value, $user_topics)) {
-				$term = taxonomy_term_load($value);
-				$field_topics[] = $term->name ;
-			}
-		}
-		$field_topics = implode(', ', $field_topics);
-	}
-
-
 	if(!empty($row['url'])){
-		$url = $row['url'];
+	$url = $row['url'];
 	}
 	else{
 		$url = $fullurl . '/' . drupal_get_path_alias('node/' . $row['nid']);
 	}
-
 	$strFinal  =  $row['title']. '   ' . $row['body'];
 	$strFinal = str_replace("\"", "'", $strFinal);
 	$url = urlencode(html_entity_decode($url, ENT_COMPAT, 'UTF-8'));
@@ -73,16 +47,14 @@
 	    <span class="field-content">
 	    	<?php print $row['body']; ?>
 	    </span>
+		</div>
+
+		<div class="views-field views-field-field-alpha-news-topics">    
+			<span class="views-label views-label-field-alpha-news-topics">Topic:</span>    
+			<div class="field-content">
+				<?php print $row['field_alpha_news_topics']; ?>
+			</div>  
 		</div><?php 
-				
-		if(isset($field_topics) && !empty($field_topics)) {
-			?><div class="views-field views-field-field-alpha-news-topics">    
-				<span class="views-label views-label-field-alpha-news-topics">Topic:</span>    
-				<div class="field-content">
-					<?php print $field_topics; ?>
-				</div>  
-			</div><?php 
-		}
 		if(!empty($row['field_company_tag'])) { 
 			?><div class="views-field views-field-field-company-tag">    
 				<span class="views-label views-label-field-company-tag">Company: </span>    
