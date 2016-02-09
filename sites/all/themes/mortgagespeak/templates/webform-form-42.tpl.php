@@ -39,7 +39,7 @@
 
   // Always print out the entire $form. This renders the remaining pieces of the
   // form that haven't yet been rendered above (buttons, hidden elements, etc).*/
-
+global $base_url;
 ?>
 <div class="upload-main-container">
 	<div class="upload-upper-contain">
@@ -59,7 +59,7 @@
 	</div>
 	<div class="upload-submit">
 		<div><?php print drupal_render_children($form);?></div>
-		<label>By clicking "Submit" you agree to our <a href="#">terms and conditions</a>.</label>
+		<label>By clicking "Submit" you agree to our <a href="<?php print $base_url; ?>/terms-and-conditions">terms and conditions</a>.</label>
 	</div>
 </div>
 
