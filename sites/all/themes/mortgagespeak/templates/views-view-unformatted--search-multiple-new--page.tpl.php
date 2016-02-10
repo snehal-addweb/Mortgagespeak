@@ -10,6 +10,7 @@
 <?php $rows = $view->style_plugin->rendered_fields;?>
 <?php 
 	global $base_url;
+	global $user;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 ?>
 <?php if (!empty($title)): ?>
@@ -17,7 +18,7 @@
 <?php endif; ?>
 <?php foreach ($rows as $id => $row): 
 	$title = $row['node_title'];
-	$body = $row['node_body_value'];
+	$body = strip_tags($row['node_body_value']);
 	$nid = $row['node_nid'];
 	if(!empty($row['node_field_url'])){
 		$url = $row['node_field_url'];
@@ -25,7 +26,7 @@
 	else{
 		$url = $fullurl . '/' . drupal_get_path_alias('node/' . $row['node_nid']);
 	}
-	$strFinal  =  $row['node_title']. '   ' . $row['node_body_value'];
+	$strFinal  =  $row['node_title']. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
 	$url = urlencode(html_entity_decode($url, ENT_COMPAT, 'UTF-8'));
 ?>
@@ -52,10 +53,12 @@
 			</div>  
 		</div><?php 
 		if(!empty($row['node_field_company_tag'])) { 
-			?><div class="views-field views-field-field-company-tag">    
-				<span class="views-label views-label-field-company-tag">Company: </span>    
-				<div class="field-content"><?php print $row['node_field_company_tag']; ?></div>  
-			</div><?php
+			if(in_array('administrator', $user->roles) || in_array('News Intelligence', $user->roles)) {
+				?><div class="views-field views-field-field-company-tag">    
+					<span class="views-label views-label-field-company-tag">Company: </span>    
+					<div class="field-content"><?php print $row['node_field_company_tag']; ?></div>  
+				</div><?php
+			}
 		}
 		?><div class="views-field views-field-sharethis">    
 		  <span class="views-label views-label-sharethis">More: </span>    
