@@ -1,6 +1,5 @@
 <?php
 global $base_url;
-
 ?>
 <div class="register-container">
 <div class="register-text">Register for <span class="green-text">free</span> here! Already have an account? <a href="<?php print $base_url; ?>/user" class="blue-text">Log in here.</a></div>
@@ -14,6 +13,7 @@ print render ($form['account']['pass']);?>
 <?php 
 print render($form['select_all']);
 print render($form['field_news_topics']);
+print render($form['captcha']);
 
 
 print drupal_render($form['actions']);
