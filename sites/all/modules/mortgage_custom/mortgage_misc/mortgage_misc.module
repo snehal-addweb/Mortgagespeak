@@ -42,6 +42,7 @@ function mortgagespeak_welcome(){
 }
 
 function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
+
  	if($form_id == 'user_register_form') {
 		$form['select_all'] = array(
 	    '#type' => 'checkbox',
@@ -49,6 +50,7 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
   	);
  	  $form['actions']['submit']['#value'] = 'Register';
  	}
+
   if($form_id == 'webform_client_form_42') {
     $form['actions']['submit']['#value'] = 'Submit !';
     $form['submitted']['content_types']['#empty_option'] = 'Content Types';

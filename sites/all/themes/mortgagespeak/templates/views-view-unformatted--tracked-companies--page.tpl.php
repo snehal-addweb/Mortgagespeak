@@ -19,7 +19,7 @@
 <?php endif; ?>
 <?php foreach ($rows as $id => $row): 
 	$title = $row['title'];
-	$body = $row['body'];
+	$body = strip_tags($row['body']);
 	$nid = $row['nid'];
 	$taxo_info = taxonomy_term_load($row['field_company_tag_1'], $vocabulary = NULL);
 
@@ -39,7 +39,7 @@
 	else{
 		$url = $fullurl . '/' . drupal_get_path_alias('node/' . $row['nid']);
 	}
-	$strFinal  =  $row['title']. '   ' . $row['body'];
+	$strFinal  =  $row['title']. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
 	$url = urlencode(html_entity_decode($url, ENT_COMPAT, 'UTF-8'));
 ?>
