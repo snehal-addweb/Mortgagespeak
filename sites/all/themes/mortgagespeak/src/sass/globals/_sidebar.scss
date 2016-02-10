@@ -154,6 +154,9 @@ $assets-path: '../..';
     }
   }
 }
+.logged-in .main-logo-container .logo-right .user-welcome span a::after {
+  display: none;
+}
 /* End */
 
 /* Menu links */
