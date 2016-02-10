@@ -58,7 +58,8 @@ a {
     content: '';
   }
   &::after {
-    margin: 0 0 12px 24px;
+    float: right;
+    margin: 10px 0 12px 24px;
     background-image: url('../images/quote-end-orange.png');
   }
 }
@@ -135,8 +136,8 @@ a {
           &::after { background-color: #D936D8; }
         }
         a {
-          max-width: 161px;
-          width: 161px;
+          max-width: 172px;
+          width: 172px;
           &:hover { /*border-top-color: #D936D8; @include box-shadow(0 1px 0 0 #D936D8 inset);*/ }
           &::before {
             width: 20px;
@@ -180,8 +181,8 @@ a {
           &::after { background-color: #F8E21C; }
         }
         a {
-          max-width: 127px;
-          width: 127px;
+          max-width: 116px;
+          width: 116px;
           &:hover { /*border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset);*/ }
           &::before {
             width: 15px;
@@ -251,7 +252,7 @@ a {
         border-left: 1px solid $border;
         background-color: $gray-light-f4;
         color: $black;
-        font-size: 12px;
+        font-size: 14px;
         &:hover {
           border-top: 1px solid #3383CC;
           background-color: $gray-light-f4;
@@ -303,28 +304,30 @@ a {
 .view-editors-pick {
   display: inline-block;
   width: 100%;
-  margin: 0 0 20px;
-  padding: 17px 18px;
-  background-color: $green-light;
-  .views-field {
+  a {
     display: inline-block;
-    &::before {
-      display: inline-block;
-      height: 16px;
-      width: 79px;
-      margin-right: 50px;
-      background-image: url('../images/editors-pick.png');
-      background-position: center right;
-      background-repeat: no-repeat;
-      vertical-align: middle;
-      content: '';
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 17px 18px;
+    background-color: $green-light;
+    color: $black-light;
+    font-size: 20px;
+    vertical-align: middle;
+    &:hover {
+      text-decoration: none;
     }
-    a {
-      color: $black-light;
-      font-size: 20px;
-      vertical-align: middle;
-      &:hover {
-        text-decoration: none;
+    .editor-pick {
+      display: inline-block;
+      .ed-img {
+        display: inline-block;
+        height: 16px;
+        width: 79px;
+        margin: 6px 50px 0 0;
+        background-image: url('../images/editors-pick.png');
+        background-position: center right;
+        background-repeat: no-repeat;
+        vertical-align: top;
+        content: '';
       }
     }
   }
