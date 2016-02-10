@@ -27,11 +27,13 @@ function mortgage_misc_menu() {
   return $items;
 }
 
+
 function mortgagespeak_my_page(){
 	global $user;
 	$output = 'comes';
 	return $output;
 }
+
 
 function mortgagespeak_welcome(){
 	global $user;
@@ -41,18 +43,19 @@ function mortgagespeak_welcome(){
 
 function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
  	if($form_id == 'user_register_form') {
-    		$form['select_all'] = array(
-    	    '#type' => 'checkbox',
-    	    '#title' => t('Select All'),
-      	);
-     	$form['actions']['submit']['#value'] = 'Register';
+		$form['select_all'] = array(
+	    '#type' => 'checkbox',
+	    '#title' => t('Select All'),
+  	);
+ 	  $form['actions']['submit']['#value'] = 'Register';
  	}
-    if($form_id == 'webform_client_form_42') {
-        $form['actions']['submit']['#value'] = 'Submit !';
-        $form['submitted']['content_types']['#empty_option'] = 'Content Types';
-        $form['submitted']['tag_types']['#empty_option'] = 'Tag Types';
-    }
+  if($form_id == 'webform_client_form_42') {
+    $form['actions']['submit']['#value'] = 'Submit !';
+    $form['submitted']['content_types']['#empty_option'] = 'Content Types';
+    $form['submitted']['tag_types']['#empty_option'] = 'Tag Types';
+  }
 }
+
 function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_id) {
 	global $user;
 	$user_topics = '';
@@ -75,7 +78,7 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
     $user_company = array('All'=>'Company A-M ');
     $user_company1 = array('All'=>'Company N-Z ');
 
-    $arrATOM = array('1', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
+    $arrATOM = array('1', '3', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
     $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 
     if(isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])){
@@ -107,4 +110,52 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
         
  }
   
+}
+
+function mortgage_misc_entity_info_alter(&$entity_info) {
+  $entity_info['taxonomy_term']['uri callback'] = 'mortgage_misc_taxonomy_term_uri';
+}
+
+function mortgage_misc_taxonomy_term_uri($term) {
+  global $user;
+  global $base_url;
+  $user_info = user_load($user->uid);
+
+  if(in_array('News Intelligence', $user->roles)) {
+    $arrATOM = array('1', '3', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
+    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+    $user_company = array();
+    
+    if(isset($user_info->field_company_tags) && !empty($user_info->field_company_tags)) {
+      foreach ($user_info->field_company_tags[LANGUAGE_NONE] as $keyComp => $valueComp) {
+        $user_company[$valueComp['tid']] = $valueComp['tid'];
+      }
+    }
+    switch ($term->vocabulary_machine_name) { 
+      case 'company_tags':
+        $parents = taxonomy_get_parents($term->tid);
+        foreach ($user_company as $key => $value) {
+          if(in_array($term->tid, $user_company)) {
+            $comp = taxonomy_term_load($term->tid);
+            if(in_array(strtolower($comp->name[0]), $arrATOM)) {
+                $user_comp[$term->tid] = $comp->name;
+                $company_url = $base_url . '/my-page/tracked-companies?company_tag='. $term->tid .'&company_tag1=All';
+            }
+            else if(in_array($comp->name[0], $arrMTOZ)) {
+                $user_comp1[$term->tid] = $comp->name;
+                $company_url = $base_url . '/my-page/tracked-companies?company_tag=All&company_tag1='. $term->tid;
+            }
+          }
+          else {
+            $company_url = $base_url . '/my-page/tracked-companies';
+          }
+        }
+        return array(
+            'path' => $company_url,
+        );
+      break;
+    }
+  }
+  // default taxonomy term uri
+  return taxonomy_term_uri($term);
 }
