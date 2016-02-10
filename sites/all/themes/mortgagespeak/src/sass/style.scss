@@ -836,7 +836,9 @@ a {
   }
   /* End */
   .view-filters {
-    #views-exposed-form-search-news-page {
+    #views-exposed-form-search-news-page,
+    #views-exposed-form-search-multiple-new-page,
+    .search-content .view-filters > form {
       display: inline-block;
       width: calc(100% + 2px);
       margin: -1px -1px 0;
