@@ -681,9 +681,17 @@ a {
             }
           }
           .custom-ads {
+            position: relative;
             padding: 5px 10px;
             border-top: 1px solid $gray;
             background-color: $gray-light-f4;
+            &::before {
+              position: absolute;
+              right: 2px;
+              bottom: 5px;
+              color: $gray;
+              content: 'AD';
+            }
             .ai-node-body-top-banner {
               display: inline-block;
               height: auto;
