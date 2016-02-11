@@ -36,11 +36,11 @@
 		</div>
 		<div class="share-icons">
 			<div class="share-icon facebook-share">
-				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook">fb</a>
+				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook" target="_blank">fb</a>
 			</div>
 
 			<div class="share-icon twitter-share">
-				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none">twitter</a>
+				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" target="_blank" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none">twitter</a>
 			</div>
 
 			<div class="share-icon linkedin-share">
@@ -49,7 +49,7 @@
 			</div>
 
 			<div class="share-icon google-plus-share">
-				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" class="prgoogle"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
+				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" target="_blank" class="prgoogle"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
 			</div>
 
 			<div class="share-icon contribute-share">
