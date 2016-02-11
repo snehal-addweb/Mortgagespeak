@@ -163,6 +163,7 @@ $assets-path: '../..';
 #block-views-news-groups-sidebar-term-block {
   float: left;
   width: 100%;
+  margin-bottom: 20px;
   .block-title {
     margin: 0;
     padding: 11px 10px;
@@ -185,7 +186,7 @@ $assets-path: '../..';
         a {
           float: left;
           width: 100%;
-          padding: 7px 5px;
+          padding: 11px 5px;
           border-bottom: 1px solid $border;
           color: $blue-font;
           font-size: 14px;
@@ -201,9 +202,6 @@ $assets-path: '../..';
             color: $link-hover;
           }
         }
-        &:last-child {
-          a { border-bottom: none; }
-        }
       }
     }
   }
@@ -215,6 +213,8 @@ $assets-path: '../..';
 #block-block-10,
 #block-block-11,
 #block-block-12 {
+  clear: both;
+  margin-top: 16px;
   text-align: center;
 }
 /* End */
