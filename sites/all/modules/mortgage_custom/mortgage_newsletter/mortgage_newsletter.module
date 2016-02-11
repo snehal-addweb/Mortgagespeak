@@ -508,14 +508,14 @@ function select_user_list_form_submit($form, &$form_state) {
                                 }
                                 $categoryName = 'Tracked Company';
                               }
-                              else if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])){
+                              else if(isset($nodeloads->field_alpha_news_topics) && !empty($nodeloads->field_alpha_news_topics)){
                                 $taxanomyId = $nodeloads->field_alpha_news_topics['und'][0]['tid'];
                                 $taxomony = taxonomy_term_load($taxanomyId);
                                 $categoryName = $taxomony->name;
-                                $company_image = $primg;
+                                $company_image = $tracked_topicimg;
                               }
                               else {
-                                $company_image = $tracked_topicimg;
+                                $company_image = $primg;
                                 $categoryName = 'P.R. & Perspectives';
                               }
 
