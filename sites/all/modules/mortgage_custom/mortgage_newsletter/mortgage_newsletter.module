@@ -94,6 +94,8 @@ function select_user_list_form_submit($form, &$form_state) {
   $arrNewsList = array();
   $url_pressrelease = 'http://' .$_SERVER['HTTP_HOST'];
 
+
+
   foreach($form_state['values']['select_user'] as $key => $vals) {    
     $userid = $vals;
     $user = user_load($userid);
@@ -188,6 +190,9 @@ function select_user_list_form_submit($form, &$form_state) {
     if($result->rowCount() != 0){
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
+        if(!array_key_exists($record['nid'], $arrNewsList)) {
+          $arrNewsList[$record['nid']] = $record['nid'];
+        }
         $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
       }    
     }
@@ -221,6 +226,9 @@ function select_user_list_form_submit($form, &$form_state) {
     if($result->rowCount() != 0){
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
+        if(!array_key_exists($record['nid'], $arrNewsList)) {
+          $arrNewsList[$record['nid']] = $record['nid'];
+        }
         $arr_user_company_tags_nids[$record['nid']] = $record['nid'];
       }    
     }    
@@ -244,6 +252,9 @@ function select_user_list_form_submit($form, &$form_state) {
     if($result->rowCount() != 0){
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
+        if(!array_key_exists($record['nid'], $arrNewsList)) {
+          $arrNewsList[$record['nid']] = $record['nid'];
+        }
         $arr_perspective_content[$record['nid']] = $record['nid'];
       }    
     }    
@@ -261,6 +272,9 @@ function select_user_list_form_submit($form, &$form_state) {
     if($result->rowCount() != 0){
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
+        if(!array_key_exists($record['nid'], $arrNewsList)) {
+          $arrNewsList[$record['nid']] = $record['nid'];
+        }
         $arr_press_releases[$record['nid']] = $record['nid'];
       }    
     }        
@@ -295,6 +309,10 @@ function select_user_list_form_submit($form, &$form_state) {
 
       print("<pre> :: arr_press_releases ::");
       print_r($arr_press_releases);
+      print("</pre>");
+
+      print("<pre> :: arrNewsList (FOR UNIQUE NODES ONLY) ::");
+      print_r($arrNewsList);
       print("</pre>");
     }
     #################################################################
@@ -447,220 +465,290 @@ function select_user_list_form_submit($form, &$form_state) {
                     </tr>';
             # Template Body Section Username & Password End...
 
-            # Template Body Section News Intelligence and User Tracked Companies Start...
-            if(!empty($arr_user_news_topics_nids) || !empty($arr_user_company_tags_nids)) {
-              $body .= '<tr class="tr-lvl-4">
-                  <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
-                    News Intelligence
-                  </td>
-                </tr>';
-                    if(!empty($arr_user_company_tags_nids)) {
-                     $body .= '<tr class="tr-lvl-4">
-                        <td style="width:100%;">
-                          <table class="tbl-lvl-5">
-                            <tbody>';
-                              foreach($arr_user_company_tags_nids as $node_id => $value) {
-                                $nodeloads = node_load($node_id);
-                                if(!empty($row['url'])){
-                                  $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
-                                }
-                                else{
-                                  $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                                }
-                                
-                                $nodeTitle = '';
-                                if(!empty($nodeloads->title)) {
-                                  $dataTitle = strip_tags($nodeloads->title);
-                                  $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
-                                }
-
-                                $nodedata = '';
-                                if(!empty($nodeloads->body)) {
-                                  $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                  $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
-                                }
-
-                                $company_image = '';
-                                if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])){
-                                  $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
-                                  $taxo_info = taxonomy_term_load($companyTid);
-                                  if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
-                                    $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
-                                    $company_image = image_style_url("tracked_images", $img_url);
-                                  }
-                                }
-
-                                
-                                $url = $urlAlias;
-                                $body .= '<tr class="tr-lvl-5">
-                                    <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
-                                      <table>
-                                        <tr class="tr-lvl-6">
-                                          <td style="padding-right:10px;">
-                                            <img src="'. $company_image .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
-                                          </td>
-                                          <td style="color:#808080; font-family:arial; font-size:13px;">
-                                            <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
-                                            <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
-                                            <div>' . $nodedata . '</div>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </td>
-                                  </tr>';
-                              }
-                    }
-                    if(!empty($arr_user_news_topics_nids)) {
-                      foreach($arr_user_news_topics_nids as $node_id => $value) {
-                            $nodeloads = node_load($node_id);
-                            if(!empty($row['url'])){
-                              $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
-                            }
-                            else{
-                              $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                            }
-
-                            $nodeTitle = '';
-                            if(!empty($nodeloads->title)) {
-                              $dataTitle = strip_tags($nodeloads->title);
-                              $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
-                            }
-
-                            $nodedata = '';
-                            if(!empty($nodeloads->body)) {
-                              $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                              $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
-                            }
-
-                            $taxanomyId = $nodeloads->field_alpha_news_topics['und'][0]['tid'];
-                            $taxomony = taxonomy_term_load($taxanomyId);
-                            $taxonomyName = $taxomony->name;
-
-                            $url = $urlAlias;
-
-                            $body .= '<tr class="tr-lvl-5">
-                                <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
-                                  <table>
-                                    <tr class="tr-lvl-6">
-                                      <td style="padding-right:10px;">
-                                        <img src="'.$tracked_topicimg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
-                                      </td>
-                                      <td style="color:#808080; font-family:arial; font-size:13px;">
-                                        <div style="font-size:10px; color: #b8b8b8; font-family:arial;">' . $taxonomyName . '</div>
-                                        <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
-                                        <div>' . $nodedata . '</div>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>';
-                            }
-                    }
-              $body .= '</tbody>
-                    </table>
-                  </td>
-                </tr>';
-            }
-            # Template Body Section News Intelligence and User Tracked Companies End... 
-
-            # Template Body Section Press Releases & Perspectives End... 
-            if(!empty($arr_perspective_content) || !empty($arr_press_releases)) {
-              $body .= '<tr class="tr-lvl-4">
-                      <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
-                        Press Releases & Perspectives
-                      </td>
-                    </tr>';
-                if(!empty($arr_perspective_content)) {
-                    $body .= '<tr class="tr-lvl-4">
+            # Template Body Section For All Content Type Start...                    
+            $body .= '<tr class="tr-lvl-4">
+                <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
+                  News Intelligence
+                </td>
+              </tr>';
+                  if(!empty($arrNewsList)) {
+                   $body .= '<tr class="tr-lvl-4">
                       <td style="width:100%;">
                         <table class="tbl-lvl-5">
                           <tbody>';
-                          foreach($arr_perspective_content as $node_id => $value) {
-                            $nodeloads = node_load($node_id);
-                            
-                            $nodeTitle = '';
-                            if(!empty($nodeloads->title)) {
-                              $dataTitle = strip_tags($nodeloads->title);
-                              $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
-                            }
+                            foreach($arrNewsList as $node_id => $value) {
+                              $nodeloads = node_load($node_id);
+                              if(!empty($row['url'])){
+                                $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+                              }
+                              else{
+                                $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                              }
+                              
+                              $nodeTitle = '';
+                              if(!empty($nodeloads->title)) {
+                                $dataTitle = strip_tags($nodeloads->title);
+                                $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                              }
 
-                            $nodedata = '';
-                            if(!empty($nodeloads->body)) {
-                              $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                              $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
-                            }
+                              $nodedata = '';
+                              if(!empty($nodeloads->body)) {
+                                $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                              }
 
-                            $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                            $url = $urlAlias;
-                            $body .= '<tr class="tr-lvl-5">
-                                <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
-                                  <table>
-                                    <tr class="tr-lvl-6">
-                                      <td style="padding-right:10px;">
-                                        <img src="'. $primg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
-                                      </td>
-                                      <td style="color:#808080; font-family:arial; font-size:13px;">
-                                        <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
-                                        <a href="'. $url .'" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
-                                        <div>' . $nodedata . '</div>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>';
-                          }
-                $body .= '</tbody>
-                        </table>
-                      </td>
-                    </tr>';
-                }
-                if(!empty($arr_press_releases)) {
-                  $body .= '<tr class="tr-lvl-4">
+                              $company_image = '';
+                              if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])){
+                                $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+                                $taxo_info = taxonomy_term_load($companyTid);
+                                if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
+                                  $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
+                                  $company_image = image_style_url("tracked_images", $img_url);
+                                }
+                              }
+
+                              
+                              $url = $urlAlias;
+                              $body .= '<tr class="tr-lvl-5">
+                                  <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                    <table>
+                                      <tr class="tr-lvl-6">
+                                        <td style="padding-right:10px;">
+                                          <img src="'. $company_image .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                        </td>
+                                        <td style="color:#808080; font-family:arial; font-size:13px;">
+                                          <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
+                                          <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                          <div>' . $nodedata . '</div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>';
+                            }
+                  }
+            $body .= '</tbody>
+                  </table>
+                </td>
+              </tr>';
+            # Template Body Section For All Content Type End...
+
+            if(false) {
+              # Template Body Section News Intelligence and User Tracked Companies Start...
+              if(!empty($arr_user_news_topics_nids) || !empty($arr_user_company_tags_nids)) {
+                $body .= '<tr class="tr-lvl-4">
+                    <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
+                      News Intelligence
+                    </td>
+                  </tr>';
+                      if(!empty($arr_user_company_tags_nids)) {
+                       $body .= '<tr class="tr-lvl-4">
                           <td style="width:100%;">
                             <table class="tbl-lvl-5">
                               <tbody>';
-                              foreach($arr_press_releases as $node_id => $value) {
-                                $nodeloads = node_load($node_id);
-                                
-                                $nodeTitle = '';
-                                if(!empty($nodeloads->title)) {
-                                  $dataTitle = strip_tags($nodeloads->title);
-                                  $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                                foreach($arr_user_company_tags_nids as $node_id => $value) {
+                                  $nodeloads = node_load($node_id);
+                                  if(!empty($row['url'])){
+                                    $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+                                  }
+                                  else{
+                                    $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                  }
+                                  
+                                  $nodeTitle = '';
+                                  if(!empty($nodeloads->title)) {
+                                    $dataTitle = strip_tags($nodeloads->title);
+                                    $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                                  }
+
+                                  $nodedata = '';
+                                  if(!empty($nodeloads->body)) {
+                                    $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                    $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                                  }
+
+                                  $company_image = '';
+                                  if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])){
+                                    $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+                                    $taxo_info = taxonomy_term_load($companyTid);
+                                    if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
+                                      $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
+                                      $company_image = image_style_url("tracked_images", $img_url);
+                                    }
+                                  }
+
+                                  
+                                  $url = $urlAlias;
+                                  $body .= '<tr class="tr-lvl-5">
+                                      <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                        <table>
+                                          <tr class="tr-lvl-6">
+                                            <td style="padding-right:10px;">
+                                              <img src="'. $company_image .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                            </td>
+                                            <td style="color:#808080; font-family:arial; font-size:13px;">
+                                              <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
+                                              <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                              <div>' . $nodedata . '</div>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>';
                                 }
-
-                                $nodedata = '';
-                                if(!empty($nodeloads->body)) {
-                                  $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                  $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
-                                }
-
-                                $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                                $url = $urlAlias;
-
-                                $body .= '<tr class="tr-lvl-5">
-                                    <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
-                                      <table>
-                                        <tr class="tr-lvl-6">
-                                          <td style="padding-right:10px;">
-                                            <img src="'. $primg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
-                                          </td>
-                                          <td style="color:#808080; font-family:arial; font-size:13px;">
-                                            <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
-                                            <a href="'. $url .'" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
-                                            <div>' . $nodedata . '</div>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </td>
-                                  </tr>';
+                      }
+                      if(!empty($arr_user_news_topics_nids)) {
+                        foreach($arr_user_news_topics_nids as $node_id => $value) {
+                              $nodeloads = node_load($node_id);
+                              if(!empty($row['url'])){
+                                $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                               }
-                    $body .= '</tbody>
-                            </table>
-                          </td>
-                        </tr>';
-                }
+                              else{
+                                $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                              }
+
+                              $nodeTitle = '';
+                              if(!empty($nodeloads->title)) {
+                                $dataTitle = strip_tags($nodeloads->title);
+                                $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                              }
+
+                              $nodedata = '';
+                              if(!empty($nodeloads->body)) {
+                                $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                              }
+
+                              $taxanomyId = $nodeloads->field_alpha_news_topics['und'][0]['tid'];
+                              $taxomony = taxonomy_term_load($taxanomyId);
+                              $taxonomyName = $taxomony->name;
+
+                              $url = $urlAlias;
+
+                              $body .= '<tr class="tr-lvl-5">
+                                  <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                    <table>
+                                      <tr class="tr-lvl-6">
+                                        <td style="padding-right:10px;">
+                                          <img src="'.$tracked_topicimg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                        </td>
+                                        <td style="color:#808080; font-family:arial; font-size:13px;">
+                                          <div style="font-size:10px; color: #b8b8b8; font-family:arial;">' . $taxonomyName . '</div>
+                                          <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                          <div>' . $nodedata . '</div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>';
+                              }
+                      }
+                $body .= '</tbody>
+                      </table>
+                    </td>
+                  </tr>';
+              }
+              # Template Body Section News Intelligence and User Tracked Companies End... 
+
+              # Template Body Section Press Releases & Perspectives End... 
+              if(!empty($arr_perspective_content) || !empty($arr_press_releases)) {
+                $body .= '<tr class="tr-lvl-4">
+                        <td style="width:100%; padding:20px 0; text-align: left; font-family:arial;font-size:26px; color:#f07a22; border-bottom: 1px solid #ccc;">
+                          Press Releases & Perspectives
+                        </td>
+                      </tr>';
+                  if(!empty($arr_perspective_content)) {
+                      $body .= '<tr class="tr-lvl-4">
+                        <td style="width:100%;">
+                          <table class="tbl-lvl-5">
+                            <tbody>';
+                            foreach($arr_perspective_content as $node_id => $value) {
+                              $nodeloads = node_load($node_id);
+                              
+                              $nodeTitle = '';
+                              if(!empty($nodeloads->title)) {
+                                $dataTitle = strip_tags($nodeloads->title);
+                                $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                              }
+
+                              $nodedata = '';
+                              if(!empty($nodeloads->body)) {
+                                $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                              }
+
+                              $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                              $url = $urlAlias;
+                              $body .= '<tr class="tr-lvl-5">
+                                  <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                    <table>
+                                      <tr class="tr-lvl-6">
+                                        <td style="padding-right:10px;">
+                                          <img src="'. $primg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                        </td>
+                                        <td style="color:#808080; font-family:arial; font-size:13px;">
+                                          <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
+                                          <a href="'. $url .'" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                          <div>' . $nodedata . '</div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>';
+                            }
+                  $body .= '</tbody>
+                          </table>
+                        </td>
+                      </tr>';
+                  }
+                  if(!empty($arr_press_releases)) {
+                    $body .= '<tr class="tr-lvl-4">
+                            <td style="width:100%;">
+                              <table class="tbl-lvl-5">
+                                <tbody>';
+                                foreach($arr_press_releases as $node_id => $value) {
+                                  $nodeloads = node_load($node_id);
+                                  
+                                  $nodeTitle = '';
+                                  if(!empty($nodeloads->title)) {
+                                    $dataTitle = strip_tags($nodeloads->title);
+                                    $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                                  }
+
+                                  $nodedata = '';
+                                  if(!empty($nodeloads->body)) {
+                                    $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                    $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                                  }
+
+                                  $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                  $url = $urlAlias;
+
+                                  $body .= '<tr class="tr-lvl-5">
+                                      <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                                        <table>
+                                          <tr class="tr-lvl-6">
+                                            <td style="padding-right:10px;">
+                                              <img src="'. $primg .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
+                                            </td>
+                                            <td style="color:#808080; font-family:arial; font-size:13px;">
+                                              <div style="font-size:10px; color: #b8b8b8; font-family:arial;">P.R. & Perspectives</div>
+                                              <a href="'. $url .'" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
+                                              <div>' . $nodedata . '</div>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>';
+                                }
+                      $body .= '</tbody>
+                              </table>
+                            </td>
+                          </tr>';
+                  }
+              }
+              # Template Body Section Press Releases & Perspectives End...
             }
-            # Template Body Section Press Releases & Perspectives End...
 
       $body .= '</tbody>
           </table>
