@@ -539,6 +539,12 @@ function select_user_list_form_submit($form, &$form_state) {
                                 </tr>';
                             }
                   }
+
+            $body .= '<tr class="tr-lvl-5">
+                        <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                        <div style="font-size:12px; color: #b8b8b8; font-family:arial;">No Headline Today</div>
+                        </td>
+                      </tr>';
             $body .= '</tbody>
                   </table>
                 </td>
@@ -780,7 +786,7 @@ function select_user_list_form_submit($form, &$form_state) {
     </table>';
     # Template Main Section Table Closing  End...
 
-    if(1) {
+    if($debug) {
       print("<pre> :: body ::");
       print_r($body);
       print("</pre>");
