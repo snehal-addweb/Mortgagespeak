@@ -691,7 +691,7 @@ a {
             position: relative;
             padding: 5px 10px;
             border-top: 1px solid $gray;
-            background-color: $gray-light-f4;
+            background-color: #F4F4F4;
             &::before {
               position: absolute;
               right: 12px;
@@ -1199,6 +1199,9 @@ a {
   width: 100%;
   margin: 0 !important;
   background-color: $gray-light;
+}
+#block-randomblocks-all-page-ads {
+  background-color: #FFF;
 }
 /* End */
 
