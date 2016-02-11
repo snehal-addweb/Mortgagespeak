@@ -329,7 +329,7 @@ function select_user_list_form_submit($form, &$form_state) {
     $node->uid = 1;
     $node->language = LANGUAGE_NONE; 
     $node->title = "Newsletter";
-    $node->body['und'][0]['format'] = 2;
+    $node->body['und'][0]['format'] = 'full_html';
 
     $primg = $base_url.'/sites/default/files/PR.png';
     $tracked_topicimg = $base_url.'/sites/default/files/Key.png'; 
@@ -478,6 +478,7 @@ function select_user_list_form_submit($form, &$form_state) {
                           <tbody>';
                             foreach($arrNewsList as $node_id => $value) {
                               $nodeloads = node_load($node_id);
+                              
                               if(!empty($row['url'])){
                                 $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                               }
@@ -505,6 +506,17 @@ function select_user_list_form_submit($form, &$form_state) {
                                   $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
                                   $company_image = image_style_url("tracked_images", $img_url);
                                 }
+                                $categoryName = 'Tracked Company';
+                              }
+                              else if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])){
+                                $taxanomyId = $nodeloads->field_alpha_news_topics['und'][0]['tid'];
+                                $taxomony = taxonomy_term_load($taxanomyId);
+                                $categoryName = $taxomony->name;
+                                $company_image = $primg;
+                              }
+                              else {
+                                $company_image = $tracked_topicimg;
+                                $categoryName = 'P.R. & Perspectives';
                               }
 
                               
@@ -517,7 +529,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                           <img src="'. $company_image .'" width="50" height="50" style="width:50px;min-height:50px;vertical-align:top">
                                         </td>
                                         <td style="color:#808080; font-family:arial; font-size:13px;">
-                                          <div style="font-size:10px; color: #b8b8b8; font-family:arial;">Tracked Company</div>
+                                          <div style="font-size:10px; color: #b8b8b8; font-family:arial;">' . $categoryName. '</div>
                                           <a href="' . $url . '" style="color: #4273ad; font-size:13px; font-family:arial;">' . $nodeTitle . '</a>
                                           <div>' . $nodedata . '</div>
                                         </td>
@@ -768,7 +780,7 @@ function select_user_list_form_submit($form, &$form_state) {
     </table>';
     # Template Main Section Table Closing  End...
 
-    if($debug) {
+    if(1) {
       print("<pre> :: body ::");
       print_r($body);
       print("</pre>");
