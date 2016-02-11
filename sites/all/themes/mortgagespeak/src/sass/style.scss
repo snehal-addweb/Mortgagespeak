@@ -476,6 +476,9 @@ a {
             margin: 0 25px 0 0;
             padding: 0;
             background-color: transparent;
+            .email {
+              margin-top: 1px;
+            }
             a {
               display: inline-block;
               height: 100%;
@@ -520,9 +523,9 @@ a {
       width: 100%;
     }
     .views-popup-container {
-      position: absolute;
-      top: 50%;
-      right: 0;
+      position: fixed;
+      bottom: 0;
+      left: 675px;
       z-index: 9;
       display: none;
       max-width: 500px;
@@ -1074,7 +1077,7 @@ a {
       display: inline-block;
       height: 21px;
       width: 20px;
-      margin: 0 0 -2px 30px;
+      margin: 0 0 -3px 30px;
       background-image: url('../images/arrow-right-white.png');
       content: '';
     }
@@ -1128,7 +1131,7 @@ a {
     clear: both;
     display: inline-block;
     width: 100%;
-    margin: 0;
+    margin: 17px 0 0;
     padding: 0 40px 0 0;
     font-size: 22px;
     font-style: italic;

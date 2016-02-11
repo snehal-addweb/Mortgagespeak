@@ -61,4 +61,9 @@ jQuery(document).ready(function() {
     jQuery(this).parent().parent().children(".input-file-name").text(filename);
   });
   /* End */
+
+  /* Adjust sidebar height */
+  var main_h = jQuery('.main-container').height();
+  jQuery('.left-sidebar').css('min-height', main_h);
+  /* End */
 });
