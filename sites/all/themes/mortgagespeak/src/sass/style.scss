@@ -1182,3 +1182,106 @@ a {
   margin: 0 !important;
   background-color: $gray-light;
 }
+/* End */
+
+/* Alpha content page */
+.node-type-alpha-content {
+  .page-header {
+    display: none;
+  }
+  .node-main-container {
+    display: inline-block;
+    width: 100%;
+    .view-header {
+      height: 42px;
+      border-bottom: 1px solid $border;
+    }
+    h2 {
+      margin: 15px 0 0;
+      padding: 0 5px;
+      font-size: 38px;
+    }
+    .node-share-content {
+      display: inline-block;
+      width: 100%;
+      .share-title {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        padding: 0 8px;
+        font-weight: bold;
+        font-family: Arial;
+        text-align: center;
+        text-transform: uppercase;
+        .share-title-sub {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          margin: 40px 0;
+          &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            margin: 8px 0 0;
+            background-color: $gray-light-f4;
+            content: '';
+          }
+        }
+        span {
+          position: relative;
+          padding: 0 10px;
+          background-color: $white;
+          color: #999;
+          font-size: 16px;
+          text-transform: uppercase;
+        }
+      }
+      .share-icons {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        .share-icon {
+          float: none;
+          display: inline-block;
+          &.linkedin-share {
+            background-image: url('../images/linkedin-share.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: auto;
+            > span {
+              float: left;
+              display: inline-block;
+              height: 42px;
+              width: 90px;
+            }
+          }
+          a {
+            float: left;
+            display: inline-block;
+            height: 42px;
+            width: 90px;
+            background-image: url('../images/facebook-share.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: auto;
+            text-indent: -9999px;
+          }
+          &.twitter-share a { background-image: url('../images/twitter-share.png'); }
+          &.linkedin-share a { background-image: url('../images/linkedin-share.png'); }
+          &.google-plus-share a { background-image: url('../images/google-plus-share.png'); }
+          &.contribute-share a { background-image: url('../images/contribute-share.png'); }
+        }
+      }
+    }
+    .alpha-content-body {
+      display: inline-block;
+      width: 100%;
+      padding: 20px;
+      font-size: 16px;
+      line-height: normal;
+    }
+  }
+}
+/* End */

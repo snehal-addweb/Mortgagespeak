@@ -25,38 +25,42 @@
 ?>
 
 
-<div class="node-main-container">
+<div class="node-main-container content-lists">
+<div class="view-header"></div>
 	<h2><?php print $node->title; ?></h2>
 	<div class="node-share-content">
-		<span>Share this</span>
+		<div class="share-title">
+			<div class="share-title-sub">
+				<span>Share this</span>
+			</div>
+		</div>
 		<div class="share-icons">
-			<div class="fb-share">
+			<div class="share-icon facebook-share">
 				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook">fb</a>
 			</div>
 
-			<div class="tw-share">
+			<div class="share-icon twitter-share">
 				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none">twitter</a>
 			</div>
 
-			<div class="in-share">
+			<div class="share-icon linkedin-share">
 				<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
 				<script type="IN/Share"></script>
 			</div>
 
-			<div class="g-share">
+			<div class="share-icon google-plus-share">
 				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" class="prgoogle"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
 			</div>
 
-			<div class="contri-content">
-				<div class="submit-pr">
-					<a href="<?php print $base_url; ?>/upload" target="_blank">Submit</a>
-				</div>
+			<div class="share-icon contribute-share">
+				<a href="<?php print $base_url; ?>/upload" target="_blank">Submit</a>
 			</div>
-		<div>
-	</div>	
-	<div class="inner-body">
+	</div>
+
+	<div class="alpha-content-body">
 		<?php print $body;?>
 	</div>
+
 	<div class="pdf-upload-document"><?php 
 		if(isset($node->field_upload_document['und']) && !empty($node->field_upload_document['und'] )){ ?>
 
