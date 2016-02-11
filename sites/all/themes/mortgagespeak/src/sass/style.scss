@@ -476,7 +476,7 @@ a {
             margin: 0 25px 0 0;
             padding: 0;
             background-color: transparent;
-            .email {
+            &.email {
               margin-top: 1px;
             }
             a {
@@ -525,10 +525,10 @@ a {
     .views-popup-container {
       position: fixed;
       bottom: 0;
-      left: 675px;
+      left: 655px;
       z-index: 9;
       display: none;
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       margin-top: -20px;
       background-color: $white;
@@ -567,11 +567,15 @@ a {
             position: relative;
             display: inline-block;
             padding: 3px 0;
-            border-bottom: 1px solid $blue-font;
             vertical-align: middle;
             .whats-this {
               display: inline-block;
               cursor: help;
+              span {
+                margin: 0 5px;
+                padding-bottom: 3px;
+                border-bottom: 1px solid #55A5FF;
+              }
             }
             .tooltip-content {
               position: absolute;
@@ -648,6 +652,9 @@ a {
                 &:last-child {
                   margin-right: 0;
                 }
+                &.email {
+                  margin-top: 1px;
+                }
               }
               .flag-saved-articles {
                 a {
@@ -687,9 +694,9 @@ a {
             background-color: $gray-light-f4;
             &::before {
               position: absolute;
-              right: 2px;
+              right: 12px;
               bottom: 5px;
-              color: $gray;
+              color: #A1A1A1;
               content: 'AD';
             }
             .ai-node-body-top-banner {
@@ -864,7 +871,7 @@ a {
             padding: 0;
             button {
               margin: 6px 10px 0;
-              padding: 6px 25px;
+              padding: 6px 15px;
               line-height: 14px;
               vertical-align: middle;
             }
