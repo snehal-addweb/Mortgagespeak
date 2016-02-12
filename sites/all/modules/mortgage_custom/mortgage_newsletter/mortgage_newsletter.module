@@ -4,7 +4,7 @@
     implements hook_menu() to create handle newletter hook
 */
 function mortgage_newsletter_menu() {
-  $items['testnewsletter'] = array(
+  $items['create-newsletter'] = array(
     'type' => MENU_CALLBACK,
     'title' => 'Select User List Form', //page title
     'description' => 'A form to select list of users to generate newsletter.',
@@ -508,14 +508,14 @@ function select_user_list_form_submit($form, &$form_state) {
                                 }
                                 $categoryName = 'Tracked Company';
                               }
-                              else if(isset($nodeloads->field_alpha_news_topics) && !empty($nodeloads->field_alpha_news_topics)){
+                              else if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])){
                                 $taxanomyId = $nodeloads->field_alpha_news_topics['und'][0]['tid'];
                                 $taxomony = taxonomy_term_load($taxanomyId);
                                 $categoryName = $taxomony->name;
-                                $company_image = $tracked_topicimg;
+                                $company_image = $primg;
                               }
                               else {
-                                $company_image = $primg;
+                                $company_image = $tracked_topicimg;
                                 $categoryName = 'P.R. & Perspectives';
                               }
 
@@ -539,14 +539,12 @@ function select_user_list_form_submit($form, &$form_state) {
                                 </tr>';
                             }
                   }
-                  else {
-                    $body .= '<tr class="tr-lvl-5">
-                      <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
-                      <div style="font-size:12px; color: #b8b8b8; font-family:arial;">No Headline Today</div>
-                      </td>
-                    </tr>';
-                  }
-          
+
+            $body .= '<tr class="tr-lvl-5">
+                        <td style="border-bottom: 1px solid #ccc; width: 100%; padding:10px 0;">
+                        <div style="font-size:12px; color: #b8b8b8; font-family:arial;">No Headline Today</div>
+                        </td>
+                      </tr>';
             $body .= '</tbody>
                   </table>
                 </td>
