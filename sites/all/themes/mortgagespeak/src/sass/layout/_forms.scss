@@ -303,7 +303,8 @@ textarea:focus {
     }
   }
 }
-.login-upload-page {
+.login-upload-page, /* Upload page class */
+.login-form { /* Login page class */
   .login-left {
     border-right: none;
     > ul {
@@ -322,6 +323,7 @@ textarea:focus {
         margin: 0 0 15px;
         font-size: 24px;
         letter-spacing: 2px;
+        text-align: center;
         text-transform: uppercase;
         span {
           color: #017F00;

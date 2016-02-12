@@ -570,7 +570,7 @@ a {
             vertical-align: middle;
             .whats-this {
               display: inline-block;
-              cursor: help;
+              /*cursor: help;*/
               span {
                 margin: 0 5px;
                 padding-bottom: 3px;
@@ -585,7 +585,7 @@ a {
               width: 200px;
               margin: -38px 0 0 -100px;
               padding: 5px 10px;
-              background-color: rgba(42, 42, 42, 1);
+              background-color: #282828; /*rgba(42, 42, 42, 1)*/
               text-align: center;
               &::before {
                 position: absolute;
@@ -898,8 +898,6 @@ a {
             }
             .views-widget {
               display: inline-block;
-              width: -webkit-calc(100% - 130px);
-              width: -moz-calc(100% - 130px);
               width: calc(100% - 130px);
               vertical-align: middle;
               input {
@@ -1159,7 +1157,8 @@ a {
 
 /* Advertisement */
 #block-block-7,
-#block-randomblocks-press-perpesctive {
+#block-randomblocks-press-perpesctive,
+#block-randomblocks-all-page-ads {
   position: relative;
   display: inline-block;
   height: 90px;
