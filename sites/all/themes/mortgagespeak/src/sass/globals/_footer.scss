@@ -15,5 +15,18 @@ $assets-path: '../..';
  * Footer design
  */
 .footer {
-  margin-top: 20px;
+  display: inline-block;
+  width: 100%;
+  margin: 20px 0 0;
+  padding: 0 0 0 205px;
+  border: none;
+  background-color: #8E8E8E;
+  color: $white;
+  .region-footer {
+    display: inline-block;
+    max-width: 970px;
+    width: 100%;
+    padding: 30px;
+    color: $gray-light-f4;
+  }
 }
