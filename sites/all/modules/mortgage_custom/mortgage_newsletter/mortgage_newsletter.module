@@ -10,7 +10,7 @@ function mortgage_newsletter_menu() {
     'description' => 'A form to select list of users to generate newsletter.',
     'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
     'page arguments' => array('select_user_list_form'), //put the name of the form here
-    'access arguments' => array('access content')
+    'access arguments' => array('administer users')
   );
  
   $items['weekly_newsletter'] = array(
@@ -19,7 +19,7 @@ function mortgage_newsletter_menu() {
   'description' => 'A form to select list of users to generate newsletter.',
   'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
   'page arguments' => array('select_user_list_form'), //put the name of the form here
-  'access arguments' => array('access content')
+  'access arguments' => array('administer users')
   );
   
   $items['adduser'] = array(
