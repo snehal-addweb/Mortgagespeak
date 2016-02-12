@@ -31,35 +31,35 @@ jQuery(document).ready(function() {
   jQuery('.page-my-page-saved-articles ul.menu li:nth-child(2) a').addClass('active-trail active');
 
   /* Popup design */
-    jQuery('body').click(function() {
+  jQuery('body').click(function() {
+    jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
+  });
+
+  jQuery('.content-lists .content-list .views-popup-container').click(function(e) {
+    e.stopPropagation();
+  });
+
+  jQuery('.content-lists .content-list > .views-field-title').click(function(e) {
+    e.stopPropagation();
+    if(jQuery(this).parent().children('.content-lists .content-list .views-popup-container').hasClass('open-popup')) {
+        jQuery(this).parent().children('.open-popup').removeClass('open-popup');
+    }
+    else {
       jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
-    });
+      jQuery(this).parent().children('.content-lists .content-list .views-popup-container').addClass('open-popup');
+    }
+  });
 
-    jQuery('.content-lists .content-list .views-popup-container').click(function(e) {
-      e.stopPropagation();
-    });
+  jQuery('.views-popup-container .popup-header .close-popup').click(function() {
+    jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
+  });
 
-    jQuery('.content-lists .content-list > .views-field-title').click(function(e) {
-      e.stopPropagation();
-      if(jQuery(this).parent().children('.content-lists .content-list .views-popup-container').hasClass('open-popup')) {
-          jQuery(this).parent().children('.open-popup').removeClass('open-popup');
-      }
-      else {
+    jQuery(document).keydown(function(e) {
+    if (e.keyCode == 27) {
+        /*window.close();*/
         jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
-        jQuery(this).parent().children('.content-lists .content-list .views-popup-container').addClass('open-popup');
-      }
-    });
-
-    jQuery('.views-popup-container .popup-header .close-popup').click(function() {
-      jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
-    });
-
-      jQuery(document).keydown(function(e) {
-      if (e.keyCode == 27) {
-          /*window.close();*/
-          jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
-      }
-});
+    }
+  });
   /* End */
 
   /* Custom input type file design */
@@ -74,5 +74,13 @@ jQuery(document).ready(function() {
   /* Adjust sidebar height */
   var main_h = jQuery('.main-container').height();
   jQuery('.left-sidebar').css('min-height', main_h);
+  /* End */
+
+  /* Change Upload Text in Upload webform*/
+  jQuery('#webform-client-form-42 .attach-content .form-managed-file button').text('Upload File');
+
+  jQuery(document).ajaxComplete(function() {
+    jQuery('#webform-client-form-42 .attach-content .form-managed-file button').text('Upload File');
+  });
   /* End */
 });

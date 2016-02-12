@@ -884,11 +884,11 @@ a {
           }
           #edit-search-api-views-fulltext-wrapper {
             display: inline-block;
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
             label {
               display: inline-block;
-              width: 70px;
+              width: 120px;
               margin: 0;
               padding: 8px 0;
               color: $gray-69;
@@ -898,7 +898,9 @@ a {
             }
             .views-widget {
               display: inline-block;
-              width: calc(100% - 80px);
+              width: -webkit-calc(100% - 130px);
+              width: -moz-calc(100% - 130px);
+              width: calc(100% - 130px);
               vertical-align: middle;
               input {
                 @include border-radius(0);
