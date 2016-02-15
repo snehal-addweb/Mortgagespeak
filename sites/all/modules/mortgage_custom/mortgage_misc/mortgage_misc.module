@@ -136,21 +136,26 @@ function mortgage_misc_taxonomy_term_uri($term) {
     switch ($term->vocabulary_machine_name) { 
       case 'company_tags':
         $parents = taxonomy_get_parents($term->tid);
-        foreach ($user_company as $key => $value) {
-          if(in_array($term->tid, $user_company)) {
-            $comp = taxonomy_term_load($term->tid);
-            if(in_array(strtolower($comp->name[0]), $arrATOM)) {
-                $user_comp[$term->tid] = $comp->name;
-                $company_url = $base_url . '/my-page/tracked-companies?company_tag='. $term->tid .'&company_tag1=All';
+        if(!empty($user_company)) {
+          foreach ($user_company as $key => $value) {
+            if(in_array($term->tid, $user_company)) {
+              $comp = taxonomy_term_load($term->tid);
+              if(in_array(strtolower($comp->name[0]), $arrATOM)) {
+                  $user_comp[$term->tid] = $comp->name;
+                  $company_url = $base_url . '/my-page/tracked-companies?company_tag='. $term->tid .'&company_tag1=All';
+              }
+              else if(in_array($comp->name[0], $arrMTOZ)) {
+                  $user_comp1[$term->tid] = $comp->name;
+                  $company_url = $base_url . '/my-page/tracked-companies?company_tag=All&company_tag1='. $term->tid;
+              }
             }
-            else if(in_array($comp->name[0], $arrMTOZ)) {
-                $user_comp1[$term->tid] = $comp->name;
-                $company_url = $base_url . '/my-page/tracked-companies?company_tag=All&company_tag1='. $term->tid;
+            else {
+              $company_url = $base_url . '/my-page/tracked-companies';
             }
           }
-          else {
-            $company_url = $base_url . '/my-page/tracked-companies';
-          }
+        }
+        else {
+          $company_url = $base_url . '/my-page/tracked-companies';
         }
         return array(
             'path' => $company_url,
