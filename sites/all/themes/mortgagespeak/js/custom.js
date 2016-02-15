@@ -74,7 +74,7 @@ jQuery(document).ready(function() {
   /* End */
 
   /* Adjust sidebar height */
-  var main_h = jQuery('.main-container').height();
+  var main_h = jQuery('.main-container .content-area').height();
   jQuery('.left-sidebar').css('min-height', main_h);
   /* End */
 
