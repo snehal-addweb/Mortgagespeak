@@ -20,7 +20,8 @@
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 	$url = $fullurl . '/' . drupal_get_path_alias('node/' . $node->nid);
 	if(!empty($node->body['und']) && isset($node->body['und'])){
-		$body = $node->body['und'][0]['value'];
+		$node_body = $node->body['und'][0]['value'];
+		$body = strip_tags($node_body);
 	}
 ?>
 
@@ -58,7 +59,7 @@
 	</div>
 
 	<div class="alpha-content-body">
-		<?php print $body;?>
+		<?php print $node_body;?>
 	</div>
 
 	<div class="pdf-upload-document"><?php 
