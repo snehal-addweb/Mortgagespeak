@@ -114,6 +114,7 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
   
 }
 
+/*
 function mortgage_misc_entity_info_alter(&$entity_info) {
   $entity_info['taxonomy_term']['uri callback'] = 'mortgage_misc_taxonomy_term_uri';
 }
@@ -166,3 +167,4 @@ function mortgage_misc_taxonomy_term_uri($term) {
   // default taxonomy term uri
   return taxonomy_term_uri($term);
 }
+*/
