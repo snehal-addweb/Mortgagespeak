@@ -6,10 +6,11 @@ global $base_url;
 <?php
 
 print render($form['account']['name']);
-print render($form['account']['mail']);
-print render ($form['account']['pass']);
 print render ($form['field_first_name']);
 print render ($form['field_last_name']);
+print render($form['account']['mail']);
+print render ($form['account']['pass']);
+
 ?>
 <span class="news-text">Choose News Topics Tracked in Your "My Page":</span>
 
