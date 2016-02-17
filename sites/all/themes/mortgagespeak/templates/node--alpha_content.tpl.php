@@ -37,24 +37,24 @@
 		</div>
 		<div class="share-icons">
 			<div class="share-icon facebook-share">
-				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook" target="_blank">fb</a>
+				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook" target="_blank" title="Share on Facebook">fb</a>
 			</div>
 
 			<div class="share-icon twitter-share">
-				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" target="_blank" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none">twitter</a>
+				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" target="_blank" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none" title="Share on Twitter">twitter</a>
 			</div>
 
-			<div class="share-icon linkedin-share">
+			<div class="share-icon linkedin-share" title="Share on LinkedIN">
 				<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
 				<script type="IN/Share"></script>
 			</div>
 
 			<div class="share-icon google-plus-share">
-				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" target="_blank" class="prgoogle"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
+				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" target="_blank" class="prgoogle" title="Share on Google+"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
 			</div>
 
 			<div class="share-icon contribute-share">
-				<a href="<?php print $base_url; ?>/upload" target="_blank">Submit</a>
+				<a href="<?php print $base_url; ?>/upload" target="_blank" title="Email this content">Submit</a>
 			</div>
 	</div>
 
