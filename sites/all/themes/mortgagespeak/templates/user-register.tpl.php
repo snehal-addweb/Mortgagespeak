@@ -5,12 +5,13 @@ global $base_url;
 <div class="register-text">Register for <span class="green-text">free</span> here! Already have an account? <a href="<?php print $base_url; ?>/user" class="blue-text">Log in here.</a></div>
 <?php
 
-print render($form['account']['name']);
+print render($form['account']['name']);?>
+<div class="field-type-wrap"><?php
 print render ($form['field_first_name']);
 print render ($form['field_last_name']);
+?></div><?php
 print render($form['account']['mail']);
 print render ($form['account']['pass']);
-
 ?>
 <span class="news-text">Choose News Topics Tracked in Your "My Page":</span>
 

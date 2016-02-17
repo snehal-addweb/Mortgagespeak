@@ -344,7 +344,9 @@ a {
   width: 100%;
   margin: 0;
   padding: 0;
-  border: 1px solid $border-cont; /*$gray-light-f4*/
+  border-top: 1px solid $border-cont; /*$gray-light-f4*/
+  border-right: 1px solid $border-cont; /*$gray-light-f4*/
+  border-left: 1px solid $border-cont; /*$gray-light-f4*/
   line-height: normal;
   .view-header,
   .upload-upper-contain {
@@ -659,7 +661,7 @@ a {
               }
               .flag-saved-articles {
                 a {
-                  margin: 0 0 0 25px;
+                  margin: 0 0 0 15px;
                 }
               }
             }
@@ -696,9 +698,12 @@ a {
             &::before {
               position: absolute;
               right: 12px;
-              bottom: 5px;
+              bottom: 10px;
+              height: 15px;
+              width: 22px;
+              background-image: url('../images/Green-Ad-image.png');
               color: #A1A1A1;
-              content: 'AD';
+              content: '';
             }
             .ai-node-body-top-banner {
               display: inline-block;
@@ -915,6 +920,12 @@ a {
     }
   }
 }
+.webform-client-form {
+  border-bottom: 1px solid $border-cont;
+}
+.content-lists-empty {
+  border: none;
+}
 .page-my-page {
   .content-lists {
     .view-header {
@@ -1013,6 +1024,7 @@ a {
 .empty-div {
   padding: 15px 10px;
   color: #468847;
+  margin: 20px 0 0 0;
 }
 .page-my-page-tracked-news.not-logged-in {
   .view-header {

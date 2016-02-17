@@ -99,8 +99,7 @@ textarea:focus {
 }
 #user-register-form,
 #user-login,
-#user-profile-form,
-.login-upload-page {
+#user-profile-form {
   display: inline-block;
   width: 100%;
   border: 1px solid $border-cont;
@@ -115,7 +114,8 @@ textarea:focus {
     background-color: $gray-light-f4;
     font-size: 12px;
   }
-  .form-item {
+  .form-item,
+  .field-type-wrap {
     max-width: 540px;
     width: 100%;
     margin: 0 0 20px;
@@ -130,6 +130,23 @@ textarea:focus {
     > .control-label {
       margin: 10px 0 0;
       font-weight: normal;
+    }
+  }
+  .field-type-wrap {
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 20px;
+    .field-type-text {
+      clear: none;
+      display: inline-block;
+      width: -webkit-calc(50% - 15px);
+      width: -moz-calc(50% - 15px);
+      width: calc(50% - 15px);
+      margin: 0 30px 0 0;
+      padding: 0;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   fieldset {

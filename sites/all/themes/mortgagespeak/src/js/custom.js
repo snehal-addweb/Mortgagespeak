@@ -83,4 +83,11 @@ jQuery(document).ready(function() {
     jQuery('#webform-client-form-42 .attach-content .form-managed-file button').text('Upload File');
   });
   /* End */
+
+  /* Add class to view if it is empty */
+    if (jQuery('.content-lists').find('view-empty')) {   
+      jQuery('.content-lists').addClass('content-lists-empty');
+    }
+  /* End */
+
 });
