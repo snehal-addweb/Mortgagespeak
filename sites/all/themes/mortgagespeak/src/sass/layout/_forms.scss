@@ -99,7 +99,8 @@ textarea:focus {
 }
 #user-register-form,
 #user-login,
-#user-profile-form {
+#user-profile-form,
+.login-upload-page {
   display: inline-block;
   width: 100%;
   border: 1px solid $border-cont;
@@ -155,6 +156,32 @@ textarea:focus {
       width: 100%;
       margin: 0 20px 20px;
       padding: 0;
+    }
+  }
+  #edit-field-news-topics {
+    > .form-item {
+      max-width: calc(100% - 40px);
+      width: 100%;
+      margin: 0 20px 20px;
+      padding: 0;
+      border: 1px solid #DDD;
+      border-radius: 4px;
+      > .control-label {
+        padding: 10px 15px;
+        border-bottom: 1px solid;
+        border-color: #DDD;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 3px;
+        background-color: #F5F5F5;
+        color: #333;
+        font-size: 15px;
+      }
+      .form-checkboxes {
+        max-width: 540px;
+        width: 100%;
+        margin: 0 0 20px;
+        padding: 0 40px;
+      }
     }
   }
   .news-text {

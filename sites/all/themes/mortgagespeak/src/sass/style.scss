@@ -358,7 +358,7 @@ a {
     padding: 12px 18px;
     border-top: 1px solid $border;
     border-right: 1px solid $border;
-    border-bottom: none;
+    border-bottom: 1px solid $border;
     border-left: 1px solid $border;
     background-color: $gray-light-f4;
     font-size: 12px;
@@ -459,6 +459,14 @@ a {
         float: left;
         color: $blue-font;
         font-size: 11px;
+      }
+    }
+    .views-field-field-alpha-news-topics,
+    .views-field-field-company-tag {
+      .field-content {
+        width: -moz-calc(100% - 94px);
+        width: -webkit-calc(100% - 94px);
+        width: calc(100% - 94px);
       }
     }
     .views-field-field-alpha-news-topics {
@@ -1282,15 +1290,27 @@ a {
           display: inline-block;
           margin: 0 25px;
           &.linkedin-share {
+            height: 42px;
+            width: 90px;
             background-image: url('../images/linkedin-share.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: auto;
-            > span {
+            > span.IN-widget {
               float: left;
               display: inline-block;
               height: 42px;
               width: 90px;
+              opacity: 0;
+            }
+            * {
+              float: left;
+              max-height: 100% !important;
+              min-height: 100% !important;
+              height: 100% !important;
+              max-width: 100% !important;
+              min-width: 100% !important;
+              width: 100% !important;
             }
           }
           a {
