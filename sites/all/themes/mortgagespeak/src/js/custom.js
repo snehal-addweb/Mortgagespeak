@@ -71,11 +71,6 @@ jQuery(document).ready(function() {
   });
   /* End */
 
-  /* Adjust sidebar height */
-  var main_h = jQuery('.main-container').height();
-  jQuery('.left-sidebar').css('min-height', main_h);
-  /* End */
-
   /* Change Upload Text in Upload webform*/
   jQuery('#webform-client-form-42 .attach-content .form-managed-file button').text('Upload File');
 
@@ -89,5 +84,14 @@ jQuery(document).ready(function() {
       jQuery('.view.content-lists').addClass('content-lists-empty');
     }
   /* End */
-
+  setTimeout(assign_height, 5000);
 });
+
+
+function assign_height(){
+
+  /* Adjust sidebar height */
+  var main_h = jQuery('.main-container').height();
+  jQuery('.left-sidebar').css('min-height', main_h);
+  /* End */
+}
