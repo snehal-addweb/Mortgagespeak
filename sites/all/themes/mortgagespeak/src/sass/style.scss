@@ -1310,6 +1310,15 @@ a {
           &.contribute-share a { background-image: url('../images/contribute-share.png'); }
         }
       }
+      .pdf-upload-document {
+        padding: 5px;
+        .document-presc {
+          #pdf_reader {
+            height: 780px;
+            width: 100%;
+          }
+        }
+      }
     }
     .alpha-content-body {
       display: inline-block;
