@@ -267,6 +267,12 @@ textarea:focus {
     }
   }
 }
+.logged-in {
+  .login-upload-page {
+    border: none;
+  }
+}
+
 .login-form {
   .help-block {
     display: none;
