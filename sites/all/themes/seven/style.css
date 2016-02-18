@@ -988,3 +988,40 @@ div.add-or-remove-shortcuts {
   -webkit-border-radius: 8px;
   border-radius: 8px;
 }
+
+
+
+/* Alpha Content Css Starts */
+.page-node-add-alpha-content .field-name-field-alpha-news-topics,
+.page-node-add-alpha-content .field-name-field-tab-,
+.page-node-add-alpha-content .field-name-field-tab-placement,
+.page-node-add-alpha-content .field-name-field-editors-pick1,
+.page-node-add-alpha-content .field-name-field-company-tag,
+.page-node-add-alpha-content .field-name-field-assign-customas {
+  float: left;
+  display: inline-block;
+  width: calc(20% - 30px);
+  margin-right: 30px;
+}
+.page-node-add-alpha-content .field-name-field-assign-customas {
+  margin-right: 0;
+}
+
+.page-node-add-alpha-content .field-name-field-tab-,
+.page-node-add-alpha-content .field-name-field-tab-placement{
+  width: 10%;
+}
+.page-node-add-alpha-content .field-name-field-editors-pick1 {
+  width: 12%;
+}
+.page-node-add-alpha-content .field-name-field-company-tag {
+  width: 30%
+}
+.page-node-add-alpha-content .field-name-field-company-tag select {
+  height: 375px;
+}
+.page-node-add-alpha-content .field-name-field-upload-document {
+  width: 100%;
+  display: inline-block;
+}
+/* End */
