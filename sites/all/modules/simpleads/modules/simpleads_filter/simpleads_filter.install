@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * SimpleAds Filter module install.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function simpleads_filter_install() {
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function simpleads_filter_uninstall() {
+
+}

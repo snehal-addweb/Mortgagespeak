@@ -1,0 +1,10 @@
+/**
+ * @file
+ * Simpleads campaigns node css.
+ */
+
+form#simpleads-campaigns-node-form #edit-field-adcamp-impressions,
+form#simpleads-campaigns-node-form #edit-field-adcamp-clicks,
+form#simpleads-campaigns-node-form #edit-field-adcamp-date {
+  display: none;
+}

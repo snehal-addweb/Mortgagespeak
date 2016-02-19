@@ -1,0 +1,14 @@
+/**
+ * @file
+ * SimpleAds node css.
+ */
+
+form#simpleads-node-form #edit-field-ad-flash .form-item,
+form#simpleads-node-form #edit-field-ad-text .form-item,
+form#simpleads-node-form #edit-field-ad-image .form-item,
+form#simpleads-node-form #edit-field-ad-url-taget .form-item,
+form#simpleads-node-form #edit-field-ad-url .form-item {
+  background-color: #eeeeee;
+  padding-left: 10px;
+  padding-right: 10px;
+}

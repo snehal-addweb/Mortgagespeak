@@ -1,0 +1,12 @@
+/**
+ * @file
+ * SimpleAds css.
+ */
+
+.simpleads-item {
+  display: none;
+}
+
+.simpleads-item.first {
+  display: block;
+}
