@@ -376,6 +376,9 @@ a {
     margin: 0;
     padding: 20px 10px 10px 94px;
     border-top: 1px solid $gray-light-f4;
+    &:first-child {
+      border-top: none;
+    }
     &:last-child {
       border-bottom: none;
     }

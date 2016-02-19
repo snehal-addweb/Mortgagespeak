@@ -84,6 +84,16 @@ jQuery(document).ready(function() {
       jQuery('.view.content-lists').addClass('content-lists-empty');
     }
   /* End */
+
+  /* Reset Button for Search view */
+    jQuery( "#edit-reset" ).click(function( event ) {
+      event.preventDefault();
+      jQuery('#edit-search-api-views-fulltext').val('');
+    });
+
+  /* End */
+
+
   setTimeout(assign_height, 5000);
 });
 
@@ -92,6 +102,6 @@ function assign_height(){
 
   /* Adjust sidebar height */
   var main_h = jQuery('.main-container').height();
-  jQuery('.left-sidebar').css('min-height', main_h);
+  //jQuery('.left-sidebar').css('min-height', main_h);
   /* End */
 }

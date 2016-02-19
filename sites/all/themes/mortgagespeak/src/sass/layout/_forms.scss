@@ -353,6 +353,13 @@ textarea:focus {
     }
   }
 }
+.page-user-edit {
+  .help-block,
+  .help-block.password-help {
+    display: none !important;
+  }
+
+}
 .login-upload-page, /* Upload page class */
 .login-form { /* Login page class */
   .login-left {
