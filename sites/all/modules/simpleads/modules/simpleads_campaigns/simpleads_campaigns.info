@@ -1,14 +1,13 @@
-name = "Campaigns"
-description = "Advertisement campaigns"
+name = "SimpleAds Campaigns"
+description = "This module allows to create advertisement campaigns."
 package = "SimpleAds"
 core = "7.x"
 
-scripts[] = simpleads_campaigns.js
+dependencies[] = "simpleads"
 
-dependencies[] = simpleads
-; Information added by Drupal.org packaging script on 2014-12-18
-version = "7.x-1.9"
+; Information added by Drupal.org packaging script on 2014-07-17
+version = "7.x-2.x-dev"
 core = "7.x"
 project = "simpleads"
-datestamp = "1418928698"
+datestamp = "1405628093"
 
