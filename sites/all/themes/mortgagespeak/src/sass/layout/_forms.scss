@@ -103,7 +103,9 @@ textarea:focus {
 .login-upload-page {
   display: inline-block;
   width: 100%;
-  border: 1px solid $border-cont;
+  border-top: 1px solid $border-cont;
+  border-right: 1px solid $border-cont;
+  border-left: 1px solid $border-cont;
   .help-block { display: none; }
   .panels-flexible-region-1-user_register_for_upload {
     width: 100%;
