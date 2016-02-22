@@ -43,21 +43,26 @@ global $base_url;
 ?>
 <div class="upload-main-container">
 	<div class="upload-upper-contain">
-		<label>Upload</label><label>What are you uploading?</label>
-		<div class="upload-content upload-drop-down"><?php print render($form['submitted']['content_types']);?></div>
-		<label>Tag My Content:</label>
-		<div class="upload-tags upload-drop-down"><?php print render($form['submitted']['tag_types']);?></div>
+		<label>Upload</label>
 	</div>
+
 	<div class="upload-below-contain">
-		<label>1. Attach Content</label>
-		<div class="attach-content"><?php print render($form['submitted']['attach_content']);?>
+		<div class="upload-type">
+		<label>1. What are you uploading?</label><?php 
+			print render($form['submitted']['upload_type']); 
+		?></div>
+		
+		<div class="attach-content">
+			<label>2. Attach Content</label>
+			<?php print render($form['submitted']['attach_content']);?>
 			<div class="description">
 				<div>File must be less than <span>6MB</span></div>
 				<div class="allowed-files">Allowed file types: <span>pdf doc docx</span></div>
 			</div>
 		</div>
-		<label>2. Email Notification/Record</label>
+		
 		<div class="upload-email-noti">
+			<label>3. Email Notification/Record</label>
 			<div><?php print render($form['submitted']['send_me_a_link']);?></div>
 			<div><?php print render($form['submitted']['email']);?></div>
 		</div>
@@ -67,4 +72,6 @@ global $base_url;
 		<label>By clicking "Submit" you agree to our <a href="<?php print $base_url; ?>/terms-and-conditions">terms and conditions</a>.</label>
 	</div>
 </div>
+
+
 

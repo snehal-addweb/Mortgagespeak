@@ -746,7 +746,7 @@ a {
       margin: 9px 15px 9px 0;
       &:nth-child(1) {
         padding-right: 15px;
-        border-right: 1px solid;
+        /*border-right: 1px solid;*/
       }
       &:nth-child(4) {
         margin-left: 30px;
@@ -779,9 +779,25 @@ a {
     letter-spacing: 1px;
     label {
       font-size: 16px;
-      &:nth-child(3) {
+      /*&:nth-child(3) {
         display: inline-block;
         width: 100%;
+        margin: 40px 0 15px;
+      }*/
+    }
+    .upload-type {
+      > label {
+        margin-bottom: 15px;
+      }
+    }
+    .webform-component--upload-type {
+      margin-left: 20px;
+      label {
+        font-size: 12px;
+      }
+    }
+    .attach-content {
+      label {
         margin: 40px 0 15px;
       }
     }
@@ -820,8 +836,13 @@ a {
     }
   }
   .upload-email-noti {
-    margin-left: 20px;
+    display: inline-block;
+    width: 100%;
+    > label {
+      margin: 40px 0 15px;
+    }
     .webform-component--send-me-a-link {
+      margin-left: 20px;
       label {
         float: left;
       }
@@ -837,7 +858,7 @@ a {
       float: left;
       clear: both;
       margin-top: 20px;
-      margin-left: 0;
+      margin-left: 20px;
       label {
         font-size: 12px;
       }
@@ -867,6 +888,10 @@ a {
       a {
         color: $blue;
       }
+    }
+    .webform-component--content-types,
+    .webform-component--tag-types {
+      display: none;
     }
   }
   /* End */
@@ -936,6 +961,13 @@ a {
 }*/
 .content-lists-empty {
   border: none;
+}
+.page-my-page-tracked-news {
+  .content-lists-empty {
+    border-top: 1px solid $border-cont;
+    border-right: 1px solid $border-cont;
+    border-left: 1px solid $border-cont;
+  }
 }
 .page-my-page {
   .content-lists {

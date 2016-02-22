@@ -247,11 +247,11 @@ textarea:focus {
     margin: 0;
     padding: 0 0 20px 20px;
     .btn {
-      padding: 10px 30px;
+      /*padding: 10px 30px;*/
       border: none;
       background-color: $blue-light-font;
       color: $white;
-      font-size: 18px;
+      /*font-size: 18px;*/
       text-transform: uppercase;
     }
   }
@@ -360,7 +360,9 @@ textarea:focus {
   .help-block.password-help {
     display: none !important;
   }
-
+  .form-item-field-company-tags-und select {
+    height: 375px;
+  }
 }
 .login-upload-page, /* Upload page class */
 .login-form { /* Login page class */

@@ -17,7 +17,7 @@ $assets-path: '../..';
  */
 .left-sidebar {
   border-right: 1px solid $border;
-  border-bottom: 1px solid $border;
+  border-bottom: none;
   background-color: $gray-light-f4;
   .well {
     margin: 0;
@@ -101,6 +101,7 @@ $assets-path: '../..';
           span {
             float: right;
             color: $blue-font;
+            line-height: 18px;
           }
         }
       }
