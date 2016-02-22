@@ -962,11 +962,13 @@ a {
 .content-lists-empty {
   border: none;
 }
-.page-my-page-tracked-news {
-  .content-lists-empty {
-    border-top: 1px solid $border-cont;
-    border-right: 1px solid $border-cont;
-    border-left: 1px solid $border-cont;
+.not-logged-in {
+  .page-my-page-tracked-news {
+    .content-lists-empty {
+      border-top: 1px solid $border-cont;
+      border-right: 1px solid $border-cont;
+      border-left: 1px solid $border-cont;
+    }
   }
 }
 .page-my-page {
