@@ -1017,7 +1017,8 @@ div.add-or-remove-shortcuts {
 .page-node .field-name-field-company-tag {
   width: 30%
 }
-.page-node .field-name-field-company-tag select {
+.page-node .field-name-field-company-tag select,
+.form-item-field-company-tags-und select {
   height: 375px;
 }
 .page-node .field-name-field-upload-document {
