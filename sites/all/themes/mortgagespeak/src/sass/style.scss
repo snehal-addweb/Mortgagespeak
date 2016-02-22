@@ -963,7 +963,7 @@ a {
   border: none;
 }
 .not-logged-in {
-  .page-my-page-tracked-news {
+  &.page-my-page-tracked-news {
     .content-lists-empty {
       border-top: 1px solid $border-cont;
       border-right: 1px solid $border-cont;

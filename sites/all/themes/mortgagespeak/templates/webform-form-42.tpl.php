@@ -48,7 +48,7 @@ global $base_url;
 
 	<div class="upload-below-contain">
 		<div class="upload-type">
-		<label>1. What are you uploading?</label><?php 
+		<label>1. What Are You Uploading?</label><?php 
 			print render($form['submitted']['upload_type']); 
 		?></div>
 		
