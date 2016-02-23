@@ -697,8 +697,8 @@ a {
             }
             .quote {
               font-family: Arial;
-              &::before { margin-right: 10px; }
-              &::after { margin-left: 10px; }
+              &::before { margin-right: 0; }
+              &::after { margin-left: 0; }
             }
           }
           .custom-ads {
