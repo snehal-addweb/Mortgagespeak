@@ -16,9 +16,11 @@ $assets-path: '../..';
  * Left sidebar
  */
 .left-sidebar {
+  width: 190px;
   border-right: 1px solid $border;
   border-bottom: none;
   background-color: $gray-light-f4;
+  &.p0 { padding-bottom: 20px; }
   .well {
     margin: 0;
     padding: 0;

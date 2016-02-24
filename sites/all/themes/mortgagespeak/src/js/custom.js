@@ -114,7 +114,7 @@ jQuery(document).ready(function() {
     }
 
 
-    jQuery('#user-register-form, #user-login, .not-logged-in.login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight + 35));
+    jQuery('#user-register-form, #user-login, .not-logged-in .login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight + 35));
     //jQuery('.logged-in .login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight));
     
     /* End */
