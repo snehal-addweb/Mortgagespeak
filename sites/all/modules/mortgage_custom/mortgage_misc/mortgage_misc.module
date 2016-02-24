@@ -58,6 +58,15 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
     /*$form['submitted']['content_types']['#empty_option'] = 'Content Types';
     $form['submitted']['tag_types']['#empty_option'] = 'Tag Types';*/
   }
+
+  if($form_id == 'user_profile_form') {
+    $form['picture']['#weight'] = '6';
+    $form['field_news_topics']['#weight'] = '7';
+    $form['field_company_tags']['#weight'] = '8';
+    $form['account']['mail']['#weight'] = '6';
+    
+  }
+
 }
 
 function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_id) {

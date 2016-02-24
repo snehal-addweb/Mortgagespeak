@@ -291,9 +291,6 @@ a {
 /**
  * Main content area
  */
-.left-sidebar {
-  width: 190px;
-}
 .content-area {
   max-width: 1000px;
   width: 100%;
@@ -586,7 +583,7 @@ a {
               display: inline-block;
               /*cursor: help;*/
               span {
-                margin: 0 5px;
+                margin: 0;
                 padding-bottom: 3px;
                 border-bottom: 1px solid #55A5FF;
               }
@@ -692,13 +689,13 @@ a {
                 margin-bottom: 0;
               }
               &::after {
-                float: none;
+                float: right;
               }
             }
             .quote {
               font-family: Arial;
-              &::before { margin-right: 0; }
-              &::after { margin-left: 0; }
+              &::before { margin-right: 10px; }
+              &::after { margin-left: 10px; }
             }
           }
           .custom-ads {
@@ -726,6 +723,11 @@ a {
             }
           }
         }
+      }
+    }
+    .webform-component {
+      .input-rc {
+        vertical-align: bottom;
       }
     }
   }
@@ -851,6 +853,7 @@ a {
       }
       .description {
         width: calc(100% - 50px);
+        margin-top: 4px;
         margin-left: 0;
       }
     }
@@ -1103,6 +1106,19 @@ a {
     }
   }
 }
+/* End */
+
+/**
+ * Welcome page
+ */
+
+#select-user-list-form {
+  #edit-select-user {
+    height: 375px;
+    width: auto;
+  }
+}
+
 /* End */
 
 

@@ -273,6 +273,17 @@ textarea:focus {
   .login-upload-page {
     border: none;
   }
+  #user-profile-form {
+    .form-item-current-pass,
+    .form-type-password-confirm {
+      .help-block {
+        display: block;
+      }
+    }
+    #edit-mimemail {
+      display: none;
+    }
+  }
 }
 
 .login-form {
@@ -356,7 +367,6 @@ textarea:focus {
   }
 }
 .page-user-edit {
-  .help-block,
   .help-block.password-help {
     display: none !important;
   }
