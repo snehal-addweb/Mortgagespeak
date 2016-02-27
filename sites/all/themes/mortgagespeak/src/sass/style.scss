@@ -978,6 +978,22 @@ a {
     }
   }
 }
+
+
+/* Pr activity */
+#block-block-15 {
+  float: left;
+  width: 100%;
+  padding: 20px;
+  /*margin: 20px 10px;*/
+  border-top: 1px solid $border-cont; /*$gray-light-f4*/
+  border-right: 1px solid $border-cont; /*$gray-light-f4*/
+  border-left: 1px solid $border-cont; /*$gray-light-f4*/
+  iframe {
+    width: 100%;
+  }
+}
+
 .page-my-page {
   .content-lists {
     .view-header {

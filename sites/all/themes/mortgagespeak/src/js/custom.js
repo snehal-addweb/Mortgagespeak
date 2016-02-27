@@ -107,13 +107,14 @@ jQuery(document).ready(function() {
 
     //alert(leftsideHeight + " LEFT"+ contentHeight + " CONET");
     if(leftsideHeight > contentHeight) {
-      jQuery('.content-lists, .webform-client-form').css('min-height', leftsideHeight - (hightlightedHeight + 35));
+      jQuery('.content-lists, .webform-client-form, #block-block-15').css('min-height', leftsideHeight - (hightlightedHeight + 35));
+      //jQuery('.content-lists .block-block-15').css('min-height', leftsideHeight - (hightlightedHeight + 35));block-block-15
     }
     else {
       jQuery('.left-sidebar').css('min-height', contentHeight);
     }
     jQuery('#user-register-form, #user-login, .not-logged-in .login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight + 35));
-    
+    jQuery('.content-lists.view-id-pr_activity').css('min-height', 0);
     //jQuery('.logged-in .login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight));
     
     /* End */
