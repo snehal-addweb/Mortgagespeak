@@ -564,7 +564,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                           $taxomony = taxonomy_term_load($topicvalue['tid']);
                                                                                           $topicsName .= $taxomony->name . ', ';
                                                                                         }
-                                                                                        $topicsName = rtrim($topicsName, ",");
+                                                                                        $topicsName = rtrim($topicsName, ", ");
                                                                                       }
                                                                                       $categoryName = $topicsName;
                                                                                     }
