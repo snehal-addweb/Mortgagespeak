@@ -81,7 +81,7 @@ function select_user_list_form_validate($form, &$form_state) {
 function select_user_list_form_submit($form, &$form_state) {
   global $base_url;
 
-  $debug = true;
+  $debug = false;
   $body = '';
   $pass = '';
   $topicsName = '';
@@ -525,10 +525,6 @@ function select_user_list_form_submit($form, &$form_state) {
                                                     <tbody>';
                                                                               foreach($arrNewsList as $node_id => $value) {
                                                                                 $nodeloads = node_load($node_id);
-                                                                                print('<pre style="color:red;">');
-                                                                                print_r($nodeloads);
-                                                                                print('</pre>');
-                                                                            
                                                                                 if(!empty($nodeloads->field_url)){
                                                                                   $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                                                                                 }
