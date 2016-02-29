@@ -247,11 +247,16 @@ function select_user_list_form_submit($form, &$form_state) {
     #######################################################################
     # Fetch Selected Perspective & Press Release content section start....
     ########################################################################    
+
+    $tab_placement = array('705','706');
+
+
     $query = db_select('node', 'n');    
     $query->fields('n', array('nid'));
-    $query->join('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
+    $query->join('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
     $query->condition('n.type', 'alpha_content', '=');
     $query->condition('n.created', array($today, $current), 'BETWEEN');
+    $query->condition('fct.field_tab_placement_tid', $tab_placement, 'IN');
 
     $query->orderBy('n.created', 'DESC');    
     $result = $query->execute();
@@ -267,7 +272,7 @@ function select_user_list_form_submit($form, &$form_state) {
       }    
     }    
 
-    $query = db_select('node', 'n');
+/*    $query = db_select('node', 'n');
     $query->join('field_data_field_assign_customas', 'fac', 'fac.entity_id = n.nid');
     $query->fields('n', array('nid'));
     $query->condition('n.type', 'alpha_content', '=');
@@ -285,7 +290,7 @@ function select_user_list_form_submit($form, &$form_state) {
         }
         $arr_press_releases[$record['nid']] = $record['nid'];
       }    
-    }        
+    }*/        
     #################################################################
     # Fetch Selected Perspective & Press Release content section start....
     #################################################################*/
@@ -576,7 +581,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
                                                                                     //Prespectives
                                                                                     if(($tabvalue['tid'] == '706') && empty($categoryName)) {
-                                                                                      $categoryName = 'Prespectives';
+                                                                                      $categoryName = 'Perspectives';
                                                                                     }
                                                                                   }
                                                                                   $company_image = $tracked_topicimg;
