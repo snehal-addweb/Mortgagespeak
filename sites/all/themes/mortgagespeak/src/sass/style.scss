@@ -1253,9 +1253,13 @@ a {
 }
 
 /* Advertisement */
+.all-page-ads {
+  clear: both;
+}
 #block-block-7,
 #block-randomblocks-press-perpesctive,
-#block-randomblocks-all-page-ads {
+#block-randomblocks-all-page-ads,
+.all-page-top-ads {
   position: relative;
   display: inline-block;
   height: 90px;

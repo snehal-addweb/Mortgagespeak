@@ -534,13 +534,13 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                 $nodeTitle = '';
                                                                                 if(!empty($nodeloads->title)) {
                                                                                   $dataTitle = strip_tags($nodeloads->title);
-                                                                                  $nodeTitle = truncate_utf8($dataTitle, 100, FALSE, TRUE, 1);
+                                                                                  $nodeTitle = truncate_utf8($dataTitle, 80, FALSE, TRUE, 1);
                                                                                 }
 
                                                                                 $nodedata = '';
                                                                                 if(!empty($nodeloads->body)) {
                                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                                                                  $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
+                                                                                  $nodedata = truncate_utf8($datanode, 80, FALSE, TRUE, 1); 
                                                                                 }
 
                                                                                 $company_image = '';
