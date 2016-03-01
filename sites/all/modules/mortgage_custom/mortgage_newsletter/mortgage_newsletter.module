@@ -370,14 +370,14 @@ function select_user_list_form_submit($form, &$form_state) {
                               <tbody>
                                 <tr>
                                   <td style="padding: 7px 0; margin:0; line-height: normal; " width="55"><a href="http://mortgagespeak.com" style="text-decoration: none;"><img alt="" src="http://www.mortgagespeak.com/files/ms.png" style="vertical-align: middle;" /></a></td>
-                                  <td style="padding: 0; margin: 0;">
+                                  <td style="padding: 7px 0 0; margin: 0; vertical-align: top;">
                                   <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
                                     <tbody>
                                       <tr>
                                         <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; ">News Intelligence</td>
                                       </tr>
                                       <tr>
-                                        <td style="padding: 0; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
+                                        <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
                                       </tr>
                                     </tbody>
                                   </table>
