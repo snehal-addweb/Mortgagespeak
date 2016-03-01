@@ -1088,6 +1088,14 @@ a {
       }
     }
   }
+  .pr-activity-view {
+    .main-link-container {
+      width: 100%;
+    }
+    .google-sign-btn {
+      float: right;
+    }
+  }
 }
 .empty-div {
   margin: 20px 0 0;
@@ -1255,6 +1263,8 @@ a {
 /* Advertisement */
 .all-page-ads {
   clear: both;
+  padding: 10px;
+  text-align: center;
 }
 #block-block-7,
 #block-randomblocks-press-perpesctive,
