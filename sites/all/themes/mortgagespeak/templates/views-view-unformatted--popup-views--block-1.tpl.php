@@ -8,7 +8,8 @@
 
 
 <?php $rows = $view->style_plugin->rendered_fields; 
-    $block = module_invoke('block', 'block_view', '8');    
+    //$block = module_invoke('randomblocks', 'block_view', 'pop_up_tab');  
+    $block = module_invoke('block', 'block_view', '8');  
 ?>
 <?php 
 	global $base_url;
@@ -20,7 +21,7 @@
 <?php endif; ?>
 <div class="popup-main-container">
 <div class="popup-header">
-	<div class="popup-title">Excerpt Time-Saver</div>
+	<div class="popup-title">Excerpt</div>
 	<div class="tooltips">
 		<div class="whats-this">(<span>What's this?</span>)</div>
 		<div class="tooltip-content">Save time. Article key point.</div>

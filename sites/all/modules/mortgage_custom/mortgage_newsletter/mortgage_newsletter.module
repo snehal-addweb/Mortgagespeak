@@ -356,45 +356,39 @@ function select_user_list_form_submit($form, &$form_state) {
     $tracked_topicimg = $base_url.'/sites/default/files/Key.png'; 
 
     # Template Main Section Start...
-    $body .= '<table style="width: 100%; max-width: 880px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
+    $body .= '<table style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
               <tbody>';
 
         # Template Header Section Start...
-        $body .= '  <tr style="background: #2e8cf0;" class="header-section">
-                      <td style="padding: 0; margin: 0; border: 1px solid #2e8cf0;">
-                        <table style="width: 100%; margin: 0px auto; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: none; " cellpadding="10">
-                          <tbody>
-                            <tr>
-                              <td style="padding: 0; margin:0;">
-                                <table class="header-table" style="width: 758px; margin: 0px auto; border-collapse: collapse; padding: 5px; border: none;" align="center">
-                                  <tbody>
-                                    <tr>
-                                      <td style="padding: 3px 0; margin:0; " width="55">
-                                        <a style="text-decoration: none;" href="http://mortgagespeak.com"><img src="http://www.mortgagespeak.com/files/ms.png" alt="" /></a>
-                                      </td>
-                                      <td style="padding: 0; margin: 0;">
-                                        <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
-                                          <tbody>
-                                             <tr>
-                                                <td style="padding:0 0 3px 0; margin:0; ">
-                                                  <span style="letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; height: 0px;">News Intelligence</span>
-                                                </td>
-                                             </tr>
-                                             <tr>
-                                                <td style="padding: 0; margin: 0;">
-                                                  <span style="letter-spacing: 1px; font-family: arial; font-size: 10pt; height: 0px; color: #ffffff;">by MortgageSpeak</span>
-                                                </td>
-                                             </tr>
-                                          </tbody>
-                                        </table>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+        $body .= '  <tr class="header-section" style="background: #2e8cf0;">
+                      <td style="padding: 0; margin: 0; border: 1px solid #2e8cf0; line-height: normal; ">
+                      <table cellpadding="10" style="width: 100%; margin: 5px auto; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: 1px solid #2e8cf0; ">
+                        <tbody>
+                          <tr>
+                            <td style="padding: 0; margin:0; line-height: normal; ">
+                            <table align="center" class="header-table" style="margin: 0px auto; border-collapse: collapse; padding: 0; border: none; width: 680px; line-height: normal; ">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 7px 0; margin:0; line-height: normal; " width="55"><a href="http://mortgagespeak.com" style="text-decoration: none;"><img alt="" src="http://www.mortgagespeak.com/files/ms.png" style="vertical-align: middle;" /></a></td>
+                                  <td style="padding: 0; margin: 0;">
+                                  <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
+                                    <tbody>
+                                      <tr>
+                                        <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; ">News Intelligence</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="padding: 0; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                       </td>
                     </tr>';
         # Template Header Section End...
@@ -413,7 +407,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
             $body .= '<tr>
                        <td style="border: 0px none; border-collapse: collapse; border-spacing: 0px; padding: 0;">
-                      <table style="border-radius: 5px 5px 0 0; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: none; margin: 0 auto; width: 100%; max-width: 760px;" align="center">
+                      <table style="border-radius: 5px 5px 0 0; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
                         <tbody>
                           <tr>
                             <td style="padding: 15px 20px 10px 20px; text-align: center;"><span style="font-family: arial; color: #666666; font-size: 14px;">Uniting your Client, Competitor, Prospect and Business Line news</span></td>
@@ -466,7 +460,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
             $body .= '<tr>
                         <td style="border-spacing: 0; border-collapse: collapse; width: 100%; padding: 0;">
-                          <table style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%; max-width: 760px" align="center">
+                          <table style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
                             <tbody>';
                               /* # Template Body Section Start...
                               $body .= '<tr class="tr-lvl-3" style="width:100%; ">
@@ -485,7 +479,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                       <tbody>
                                                         <tr style="width: 100%;">
                                                           <td style="font-weight: bold; text-decoration: none; font-size: 12px; font-family: arial; border-radius: 3px; padding:20px 10px 0 10px; color: #4c99ee; text-align: left; height: 15px; line-height: normal; width: 100%;" align="left">
-                                                            <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a style="text-decoration: none; font-family: arial; color: #4c99ee; border-radius: 3px; font-size: 12px; padding: 0; text-align: left; display: block; line-height: normal;" href="http://www.mortgagespeak.com" target="_blank"><span style="text-decoration: underline; color: #4c99ee;"><a href="'.$base_url.'/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in!</a></span>!</a></span></div>
+                                                            <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a style="text-decoration: none; font-family: arial; color: #4c99ee; border-radius: 3px; font-size: 12px; padding: 0; text-align: left; display: block; line-height: normal;" href="http://www.mortgagespeak.com" target="_blank"><span style="text-decoration: underline; color: #4c99ee;"><a href="'.$base_url.'/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in!</a></span></a></span></div>
                                                           </td>
                                                         </tr>
                                                         <tr style="width:100%;">                                                       <td style="padding:0px 10px 20px 10px;">
@@ -526,7 +520,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                     if(!empty($arrNewsList)) {
                                      $body .= '<tr>
                                                 <td style="width: 100%;padding: 10px 20px;">
-                                                  <table style="margin: 0px auto; border-collapse: collapse; width: 100%; max-width: 758px; border: none;">
+                                                  <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
                                                     <tbody>';
                                                                               foreach($arrNewsList as $node_id => $value) {
                                                                                 $nodeloads = node_load($node_id);
@@ -602,16 +596,16 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                 $url = $urlAlias;
                                                                                 $body .= '<tr>
                                                 <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
-                                                  <table style="margin: 0px auto; border-collapse: collapse; width: 100%; max-width: 758px; border: none;">
+                                                  <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
                                                     <tbody>
                                                       <tr>
                                                         <td style="width: 50px; padding: 0 10px 0 0;" valign="top" height="50">
                                                           <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img style="width: 50px; height: 50px; vertical-align: top;" src="'. $company_image .'" alt="" width="50" height="50" />&nbsp;</div>
                                                         </td>
-                                                        <td style="line-height: normal; vertical-align: top; text-align: left; width: 640px; max-width: 640px; padding: 0;">
-                                                          <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 640px; max-width: 640px;"><span style="color: #999999;">' . $categoryName. '</span></div>
-                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 640px; max-width: 640px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '">' . $nodeTitle . '</a></div>
-                                                          <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 640px; max-width: 640px;">' . $nodedata . '</div>
+                                                        <td style="line-height: normal; vertical-align: top; text-align: left; width: 540px; max-width: 540px; padding: 0;">
+                                                          <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 540px; max-width: 540px;"><span style="color: #999999;">' . $categoryName. '</span></div>
+                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '">' . $nodeTitle . '</a></div>
+                                                          <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 540px; max-width: 540px;">' . $nodedata . '</div>
                                                         </td>
                                                       </tr>
                                                     </tbody>
@@ -623,7 +617,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                     }
                                     else {
                                       $body .= '<tr>
-                                        <td style="padding: 0 20px 20px 20px; width: 100%;">
+                                        <td style="padding: 10px 20px 20px 20px; width: 100%;">
                                           <table class="both_table" style=" width:100%;margin: 0px auto; border-collapse: collapse; border: none;">
                                             <tbody><tr class="tr-lvl-5"><td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;"><div style="font-size:12px; color: #b8b8b8; font-family:arial;">No Headline Today</div></td></tr></tbody></table></td></tr>';
                                     }
