@@ -125,6 +125,17 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
   
 }
 
+/** 
+* Set Newsletter password on user save
+**/
+function mortgage_misc_user_presave(&$edit, $account, $category) {
+  if(!empty($_REQUEST['pass']['pass1'])){
+    $new_pass = $_REQUEST['pass']['pass1'];
+    $edit['field_newsletter_password']['und'][0]['value'] = $new_pass;
+  }
+}
+
+
 /*
 function mortgage_misc_entity_info_alter(&$entity_info) {
   $entity_info['taxonomy_term']['uri callback'] = 'mortgage_misc_taxonomy_term_uri';

@@ -26,7 +26,7 @@
 	else{
 		$url = $fullurl . '/' . drupal_get_path_alias('node/' . $row['node_nid']);
 	}
-	$strFinal  =  $row['node_title']. '   ' . $body;
+	$strFinal  =  $row['node_title'];	//. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
 	$url = urlencode(html_entity_decode($url, ENT_COMPAT, 'UTF-8'));
 ?>
@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="views-field views-field-field-alpha-news-topics">    
-			<span class="views-label views-label-field-alpha-news-topics">Topic:</span>    
+			<span class="views-label views-label-field-alpha-news-topics">Mortgage Topic:</span>    
 			<div class="field-content">
 				<?php print $row['node_field_alpha_news_topics']; ?>
 			</div>  
@@ -66,11 +66,11 @@
 			  <div class="sharethis-wrapper">
 
 					<span class="chicklets linkedin">
-						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $body; ?>" target="_blank" class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $strFinal; ?>" target="_blank" class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
 					</span>
 
 					<span class="chicklets facebook">
-						<a href='http://www.facebook.com/sharer.php?u=<?php print $url; ?>&t=<?php echo $title; ?>' target="_blank" class="facebook" title="Share on Facebook"><img src="/sites/all/themes/mortgage_new_theme/images/facebook1.png" /></a>
+						<a href='http://www.facebook.com/sharer.php?u=<?php print $url; ?>&t=<?php echo $strFinal; ?>' target="_blank" class="facebook" title="Share on Facebook"><img src="/sites/all/themes/mortgage_new_theme/images/facebook1.png" /></a>
 					</span>
 
 					<span class="chicklets twitter">
@@ -78,7 +78,7 @@
 					</span>
 
 					<span class="chicklets googleplus">
-						<a href="https://plus.google.com/share?url=<?php print ($url); ?>&body=<?php print $body; ?>" target="_blank" class="google" title="Share on Google+"><img src="/sites/all/themes/mortgage_new_theme/images/google1.png" /></a>
+						<a href="https://plus.google.com/share?url=<?php print ($url); ?>&body=<?php print $strFinal; ?>" target="_blank" class="google" title="Share on Google+"><img src="/sites/all/themes/mortgage_new_theme/images/google1.png" /></a>
 					</span>
 
 					<span class="chicklets email">

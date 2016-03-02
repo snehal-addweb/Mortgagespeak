@@ -470,3 +470,13 @@ textarea:focus {
   }
 }
 /* End */
+
+/**
+* Captcha image
+*/
+.captcha {
+  img {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+}
