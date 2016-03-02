@@ -9,7 +9,7 @@
 
 <?php $rows = $view->style_plugin->rendered_fields; 
     //$block = module_invoke('randomblocks', 'block_view', 'pop_up_tab');  
-    $block = module_invoke('block', 'block_view', '8');  
+    //$block = module_invoke('block', 'block_view', '8');  
 ?>
 <?php 
 	global $base_url;
@@ -94,7 +94,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="custom-ads"><?php print render($block['content']); ?></div>
+			<div class="custom-ads"><?php print views_embed_view('custom_ads_for_pr_and_perpesctive','block_6', $nid); ?></div>
 	  </div>
 	<?php endforeach; ?>
 </div>

@@ -64,7 +64,7 @@
 		</div>
 
 		<div class="views-field views-field-field-alpha-news-topics">    
-			<span class="views-label views-label-field-alpha-news-topics">Topic:</span>    
+			<span class="views-label views-label-field-alpha-news-topics">Mortgage Topic:</span>    
 			<div class="field-content">
 				<?php print $row['field_alpha_news_topics']; ?>
 			</div>  
