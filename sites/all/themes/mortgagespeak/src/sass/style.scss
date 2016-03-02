@@ -870,7 +870,7 @@ a {
         font-size: 12px;
       }
       input {
-        height: 28px;
+        height: 35px;
         border-radius: 0;
         color: #7C7E81;
         font-size: 12px;
@@ -1001,9 +1001,10 @@ a {
       padding: 5px 5px 5px 18px;
       border-bottom: 1px solid $border;
       .pg-number {
+        float: left;
         display: inline-block;
         width: 65px;
-        padding: 7px 0;
+        padding: 6px 0;
         color: $gray-69;
         font-size: 14px;
       }
@@ -1089,6 +1090,11 @@ a {
           display: none;
         }
       }
+    }
+  }
+  .view-tracked-news {
+    .view-filters {
+      padding-right: 30px;
     }
   }
   .pr-activity-view {
