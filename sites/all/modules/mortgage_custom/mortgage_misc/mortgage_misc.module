@@ -91,8 +91,8 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
     $user_company = array('All'=>'Company A-M ');
     $user_company1 = array('All'=>'Company N-Z ');
 
-    $arrATOM = array('1', '3', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
-    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+    $arrATOM = array('1', '3', '2', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
+    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
     if(isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])){
         foreach($user_info->field_company_tags[LANGUAGE_NONE] as $tidKey=>$tidVal){
