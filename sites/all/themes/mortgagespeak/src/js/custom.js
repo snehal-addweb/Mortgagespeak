@@ -121,6 +121,21 @@ jQuery(document).ready(function() {
 
 
   //setTimeout(assign_height, 3000);
+
+  jQuery('.page-my-page-tracked-companies #edit-company-tag').change(function() {
+      jQuery('.page-my-page-tracked-companies #edit-company-tag1').find('option:first').attr('selected', 'selected');
+  });
+
+  jQuery('.page-my-page-tracked-companies #edit-company-tag1').change(function() {
+      jQuery('.page-my-page-tracked-companies #edit-company-tag').find('option:first').attr('selected', 'selected');
+  });
+
+  jQuery( "#views-exposed-form-tracked-companies-page .views-exposed-widgets select" ).change(function() {
+    var current_val = jQuery(this).val();                                                          
+    jQuery("#views-exposed-form-tracked-companies-page .views-exposed-widgets select").val("All");
+    jQuery(this).val(current_val);
+  });
+
 });
 
 
