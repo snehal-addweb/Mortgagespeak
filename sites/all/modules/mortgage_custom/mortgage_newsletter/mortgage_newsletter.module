@@ -85,6 +85,9 @@ function select_user_list_form_submit($form, &$form_state) {
   $body = '';
   $pass = '';
   $categoryName = '';
+  $arrNewstopics = array();
+  $arrCompanytags = array();
+  $arrTabplacements = array();
 
   $abbrTimeZone = "CST";
   date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
@@ -206,6 +209,7 @@ function select_user_list_form_submit($form, &$form_state) {
       while ($record = $result->fetchAssoc()) {
         if(!array_key_exists($record['nid'], $arrNewsList)) {
           $arrNewsList[$record['nid']] = $record['nid'];
+          $arrCompanytags[$record['nid']] = $record['nid'];
         }
         $arr_user_company_tags_nids[$record['nid']] = $record['nid'];
       }    
@@ -229,6 +233,8 @@ function select_user_list_form_submit($form, &$form_state) {
 
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_alpha_news_topics', 'fnt', 'fnt.entity_id = n.nid');
+    $query->leftjoin('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
+    $query->condition('fct.field_tab_placement_tid', '701', '=');
     $query->fields('n', array('nid'));
     $query->condition('n.type', 'alpha_content', '=');
     $query->condition('n.status', '1', '=');
@@ -254,6 +260,7 @@ function select_user_list_form_submit($form, &$form_state) {
       while ($record = $result->fetchAssoc()) {
         if(!array_key_exists($record['nid'], $arrNewsList)) {
           $arrNewsList[$record['nid']] = $record['nid'];
+          $arrNewstopics[$record['nid']] = $record['nid'];
         }
         $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
       }    
@@ -293,6 +300,7 @@ function select_user_list_form_submit($form, &$form_state) {
       while ($record = $result->fetchAssoc()) {
         if(!array_key_exists($record['nid'], $arrNewsList)) {
           $arrNewsList[$record['nid']] = $record['nid'];
+          $arrTabplacements[$record['nid']] = $record['nid'];
         }
         $arr_perspective_content[$record['nid']] = $record['nid'];
       }    
@@ -334,7 +342,8 @@ function select_user_list_form_submit($form, &$form_state) {
       print("<pre> :: arr_user_company_tags ::");
       print_r($arr_user_company_tags);
       print("</pre>");
-/*      print("<pre> :: arr_user_company_tags ::");
+
+      print("<pre> :: arr_user_company_tags ::");
       print_r($arr_user_company_tags);
       print("</pre>");
 
@@ -357,7 +366,7 @@ function select_user_list_form_submit($form, &$form_state) {
       print("<pre> :: arr_press_releases ::");
       print_r($arr_press_releases);
       print("</pre>");
-*/
+
       print("<pre> :: arrNewsList (FOR UNIQUE NODES ONLY) ::");
       print_r($arrNewsList);
       print("</pre>");
@@ -579,49 +588,64 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                 }
 
                                                                                 $company_image = '';
-                                                                                if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
-                                                                                  $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
-                                                                                  $taxo_info = taxonomy_term_load($companyTid);
-                                                                                  if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
-                                                                                    $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
-                                                                                    $company_image = image_style_url("tracked_images", $img_url);
+                                                                                if(in_array($node_id, $arrCompanytags)) {
+                                                                                  if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
+                                                                                    $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+                                                                                    $taxo_info = taxonomy_term_load($companyTid);
+                                                                                    if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
+                                                                                      $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
+                                                                                      $company_image = image_style_url("tracked_images", $img_url);
+                                                                                    }
+                                                                                    $categoryName = 'Tracked Company';
                                                                                   }
-                                                                                  $categoryName = 'Tracked Company';
                                                                                 }
-                                                                                else if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-                                                                                  foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
-                                                                                    
-                                                                                    // News Topics
-                                                                                    if($tabvalue['tid'] == '701') {
-                                                                                      if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-                                                                                        foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
-                                                                                          $taxomony = taxonomy_term_load($topicvalue['tid']);
-                                                                                          $topicsName .= $taxomony->name . ', ';
+                                                                                else if(in_array($node_id, $arrNewstopics)) {
+                                                                                  if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
+                                                                                    $topicsName = '';
+                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
+                                                                                      // News Topics
+                                                                                      if($tabvalue['tid'] == '701') {
+                                                                                        if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+                                                                                          foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
+                                                                                            $taxomony = taxonomy_term_load($topicvalue['tid']);
+                                                                                            $topicsName .= $taxomony->name . ', ';
+                                                                                          }
+                                                                                          $topicsName = rtrim($topicsName, ", ");
                                                                                         }
-                                                                                        $topicsName = rtrim($topicsName, ", ");
+                                                                                        $categoryName = $topicsName;
                                                                                       }
-                                                                                      $categoryName = $topicsName;
-                                                                                    }
-                                                                                
-                                                                                    // Press Releases
-                                                                                    if(($tabvalue['tid'] == '705') && empty($categoryName)) {
-                                                                                      $categoryName = 'Press Releases';
-                                                                                    }
-
-                                                                                    //Prespectives
-                                                                                    if(($tabvalue['tid'] == '706') && empty($categoryName)) {
-                                                                                      $categoryName = 'Perspectives';
-                                                                                    }
-
-                                                                                    //Blogs
-                                                                                    if(($tabvalue['tid'] == '703') && empty($categoryName)) {
-                                                                                      $categoryName = 'Blogs';
                                                                                     }
                                                                                   }
-                                                                                  $company_image = $tracked_topicimg;
+                                                                                }
+                                                                                else if(in_array($node_id, $arrTabplacements)) {
+                                                                                  if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
+                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
+                                                                                      $categoryName = '';
+                                                                                      
+                                                                                      // Press Releases
+                                                                                      if(($tabvalue['tid'] == '705')) {
+                                                                                        $categoryName = 'Press Releases';
+                                                                                        break;
+                                                                                      }
+
+                                                                                      //Prespectives
+                                                                                      if(($tabvalue['tid'] == '706')) {
+                                                                                        $categoryName = 'Perspectives';
+                                                                                        break;
+                                                                                      }
+
+                                                                                      //Blogs
+                                                                                      if(($tabvalue['tid'] == '703')) {
+                                                                                        $categoryName = 'Blogs';
+                                                                                        break;
+                                                                                      }
+                                                                                    }
+                                                                                    $company_image = $tracked_topicimg;
+                                                                                  }
                                                                                 }
                                                                                 else {
                                                                                     if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+                                                                                        $topicsName = '';
                                                                                         foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
                                                                                           $taxomony = taxonomy_term_load($topicvalue['tid']);
                                                                                           $topicsName .= $taxomony->name . ', ';
