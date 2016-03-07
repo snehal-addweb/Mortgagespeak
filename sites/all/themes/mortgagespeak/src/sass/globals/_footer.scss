@@ -15,9 +15,11 @@ $assets-path: '../..';
  * Footer design
  */
 .footer {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   width: 100%;
-  margin: 0;
+  margin: -5px 0 0;
   padding: 0 0 0 205px;
   border: none;
   background-color: #8E8E8E;

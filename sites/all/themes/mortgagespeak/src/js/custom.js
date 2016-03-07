@@ -80,47 +80,17 @@ jQuery(document).ready(function() {
   /* End */
 
   /* Add class to view if it is empty */
-    if (jQuery('.view.content-lists').find('.view-empty').length == 1) {   
-      jQuery('.view.content-lists').addClass('content-lists-empty');
-    }
+  if (jQuery('.view.content-lists').find('.view-empty').length == 1) {   
+    jQuery('.view.content-lists').addClass('content-lists-empty');
+  }
   /* End */
 
   /* Reset Button for Search view */
-    jQuery( "#edit-reset" ).click(function( event ) {
-      event.preventDefault();
-      jQuery('#edit-search-api-views-fulltext').val('');
-    });
-
+  jQuery( "#edit-reset" ).click(function( event ) {
+    event.preventDefault();
+    jQuery('#edit-search-api-views-fulltext').val('');
+  });
   /* End */
-
-  /* Set Max height to Sidebar and Content */
-
-    var leftsideHeight = 0;
-    var contentHeight = 0;
-    var hightlightedHeight = 0;
-
-    leftsideHeight = jQuery('.left-sidebar').outerHeight();
-    contentHeight = jQuery('.content-area').outerHeight();
-    hightlightedHeight = jQuery('.highlighted').height();
-
-    //alert(leftsideHeight + "LEFT " + contentHeight + "CNOET " + hightlightedHeight + "highlighted");
-
-    //alert(leftsideHeight + " LEFT"+ contentHeight + " CONET");
-    if(leftsideHeight > contentHeight) {
-      jQuery('.content-lists, .webform-client-form, #block-block-15').css('min-height', leftsideHeight - (hightlightedHeight + 35));
-      //jQuery('.content-lists .block-block-15').css('min-height', leftsideHeight - (hightlightedHeight + 35));block-block-15
-    }
-    else {
-      jQuery('.left-sidebar').css('min-height', contentHeight);
-    }
-    jQuery('#user-register-form, #user-login, .not-logged-in .login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight + 35));
-    jQuery('.content-lists.view-id-pr_activity').css('min-height', 0);
-    //jQuery('.logged-in .login-upload-page').css('min-height', leftsideHeight - (hightlightedHeight));
-    
-    /* End */
-
-
-  //setTimeout(assign_height, 3000);
 
   jQuery('.page-my-page-tracked-companies #edit-company-tag').change(function() {
       jQuery('.page-my-page-tracked-companies #edit-company-tag1').find('option:first').attr('selected', 'selected');
@@ -135,14 +105,36 @@ jQuery(document).ready(function() {
     jQuery("#views-exposed-form-tracked-companies-page .views-exposed-widgets select").val("All");
     jQuery(this).val(current_val);
   });
-
 });
 
+/* Set Max height to Sidebar and Content */
+jQuery(window).bind("load", function() {
+  //alert('sdaf');
+  var leftsideHeight = 0;
+  var contentHeight = 0;
+  var hightlightedHeight = 0;
 
-function assign_height(){
+  leftsideHeight = jQuery('.left-sidebar').outerHeight();
+  contentHeight = jQuery('.content-area').outerHeight();
+  region_content = jQuery('.region-content').outerHeight();
 
-  /* Adjust sidebar height */
-  var main_h = jQuery('.main-container').height();
-  jQuery('.left-sidebar').css('min-height', main_h);
-  /* End */
-}
+  var new_contentHeight = leftsideHeight - (contentHeight - region_content);
+  //var content_border = contentHeight - hightlightedHeight;
+
+  console.log('left'+leftsideHeight);
+  console.log('content'+contentHeight);
+  console.log('region_content'+region_content);
+  console.log('new_contentHeight'+new_contentHeight);
+
+  if (leftsideHeight > contentHeight) {
+    console.log('if');
+    jQuery('.content-lists, .webform-client-form, .page-user #block-system-main form').css('min-height', new_contentHeight);
+    jQuery('.left-sidebar').css('min-height', leftsideHeight);
+  }
+  else if (leftsideHeight < contentHeight) {
+    console.log('else');
+    jQuery('.left-sidebar').css('min-height', contentHeight);
+    jQuery('.content-lists, .webform-client-form, .page-user #block-system-main form').css('min-height', new_contentHeight);
+  }
+});
+/* End */
