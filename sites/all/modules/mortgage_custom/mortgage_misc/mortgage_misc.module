@@ -136,7 +136,7 @@ function mortgage_misc_user_presave(&$edit, $account, $category) {
 }
 
 
-/*
+
 function mortgage_misc_entity_info_alter(&$entity_info) {
   $entity_info['taxonomy_term']['uri callback'] = 'mortgage_misc_taxonomy_term_uri';
 }
@@ -147,8 +147,8 @@ function mortgage_misc_taxonomy_term_uri($term) {
   $user_info = user_load($user->uid);
 
   if(in_array('News Intelligence', $user->roles)) {
-    $arrATOM = array('1', '3', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm');
-    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+    $arrATOM = array('1', '3', '2', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
+    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
     $user_company = array();
     
     if(isset($user_info->field_company_tags) && !empty($user_info->field_company_tags)) {
@@ -189,4 +189,3 @@ function mortgage_misc_taxonomy_term_uri($term) {
   // default taxonomy term uri
   return taxonomy_term_uri($term);
 }
-*/

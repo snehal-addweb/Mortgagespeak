@@ -382,7 +382,7 @@ a {
     width: 100%;
     margin: 0;
     padding: 20px 10px 10px 94px;
-    border-top: 1px solid $gray-light-f4;
+    /*border-top: 1px solid $gray-light-f4;*/
     &:first-child {
       border-top: none;
     }
@@ -972,6 +972,10 @@ a {
     }
   }
 }
+.webform-client-form-19,
+.webform-client-form-20 {
+  border: none;
+}
 /*.webform-client-form {
   border-bottom: 1px solid $border-cont;
 }*/
@@ -1107,6 +1111,7 @@ a {
     }
   }
   .pr-activity-view {
+    min-height: 0 !important;
     .main-link-container {
       width: 100%;
     }
@@ -1437,7 +1442,8 @@ a {
           &.linkedin-share a { background-image: url('../images/linkedin-share.png'); }
           &.google-plus-share a { background-image: url('../images/google-plus-share_new.png'); }
           &.contribute-share a { background-image: url('../images/contribute-share.png'); }
-          &.copy-to-clipboard a { background-image: url('../images/save.png'); }
+          &.copy-to-clipboard a { background-image: url('../images/copylink.png'); }
+          &.save-flag a { background-image: url('../images/save.png'); }
         }
       }
       .pdf-upload-document {
