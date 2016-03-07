@@ -378,7 +378,7 @@ a {
   .upload-below-contain {
     position: relative;
     display: inline-block;
-    min-height: 170px;
+    min-height: 200px;
     width: 100%;
     margin: 0;
     padding: 20px 10px 10px 94px;
@@ -450,7 +450,7 @@ a {
       display: inline-block;
       width: 100%;
       margin: 0 0 15px;
-      color: #505050;
+      color: #696B6F;
       font-size: 14px;
     }
     .views-field-field-alpha-news-topics,
@@ -1011,7 +1011,7 @@ a {
   .content-lists {
     .view-header {
       position: relative;
-      padding: 5px 5px 5px 18px;
+      padding: 5px;
       border-bottom: 1px solid $border;
       .pg-number {
         float: left;
@@ -1026,6 +1026,7 @@ a {
         padding: 7px 0;
         .tracked-news-lists {
           float: left;
+          padding-top: 4px;
         }
         .tracked-news {
           display: inline-block;

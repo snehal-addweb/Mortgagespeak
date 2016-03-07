@@ -180,6 +180,7 @@ function select_user_list_form_submit($form, &$form_state) {
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
     $query->fields('n', array('nid'));
+    $query->condition('n.status', '1', '=');
     $query->condition('n.type', 'alpha_content', '=');
 
     if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
@@ -230,6 +231,7 @@ function select_user_list_form_submit($form, &$form_state) {
     $query->leftJoin('field_data_field_alpha_news_topics', 'fnt', 'fnt.entity_id = n.nid');
     $query->fields('n', array('nid'));
     $query->condition('n.type', 'alpha_content', '=');
+    $query->condition('n.status', '1', '=');
     if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
       $yesterday  = strtotime("-7 day", $current);
       $query->condition('n.created',array($yesterday,$current),'BETWEEN');
@@ -270,6 +272,7 @@ function select_user_list_form_submit($form, &$form_state) {
     $query->fields('n', array('nid'));
     $query->join('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
     $query->condition('n.type', 'alpha_content', '=');
+    $query->condition('n.status', '1', '=');
     $query->condition('fct.field_tab_placement_tid', $tab_placement, 'IN');
     if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
       $yesterday  = strtotime("-7 day", $current);
@@ -608,6 +611,11 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                     //Prespectives
                                                                                     if(($tabvalue['tid'] == '706') && empty($categoryName)) {
                                                                                       $categoryName = 'Perspectives';
+                                                                                    }
+
+                                                                                    //Blogs
+                                                                                    if(($tabvalue['tid'] == '703') && empty($categoryName)) {
+                                                                                      $categoryName = 'Blogs';
                                                                                     }
                                                                                   }
                                                                                   $company_image = $tracked_topicimg;
