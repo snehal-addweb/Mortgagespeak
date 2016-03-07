@@ -114,9 +114,9 @@ jQuery(window).bind("load", function() {
   var contentHeight = 0;
   var hightlightedHeight = 0;
 
-  leftsideHeight = jQuery('.left-sidebar').outerHeight();
+  leftsideHeight = jQuery('.left-sidebar').outerHeight() + 30;
   contentHeight = jQuery('.content-area').outerHeight();
-  region_content = jQuery('.region-content').outerHeight();
+  region_content = jQuery('.region-content').outerHeight() + 30;
 
   var new_contentHeight = leftsideHeight - (contentHeight - region_content);
   //var content_border = contentHeight - hightlightedHeight;

@@ -305,7 +305,7 @@ a {
   max-width: 1000px;
   width: 100%;
   /*padding: 15px;*/
-  padding: 15px 15px 30px;
+  padding: 15px 15px 20px;
 }
 
 /* Common Content lists */
@@ -382,7 +382,7 @@ a {
     width: 100%;
     margin: 0;
     padding: 20px 10px 10px 94px;
-    /*border-top: 1px solid $gray-light-f4;*/
+    border-top: 1px solid $gray-light-f4;
     &:first-child {
       border-top: none;
     }
@@ -1465,5 +1465,37 @@ a {
       line-height: normal;
     }
   }
+}
+/* End */
+
+/* My page pr activity */
+.page-my-page-pr-activity {
+  .region-content {
+    display: inline-block;
+    width: 100%;
+  }
+  #block-system-main {
+    .content-lists {
+      border-top: none;
+    }
+  }
+  #block-block-15 {
+    border-top: none;
+  }
+}
+/* End */
+
+/* Set border height */
+.webform-client-form,
+.page-user #block-system-main form,
+.login-upload-page,
+#block-block-15 {
+  padding-bottom: 30px;
+}
+.panels-flexible-1 .panels-flexible-row {
+  padding-bottom: 0;
+}
+.logged-in .login-upload-page {
+  min-height: 0 !important;
 }
 /* End */
