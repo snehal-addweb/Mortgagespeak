@@ -128,7 +128,7 @@ jQuery(window).bind("load", function() {
 
   if (leftsideHeight > contentHeight) {
     console.log('if');
-    jQuery('.content-lists, .webform-client-form, .page-user #block-system-main form').css('min-height', new_contentHeight);
+    jQuery('.content-lists, .webform-client-form, .page-user #block-system-main form, .login-upload-page, #block-block-15').css('min-height', new_contentHeight);
     jQuery('.left-sidebar').css('min-height', leftsideHeight);
   }
   else if (leftsideHeight < contentHeight) {
