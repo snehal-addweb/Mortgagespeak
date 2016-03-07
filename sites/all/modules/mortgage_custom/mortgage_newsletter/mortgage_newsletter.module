@@ -613,6 +613,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                           $topicsName = rtrim($topicsName, ", ");
                                                                                         }
                                                                                         $categoryName = $topicsName;
+                                                                                        $company_image = $tracked_topicimg;
                                                                                       }
                                                                                     }
                                                                                   }
