@@ -25,6 +25,21 @@
 	}
 ?>
 
+<?php // Copy to clipboard script ?>
+<script type="text/javascript">
+  function customCopyText(objId) {
+    var copyTextarea = document.querySelector('#' + objId);
+    copyTextarea.select();
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + msg);
+    }
+    catch (err) {
+      console.log('Oops, unable to copy');
+    }
+  }
+</script>
 
 <div class="node-main-container content-lists">
 <div class="view-header"></div>
@@ -52,9 +67,14 @@
 			<div class="share-icon google-plus-share">
 				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" target="_blank" class="prgoogle" title="Share on Google+"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
 			</div>
-
-			<div class="share-icon contribute-share">
-				<a href="<?php print $base_url; ?>/upload" target="_blank" title="Email this content">Submit</a>
+			
+			<div class="share-icon copy-to-clipboard" title="Copy to Clipboard">
+				<textarea class="js-copytextarea" style="display:none;" id="copytext_<?php print $node->nid;?>"><?php print $url; ?></textarea>
+	      <a href="javascript:void(0)" class="js-textareacopybtn" onclick="customCopyText('copytext_<?php print $node->nid; ?>');">Copy Textarea</a>
+      </div>
+			
+			<div class="share-icon save-flag">
+				<?php print flag_create_link('saved_articles', $node->nid); ?>
 			</div>
 	</div>
 
