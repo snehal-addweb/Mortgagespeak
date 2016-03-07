@@ -14,7 +14,7 @@
 			<?php $block = module_invoke('block', 'block_view', '14');
 				print render($block['content']);;
 			?>
-			<div class="register-free">Or <a href="/user/register">REGISTER (free)</a></div> 
+			<div class="register-free"><a href="/user/register">REGISTER (free)</a></div> 
 		</div>
 	</div>
 </div>

@@ -13,7 +13,7 @@ function mortgage_newsletter_menu() {
     'access arguments' => array('administer users')
   );
  
-  $items['weekly_newsletter'] = array(
+  $items['create-weekly-newsletter'] = array(
   'type' => MENU_CALLBACK,
   'title' => 'Select User List Form', //page title
   'description' => 'A form to select list of users to generate newsletter.',
@@ -81,10 +81,9 @@ function select_user_list_form_validate($form, &$form_state) {
 function select_user_list_form_submit($form, &$form_state) {
   global $base_url;
 
-  $debug = false;
+  $debug = FALSE;
   $body = '';
   $pass = '';
-  $topicsName = '';
   $categoryName = '';
 
   $abbrTimeZone = "CST";
@@ -182,7 +181,17 @@ function select_user_list_form_submit($form, &$form_state) {
     $query->leftJoin('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
     $query->fields('n', array('nid'));
     $query->condition('n.type', 'alpha_content', '=');
-    $query->condition('n.created', array($today, $current), 'BETWEEN');
+
+    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+      $yesterday  = strtotime("-7 day", $current);
+      $query->condition('n.created',array($yesterday,$current),'BETWEEN');
+    }
+    else {
+      if($form_state['complete form']['#action'] == '/create-newsletter') {
+        $query->condition('n.created', array($today, $current), 'BETWEEN');
+      }
+    }
+    
 
     if(!empty($arr_user_company_tags))
       $query->condition('fct.field_company_tag_tid', $arr_user_company_tags, 'IN');
@@ -221,7 +230,15 @@ function select_user_list_form_submit($form, &$form_state) {
     $query->leftJoin('field_data_field_alpha_news_topics', 'fnt', 'fnt.entity_id = n.nid');
     $query->fields('n', array('nid'));
     $query->condition('n.type', 'alpha_content', '=');
-    $query->condition('n.created', array($today, $current), 'BETWEEN');
+    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+      $yesterday  = strtotime("-7 day", $current);
+      $query->condition('n.created',array($yesterday,$current),'BETWEEN');
+    }
+    else {
+      if($form_state['complete form']['#action'] == '/create-newsletter') {
+        $query->condition('n.created', array($today, $current), 'BETWEEN');
+      }
+    }
 
     if(!empty($arr_user_news_topics))
       $query->condition('fnt.field_alpha_news_topics_tid', $arr_user_news_topics, 'IN');
@@ -249,14 +266,20 @@ function select_user_list_form_submit($form, &$form_state) {
     ########################################################################    
 
     $tab_placement = array('705','706');
-
-
     $query = db_select('node', 'n');    
     $query->fields('n', array('nid'));
     $query->join('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
     $query->condition('n.type', 'alpha_content', '=');
-    $query->condition('n.created', array($today, $current), 'BETWEEN');
     $query->condition('fct.field_tab_placement_tid', $tab_placement, 'IN');
+    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+      $yesterday  = strtotime("-7 day", $current);
+      $query->condition('n.created',array($yesterday,$current),'BETWEEN');
+    }
+    else {
+      if($form_state['complete form']['#action'] == '/create-newsletter') {
+        $query->condition('n.created', array($today, $current), 'BETWEEN');
+      }
+    }
 
     $query->orderBy('n.created', 'DESC');    
     $result = $query->execute();
@@ -348,8 +371,15 @@ function select_user_list_form_submit($form, &$form_state) {
     $node->type = 'simplenews';
     $node->status = 1;
     $node->uid = 1;
-    $node->language = LANGUAGE_NONE; 
-    $node->title = "Newsletter";
+    $node->language = LANGUAGE_NONE;
+    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+      $node->title = "Weekly Newsletter";
+    } 
+    else {
+      if($form_state['complete form']['#action'] == '/create-newsletter') {
+       $node->title = "Newsletter";
+      }
+    }
     $node->body['und'][0]['format'] = 'full_html';
 
     $primg = $base_url.'/sites/default/files/PR.png';
@@ -523,6 +553,8 @@ function select_user_list_form_submit($form, &$form_state) {
                                                   <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
                                                     <tbody>';
                                                                               foreach($arrNewsList as $node_id => $value) {
+                                                                                $topicsName = '';
+                                                                                $categoryName = '';
                                                                                 $nodeloads = node_load($node_id);
                                                                                 if(!empty($nodeloads->field_url)){
                                                                                   $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
@@ -555,7 +587,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                 }
                                                                                 else if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
                                                                                   foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
-
+                                                                                    
                                                                                     // News Topics
                                                                                     if($tabvalue['tid'] == '701') {
                                                                                       if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
@@ -619,7 +651,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                       $body .= '<tr>
                                         <td style="padding: 10px 20px 20px 20px; width: 100%;">
                                           <table class="both_table" style=" width:100%;margin: 0px auto; border-collapse: collapse; border: none;">
-                                            <tbody><tr class="tr-lvl-5"><td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;"><div style="font-size:12px; color: #b8b8b8; font-family:arial;">No Headline Today</div></td></tr></tbody></table></td></tr>';
+                                            <tbody><tr class="tr-lvl-5"><td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;"><div style="font-size:12px; color: #b8b8b8; font-family:arial;">No headlines today.</div></td></tr></tbody></table></td></tr>';
                                     }
                               /*$body .= '</tbody></table></td></tr>';*/
                               # Template Body Section For All Content Type End...
