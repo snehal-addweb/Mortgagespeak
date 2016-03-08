@@ -57,7 +57,7 @@ $assets-path: '../..';
   }
   .logo-right {
     float: left;
-    width: 94px;
+    width: 102px;
     padding: 0 0 0 8px;
     a {
       font-size: 11px;
@@ -139,26 +139,99 @@ $assets-path: '../..';
     .login-link {
       float: left;
       width: 94px;
-      a {
-        float: left;
+      margin-bottom: 18px;
+      .client-login {
+        display: inline-block;
         width: 100%;
         padding: 4px 0;
-        border: 1px solid #86898D;
-        color: #86898D;
+        border: 1px solid #498BF4;
+        border-radius: 4px;
+        background: #498BF4;
+        color: #FFF;
         font-size: 12px;
         line-height: normal;
+        font-family: arial;
         text-align: center;
-        text-decoration: none;
-        @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
-        &:hover {
+        /*&:hover {
           background: #F4F4F4;
           color: #333;
+        }*/
+        a {
+          padding: 0 4px;
+          border-right: 1px solid rgba(255, 255, 255, .4);
+          color: #FFF;
+          line-height: 12px;
+          text-decoration: none;
+          &:last-child { border-right: none;}
+          &:hover {
+            text-decoration: underline;
+          }
+          &:focus {
+            text-decoration: none;
+          }
         }
-        &:focus {
-          background: #E8E8E8;
+      }
+      .logout-text {
+        a {
+          float: left;
+          width: 100%;
+          padding: 4px 0;
+          border: 1px solid #86898D;
+          color: #86898D;
+          font-size: 12px;
+          line-height: normal;
+          text-align: center;
+          text-decoration: none;
+          @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
+          &:hover {
+            background: #F4F4F4;
+            color: #333;
+          }
+          &:focus {
+            background: #E8E8E8;
+          }
         }
       }
     }
+  }
+  .top-day {
+    display: inline-block;
+    width: 65px;
+    margin-top: 10px;
+    color: #333;
+    font-size: 31px;
+    font-weight: 400;
+    font-family: arial;
+    letter-spacing: 1px;
+  }
+  .top-left-date {
+    float: left;
+    display: inline-block;
+    width: auto;
+    color: #777;
+    .top-month-yr {
+      display: inline-block;
+      width: 35px;
+      font-size: 11px;
+      line-height: 14px;
+      text-transform: uppercase;
+      span {
+        display: inline;
+        width: 100%;
+      }
+    }
+  }
+  .total-content {
+    float: right;
+    display: inline-block;
+    width: 57px;
+    padding: 5px 0;
+    border-radius: 3px;
+    background-color: #F07A22;
+    color: #FFF;
+    font-size: 12px;
+    font-family: arial;
+    text-align: center;
   }
 }
 .logged-in .main-logo-container .logo-right .user-welcome span a::after {
