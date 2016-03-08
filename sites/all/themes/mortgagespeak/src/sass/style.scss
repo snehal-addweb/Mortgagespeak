@@ -250,7 +250,7 @@ a {
         float: left;
         height: 42px;
         margin: 0;
-        padding: 11px 22px;
+        padding: 9px 22px;
         border-top: 1px solid $border;
         border-bottom: 1px solid $border;
         border-left: 1px solid $border;
@@ -279,16 +279,16 @@ a {
           }
         }
         &.active {
-          padding: 12px 22px 11px;
+          padding: 11px 22px;
           &::before {
-            margin: 0 12px 0 0;
+            margin: -1px 12px 0 0;
           }
         }
         &::before {
           float: left;
           height: 18px;
           width: 18px;
-          margin: 0 12px 0 0;
+          margin: 2px 12px 0 0;
           background-repeat: no-repeat;
           content: '';
         }
