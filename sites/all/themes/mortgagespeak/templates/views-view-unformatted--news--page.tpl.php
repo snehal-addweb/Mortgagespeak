@@ -27,7 +27,7 @@
 	}
 	$strFinal  =  $row['title'];	//. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
-	$url1 = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
+	$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
 ?>
 
 <?php // Copy to clipboard script ?>
@@ -102,7 +102,7 @@
 						<a href='mailto:Article@MortgageSpeak.com?subject=<?php echo $title; ?>&body=I wanted to share this article with you: <?php print ($url. '     ' .$body); ?>' class="email" target="_blank" title="Email this content"><img src="/sites/all/themes/mortgage_new_theme/images/mail1.png" /></a>
 					</span>
 					<span class="chicklets copy-to-clipboard">
-					  <textarea class="js-copytextarea" style="display:none;" id="copytext_<?php print $nid; ?>"><?php print $url1; ?></textarea>
+					  <textarea class="js-copytextarea"  id="copytext_<?php print $nid; ?>"><?php print $url1; ?></textarea>
 				    <a href="javascript:void(0)" class="copy-link js-textareacopybtn" title="Copy to Clipboard" onclick="customCopyText('copytext_<?php print $nid; ?>');">Copy Textarea</a>
 			    	</span>
 				</div> 
@@ -113,3 +113,5 @@
 		<div class="views-popup-container"><?php print views_embed_view('popup_views','block_1', $nid); ?></div>
   </div>
 <?php endforeach; ?>
+
+
