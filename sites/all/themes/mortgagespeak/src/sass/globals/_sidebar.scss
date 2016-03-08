@@ -57,7 +57,7 @@ $assets-path: '../..';
   }
   .logo-right {
     float: left;
-    width: 102px;
+    width: 108px;
     padding: 0 0 0 8px;
     a {
       font-size: 11px;
@@ -138,14 +138,14 @@ $assets-path: '../..';
     }
     .login-link {
       float: left;
-      width: 94px;
+      width: 100px;
       margin-bottom: 18px;
       .client-login {
         display: inline-block;
         width: 100%;
         padding: 4px 0;
         border: 1px solid #498BF4;
-        border-radius: 4px;
+        border-radius: 3px;
         background: #498BF4;
         color: #FFF;
         font-size: 12px;
@@ -163,9 +163,9 @@ $assets-path: '../..';
           line-height: 12px;
           text-decoration: none;
           &:last-child { border-right: none;}
-          &:hover {
+          /*&:hover {
             text-decoration: underline;
-          }
+          }*/
           &:focus {
             text-decoration: none;
           }
@@ -173,22 +173,22 @@ $assets-path: '../..';
       }
       .logout-text {
         a {
-          float: left;
+          display: inline-block;
           width: 100%;
           padding: 4px 0;
-          border: 1px solid #86898D;
-          color: #86898D;
+          border: 1px solid #498BF4;
+          border-radius: 4px;
+          background: #498BF4;
+          color: #FFF;
           font-size: 12px;
           line-height: normal;
+          font-family: arial;
           text-align: center;
-          text-decoration: none;
-          @include background(#FBFBFB, #F4F4F4, #EEE, #E8E8E8);
-          &:hover {
-            background: #F4F4F4;
-            color: #333;
-          }
+          /*&:hover {
+            text-decoration: underline;
+          }*/
           &:focus {
-            background: #E8E8E8;
+            text-decoration: none;
           }
         }
       }
@@ -212,7 +212,7 @@ $assets-path: '../..';
     .top-month-yr {
       display: inline-block;
       width: 35px;
-      font-size: 11px;
+      font-size: 13px;
       line-height: 14px;
       text-transform: uppercase;
       span {

@@ -515,7 +515,12 @@ a {
             .twitter-share-button { width: 14px; background-image: url('../images/twitter-sm.png'); }
             .google { width: 22px; background-image: url('../images/google-plus-sm.png'); }
             .email { width: 20px; background-image: url('../images/email-sm.png'); }
-            .copy-link { width: 20px; padding: 0 20px 0 0; background-image: url('../images/copysmall.png'); color: transparent; }
+            .copy-link {
+              width: 20px;
+              padding: 0 20px 0 0;
+              background-image: url('../images/copysmall.png');
+              color: transparent;
+            }
           }
         }
         .flag-saved-articles {
@@ -737,6 +742,13 @@ a {
             }
           }
         }
+      }
+    }
+    .copy-to-clipboard {
+      .js-copytextarea {
+        position: absolute;
+        top: 0;
+        left: -2000px;
       }
     }
     .webform-component {
@@ -1444,7 +1456,14 @@ a {
           &.linkedin-share a { background-image: url('../images/linkedin-share.png'); }
           &.google-plus-share a { background-image: url('../images/google-plus-share_new.png'); }
           &.contribute-share a { background-image: url('../images/contribute-share.png'); }
-          &.copy-to-clipboard a { background-image: url('../images/copylink.png'); }
+          &.copy-to-clipboard {
+            .js-copytextarea {
+              position: absolute;
+              top: 0;
+              left: -2000px;
+            }
+            a { background-image: url('../images/copylink.png'); }
+          }
           &.save-flag a { background-image: url('../images/save.png'); }
           .flag-wrapper {
             float: left;
