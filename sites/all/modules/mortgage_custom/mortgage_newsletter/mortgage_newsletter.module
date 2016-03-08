@@ -259,9 +259,9 @@ function select_user_list_form_submit($form, &$form_state) {
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
         if(!array_key_exists($record['nid'], $arrNewsList)) {
-          $arrNewsList[$record['nid']] = $record['nid'];
-          $arrNewstopics[$record['nid']] = $record['nid'];
-        }
+            $arrNewsList[$record['nid']] = $record['nid'];
+            $arrNewstopics[$record['nid']] = $record['nid'];
+          }
         $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
       }    
     }
@@ -299,9 +299,11 @@ function select_user_list_form_submit($form, &$form_state) {
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
         if(!array_key_exists($record['nid'], $arrNewsList)) {
-          $arrNewsList[$record['nid']] = $record['nid'];
-          $arrTabplacements[$record['nid']] = $record['nid'];
-        }
+          //if(!array_key_exists($record['nid'], $arrCompanytags)) {
+            $arrNewsList[$record['nid']] = $record['nid'];
+            $arrTabplacements[$record['nid']] = $record['nid'];
+          }
+        //}
         $arr_perspective_content[$record['nid']] = $record['nid'];
       }    
     }    
@@ -362,6 +364,10 @@ function select_user_list_form_submit($form, &$form_state) {
       print("<pre> :: arr_perspective_content ::");
       print_r($arr_perspective_content);
       print("</pre>");
+
+      print('<pre :: arrTabplacements style="color:red;">');
+      print_r($arrTabplacements);
+      print('</pre>');
 
       print("<pre> :: arr_press_releases ::");
       print_r($arr_press_releases);
