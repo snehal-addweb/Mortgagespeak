@@ -675,7 +675,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                         </td>
                                                         <td style="line-height: normal; vertical-align: top; text-align: left; width: 540px; max-width: 540px; padding: 0;">
                                                           <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 540px; max-width: 540px;"><span style="color: #999999;">' . $categoryName. '</span></div>
-                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '">' . $nodeTitle . '</a></div>
+                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodeTitle . '</a></div>
                                                           <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 540px; max-width: 540px;">' . $nodedata . '</div>
                                                         </td>
                                                       </tr>
