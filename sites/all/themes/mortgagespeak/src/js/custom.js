@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
   /* End */
 
   /* Add class to view if it is empty */
-  if (jQuery('.view.content-lists').find('.view-empty').length == 1) {   
+  if (jQuery('.view.content-lists').find('.view-content').length == 0) {   
     jQuery('.view.content-lists').addClass('content-lists-empty');
   }
   /* End */

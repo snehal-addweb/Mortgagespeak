@@ -16,6 +16,22 @@
 	global $user;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 ?>
+
+<script type="text/javascript">
+  function customCopyText(objId) {
+    var copyTextarea = document.querySelector('#' + objId);
+    copyTextarea.select();
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + msg);
+    }
+    catch (err) {
+      console.log('Oops, unable to copy');
+    }
+  }
+</script>
+
 <?php if (!empty($title)): ?>
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
@@ -35,20 +51,20 @@
 		if(!empty($row['field_upload_document'])){
 			//$title_link = 'https://docs.google.com/viewerng/viewer?url=' .$row['field_upload_document'];
 			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
-			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+			$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
 		}
 		else if(!empty($row['field_url'])){
-			$url = $row['field_url'];
+			$url1 = $row['field_url'];
 			$title_link = $row['field_url'];
 		}
 		else{
-			$url = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+			$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
 			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
 		}
 
 		$strFinal  =  $row['title'];	//. '   ' . $row['body'];
 		$strFinal = str_replace("\"", "'", $strFinal);
-		$url = urlencode(html_entity_decode($url, ENT_COMPAT, 'UTF-8'));
+		$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
 		?>
 
 	  <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
@@ -82,6 +98,12 @@
 								<span class="chicklets email">
 									<a href='mailto:Article@MortgageSpeak.com?subject=<?php echo $title; ?>&body=I wanted to share this article with you: <?php print ($url. '     ' .$body); ?>' class="email" target="_blank" title="Email this content"><img src="/sites/all/themes/mortgage_new_theme/images/mail1.png" /></a>
 								</span>
+
+								<span class="chicklets copy-to-clipboard">
+								  <textarea class="js-copytextarea" style="display:none;" id="copytext_<?php print $nid; ?>"><?php print $url1; ?></textarea>
+							    <a href="javascript:void(0)" class="copy-link js-textareacopybtn" title="Copy to Clipboard" onclick="customCopyText('copytext_<?php print $nid; ?>');">Copy Textarea</a>
+			    			</span>
+
 							</div> 
 							 <!-- Flag link-->
 							 <?php print $row['ops'];?>
