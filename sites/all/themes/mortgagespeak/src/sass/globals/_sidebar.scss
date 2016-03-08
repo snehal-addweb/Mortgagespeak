@@ -143,7 +143,7 @@ $assets-path: '../..';
       .client-login {
         display: inline-block;
         width: 100%;
-        padding: 4px 0;
+        padding: 4px 8px;
         border: 1px solid #498BF4;
         border-radius: 3px;
         background: #498BF4;
@@ -157,12 +157,12 @@ $assets-path: '../..';
           color: #333;
         }*/
         a {
-          padding: 0 4px;
+          padding: 0 4px 0 1px;
           border-right: 1px solid rgba(255, 255, 255, .4);
           color: #FFF;
           line-height: 12px;
           text-decoration: none;
-          &:last-child { border-right: none;}
+          &:last-child { padding: 0 0 0 1px;border-right: none;}
           &:hover {
             text-decoration: none;
           }
