@@ -217,9 +217,9 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'mortgagespeak',
-      'username' => 'root',
-      'password' => '',
+      'database' => 'addwebin_mgspeak',
+      'username' => 'addwebin_mgspeak',
+      'password' => 'mortgage123',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
