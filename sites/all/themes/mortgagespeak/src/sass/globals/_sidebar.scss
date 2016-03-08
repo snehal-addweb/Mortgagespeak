@@ -163,9 +163,9 @@ $assets-path: '../..';
           line-height: 12px;
           text-decoration: none;
           &:last-child { border-right: none;}
-          /*&:hover {
-            text-decoration: underline;
-          }*/
+          &:hover {
+            text-decoration: none;
+          }
           &:focus {
             text-decoration: none;
           }
@@ -184,9 +184,9 @@ $assets-path: '../..';
           line-height: normal;
           font-family: arial;
           text-align: center;
-          /*&:hover {
-            text-decoration: underline;
-          }*/
+          &:hover {
+            text-decoration: none;
+          }
           &:focus {
             text-decoration: none;
           }
