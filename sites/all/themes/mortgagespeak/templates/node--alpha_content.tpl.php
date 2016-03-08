@@ -68,9 +68,9 @@
 				<a href="https://plus.google.com/share?url=<?php print $url; ?>&body=<?php print $body; ?>" target="_blank" class="prgoogle" title="Share on Google+"><img src="/sites/all/themes/mortgage_new_theme/images/g+.png" /></a>
 			</div>
 			
-			<div class="share-icon copy-to-clipboard" title="Copy to Clipboard">
+			<div class="share-icon copy-to-clipboard">
 				<textarea class="js-copytextarea" style="display:none;" id="copytext_<?php print $node->nid;?>"><?php print $url; ?></textarea>
-	      <a href="javascript:void(0)" class="js-textareacopybtn" onclick="customCopyText('copytext_<?php print $node->nid; ?>');">Copy Textarea</a>
+	      <a href="javascript:void(0)" class="js-textareacopybtn" title="Copy to Clipboard" onclick="customCopyText('copytext_<?php print $node->nid; ?>');">Copy Textarea</a>
       </div>
 			
 			<div class="share-icon save-flag">
