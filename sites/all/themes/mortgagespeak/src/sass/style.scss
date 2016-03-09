@@ -1146,6 +1146,9 @@ a {
 }
 .page-my-page-tracked-news.not-logged-in {
   .view-header {
+    .main-link-container {
+      padding: 10px;
+    }
     .view-filters {
       display: none;
     }
