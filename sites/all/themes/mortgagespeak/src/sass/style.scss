@@ -762,7 +762,7 @@ a {
   /* Upload page */
   .upload-upper-contain {
     float: left;
-    padding: 5px 18px;
+    padding: 6px 18px;
     label,
     .upload-content,
     .upload-tags {
@@ -989,6 +989,11 @@ a {
 }
 .content-lists {
   padding-bottom: 20px;
+}
+.search-content {
+  label {
+    font-size: 14px;
+  }
 }
 .webform-client-form-19,
 .webform-client-form-20 {
