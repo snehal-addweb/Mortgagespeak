@@ -146,7 +146,10 @@ $assets-path: '../..';
         padding: 4px 8px;
         border: 1px solid #498BF4;
         border-radius: 3px;
-        background: #498BF4;
+        background-color: #498BF4;
+        background-image: url('../images/horizontal-divider.png');
+        background-position: 44px center;
+        background-repeat: no-repeat;
         color: #FFF;
         font-size: 12px;
         line-height: normal;
@@ -164,13 +167,13 @@ $assets-path: '../..';
           text-decoration: none;
           &:first-child {
             position: relative;
-            right: 3px;
+            right: 5px;
             bottom: 1px;
           }
           &:last-child {
             position: relative;
             bottom: 1px;
-            left: 3px;
+            left: 5px;
             border-right: none;
           }
           &:hover {
