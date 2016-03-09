@@ -43,7 +43,7 @@ $assets-path: '../..';
   float: left;
   display: inline-block;
   width: 100%;
-  padding: 10px 8px;
+  padding: 10px 8px 0;
   border-bottom: 1px solid $border;
   .logo-left {
     float: left;
@@ -66,7 +66,7 @@ $assets-path: '../..';
       float: left;
       height: 41px;
       width: 94px;
-      margin: -3px 0 3px;
+      margin: -3px 0 2px;
       font-size: 14px;
       span {
         display: inline-block;
@@ -139,7 +139,7 @@ $assets-path: '../..';
     .login-link {
       float: left;
       width: 100px;
-      margin-bottom: 18px;
+      margin-bottom: 13px;
       .client-login {
         display: inline-block;
         width: 100%;
@@ -162,7 +162,8 @@ $assets-path: '../..';
           color: #FFF;
           line-height: 12px;
           text-decoration: none;
-          &:last-child { padding: 0 0 0 1px;border-right: none;}
+          &:first-child { padding: 0 5px 0 0; }
+          &:last-child { padding: 0 0 0 3px;border-right: none;}
           &:hover {
             text-decoration: none;
           }
@@ -197,7 +198,7 @@ $assets-path: '../..';
   .top-day {
     display: inline-block;
     width: 65px;
-    margin-top: 10px;
+    margin-top: 5px;
     color: #333;
     font-size: 31px;
     font-weight: 400;
