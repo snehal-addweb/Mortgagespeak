@@ -995,9 +995,12 @@ a {
     }
   }
 }
+.content-lists.pr-activity-view,
+#block-block-15.content-lists { padding-bottom: 0; }
 .content-lists {
   padding-bottom: 20px;
 }
+
 .webform-client-form-19,
 .webform-client-form-20 {
   border: none;
