@@ -42,7 +42,7 @@
 </script>
 
 <div class="node-main-container content-lists">
-<div class="view-header"></div>
+	<div class="view-header"></div>
 	<h2><?php print $node->title; ?></h2>
 	<div class="node-share-content">
 		<div class="share-title">

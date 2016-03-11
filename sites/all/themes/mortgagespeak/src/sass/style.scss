@@ -1032,6 +1032,7 @@ a {
   border-right: 1px solid $border-cont; /*$gray-light-f4*/
   border-left: 1px solid $border-cont; /*$gray-light-f4*/
   iframe {
+    height: 850px;
     width: 100%;
   }
 }
@@ -1490,8 +1491,13 @@ a {
         }
       }
       .pdf-upload-document {
-        padding: 5px;
+        padding: 20px;
         .document-presc {
+          a {
+            display: inline-block;
+            margin-bottom: 12px;
+            font-size: 14px;
+          }
           #pdf_reader {
             height: 780px;
             width: 100%;

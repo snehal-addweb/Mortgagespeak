@@ -287,6 +287,10 @@ textarea:focus {
   }
 }
 
+#user-login .register-free {
+  padding-left: 50px;
+}
+
 .login-form {
   .help-block {
     display: none;
@@ -425,9 +429,6 @@ textarea:focus {
           }
         }
       }
-    }
-    .register-free {
-      padding-left: 50px;
     }
   }
 }
