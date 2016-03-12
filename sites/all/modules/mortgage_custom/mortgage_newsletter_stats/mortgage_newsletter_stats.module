@@ -111,21 +111,25 @@ function mortgage_stats(){
 									$qryNewsSel .= " AND sc.timestamp BETWEEN '".$frmtime."' AND '".$totime."'  ";
 								}
 							}
-		$qryNewsSel .= " GROUP BY n.nid, sub.mail ORDER BY sc.timestamp DESC";
+		$qryNewsSel .= " GROUP BY n.nid, sub.mail, sc.timestamp ORDER BY sc.timestamp DESC";
 
 		
 		$newsletter_urls = db_query($qryNewsSel);
 
 		$base_url1 = 'http://mortgage.saurabhdhariwal.com/';
 		$arrNewsletterNids = array();
-
+		$index = 0;
+		$index1 = 0;
 		while($news_RowInfo = $newsletter_urls->fetchAssoc()) {
+
 		  $url = $news_RowInfo['url'];
 		  $sub_url = str_replace($base_url1, "", $news_RowInfo['url']);
 
 		  $arrUrl = explode(",", $url);			
 			$arrResultUrl = array_map("addPrefixSuffix", $arrUrl);
 			$url = implode(",", $arrResultUrl);
+			$url = htmlspecialchars_decode($url);
+
 
 		  $arrSubUrl = explode(",", $sub_url);
 			$arrResultSubUrl = array_map("addPrefixSuffix", $arrSubUrl);
@@ -135,14 +139,15 @@ function mortgage_stats(){
 								FROM field_data_field_url fu
 								WHERE fu.field_url_value IN ($url)";
 			$result1 = db_query($qrySel1);
-			$index = 0;
-			$index1 = 0;
-			while($rowinfo1 = $result1->fetchAssoc()) {
-				$nid = $rowinfo1['nid'];
+
+			$rowinfo1 = $result1->fetchAllAssoc('nid');
+			
+			foreach ($rowinfo1 as $key => $value) {
+				$nid = $value->nid;
 				//$arrNewsletterNids[$nid] = $nid;
-				$arrNewsletterNids[$nid][$index]['nid'] = $nid;
-				$arrNewsletterNids[$nid][$index]['created'] = $news_RowInfo['created'];
-				$arrNewsletterNids[$nid][$index]['mail'] = $news_RowInfo['mail'];
+				$arrNewsletterNids[$index]['nid'] = $nid;
+				$arrNewsletterNids[$index]['created'] = $news_RowInfo['created'];
+				$arrNewsletterNids[$index]['mail'] = $news_RowInfo['mail'];
 				$index++;
 			}
 
@@ -150,21 +155,23 @@ function mortgage_stats(){
 								FROM url_alias ua
 								WHERE ua.alias IN ({$sub_url})";
 			$result2 = db_query($qrySel2);
-			while($rowinfo2 = $result2->fetchAssoc()) {
-				$nid = $rowinfo2['nid'];
-				$arrNewsletterNids[$nid][$index1]['nid'] = $nid;
-				$arrNewsletterNids[$nid][$index1]['created'] = $news_RowInfo['created'];
-				$arrNewsletterNids[$nid][$index1]['mail'] = $news_RowInfo['mail'];
-				$index1++;
+			$rowinfo2 = $result2->fetchAllAssoc('nid');
+			foreach ($rowinfo2 as $key2 => $value2) {
+				$nid = $value2->nid;
+				$arrNewsletterNids[$index]['nid'] = $nid;
+				$arrNewsletterNids[$index]['created'] = $news_RowInfo['created'];
+				$arrNewsletterNids[$index]['mail'] = $news_RowInfo['mail'];
+				$index++;
 			}
 		}
+
 
 
 		// Fetch Data from Newsletter Nids
 		$final = 0;
 		foreach ($arrNewsletterNids as $nidKey => $nidValue) {
-			foreach ($nidValue as $key => $value) {
-				$nodeloads = node_load($value['nid']);
+			//foreach ($nidValue as $key => $value) {
+				$nodeloads = node_load($nidValue['nid']);
 
 				// Get url for Headlines
 			 	if(!empty($nodeloads->field_url)){
@@ -176,8 +183,8 @@ function mortgage_stats(){
 
 	      $headline = "<a href='".$urlAlias."' target=_blank>".$nodeloads->title."</a>";
 	      $arrNodeList[$final]['url'] = $urlAlias;
-				$arrNodeList[$final]['timestamp'] = $value['created'];
-				$arrNodeList[$final]['email'] = $value['mail'];
+				$arrNodeList[$final]['timestamp'] = $nidValue['created'];
+				$arrNodeList[$final]['email'] = $nidValue['mail'];
 				$arrNodeList[$final]['main_node_title'] = $headline;
 				$arrNodeList[$final]['source'] = 'Newsletter';
 
@@ -241,7 +248,7 @@ function mortgage_stats(){
 		  	}
 		  	$T_arr[] = $arrNodeList[$final]['topic'];
 		  	$final++;
-			}
+			//}
 		}
 
 		// Query to get user activity from Website.
@@ -267,8 +274,8 @@ function mortgage_stats(){
       else {
         $urlAlias = $Alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
       }
-
-      $headline = "<a href='".'node/'.$nodeloads->nid."' target=_blank>".$nodeloads->title."</a>";
+      $node_url = $Alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+      $headline = "<a href='".$node_url."' target=_blank>".$nodeloads->title."</a>";
       $arrNodeList[$final]['url'] = $urlAlias;
 			$arrNodeList[$final]['timestamp'] = $website_RowInfo['timestamp'];
 			$arrNodeList[$final]['email'] = $website_RowInfo['mail'];
