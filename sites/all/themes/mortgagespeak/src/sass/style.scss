@@ -384,7 +384,7 @@ a {
     width: 100%;
     margin: 0;
     padding: 20px 10px 10px 94px;
-    border-top: 1px solid $gray-light-f4;
+    /*border-top: 1px solid $gray-light-f4;*/
     &:first-child {
       border-top: none;
     }
@@ -1274,6 +1274,10 @@ a {
   }
   .pr-activity-view {
     min-height: 0 !important;
+    .view-header {
+      width: 100%;
+      margin: 0;
+    }
     .main-link-container {
       width: 100%;
     }
