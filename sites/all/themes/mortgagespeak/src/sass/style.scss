@@ -1053,12 +1053,37 @@ a {
         padding: 12px;
         background-color: $gray-light-f4;
         line-height: 0;
+        text-align: center;
         label {
           float: left;
           margin-bottom: 0;
+          line-height: normal;
+        }
+        .stats-date-filter {
+          display: inline-block;
+          line-height: normal;
+          form {
+            * {
+              float: left;
+              width: auto;
+              vertical-align: middle;
+            }
+            input[type='text'] {
+              max-width: 150px;
+              width: 100% !important;
+              margin: -2px 10px 0;
+            }
+            input[type='submit'] {
+              border: 1px solid #8E8E8E;
+              background-color: #8E8E8E;
+              color: $white;
+              @include border-radius(0);
+            }
+          }
         }
         .total-clicks {
           float: right;
+          margin-top: 6px;
           color: #717173;
           font-size: 14px;
           span {
@@ -1099,7 +1124,7 @@ a {
     .user-activity {
       .user-activity-header {
         padding: 8px;
-        background-color: #EEE;
+        background-color: $gray-light-f4;
         color: #000;
         font-size: 12px;
         font-weight: bold;
