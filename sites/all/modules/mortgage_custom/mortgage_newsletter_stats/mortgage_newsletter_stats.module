@@ -89,7 +89,7 @@ function mortgage_stats(){
 	    'company_name' => array('data' => t('Company'), 'field' => 'nw.company_name','class' => array('company')),
 	    'topic_taxonomy_name' => array('data' => t('Topic'), 'field' => 'nw.topic_taxonomy_name'),
 	    'headline' => array('data' => t('Headline'), 'field' => 'nw.headline','class' => array('headline')),
-	    /*'Location' => array('data' => t('Location'), 'field' => 'Newsletter'),*/
+	    'Location' => array('data' => t('Location'), 'field' => 'Newsletter'),
 	  );
 
 		//DAte Filter
@@ -438,7 +438,7 @@ function mortgage_stats(){
 					    $row['company'],
 					    $row['topic'],
 				     	$row['main_node_title'],
-					   /* $row['source'],*/
+					    $row['source'],
 			    );
 			  }
 
