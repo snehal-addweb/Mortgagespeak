@@ -105,8 +105,15 @@ function mortgage_stats(){
 							INNER JOIN simplenews_subscriber sub ON sc.snid = sub.snid
 							INNER JOIN node n ON scu.nid = n.nid
 							LEFT OUTER JOIN field_data_field_url fu ON n.nid = fu.entity_id
-							WHERE (sub.mail IN  ($subscriber_emailid))
-							GROUP BY n.nid, sub.mail";
+							WHERE (sub.mail IN  ($subscriber_emailid))";
+							if($_POST['datsubmit']){
+								if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
+									$qryNewsSel .= " AND sc.timestamp BETWEEN '".$frmtime."' AND '".$totime."'  ";
+								}
+							}
+		$qryNewsSel .= " GROUP BY n.nid, sub.mail ORDER BY sc.timestamp DESC";
+
+		
 		$newsletter_urls = db_query($qryNewsSel);
 
 		$base_url1 = 'http://mortgage.saurabhdhariwal.com/';
@@ -242,7 +249,13 @@ function mortgage_stats(){
 							FROM heartbeat_activity hba
 							INNER JOIN users u ON hba.uid = u.uid
 							INNER JOIN node n ON hba.nid = n.nid 
-							WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews' ORDER BY hba.timestamp";
+							WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews'";
+							if($_POST['datsubmit']){
+								if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
+									$qrySiteSel .= "AND hba.timestamp BETWEEN '".$frmtime."' AND '".$totime."'";
+								}
+							}
+		$qrySiteSel .="ORDER BY hba.timestamp";
 		$website_nids = db_query($qrySiteSel);
 		while($website_RowInfo = $website_nids->fetchAssoc()) {
 			$nodeloads = node_load($website_RowInfo['nid']);
@@ -352,7 +365,24 @@ function mortgage_stats(){
 
 		$output .= '<div class="stats-main-container">';
 			$output.='<div class="bar-chart-main">
-								<div class="bar-header"><label>Content Click Breakdown</label><div class="total-clicks">Total Clicks: <span>'.$total_clicks.'</span></div></div>';
+								<div class="bar-header">
+									<label>Content Click Breakdown</label>
+									<div class="stats-date-filter">
+										<form method="post">
+											<div class="from-container">
+												<span>From</span>
+												<input type="text" class="clicks_date" id="datepicker" name="fromdate" value="'.$getfromdate.'" />
+											</div>
+											<div class="to-container">
+												<span>To</span>
+												<input type="text" class="clicks_date" id="todatepicker" name="todate" value="'.$todate.'" style="width:90px;"/>
+											</div>
+											<input type="submit" value="Go" name="datsubmit" class="datsubmit">
+										</form>
+									</div>
+									<div class="total-clicks">Total Clicks: <span>'.$total_clicks.'</span>
+									</div>
+								</div>';
 
 					
 
