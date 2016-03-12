@@ -996,7 +996,9 @@ a {
   }
 }
 .content-lists.pr-activity-view,
-#block-block-15.content-lists { padding-bottom: 0; }
+#block-block-15.content-lists,
+.pr-block.news-stats { padding-bottom: 0; }
+
 .content-lists {
   padding-bottom: 20px;
 }
@@ -1036,6 +1038,110 @@ a {
     width: 100%;
   }
 }
+
+/* Statistics Page Starts*/
+
+.news-stats {
+  .stats-main-container {
+    display: inline-block;
+    padding: 20px 15px;
+    font-size: 14px;
+    .bar-chart-main {
+      .bar-header {
+        display: inline-block;
+        width: 100%;
+        padding: 12px;
+        background-color: $gray-light-f4;
+        line-height: 0;
+        label {
+          float: left;
+          margin-bottom: 0;
+        }
+        .total-clicks {
+          float: right;
+          color: #717173;
+          font-size: 14px;
+          span {
+            color: #41AB48;
+            font-size: 20px;
+          }
+        }
+      }
+      .bar-chart {
+        display: inline-block;
+        width: 100%;
+        padding: 15px;
+        .topics-list {
+          display: inline-block;
+          width: calc(100% - 600px);
+          padding-top: 20px;
+          vertical-align: top;
+          .topics-details {
+            display: inline-block;
+            width: 100%;
+            color: #B4B4B6;
+            line-height: 25px;
+            .topics-name {
+              display: inline-block;
+              width: 70%;
+            }
+            .topics-per {
+              display: inline-block;
+            }
+          }
+        }
+        .bar-inner {
+          float: right;
+          vertical-align: top;
+        }
+      }
+    }
+    .user-activity {
+      .user-activity-header {
+        padding: 8px;
+        background-color: #EEE;
+        color: #000;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .table-responsive {
+        table {
+          thead {
+            tr {
+              th {
+                padding-top: 15px;
+                padding-bottom: 15px;
+
+                a {
+                  img {
+                    display: inline-block;
+                  }
+                }
+                &.active {
+                  background-color: transparent;
+                }
+              }
+            }
+          }
+          tbody {
+            tr {
+              font-size: 12px;
+              td {
+                width: 150px;
+                color: #505052;
+                a {
+                  color: #126EDC;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Statistics Page Ends */
 
 .page-my-page {
   .content-lists {
