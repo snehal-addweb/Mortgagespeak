@@ -10,13 +10,14 @@
 /**
 * Implements custom menu item for stats().
 */
+
 function mortgage_newsletter_stats_menu() {
   $items['stats'] = array(
-  	'title' => t('My News Page'),
-	'description' => 'Show Simplenews Statistics Clicks ',
-	'type' => MENU_NORMAL_ITEM,
-	'page callback' => 'mortgage_stats',
-	'access arguments' => array('access content'),
+    'title' => 'My News Page',
+    'description' => 'Show Simplenews Statistics Clicks',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'mortgage_stats',
+    'access arguments' => array('access content'),
   );
   return $items;
 }
@@ -36,6 +37,7 @@ function mortgage_newsletter_stats_block_info() {
 /**
 * Implements hook_block_view().
 */
+
 function mortgage_newsletter_stats_block_view($delta = '') {
   $block = array();
   switch ($delta) {
@@ -46,486 +48,481 @@ function mortgage_newsletter_stats_block_view($delta = '') {
   }
   return $block;
 }
+
 /**
 * Implements stats of logged in user newsletter category().
 */
-function mortgage_stats(){
-	global $user;
-	global $base_url;
-	$Alias = 'http://' .$_SERVER['HTTP_HOST'];
-	$output = '';
-	$getfromdate = '';
-	$todate = '';
-	$submit_datefilter = '';
-	$topics_arr = array();
-	$arrNodeList = array();
-	$finalPerct = array();
-	$user_info =  user_load($user->uid);
-	$user_newsletter_tid = $user_info->field_assign_newsletter['und'][0]['tid'];
 
-	// Query to get subscribers email.
-	$querySubscriber = db_select('simplenews_subscriber', 'sn');
-	$querySubscriber->leftJoin('users', 'u', 'sn.uid = u.uid');
-	$querySubscriber->innerJoin('simplenews_subscription', 'su', 'sn.snid = su.snid');
-	$querySubscriber->condition('su.status', SIMPLENEWS_SUBSCRIPTION_STATUS_SUBSCRIBED);
-	$querySubscriber->condition('su.tid',$user_newsletter_tid ,'=');
-	$querySubscriber->addField('u', 'name', 'name');
-	$resultSubscriber = $querySubscriber
-	->fields('sn', array('snid', 'activated', 'mail', 'uid', 'language'))
-	->execute();
+function mortgage_stats() {
+  global $user;
+  global $base_url;
+  $alias = 'http://' . $_SERVER['HTTP_HOST'];
+  $output = '';
+  $getfromdate = '';
+  $todate = '';
+  $submit_datefilter = '';
+  $topics_arr = array();
+  $arr_nodelist = array();
+  $finalperct = array();
+  $user_info =  user_load($user->uid);
+  $user_newsletter_tid = $user_info->field_assign_newsletter['und'][0]['tid'];
 
-	foreach ($resultSubscriber as $subscriber) {
-   	  $options[$subscriber->snid] = array(
-     	 'mail' => check_plain($subscriber->mail),);
-      	  $subscriber_email[] = "'".$subscriber->mail."'";
- 	 }
+  // Query to get subscribers email.
+  $query_subscriber = db_select('simplenews_subscriber', 'sn');
+  $query_subscriber->leftJoin('users', 'u', 'sn.uid = u.uid');
+  $query_subscriber->innerJoin('simplenews_subscription', 'su', 'sn.snid = su.snid');
+  $query_subscriber->condition('su.status', SIMPLENEWS_SUBSCRIPTION_STATUS_SUBSCRIBED);
+  $query_subscriber->condition('su.tid', $user_newsletter_tid, '=');
+  $query_subscriber->addField('u', 'name', 'name');
+  $result_subscriber = $query_subscriber
+  ->fields('sn', array('snid', 'activated', 'mail', 'uid', 'language'))
+  ->execute();
 
- 	$subscriber_emailid = implode(',',$subscriber_email);
+  foreach ($result_subscriber as $subscriber) {
+    $options[$subscriber->snid] = array(
+    'mail' => check_plain($subscriber->mail), );
+    $subscriber_email[] = "'" . $subscriber->mail . "'";
+  }
 
- 	if(empty($subscriber_emailid))	{
-		$output = "No NewsLetter Assigned";
-		return $output;
-	}
-	else {
+  $subscriber_emailid = implode(',', $subscriber_email);
 
-		// Table Header
-		$header = array(
-	    'timestamp' => array('data' => t('Date'), 'field' => 'sc.timestamp', 'sort' => 'desc'),
-	    'mail' => array('data' => t('User'), 'field' => 'sub.mail'),
-	    'company_name' => array('data' => t('Company'), 'field' => 'nw.company_name','class' => array('company')),
-	    'topic_taxonomy_name' => array('data' => t('Topic'), 'field' => 'nw.topic_taxonomy_name'),
-	    'headline' => array('data' => t('Headline'), 'field' => 'nw.headline','class' => array('headline')),
-	    'Location' => array('data' => t('Location'), 'field' => 'Newsletter'),
-	  );
+  if (empty($subscriber_emailid)) {
+    //$output = "No NewsLetter Assigned";
+    $output .= '<div class="bg-success empty-div">No NewsLetter Assigned</div>';
+    return $output;
+  }
+  else {
 
-		//DAte Filter
-		if(isset($_POST) && !empty($_POST)) {
-			$getfromdate = $_POST['fromdate'];
-			$todate = $_POST['todate'];
-			$submit_datefilter = $_POST['datsubmit'];
-		}
-		if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
-			$arr_from_date = explode('/', $_POST['fromdate']);
-			$arr_to_date = explode('/', $_POST['todate']);
+    // Table Header
+    $header = array(
+      'timestamp' => array('data' => t('Date'), 'field' => 'sc.timestamp', 'sort' => 'desc'),
+      'mail' => array('data' => t('User'), 'field' => 'sub.mail'),
+      'company_name' => array('data' => t('Company'), 'field' => 'nw.company_name', 'class' => array('company')),
+      'topic_taxonomy_name' => array('data' => t('Topic'), 'field' => 'nw.topic_taxonomy_name'),
+      'headline' => array('data' => t('Headline'), 'field' => 'nw.headline', 'class' => array('headline')),
+      'Location' => array('data' => t('Location'), 'field' => 'Newsletter'),
+    );
 
-			$getfromdate1 = $arr_from_date['2'] . "-" . $arr_from_date['0'] . "-" . $arr_from_date['1'] . " 00:00:00";
-			$todate1 = $arr_to_date['2'] . "-" . $arr_to_date['0'] . "-" . $arr_to_date['1'] . " 23:59:59";
+    //DAte Filter
+    if (isset($_POST) && !empty($_POST)) {
+      $getfromdate = $_POST['fromdate'];
+      $todate = $_POST['todate'];
+      $submit_datefilter = $_POST['datsubmit'];
+    }
+    if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
+      $arr_from_date = explode('/', $_POST['fromdate']);
+      $arr_to_date = explode('/', $_POST['todate']);
 
-			$frmtime = strtotime($getfromdate1);
-			$totime = strtotime($todate1);
-		}
+      $getfromdate1 = $arr_from_date['2'] . "-" . $arr_from_date['0'] . "-" . $arr_from_date['1'] . " 00:00:00";
+      $todate1 = $arr_to_date['2'] . "-" . $arr_to_date['0'] . "-" . $arr_to_date['1'] . " 23:59:59";
 
-		
+      $frmtime = strtotime($getfromdate1);
+      $totime = strtotime($todate1);
+    }
 
-		// Query to get user activity from Newsletter.
-		$qryNewsSel = "SELECT GROUP_CONCAT(scu.url) AS url, n.nid nid, sub.mail mail, sc.timestamp created
-							FROM simplenews_statistics_click sc
-							INNER JOIN simplenews_statistics_url scu ON scu.urlid = sc.urlid
-							INNER JOIN simplenews_subscriber sub ON sc.snid = sub.snid
-							INNER JOIN node n ON scu.nid = n.nid
-							LEFT OUTER JOIN field_data_field_url fu ON n.nid = fu.entity_id
-							WHERE (sub.mail IN  ($subscriber_emailid))";
+    // Query to get user activity from Newsletter.
+    $qry_news_sel = "SELECT GROUP_CONCAT(scu.url) AS url, n.nid nid, sub.mail mail, sc.timestamp created
+    					FROM simplenews_statistics_click sc
+    					INNER JOIN simplenews_statistics_url scu ON scu.urlid = sc.urlid
+    					INNER JOIN simplenews_subscriber sub ON sc.snid = sub.snid
+    					INNER JOIN node n ON scu.nid = n.nid
+    					LEFT OUTER JOIN field_data_field_url fu ON n.nid = fu.entity_id
+    					WHERE (sub.mail IN  ($subscriber_emailid))";
 
-							if($submit_datefilter){
-								if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
-									$qryNewsSel .= " AND sc.timestamp >= '".$frmtime."' AND sc.timestamp <='".$totime."'  ";
-								}
-							}
-		$qryNewsSel .= " GROUP BY n.nid, sub.mail, sc.timestamp ORDER BY sc.timestamp DESC";
-
-		
-		$newsletter_urls = db_query($qryNewsSel);
-
-		$base_url1 = 'http://mortgage.saurabhdhariwal.com/';
-		$arrNewsletterNids = array();
-		$index = 0;
-		$index1 = 0;
-		while($news_RowInfo = $newsletter_urls->fetchAssoc()) {
-
-		  $url = $news_RowInfo['url'];
-		  $sub_url = str_replace($base_url1, "", $news_RowInfo['url']);
-
-		  $arrUrl = explode(",", $url);			
-			$arrResultUrl = array_map("addPrefixSuffix", $arrUrl);
-			$url = implode(",", $arrResultUrl);
-			$url = htmlspecialchars_decode($url);
+              if ($submit_datefilter) {
+                if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
+                  $qry_news_sel .= " AND sc.timestamp >= '" . $frmtime . "' AND sc.timestamp <='" . $totime . "'  ";
+                }
+              }
+    $qry_news_sel .= " GROUP BY n.nid, sub.mail, sc.timestamp ORDER BY sc.timestamp DESC";
 
 
-		  $arrSubUrl = explode(",", $sub_url);
-			$arrResultSubUrl = array_map("addPrefixSuffix", $arrSubUrl);
-			$sub_url = implode(",", $arrResultSubUrl); 
+    $newsletter_urls = db_query($qry_news_sel);
 
-			$qrySel1 = "SELECT fu.entity_id nid
-								FROM field_data_field_url fu
-								WHERE fu.field_url_value IN ($url)";
-			$result1 = db_query($qrySel1);
+    $base_url1 = 'http://mortgage.saurabhdhariwal.com/';
+    $arr_newsletter_nids = array();
+    $index = 0;
+    $index1 = 0;
+    while ($news_rowinfo = $newsletter_urls->fetchAssoc()) {
+      $url = $news_rowinfo['url'];
+      $sub_url = str_replace($base_url1, "", $news_rowinfo['url']);
 
-			$rowinfo1 = $result1->fetchAllAssoc('nid');
-			
-			foreach ($rowinfo1 as $key => $value) {
-				$nid = $value->nid;
-				//$arrNewsletterNids[$nid] = $nid;
-				$arrNewsletterNids[$index]['nid'] = $nid;
-				$arrNewsletterNids[$index]['created'] = $news_RowInfo['created'];
-				$arrNewsletterNids[$index]['mail'] = $news_RowInfo['mail'];
-				$index++;
-			}
+      $arrurl = explode(",", $url);
+      $arr_resulturl = array_map("addprefixsuffix", $arrurl);
+      $url = implode(",", $arr_resulturl);
+      $url = htmlspecialchars_decode($url);
 
-			$qrySel2 = "SELECT substring_index(ua.source, '/', -1) nid
-								FROM url_alias ua
-								WHERE ua.alias IN ({$sub_url})";
-			$result2 = db_query($qrySel2);
-			$rowinfo2 = $result2->fetchAllAssoc('nid');
-			foreach ($rowinfo2 as $key2 => $value2) {
-				$nid = $value2->nid;
-				$arrNewsletterNids[$index]['nid'] = $nid;
-				$arrNewsletterNids[$index]['created'] = $news_RowInfo['created'];
-				$arrNewsletterNids[$index]['mail'] = $news_RowInfo['mail'];
-				$index++;
-			}
-		}
+      $arr_suburl = explode(",", $sub_url);
+      $arr_resultsuburl = array_map("addprefixsuffix", $arr_suburl);
+      $sub_url = implode(",", $arr_resultsuburl); 
+
+      $qrysel1 = "SELECT fu.entity_id nid
+      				FROM field_data_field_url fu
+      				WHERE fu.field_url_value IN ($url)";
+      $result1 = db_query($qrysel1);
+
+      $rowinfo1 = $result1->fetchAllAssoc('nid');
+
+      foreach ($rowinfo1 as $key => $value) {
+        $nid = $value->nid;
+        //$arrNewsletterNids[$nid] = $nid;
+        $arr_newsletter_nids[$index]['nid'] = $nid;
+        $arr_newsletter_nids[$index]['created'] = $news_rowinfo['created'];
+        $arr_newsletter_nids[$index]['mail'] = $news_rowinfo['mail'];
+        $index++;
+      }
+
+      $qrysel2 = "SELECT substring_index(ua.source, '/', -1) nid
+      					FROM url_alias ua
+      					WHERE ua.alias IN ({$sub_url})";
+      $result2 = db_query($qrysel2);
+      $rowinfo2 = $result2->fetchAllAssoc('nid');
+
+      foreach ($rowinfo2 as $key2 => $value2) {
+        $nid = $value2->nid;
+        $arr_newsletter_nids[$index]['nid'] = $nid;
+        $arr_newsletter_nids[$index]['created'] = $news_rowinfo['created'];
+        $arr_newsletter_nids[$index]['mail'] = $news_rowinfo['mail'];
+        $index++;
+      }
+    }
 
 
 
-		// Fetch Data from Newsletter Nids
-		$final = 0;
-		foreach ($arrNewsletterNids as $nidKey => $nidValue) {
-			//foreach ($nidValue as $key => $value) {
-				$nodeloads = node_load($nidValue['nid']);
+    // Fetch Data from Newsletter Nids
+    $final = 0;
+    foreach ($arr_newsletter_nids as $nidkey => $nidvalue) {
+      //foreach ($nidvalue as $key => $value) {
+      $nodeloads = node_load($nidvalue['nid']);
 
-				// Get url for Headlines
-			 	if(!empty($nodeloads->field_url)){
-	        $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
-	      }
-	      else {
-	        $urlAlias = $Alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-	      }
-
-	      $headline = "<a href='".$urlAlias."' target=_blank>".$nodeloads->title."</a>";
-	      $arrNodeList[$final]['url'] = $urlAlias;
-				$arrNodeList[$final]['timestamp'] = $nidValue['created'];
-				$arrNodeList[$final]['email'] = $nidValue['mail'];
-				$arrNodeList[$final]['main_node_title'] = $headline;
-				$arrNodeList[$final]['source'] = 'Newsletter';
-
-	      // Get Headlines Details from Newsletter
-			  if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
-	        $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
-	        $taxo_info = taxonomy_term_load($companyTid);
-	        $company = $taxo_info->name;
-
-	        /*if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-	        	$taxomony = taxonomy_term_load($nodeloads->field_alpha_news_topics[LANGUAGE_NONE][0]['tid']);
-			      $topicsName = $taxomony->name;
-	        }*/
-
-	        $arrNodeList[$final]['company'] = $company;
-					$arrNodeList[$final]['topic'] = 'Company News';
-	      }
-
-	      else if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-		    	$topicsName = '';
-			    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
-			      // News Topics
-			      if($tabvalue['tid'] == '701' && isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-			       /* if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {*/
-			          //foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
-			            $taxomony = taxonomy_term_load($nodeloads->field_alpha_news_topics[LANGUAGE_NONE][0]['tid']);
-			            $topicsName = $taxomony->name;
-			          //}
-			          //$topicsName = rtrim($topicsName, ", ");
-			        //}
-			        $categoryName = $topicsName;
-			        //$company_image = $tracked_topicimg;
-			        $arrNodeList[$final]['company'] = '';
-							$arrNodeList[$final]['topic'] = $topicsName;
-			        break;
-			      }
-
-			      if(($tabvalue['tid'] == '705')) {
-	            $categoryName = 'Press Releases';
-	            $arrNodeList[$final]['company'] = '';
-							$arrNodeList[$final]['topic'] = 'Press Releases';
-	            break;
-	          }
-
-	          //Prespectives
-	          if(($tabvalue['tid'] == '706')) {
-	            $categoryName = 'Perspectives';
-	            $arrNodeList[$final]['company'] = '';
-							$arrNodeList[$final]['topic'] = 'Perspectives';
-	            break;
-	          }
-
-	          //Blogs
-	          if(($tabvalue['tid'] == '703')) {
-	            $categoryName = 'Blogs';
-	            $arrNodeList[$final]['company'] = '';
-							$arrNodeList[$final]['topic'] = 'Blogs';
-	            break;
-	          }
-			    }
-		  	}
-		  	$topics_arr[] = $arrNodeList[$final]['topic'];
-		  	$final++;
-			//}
-		}
-
-		// Query to get user activity from Website.
-		$qrySiteSel = "SELECT hba.nid,u.mail,hba.timestamp,u.uid
-							FROM heartbeat_activity hba
-							INNER JOIN users u ON hba.uid = u.uid
-							INNER JOIN node n ON hba.nid = n.nid 
-							WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews'";
-							if($submit_datefilter){
-								if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
-									$qrySiteSel .= "AND hba.timestamp >= '".$frmtime."' AND  hba.timestamp <='".$totime."'";
-								}
-							}
-		$qrySiteSel .="ORDER BY hba.timestamp";
-		$website_nids = db_query($qrySiteSel);
-		while($website_RowInfo = $website_nids->fetchAssoc()) {
-			$nodeloads = node_load($website_RowInfo['nid']);
-
-			// Get url for Headlines
-		 	if(!empty($nodeloads->field_url)){
-        $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+      // Get url for Headlines
+      if (!empty($nodeloads->field_url)) {
+        $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
       }
       else {
-        $urlAlias = $Alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+        $urlalias = $alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
       }
-      $node_url = $Alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-      $headline = "<a href='".$node_url."' target=_blank>".$nodeloads->title."</a>";
-      $arrNodeList[$final]['url'] = $urlAlias;
-			$arrNodeList[$final]['timestamp'] = $website_RowInfo['timestamp'];
-			$arrNodeList[$final]['email'] = $website_RowInfo['mail'];
-			$arrNodeList[$final]['main_node_title'] = $headline;
-			$arrNodeList[$final]['source'] = 'Website';
 
-			 // Get Headlines Details from Newsletter
-		  if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
-        $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
-        $taxo_info = taxonomy_term_load($companyTid);
+      $headline = "<a href='" . $urlalias . "' target=_blank>" . $nodeloads->title . "</a>";
+      $arr_nodelist[$final]['url'] = $urlalias;
+      $arr_nodelist[$final]['timestamp'] = $nidvalue['created'];
+      $arr_nodelist[$final]['email'] = $nidvalue['mail'];
+      $arr_nodelist[$final]['main_node_title'] = $headline;
+      $arr_nodelist[$final]['source'] = 'Newsletter';
+
+      // Get Headlines Details from Newsletter
+      if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
+        $company_tid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+        $taxo_info = taxonomy_term_load($company_tid);
         $company = $taxo_info->name;
-        $arrNodeList[$final]['company'] = $company;
-				$arrNodeList[$final]['topic'] = 'Company News';
+
+        /*if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+        $taxomony = taxonomy_term_load($nodeloads->field_alpha_news_topics[LANGUAGE_NONE][0]['tid']);
+        $topics_name = $taxomony->name;
+        }*/
+
+        $arr_nodelist[$final]['company'] = $company;
+        $arr_nodelist[$final]['topic'] = 'Company News';
       }
 
-      else if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-	    	$topicsName = '';
-		    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
-		      // News Topics
-		      if($tabvalue['tid'] == '701' && isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-		       /* if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {*/
-		          //foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
-		            $taxomony = taxonomy_term_load($nodeloads->field_alpha_news_topics[LANGUAGE_NONE][0]['tid']);
-		            $topicsName = $taxomony->name;
-		          //}
-		          //$topicsName = rtrim($topicsName, ", ");
-		        //}
-		        $categoryName = $topicsName;
-		        //$company_image = $tracked_topicimg;
-		        $arrNodeList[$final]['company'] = '';
-						$arrNodeList[$final]['topic'] = $topicsName;
-		        break;
-		      }
+      elseif (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
+        $topics_name = '';
+        foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
+          // News Topics
+          if ($tabvalue['tid'] == '701' && isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+            /* if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {*/
+            //foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
+            $taxomony = taxonomy_term_load($nodeloads->field_alpha_news_topics[LANGUAGE_NONE][0]['tid']);
+            $topics_name = $taxomony->name;
+            //}
+            //$topics_name = rtrim($topics_name, ", ");
+            //}
+            $category_name = $topics_name;
+            //$company_image = $tracked_topicimg;
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = $topics_name;
+            break;
+          }
 
-		      if(($tabvalue['tid'] == '705')) {
-            $categoryName = 'Press Releases';
-            $arrNodeList[$final]['company'] = '';
-						$arrNodeList[$final]['topic'] = 'Press Releases';
+          if (($tabvalue['tid'] == '705')) {
+            $category_name = 'Press Releases';
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = 'Press Releases';
             break;
           }
 
           //Prespectives
-          if(($tabvalue['tid'] == '706')) {
-            $categoryName = 'Perspectives';
-            $arrNodeList[$final]['company'] = '';
-						$arrNodeList[$final]['topic'] = 'Perspectives';
+          if (($tabvalue['tid'] == '706')) {
+            $category_name = 'Perspectives';
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = 'Perspectives';
             break;
           }
 
           //Blogs
-          if(($tabvalue['tid'] == '703')) {
-            $categoryName = 'Blogs';
-            $arrNodeList[$final]['company'] = '';
-						$arrNodeList[$final]['topic'] = 'Blogs';
+          if (($tabvalue['tid'] == '703')) {
+            $category_name = 'Blogs';
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = 'Blogs';
             break;
           }
-		    }
-		    $topics_arr[] = $arrNodeList[$final]['topic'];
-	  	}
-	  	$final++;
-		}
+        }
+      }
+      $topics_arr[] = $arr_nodelist[$final]['topic'];
+      $final++;
+      //}
+    }
 
-		$Total_Tarr = count($topics_arr);
-		if(count($topics_arr) === 1 ){
-			$cnt_Tarr  = array($topics_arr => "1");
-		}
-		else{
-			$cnt_Tarr = array_count_values($topics_arr);
-		}
-		arsort($cnt_Tarr);
+    // Query to get user activity from Website.
+    $qry_sitesel = "SELECT hba.nid,u.mail,hba.timestamp,u.uid
+    					FROM heartbeat_activity hba
+    					INNER JOIN users u ON hba.uid = u.uid
+    					INNER JOIN node n ON hba.nid = n.nid 
+    					WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews'";
+              if ($submit_datefilter) {
+                if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
+                $qry_sitesel .= "AND hba.timestamp >= '" . $frmtime . "' AND  hba.timestamp <='" . $totime . "'";
+                }
+              }
+    $qry_sitesel .= "ORDER BY hba.timestamp";
+    $website_nids = db_query($qry_sitesel);
+    while ($website_rowinfo = $website_nids->fetchAssoc()) {
+      $nodeloads = node_load($website_rowinfo['nid']);
 
-		foreach($cnt_Tarr as $key=>$values){
-			$percentage = ($values/$Total_Tarr) * 100;
-			$finalPerct[] = array($key,round($percentage,1),$values);
-			$chart_arr[] = array($key,$values);
-			$per[] = $percentage;
-		}
-		// Total Clicks
-		$total_clicks = 0;
-		$total_clicks = count($arrNodeList);
+      // Get url for Headlines
+      if (!empty($nodeloads->field_url)) {
+        $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+      }
+      else {
+        $urlalias = $alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+      }
+      $node_url = $alias . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+      $headline = "<a href='" . $node_url . "' target=_blank>" . $nodeloads->title . "</a>";
+      $arr_nodelist[$final]['url'] = $urlalias;
+      $arr_nodelist[$final]['timestamp'] = $website_rowinfo['timestamp'];
+      $arr_nodelist[$final]['email'] = $website_rowinfo['mail'];
+      $arr_nodelist[$final]['main_node_title'] = $headline;
+      $arr_nodelist[$final]['source'] = 'Website';
 
+      // Get Headlines Details from Newsletter
+      if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
+        $company_tid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+        $taxo_info = taxonomy_term_load($company_tid);
+        $company = $taxo_info->name;
+        $arr_nodelist[$final]['company'] = $company;
+        $arr_nodelist[$final]['topic'] = 'Company News';
+      }
 
-		// Sort array according to timestamp
-		$arrNodeList = msort($arrNodeList,'timestamp');
+      elseif (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
+        $topics_name = '';
+        foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
+          // News Topics
+          if ($tabvalue['tid'] == '701' && isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+            /* if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {*/
+            //foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
+            $taxomony = taxonomy_term_load($nodeloads->field_alpha_news_topics[LANGUAGE_NONE][0]['tid']);
+            $topics_name = $taxomony->name;
+            //}
+            //$topics_name = rtrim($topics_name, ", ");
+            //}
+            $category_name = $topics_name;
+            //$company_image = $tracked_topicimg;
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = $topics_name;
+            break;
+          }
 
-		$output .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">';
-		$output .= ' <script>
-									jQuery(function() {
-										jQuery( "#datepicker").datepicker();
-										jQuery( "#todatepicker").datepicker();
-									});
-								 </script>';
+          if (($tabvalue['tid'] == '705')) {
+            $category_name = 'Press Releases';
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = 'Press Releases';
+            break;
+          }
 
-		$output .= '<div class="stats-main-container">';
-			$output.='<div class="bar-chart-main">
-								<div class="bar-header">
-									<label>Content Click Breakdown</label>
-									<div class="stats-date-filter">
-										<form method="post">
-											<div class="from-container">
-												<span>From</span>
-												<input type="text" class="clicks_date" id="datepicker" name="fromdate" value="'.$getfromdate.'" />
-											</div>
-											<div class="to-container">
-												<span>To</span>
-												<input type="text" class="clicks_date" id="todatepicker" name="todate" value="'.$todate.'" style="width:90px;"/>
-											</div>
-											<input type="submit" value="Go" name="datsubmit" class="datsubmit">
-										</form>
-									</div>
-									<div class="total-clicks">Total Clicks: <span>'.$total_clicks.'</span>
-									</div>
-								</div>';
+          //Prespectives
+          if (($tabvalue['tid'] == '706')) {
+            $category_name = 'Perspectives';
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = 'Perspectives';
+            break;
+          }
 
-					
+          //Blogs
+          if (($tabvalue['tid'] == '703')) {
+            $category_name = 'Blogs';
+            $arr_nodelist[$final]['company'] = '';
+            $arr_nodelist[$final]['topic'] = 'Blogs';
+            break;
+          }
+        }
+      }
+      $topics_arr[] = $arr_nodelist[$final]['topic'];
+      $final++;
+    }
 
-								// Bar Chart Code
-								
-								$output .= '<div class="bar-chart">
-															<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-															<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-															<script type="text/javascript">
-																google.load("visualization", "1.1", {packages: ["corechart"]});
-																google.setOnLoadCallback(drawChart);
+    $total_tarr = count($topics_arr);
+    if (count($topics_arr) === 1 ) {
+      $cnt_tarr  = array($topics_arr => "1");
+    }
+    else {
+      $cnt_tarr = array_count_values($topics_arr);
+    }
+    arsort($cnt_tarr);
 
-																function drawChart() {
-																  var data = new google.visualization.DataTable();
-																  data.addColumn("string", "Topics");
-																  data.addColumn("number", "Per");';
-
-																   	$str_row = '';
-																    $str_apend = '';
-
-																    foreach($finalPerct as $key=>$values){
-														    			$legends = $values[0] . ' ' . $values[1] . '%';
-														    			$str_row .= '["' . $legends . '", ' . $values[2] . '],';
-																  	}
-
-																	  $str_row = trim($str_row, ",");
-
-																  $output .= 'data.addRows([' . $str_row . ']);
-																  var options = {
-															     	backgroundColor: \'transparent\',
-         														legend: \'none\',
-         														vAxis: {textStyle: {color: \'#b4b4b6\', fontSize:14 }},
-															      chartArea: {top: 10,width: \'60%\', height: \'70%\'},
-															      colors: [\'#60C761\' ],
-															    };';
-
-																  $output .= 'var chart = new google.visualization.BarChart(document.getElementById("bar-inner"));
-																	chart.draw(data,options);';
-																$output .= '}
-															</script>';
-										/*$output.='<div class="topics-list">';
-											foreach($finalPerct as $key=>$values){
-												$output .= '<div class="topics-details"><div class="topics-name">'.$values[0].'</div><div class="topics-per">'.$values[1].'%</div></div>';
-											}
-										$output.='</div>';*/
-										if(isset($arrNodeList) && !empty($arrNodeList)) {
-											$output .=  '<div id="bar-inner" style="float:right;width: 100%; height: 400px;"></div>';
-										}
-								$output .= '</div>
-			</div>';
-
-
-			// Table Structure starts
-			$rows = array();
-			if(isset($arrNodeList) && !empty($arrNodeList)) {
-				foreach($arrNodeList as $row) {
-
-				$timestamp = date('m/d/y - H:i', $row['timestamp']);
-			    	$rows[] = array($timestamp,
-					    $row['email'],
-					    $row['company'],
-					    $row['topic'],
-				     	$row['main_node_title'],
-					    $row['source'],
-			    );
-			  }
-
-			$per_page = 20;
-			$current_page = pager_default_initialize(count($rows), $per_page);
-			$chunks = array_chunk($rows, $per_page, TRUE);
-			$output .= '<div class="user-activity"><div class="user-activity-header">User Activity</div>';
-			$output .= theme('table', array('header' => $header, 'rows' => $chunks[$current_page]));
-			$output .= theme('pager');
-			$output .= '</div>';
-			}
-			else {
-				$output .= '<div class="bg-success empty-div">No Result Found!</div>';
-			}
+    foreach ($cnt_tarr as $key => $values) {
+      $percentage = ($values/$total_tarr) * 100;
+      $finalperct[] = array($key, round($percentage, 1), $values);
+      $chart_arr[] = array($key, $values);
+      $per[] = $percentage;
+    }
+    // Total Clicks
+    $total_clicks = 0;
+    $total_clicks = count($arr_nodelist);
 
 
+    // Sort array according to timestamp
+    $arr_nodelist = msort($arr_nodelist, 'timestamp');
 
-			
-		$output .= '</div>';
-		return $output;
-	}
+    $output .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">';
+    $output .= ' <script>
+    						jQuery(function() {
+    							jQuery( "#datepicker").datepicker();
+    							jQuery( "#todatepicker").datepicker();
+    						});
+    					 </script>';
+
+    $output .= '<div class="stats-main-container">';
+    $output .= '<div class="bar-chart-main">
+    					   <div class="bar-header">
+      						<label>Content Click Breakdown</label>
+      						<div class="stats-date-filter">
+      							<form method="post">
+      								<div class="from-container">
+      									<span>From</span>
+      									<input type="text" class="clicks_date" id="datepicker" name="fromdate" value="' . $getfromdate . '" />
+      								</div>
+      								<div class="to-container">
+      									<span>To</span>
+      									<input type="text" class="clicks_date" id="todatepicker" name="todate" value="' . $todate . '" style="width:90px;"/>
+      								</div>
+      								<input type="submit" value="Go" name="datsubmit" class="datsubmit">
+      							</form>
+      						</div>
+      						<div class="total-clicks">Total Clicks: <span>' . $total_clicks . '</span>
+    						</div>
+    					</div>';
+
+              // Bar Chart Code
+
+              $output .= '<div class="bar-chart">
+              						<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+              						<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+              						<script type="text/javascript">
+              							google.load("visualization", "1.1", {packages: ["corechart"]});
+              							google.setOnLoadCallback(drawChart);
+
+              							function drawChart() {
+              							  var data = new google.visualization.DataTable();
+              							  data.addColumn("string", "Topics");
+              							  data.addColumn("number", "Total");';
+
+                              $str_row = '';
+                              $str_apend = '';
+
+                              foreach ($finalperct as $key => $values) {
+                                $legends = $values[0] . ' ' . $values[1] . '%';
+                                $str_row .= '["' . $legends . '", ' . $values[2] . '],';
+                              }
+
+                              $str_row = trim($str_row, ",");
+
+                              $output .= 'data.addRows([' . $str_row . ']);
+                              var options = {
+                               	backgroundColor: \'transparent\',
+                              		legend: \'none\',
+                              		vAxis: {textStyle: {color: \'#b4b4b6\', fontSize:14 }},
+                                chartArea: {top: 10,width: \'60%\', height: \'70%\'},
+                                colors: [\'#60C761\' ],
+                              };';
+
+                              $output .= 'var chart = new google.visualization.BarChart(document.getElementById("bar-inner"));
+                              chart.draw(data,options);';
+                            $output .= '}
+                            </script>';
+                        /*$output.='<div class="topics-list">';
+                        foreach($finalperct as $key=>$values){
+                        $output .= '<div class="topics-details"><div class="topics-name">'.$values[0].'</div><div class="topics-per">'.$values[1].'%</div></div>';
+                        }
+                        $output.='</div>';*/
+                        if (isset($arr_nodelist) && !empty($arr_nodelist)) {
+                          $output .=  '<div id="bar-inner" style="float:right;width: 100%; height: 400px;"></div>';
+                        }
+              $output .= '</div>
+    </div>';
+
+
+    // Table Structure starts
+    $rows = array();
+    if (isset($arr_nodelist) && !empty($arr_nodelist)) {
+      foreach ($arr_nodelist as $row) {
+        $timestamp = date('m/d/y - H:i', $row['timestamp']);
+          $rows[] = array($timestamp,
+          $row['email'],
+          $row['company'],
+          $row['topic'],
+          $row['main_node_title'],
+          $row['source'],
+        );
+      }
+
+      $per_page = 20;
+      $current_page = pager_default_initialize(count($rows), $per_page);
+      $chunks = array_chunk($rows, $per_page, TRUE);
+      $output .= '<div class="user-activity"><div class="user-activity-header">User Activity</div>';
+      $output .= theme('table', array('header' => $header, 'rows' => $chunks[$current_page]));
+      $output .= theme('pager');
+      $output .= '</div>';
+    }
+    else {
+      $output .= '<div class="bg-success empty-div">No Result Found!</div>';
+    }
+
+    $output .= '</div>';
+    return $output;
+  }
 }
 
 
-function addPrefixSuffix($value) {
-	return "'" . $value . "'";
+function addprefixsuffix($value) {
+  return "'" . $value . "'";
 }
 
 
 function msort($array, $key, $sort_flags = SORT_NUMERIC) {
-    if (is_array($array) && count($array) > 0) {
-        if (!empty($key)) {
-            $mapping = array();
-            foreach ($array as $k => $v) {
-                $sort_key = '';
-                if (!is_array($key)) {
-                    $sort_key = $v[$key];
-                } else {
-                    // @TODO This should be fixed, now it will be sorted as string
-                    foreach ($key as $key_key) {
-                        $sort_key .= $v[$key_key];
-                    }
-                    $sort_flags = SORT_STRING;
-                }
-                $mapping[$k] = $sort_key;
-            }
-            arsort($mapping, $sort_flags);
-            $sorted = array();
-            foreach ($mapping as $k => $v) {
-                $sorted[] = $array[$k];
-            }
-            return $sorted;
-        }
+  if (is_array($array) && count($array) > 0) {
+    if (!empty($key)) {
+      $mapping = array();
+      foreach ($array as $k => $v) {
+          $sort_key = '';
+          if (!is_array($key)) {
+              $sort_key = $v[$key];
+          } 
+          else {
+              // @TODO This should be fixed, now it will be sorted as string
+              foreach ($key as $key_key) {
+                  $sort_key .= $v[$key_key];
+              }
+              $sort_flags = SORT_STRING;
+          }
+          $mapping[$k] = $sort_key;
+      }
+      arsort($mapping, $sort_flags);
+      $sorted = array();
+      foreach ($mapping as $k => $v) {
+          $sorted[] = $array[$k];
+      }
+      return $sorted;
     }
-    return $array;
+  }
+  return $array;
 }
