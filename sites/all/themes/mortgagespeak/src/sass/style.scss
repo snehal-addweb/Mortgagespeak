@@ -384,7 +384,7 @@ a {
     width: 100%;
     margin: 0;
     padding: 20px 10px 10px 94px;
-    /*border-top: 1px solid $gray-light-f4;*/
+    border-top: 1px solid $gray-light-f4;
     &:first-child {
       border-top: none;
     }
@@ -759,6 +759,9 @@ a {
       }
     }
   }
+  .views-row-first {
+    border-top: none;
+  }
   /* Upload page */
   .upload-upper-contain {
     float: left;
@@ -1042,6 +1045,9 @@ a {
 /* Statistics Page Starts*/
 
 .news-stats {
+  &.block-mortgage-newsletter-stats-newsletter-stats {
+    margin-top: -1px;
+  }
   .stats-main-container {
     display: inline-block;
     width: 100%;
@@ -1073,7 +1079,6 @@ a {
             }
             input[type='text'] {
               max-width: 150px;
-              width: 100% !important;
               margin: 1px 10px 0;
               border: 1px solid #8E8E8E;
               @include border-radius(0);
