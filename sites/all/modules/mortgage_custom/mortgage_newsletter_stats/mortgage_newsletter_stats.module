@@ -95,8 +95,15 @@ function mortgage_stats(){
 		//DAte Filter
 		$getfromdate = $_POST['fromdate'];
 		$todate = $_POST['todate'];
-		$frmtime = strtotime($getfromdate);
-		$totime = strtotime($todate);
+
+		$arr_from_date = explode('/', $_POST['fromdate']);
+		$arr_to_date = explode('/', $_POST['todate']);
+
+		$getfromdate1 = $arr_from_date['2'] . "-" . $arr_from_date['0'] . "-" . $arr_from_date['1'] . " 00:00:00";
+		$todate1 = $arr_to_date['2'] . "-" . $arr_to_date['0'] . "-" . $arr_to_date['1'] . " 23:59:59";
+
+		$frmtime = strtotime($getfromdate1);
+		$totime = strtotime($todate1);
 
 		// Query to get user activity from Newsletter.
 		$qryNewsSel = "SELECT GROUP_CONCAT(scu.url) AS url, n.nid nid, sub.mail mail, sc.timestamp created
@@ -108,7 +115,7 @@ function mortgage_stats(){
 							WHERE (sub.mail IN  ($subscriber_emailid))";
 							if($_POST['datsubmit']){
 								if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
-									$qryNewsSel .= " AND sc.timestamp BETWEEN '".$frmtime."' AND '".$totime."'  ";
+									$qryNewsSel .= " AND sc.timestamp >= '".$frmtime."' AND sc.timestamp <='".$totime."'  ";
 								}
 							}
 		$qryNewsSel .= " GROUP BY n.nid, sub.mail, sc.timestamp ORDER BY sc.timestamp DESC";
@@ -259,7 +266,7 @@ function mortgage_stats(){
 							WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews'";
 							if($_POST['datsubmit']){
 								if((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))){
-									$qrySiteSel .= "AND hba.timestamp BETWEEN '".$frmtime."' AND '".$totime."'";
+									$qrySiteSel .= "AND hba.timestamp >= '".$frmtime."' AND  hba.timestamp <='".$totime."'";
 								}
 							}
 		$qrySiteSel .="ORDER BY hba.timestamp";
@@ -349,11 +356,10 @@ function mortgage_stats(){
 
 		foreach($cnt_Tarr as $key=>$values){
 			$percentage = ($values/$Total_Tarr) * 100;
-			$finalPerct[] = array($key,round($percentage,1));
+			$finalPerct[] = array($key,round($percentage,1),$values);
 			$chart_arr[] = array($key,$values);
 			$per[] = $percentage;
 		}
-
 		// Total Clicks
 		$total_clicks = 0;
 		$total_clicks = count($arrNodeList);
@@ -408,29 +414,33 @@ function mortgage_stats(){
 																  data.addColumn("number", "Per");';
 
 																   	$str_row = '';
-
-
 																    $str_apend = '';
-																    foreach ($chart_arr as $topicsKey => $topicsValue) {
-																    		$str_row .= '["' . $topicsValue[0] . '", ' . $topicsValue[1] . '],';
+
+																    foreach($finalPerct as $key=>$values){
+														    			$legends = $values[0] . ' ' . $values[1] . '%';
+														    			$str_row .= '["' . $legends . '", ' . $values[2] . '],';
 																  	}
+
 																	  $str_row = trim($str_row, ",");
 
 																  $output .= 'data.addRows([' . $str_row . ']);
 																  var options = {
-															      chartArea: {top: 10,width: \'70%\', height: \'70%\'},
+															     	backgroundColor: \'transparent\',
+         														legend: \'none\',
+         														vAxis: {textStyle: {color: \'#b4b4b6\', fontSize:14 }},
+															      chartArea: {top: 10,width: \'60%\', height: \'70%\'},
 															      colors: [\'#60C761\' ],
 															    };';
 																  $output .= 'var chart = new google.visualization.BarChart(document.getElementById("bar-inner"));
 																	chart.draw(data,options);';
 																$output .= '}
 															</script>';
-										$output.='<div class="topics-list">';
+										/*$output.='<div class="topics-list">';
 											foreach($finalPerct as $key=>$values){
 												$output .= '<div class="topics-details"><div class="topics-name">'.$values[0].'</div><div class="topics-per">'.$values[1].'%</div></div>';
 											}
-										$output.='</div>';
-										$output .=  '<div id="bar-inner" style="float:right;width: 600px; height: 400px;"></div>';
+										$output.='</div>';*/
+										$output .=  '<div id="bar-inner" style="float:right;width: 100%; height: 400px;"></div>';
 								$output .= '</div>
 			</div>';
 
