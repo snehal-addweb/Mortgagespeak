@@ -222,7 +222,7 @@ function mortgage_stats() {
         }*/
 
         $arr_nodelist[$final]['company'] = $company;
-        $arr_nodelist[$final]['topic'] = 'Company News';
+        $arr_nodelist[$final]['topic'] = 'Tracked Company';
       }
 
       elseif (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
@@ -310,7 +310,7 @@ function mortgage_stats() {
         $taxo_info = taxonomy_term_load($company_tid);
         $company = $taxo_info->name;
         $arr_nodelist[$final]['company'] = $company;
-        $arr_nodelist[$final]['topic'] = 'Company News';
+        $arr_nodelist[$final]['topic'] = 'Tracked Company';
       }
 
       elseif (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
