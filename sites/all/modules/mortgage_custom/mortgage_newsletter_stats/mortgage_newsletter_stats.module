@@ -126,6 +126,7 @@ function mortgage_stats() {
       if(isset($_REQUEST['clearsubmit']) && !empty($_REQUEST['clearsubmit'])){
         unset($_SESSION['from_dt']);
         unset($_SESSION['to_dt']);
+        drupal_goto($base_url . '/my-page/stats');
       }
     }
     
