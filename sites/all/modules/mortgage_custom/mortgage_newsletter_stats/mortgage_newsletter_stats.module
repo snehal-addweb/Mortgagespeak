@@ -113,36 +113,50 @@ function mortgage_stats() {
     );
 
     //DAte Filter
+    if (isset($_REQUEST) && !empty($_REQUEST)) {
+      if (isset($_REQUEST) && !empty($_REQUEST)) {
+        $getfromdate = $_REQUEST['fromdate'];
+        $todate = $_REQUEST['todate'];
+        $submit_datefilter = $_REQUEST['datsubmit'];
+      }
 
-    // Default Date Filter
-    $abbrTimeZone = "CST";
-    date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
-    $today              = strtotime("00:00:01");
-    $previous_month     = date("m/d/Y", strtotime("-1 month", $today));
-    $current            = date("m/d/Y");
+      if (isset($_REQUEST['datsubmit']) && !empty($_REQUEST['datsubmit'])) {
+        $_SESSION['from_dt'] = $_REQUEST['fromdate'];
+        $_SESSION['to_dt']   = $_REQUEST['todate'];
+      }
 
-    $arr_default_from_date = explode('/', $previous_month);
-    $arr_default_to_date = explode('/', $current);
+      if(isset($_REQUEST['clearsubmit']) && !empty($_REQUEST['clearsubmit'])){
+        unset($_SESSION['from_dt']);
+        unset($_SESSION['to_dt']);
+      }
+    }
+    
+    if (isset($_SESSION['from_dt']) && !empty($_SESSION['from_dt']) && (isset($_SESSION['to_dt'])) && !empty($_SESSION['to_dt'])) {
+      $getfromdate = $_SESSION['from_dt'];
+      $todate = $_SESSION['to_dt'];
 
-    $getdefault_fromdate1 = $arr_default_from_date['2'] . "-" . $arr_default_from_date['0'] . "-" . $arr_default_from_date['1'] . " 00:00:00";
-    $default_todate1 = $arr_default_to_date['2'] . "-" . $arr_default_to_date['0'] . "-" . $arr_default_to_date['1'] . " 23:59:59";
+      $arr_from_date = explode('/', $_SESSION['from_dt']);
+      $arr_to_date = explode('/', $_SESSION['to_dt']);
 
-    $default_frmtime = strtotime($getdefault_fromdate1);
-    $default_totime = strtotime($default_todate1);
+      $getfromdate1 = $arr_from_date['2'] . "-" . $arr_from_date['0'] . "-" . $arr_from_date['1'] . " 00:00:00";
+      $todate1 = $arr_to_date['2'] . "-" . $arr_to_date['0'] . "-" . $arr_to_date['1'] . " 23:59:59";
 
-    if (isset($_POST) && !empty($_POST)) {
-      $getfromdate = $_POST['fromdate'];
-      $todate = $_POST['todate'];
-      $submit_datefilter = $_POST['datsubmit'];
+      $frmtime = strtotime($getfromdate1);
+      $totime = strtotime($todate1);
     }
     else {
+      // Default Date Filter
+      $abbrTimeZone = "CST";
+      //date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
+      $today              = strtotime("00:00:01");
+      $previous_month     = date("m/d/Y", strtotime("-1 month", $today));
+      $current            = date("m/d/Y");
+
       $getfromdate = $previous_month;
       $todate = $current;
-    }
 
-    if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
-      $arr_from_date = explode('/', $_POST['fromdate']);
-      $arr_to_date = explode('/', $_POST['todate']);
+      $arr_from_date = explode('/', $previous_month);
+      $arr_to_date = explode('/', $current);
 
       $getfromdate1 = $arr_from_date['2'] . "-" . $arr_from_date['0'] . "-" . $arr_from_date['1'] . " 00:00:00";
       $todate1 = $arr_to_date['2'] . "-" . $arr_to_date['0'] . "-" . $arr_to_date['1'] . " 23:59:59";
@@ -151,6 +165,18 @@ function mortgage_stats() {
       $totime = strtotime($todate1);
     }
 
+
+    print('sessiosn:: <pre style="color:red;">');
+    print_r($_SESSION);
+    print('</pre>');
+    print(' frmdate:: <pre style="color:red;">');
+    print_r($getfromdate);
+    print('</pre>');
+    print('todate::<pre style="color:red;">');
+    print_r($todate);
+    print('</pre>');
+
+
     // Query to get user activity from Newsletter.
     $qry_news_sel = "SELECT GROUP_CONCAT(scu.url) AS url, n.nid nid, sub.mail mail, sc.timestamp created
     					FROM simplenews_statistics_click sc
@@ -158,16 +184,13 @@ function mortgage_stats() {
     					INNER JOIN simplenews_subscriber sub ON sc.snid = sub.snid
     					INNER JOIN node n ON scu.nid = n.nid
     					LEFT OUTER JOIN field_data_field_url fu ON n.nid = fu.entity_id
-    					WHERE (sub.mail IN  ($subscriber_emailid)) ";
-
-              if ($submit_datefilter) {
-                if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
+    					WHERE (sub.mail IN  ($subscriber_emailid))";
+              $qry_news_sel .= " AND sc.timestamp >= '" . $frmtime . "' AND sc.timestamp <='" . $totime . "'  ";
+            /*  if ($submit_datefilter) {
+                //if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
                   $qry_news_sel .= " AND sc.timestamp >= '" . $frmtime . "' AND sc.timestamp <='" . $totime . "'  ";
-                }
-              }
-              else {
-                $qry_news_sel .= " AND sc.timestamp >= '" . $default_frmtime . "' AND sc.timestamp <='" . $default_totime . "'  ";
-              }
+                //}
+              }*/
     $qry_news_sel .= " GROUP BY n.nid, sub.mail, sc.timestamp ORDER BY sc.timestamp DESC";
 
 
@@ -312,15 +335,16 @@ function mortgage_stats() {
     					FROM heartbeat_activity hba
     					INNER JOIN users u ON hba.uid = u.uid
     					INNER JOIN node n ON hba.nid = n.nid 
-    					WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews'";
-              if ($submit_datefilter) {
+    					WHERE (u.mail IN  ($subscriber_emailid)) AND n.type = 'alpha_content'";
+              $qry_sitesel .= " AND hba.timestamp >= '" . $frmtime . "' AND  hba.timestamp <='" . $totime . "' ";
+              /*if ($submit_datefilter) {
                 if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
                   $qry_sitesel .= "AND hba.timestamp >= '" . $frmtime . "' AND  hba.timestamp <='" . $totime . "'";
                 }
               }
               else {
                   $qry_sitesel .= "AND hba.timestamp >= '" . $default_frmtime . "' AND  hba.timestamp <='" . $default_totime . "'";
-              }
+              }*/
     $qry_sitesel .= "ORDER BY hba.timestamp";
     $website_nids = db_query($qry_sitesel);
     while ($website_rowinfo = $website_nids->fetchAssoc()) {
@@ -436,13 +460,14 @@ function mortgage_stats() {
       							<form method="post">
       								<div class="from-container">
       									<span>From</span>
-      									<input type="text" class="clicks_date" id="datepicker" name="fromdate" value="' . $getfromdate . '" />
-      								</div>
+                        <input type="text" class="clicks_date" id="datepicker" name="fromdate" readonly value="' . $getfromdate . '" />
+                      </div>
       								<div class="to-container">
       									<span>To</span>
-      									<input type="text" class="clicks_date" id="todatepicker" name="todate" value="' . $todate . '" />
-      								</div>
+                        <input type="text" class="clicks_date" id="todatepicker" name="todate" readonly value="' . $todate . '" />
+                      </div>
       								<input type="submit" value="Go" name="datsubmit" class="datsubmit">
+                      <input type="submit" value="Reset" name="clearsubmit" class="clearsubmit">
       							</form>
       						</div>
       						<div class="total-clicks">Total Clicks: <span>' . $total_clicks . '</span>
@@ -508,7 +533,7 @@ function mortgage_stats() {
           $row['company'],
           $row['topic'],
           $row['main_node_title'],
-         /* $row['source'],*/
+          $row['source'],
         );
       }
 
@@ -517,7 +542,7 @@ function mortgage_stats() {
       $chunks = array_chunk($rows, $per_page, TRUE);
       $output .= '<div class="user-activity"><div class="user-activity-header">User Activity</div>';
       $output .= theme('table', array('header' => $header, 'rows' => $chunks[$current_page]));
-      $output .= theme('pager');
+      $output .= theme('pager', array('parameters'=> array('fdt' => $getfromdate, 'tdt' => $todate)));
       $output .= '</div>';
     }
     else {

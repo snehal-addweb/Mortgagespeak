@@ -1091,9 +1091,12 @@ a {
               background-color: #4CA9FF;
               color: $white;
               @include border-radius(0);
-              &:hover {
+              /*&:hover {
                 opacity: .7;
-              }
+              }*/
+            }
+            .clearsubmit {
+              margin-left: 10px;
             }
           }
           span {
