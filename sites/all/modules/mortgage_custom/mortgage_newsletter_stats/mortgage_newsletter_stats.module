@@ -113,11 +113,33 @@ function mortgage_stats() {
     );
 
     //DAte Filter
+
+    // Default Date Filter
+    $abbrTimeZone = "CST";
+    date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
+    $today              = strtotime("00:00:01");
+    $previous_month     = date("m/d/Y", strtotime("-1 month", $today));
+    $current            = date("m/d/Y");
+
+    $arr_default_from_date = explode('/', $previous_month);
+    $arr_default_to_date = explode('/', $current);
+
+    $getdefault_fromdate1 = $arr_default_from_date['2'] . "-" . $arr_default_from_date['0'] . "-" . $arr_default_from_date['1'] . " 00:00:00";
+    $default_todate1 = $arr_default_to_date['2'] . "-" . $arr_default_to_date['0'] . "-" . $arr_default_to_date['1'] . " 23:59:59";
+
+    $default_frmtime = strtotime($getdefault_fromdate1);
+    $default_totime = strtotime($default_todate1);
+
     if (isset($_POST) && !empty($_POST)) {
       $getfromdate = $_POST['fromdate'];
       $todate = $_POST['todate'];
       $submit_datefilter = $_POST['datsubmit'];
     }
+    else {
+      $getfromdate = $previous_month;
+      $todate = $current;
+    }
+
     if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
       $arr_from_date = explode('/', $_POST['fromdate']);
       $arr_to_date = explode('/', $_POST['todate']);
@@ -136,12 +158,15 @@ function mortgage_stats() {
     					INNER JOIN simplenews_subscriber sub ON sc.snid = sub.snid
     					INNER JOIN node n ON scu.nid = n.nid
     					LEFT OUTER JOIN field_data_field_url fu ON n.nid = fu.entity_id
-    					WHERE (sub.mail IN  ($subscriber_emailid))";
+    					WHERE (sub.mail IN  ($subscriber_emailid)) ";
 
               if ($submit_datefilter) {
                 if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
                   $qry_news_sel .= " AND sc.timestamp >= '" . $frmtime . "' AND sc.timestamp <='" . $totime . "'  ";
                 }
+              }
+              else {
+                $qry_news_sel .= " AND sc.timestamp >= '" . $default_frmtime . "' AND sc.timestamp <='" . $default_totime . "'  ";
               }
     $qry_news_sel .= " GROUP BY n.nid, sub.mail, sc.timestamp ORDER BY sc.timestamp DESC";
 
@@ -290,8 +315,11 @@ function mortgage_stats() {
     					WHERE (u.mail IN  ($subscriber_emailid)) AND n.type != 'simplenews'";
               if ($submit_datefilter) {
                 if ((isset($getfromdate) && !empty($getfromdate)) && (isset($todate) && !empty($todate))) {
-                $qry_sitesel .= "AND hba.timestamp >= '" . $frmtime . "' AND  hba.timestamp <='" . $totime . "'";
+                  $qry_sitesel .= "AND hba.timestamp >= '" . $frmtime . "' AND  hba.timestamp <='" . $totime . "'";
                 }
+              }
+              else {
+                  $qry_sitesel .= "AND hba.timestamp >= '" . $default_frmtime . "' AND  hba.timestamp <='" . $default_totime . "'";
               }
     $qry_sitesel .= "ORDER BY hba.timestamp";
     $website_nids = db_query($qry_sitesel);
