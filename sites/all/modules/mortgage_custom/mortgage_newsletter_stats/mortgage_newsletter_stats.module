@@ -104,11 +104,11 @@ function mortgage_stats() {
 
     // Table Header
     $header = array(
-      'timestamp' => array('data' => t('Date'), 'field' => 'sc.timestamp', 'sort' => 'desc', 'class' => array('date')),
-      'mail' => array('data' => t('User'), 'field' => 'sub.mail', 'class' => array('email')),
-      'company_name' => array('data' => t('Company'), 'field' => 'nw.company_name', 'class' => array('company')),
-      'topic_taxonomy_name' => array('data' => t('Topic'), 'field' => 'nw.topic_taxonomy_name', 'class' => array('topics')),
-      'headline' => array('data' => t('Headline'), 'field' => 'nw.headline', 'class' => array('headline')),
+      'timestamp' => array('data' => t('Date'), 'class' => array('date')),
+      'mail' => array('data' => t('User'), 'class' => array('email')),
+      'company_name' => array('data' => t('Company'), 'class' => array('company')),
+      'topic_taxonomy_name' => array('data' => t('Topic'), 'class' => array('topics')),
+      'headline' => array('data' => t('Headline'), 'class' => array('headline')),
       /*'Location' => array('data' => t('Location'), 'field' => 'Newsletter'),*/
     );
 
@@ -220,7 +220,7 @@ function mortgage_stats() {
       $arr_nodelist[$final]['source'] = 'Newsletter';
 
       // Get Headlines Details from Newsletter
-      if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
+      if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($arr_user_company_tags) && in_array($nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'], $arr_user_company_tags)) {
         $company_tid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
         $taxo_info = taxonomy_term_load($company_tid);
         $company = $taxo_info->name;
@@ -231,7 +231,7 @@ function mortgage_stats() {
         }*/
 
         $arr_nodelist[$final]['company'] = $company;
-        $arr_nodelist[$final]['topic'] = 'Tracked Company';
+        $arr_nodelist[$final]['topic'] = 'Company News';
       }
 
       elseif (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
@@ -319,7 +319,7 @@ function mortgage_stats() {
         $taxo_info = taxonomy_term_load($company_tid);
         $company = $taxo_info->name;
         $arr_nodelist[$final]['company'] = $company;
-        $arr_nodelist[$final]['topic'] = 'Tracked Company';
+        $arr_nodelist[$final]['topic'] = 'Company News';
       }
 
       elseif (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
