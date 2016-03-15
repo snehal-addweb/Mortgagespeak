@@ -165,18 +165,6 @@ function mortgage_stats() {
       $totime = strtotime($todate1);
     }
 
-
-    print('sessiosn:: <pre style="color:red;">');
-    print_r($_SESSION);
-    print('</pre>');
-    print(' frmdate:: <pre style="color:red;">');
-    print_r($getfromdate);
-    print('</pre>');
-    print('todate::<pre style="color:red;">');
-    print_r($todate);
-    print('</pre>');
-
-
     // Query to get user activity from Newsletter.
     $qry_news_sel = "SELECT GROUP_CONCAT(scu.url) AS url, n.nid nid, sub.mail mail, sc.timestamp created
     					FROM simplenews_statistics_click sc

@@ -1073,6 +1073,9 @@ a {
           margin-top: 1px;
           line-height: normal;
           form {
+            display: inline-block;
+            margin: 0;
+            line-height: normal;
             * {
               float: left;
               width: auto;
@@ -1112,7 +1115,7 @@ a {
           vertical-align: middle;
           span {
             color: #41AB48;
-            font-size: 15px;
+            font-size: 14px;
             line-height: normal;
             font-weight: bold;
             vertical-align: top;
