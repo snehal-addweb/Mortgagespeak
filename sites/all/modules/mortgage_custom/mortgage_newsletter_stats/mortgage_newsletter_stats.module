@@ -114,11 +114,9 @@ function mortgage_stats() {
 
     //DAte Filter
     if (isset($_REQUEST) && !empty($_REQUEST)) {
-      if (isset($_REQUEST) && !empty($_REQUEST)) {
-        $getfromdate = $_REQUEST['fromdate'];
-        $todate = $_REQUEST['todate'];
-        $submit_datefilter = $_REQUEST['datsubmit'];
-      }
+      $getfromdate = $_REQUEST['fromdate'];
+      $todate = $_REQUEST['todate'];
+      $submit_datefilter = $_REQUEST['datsubmit'];
 
       if (isset($_REQUEST['datsubmit']) && !empty($_REQUEST['datsubmit'])) {
         $_SESSION['from_dt'] = $_REQUEST['fromdate'];
@@ -521,7 +519,7 @@ function mortgage_stats() {
           $row['company'],
           $row['topic'],
           $row['main_node_title'],
-          $row['source'],
+          /*$row['source'],*/
         );
       }
 
