@@ -32,3 +32,10 @@ $assets-path: '../..';
     color: $gray-light-f4;
   }
 }
+.page-upload,
+.page-my-page-pr-activity,
+.page-my-page-stats {
+  .footer {
+    margin: -40px 0 0;
+  }
+}

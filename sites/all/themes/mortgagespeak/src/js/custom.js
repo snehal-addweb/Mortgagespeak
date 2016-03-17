@@ -130,6 +130,7 @@ jQuery(window).bind("load", function() {
     console.log('if');
     jQuery('.content-lists, .webform-client-form, .page-user #block-system-main form, .login-upload-page, .content-lists.pr-block').css('min-height', new_contentHeight);
     jQuery('.content-lists.pr-block').css('min-height', (new_contentHeight - 10));
+    jQuery('.webform-client-form').css('min-height', (new_contentHeight + 20));
     jQuery('.left-sidebar').css('min-height', leftsideHeight);
   }
   else if (leftsideHeight < contentHeight) {
