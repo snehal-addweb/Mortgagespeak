@@ -70,8 +70,8 @@ function mortgage_stats() {
 
   // Get User Assigned Company
   $arr_user_company_tags = array();
-  if(!empty($user_info->field_company_tags)) {
-    foreach($user_info->field_company_tags['und'] as $keyuser => $valuser) {
+  if (!empty($user_info->field_company_tags)) {
+    foreach ($user_info->field_company_tags['und'] as $keyuser => $valuser) {
       $arr_user_company_tags[] = $valuser['tid'];
     }
   }
@@ -123,7 +123,7 @@ function mortgage_stats() {
         $_SESSION['to_dt']   = $_REQUEST['todate'];
       }
 
-      if(isset($_REQUEST['clearsubmit']) && !empty($_REQUEST['clearsubmit'])){
+      if (isset($_REQUEST['clearsubmit']) && !empty($_REQUEST['clearsubmit'])) {
         unset($_SESSION['from_dt']);
         unset($_SESSION['to_dt']);
         drupal_goto($base_url . '/my-page/stats');
@@ -145,8 +145,8 @@ function mortgage_stats() {
     }
     else {
       // Default Date Filter
-      $abbrTimeZone = "CST";
-      //date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
+      $abbrtimeczone = "CST";
+      //date_default_timezone_set(timezone_name_from_abbr($abbrtimeczone));
       $today              = strtotime("00:00:01");
       $previous_month     = date("m/d/Y", strtotime("-1 month", $today));
       $current            = date("m/d/Y");
@@ -529,7 +529,7 @@ function mortgage_stats() {
       $chunks = array_chunk($rows, $per_page, TRUE);
       $output .= '<div class="user-activity"><div class="user-activity-header">User Activity</div>';
       $output .= theme('table', array('header' => $header, 'rows' => $chunks[$current_page]));
-      $output .= theme('pager', array('parameters'=> array('fdt' => $getfromdate, 'tdt' => $todate)));
+      $output .= theme('pager');
       $output .= '</div>';
     }
     else {

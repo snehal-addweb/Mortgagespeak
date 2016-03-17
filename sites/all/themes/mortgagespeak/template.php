@@ -62,3 +62,34 @@ function mortgagespeak_preprocess_page(&$variables) {
     $variables['content_column_class'] = ' class="content-area col-lg-12 col-md-12 col-sm-12 col-xs-12"';
   }
 }
+
+
+function mortgagespeak_menu_link(array $variables) {
+  global $user;
+  $show_purple_tooltip = 0;
+  $user_info = user_load($user->uid);
+  if (isset($user_info->field_show_got_it_box) && !empty($user_info->field_show_got_it_box)) {
+    $show_purple_tooltip = $user_info->field_show_got_it_box['und'][0]['value'];
+  }
+  $sub_menu = '';
+  $element = $variables['element'];
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+  $variables['element']['#attributes']['class'][] = 'active active-trail';
+  $variables['element']['#localized_options']['attributes']['class'][] = 'active active-trail';
+
+  $output = l($element['#title'], $element['#href'], $options = $element['#localized_options']);
+  
+  if ($show_purple_tooltip == 1) {
+    if ($element['#original_link']['menu_name'] == 'main-menu' && $element['#href'] == 'my-page/tracked-news') {
+       return '<li' . drupal_attributes($element['#attributes']) . '>' . $output  . "<div id='purple-tooltip' class='purple-main-container'><div class='purple-inner'><div class='purple-text'>Access your Custom News Page here.</div><div class='purple-button'>ok, Got it</div></div></div></li>\n"; 
+    } 
+    else{
+         return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu ."</li>\n";
+    }
+  }
+  else {
+    return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu ."</li>\n";
+  }
+}

@@ -106,7 +106,8 @@ a {
       float: left;
       &:nth-child(1) { display: none; }
       &:nth-child(2) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #3383CC; }
         }
         a {
@@ -121,7 +122,8 @@ a {
         }
       }
       &:nth-child(3) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #36BDD9; }
         }
         a {
@@ -136,7 +138,8 @@ a {
         }
       }
       &:nth-child(4) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #D936D8; }
         }
         a {
@@ -151,7 +154,8 @@ a {
         }
       }
       &:nth-child(5) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #F8991D; }
         }
         a {
@@ -166,7 +170,8 @@ a {
         }
       }
       &:nth-child(6) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #36D938; }
         }
         a {
@@ -181,7 +186,8 @@ a {
         }
       }
       &:nth-child(7) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #F8E21C; }
         }
         a {
@@ -196,7 +202,8 @@ a {
         }
       }
       &:nth-child(8) {
-        &.active a {
+        &.active a,
+        &.active-trail a {
           &::after { background-color: #B48864; }
         }
         a {
@@ -216,7 +223,8 @@ a {
           border-right: 1px solid $border;
         }
       }
-      &.active {
+      &.active,
+      &.active-trail {
         a {
           border-top: 1px solid #3383CC;
           border-bottom: none;
@@ -291,6 +299,64 @@ a {
           margin: 1px 12px 0 0;
           background-repeat: no-repeat;
           content: '';
+        }
+      }
+    }
+  }
+  .purple-main-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    display: inline-block;
+    height: auto;
+    width: 175px;
+    margin: 46px 15px 0 0;
+    padding: 15px;
+    background-color: $purple;
+    color: $white;
+    @include border-radius(10px);
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: inline-block;
+      height: 12px;
+      width: 14px;
+      margin: -11px 20px 0 0;
+      background-image: url('../images/purple-arrow.png');
+      background-position: center right;
+      background-repeat: no-repeat;
+      content: '';
+    }
+    &.hide-purple {
+      display: none;
+    }
+    &.show-purple {
+      display: inline-block;
+    }
+    .purple-inner {
+      display: inline-block;
+      width: 100%;
+      font-size: 14px;
+      .purple-text {
+        display: inline-block;
+        width: 100%;
+        margin: 0 0 10px;
+      }
+      .purple-button {
+        display: inline-block;
+        width: 100%;
+        padding: 5px 0;
+        border: none;
+        background-color: $white;
+        color: $purple;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        @include border-radius(2px);
+        &:hover {
+          border: none;
         }
       }
     }

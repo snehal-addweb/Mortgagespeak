@@ -137,5 +137,14 @@ jQuery(window).bind("load", function() {
     jQuery('.left-sidebar').css('min-height', contentHeight);
     jQuery('.content-lists, .webform-client-form, .page-user #block-system-main form').css('min-height', new_contentHeight);
   }
+
+  // hide purple tooltip
+  jQuery('#purple-tooltip .purple-button').click(function() {
+    jQuery('#purple-tooltip').addClass('hide-purple');
+    jQuery('#purple-tooltip').removeClass('show-purple');
+  });
+  jQuery('#purple-tooltip').removeClass('hide-purple');
+  jQuery('#purple-tooltip').addClass('show-purple');
+
 });
 /* End */

@@ -10,126 +10,125 @@
 
 function mortgage_misc_menu() {
   $items['welcome'] = array(
-	  'title' => t('Welcome'),
-		'description' => 'Welcome Page',
-		'type' => MENU_NORMAL_ITEM,
-		'page callback' => 'mortgagespeak_welcome',
-		'access arguments' => array('access content'),
+    'title' => 'Welcome',
+    'description' => 'Welcome Page',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'mortgagespeak_welcome',
+    'access arguments' => array('access content'),
   );
   $items['my-page/%'] = array(
-	  'title' => t('My Page'),
-		'description' => 'My Page',
-		'page arguments' => array(1),
-		'page callback' => 'mortgagespeak_my_page',
-		'access arguments' => array('access content'),
-	);
+    'title' => 'My Page',
+    'description' => 'My Page',
+    'page arguments' => array(1),
+    'page callback' => 'mortgagespeak_my_page',
+    'access arguments' => array('access content'),
+  );
 
   return $items;
 }
 
 
-function mortgagespeak_my_page(){
-	global $user;
-	$output = 'comes';
-	return $output;
+function mortgagespeak_my_page() {
+  global $user;
+  $output = 'comes';
+  return $output;
 }
 
 
-function mortgagespeak_welcome(){
-	global $user;
-	$output = '';
-	return $output;
+function mortgagespeak_welcome() {
+  global $user;
+  $output = '';
+  return $output;
 }
 
 function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
 
- 	if($form_id == 'user_register_form') {
-		$form['select_all'] = array(
-	    '#type' => 'checkbox',
-	    '#title' => t('Select All'),
-  	);
- 	  $form['actions']['submit']['#value'] = 'Register';
- 	}
+  if ($form_id == 'user_register_form') {
+    $form['select_all'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Select All'),
+    );
+    $form['actions']['submit']['#value'] = 'Register';
+  }
 
-  if($form_id == 'webform_client_form_42') {
-    $content_type = array(29=>'Press Release',36=>'Perspective ( e.g White Paper, Thought Leadership, Case Study, etc. )',37=>'Blog Post',35=>'Other');
+  if ($form_id == 'webform_client_form_42') {
+    $content_type = array(29 => 'Press Release', 36 => 'Perspective ( e.g White Paper, Thought Leadership, Case Study, etc. )', 37 => 'Blog Post', 35 => 'Other');
     $form['submitted']['upload_type']['#options'] = $content_type;
     $form['actions']['submit']['#value'] = 'Submit !';
     /*$form['submitted']['content_types']['#empty_option'] = 'Content Types';
     $form['submitted']['tag_types']['#empty_option'] = 'Tag Types';*/
   }
 
-  if($form_id == 'user_profile_form') {
+  if ($form_id == 'user_profile_form') {
     $form['picture']['#weight'] = '6';
     $form['field_news_topics']['#weight'] = '7';
     $form['field_company_tags']['#weight'] = '8';
     $form['account']['mail']['#weight'] = '6';
-    
   }
-
 }
 
 function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_id) {
-	global $user;
-	$user_topics = '';
-	$user_info = user_load($user->uid);
-	if($form['#id'] == 'views-exposed-form-tracked-news-page'){
-		$user_news = array('All'=>'All Tracked News');
-		if(isset($user_info->field_news_topics[LANGUAGE_NONE]) && !empty($user_info->field_news_topics[LANGUAGE_NONE])){
-			foreach($user_info->field_news_topics[LANGUAGE_NONE] as $tidKey=>$tidVal){
-				$user_topics = taxonomy_term_load($tidVal['tid']);
-				$user_news[$tidVal['tid']] = $user_topics->name;
-			}   
-		}
-		$form['field_alpha_news_topics_tid_1']['#options'] = $user_news;
-		#$form['field_alpha_news_topics_tid_1']['#value'] = 'All';		
-    if(!empty($_REQUEST['field_alpha_news_topics_tid_1']))
-        $form['field_alpha_news_topics_tid_1']['#value'] = $_REQUEST['field_alpha_news_topics_tid_1'];  	
+  global $user;
+  $user_topics = '';
+  $user_info = user_load($user->uid);
+  if ($form['#id'] == 'views-exposed-form-tracked-news-page') {
+    $user_news = array('All' => 'All Tracked News');
+    if (isset($user_info->field_news_topics[LANGUAGE_NONE]) && !empty($user_info->field_news_topics[LANGUAGE_NONE])) {
+      foreach ($user_info->field_news_topics[LANGUAGE_NONE] as $tidkey => $tidval) {
+        $user_topics = taxonomy_term_load($tidval['tid']);
+        $user_news[$tidval['tid']] = $user_topics->name;
+      }   
+    }
+    $form['field_alpha_news_topics_tid_1']['#options'] = $user_news;
+    #$form['field_alpha_news_topics_tid_1']['#value'] = 'All';
+    if (!empty($_REQUEST['field_alpha_news_topics_tid_1'])) {
+      $form['field_alpha_news_topics_tid_1']['#value'] = $_REQUEST['field_alpha_news_topics_tid_1'];  
+    }
   }
 
-	if($form['#id'] == 'views-exposed-form-tracked-companies-page'){    
-    $user_company = array('All'=>'Company A-M ');
-    $user_company1 = array('All'=>'Company N-Z ');
+  if ($form['#id'] == 'views-exposed-form-tracked-companies-page') {    
+    $user_company = array('All' => 'Company A-M ');
+    $user_company1 = array('All' => 'Company N-Z ');
 
-    $arrATOM = array('1', '3', '2', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
-    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    $arr_a_to_m = array('1', '3', '2', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
+    $arr_m_to_z = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
-    if(isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])){
-        foreach($user_info->field_company_tags[LANGUAGE_NONE] as $tidKey=>$tidVal){
-            $user_tags = taxonomy_term_load($tidVal['tid']);
-            if(in_array(strtolower($user_tags->name[0]), $arrATOM)) {
-                $user_company[$tidVal['tid']] = $user_tags->name;
-            }
-            else if(in_array($user_tags->name[0], $arrMTOZ)) {
-                $user_company1[$tidVal['tid']] = $user_tags->name;
-            }
+    if (isset($user_info->field_company_tags[LANGUAGE_NONE]) && !empty($user_info->field_company_tags[LANGUAGE_NONE])) {
+      foreach ($user_info->field_company_tags[LANGUAGE_NONE] as $tidkey => $tidval) {
+        $user_tags = taxonomy_term_load($tidval['tid']);
+        if (in_array(strtolower($user_tags->name[0]), $arr_a_to_m)) {
+          $user_company[$tidval['tid']] = $user_tags->name;
         }
+        elseif (in_array($user_tags->name[0], $arr_m_to_z)) {
+          $user_company1[$tidval['tid']] = $user_tags->name;
+        }
+      }
     }
+
     $form['company_tag']['#options'] = $user_company;    
-    if(!empty($_REQUEST['company_tag'])) {
+    if (!empty($_REQUEST['company_tag'])) {
       $form['company_tag']['#value'] = $_REQUEST['company_tag'];
     }
     else{
-    	$form['company_tag']['#value'] = 'All';
+      $form['company_tag']['#value'] = 'All';
     }
 
     $form['company_tag1']['#options'] = $user_company1;
-    if(!empty($_REQUEST['company_tag1'])){
-    	$form['company_tag1']['#value'] = $_REQUEST['company_tag1'];
+    if (!empty($_REQUEST['company_tag1'])) {
+      $form['company_tag1']['#value'] = $_REQUEST['company_tag1'];
     }
-    else{
-    	$form['company_tag1']['#value'] = 'All';
-    }
-        
- }
-  
+    else {
+      $form['company_tag1']['#value'] = 'All';
+    }     
+  }
 }
 
 /** 
 * Set Newsletter password on user save
 **/
+
 function mortgage_misc_user_presave(&$edit, $account, $category) {
-  if(!empty($_REQUEST['pass']['pass1'])){
+  if (!empty($_REQUEST['pass']['pass1'])) {
     $new_pass = $_REQUEST['pass']['pass1'];
     $edit['field_newsletter_password']['und'][0]['value'] = $new_pass;
   }
@@ -146,30 +145,30 @@ function mortgage_misc_taxonomy_term_uri($term) {
   global $base_url;
   $user_info = user_load($user->uid);
 
-  if(in_array('News Intelligence', $user->roles)) {
-    $arrATOM = array('1', '3', '2', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
-    $arrMTOZ = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+  if (in_array('News Intelligence', $user->roles)) {
+    $arr_a_to_m = array('1', '3', '2', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
+    $arr_m_to_z = array('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
     $user_company = array();
-    
-    if(isset($user_info->field_company_tags) && !empty($user_info->field_company_tags)) {
-      foreach ($user_info->field_company_tags[LANGUAGE_NONE] as $keyComp => $valueComp) {
-        $user_company[$valueComp['tid']] = $valueComp['tid'];
+
+    if (isset($user_info->field_company_tags) && !empty($user_info->field_company_tags)) {
+      foreach ($user_info->field_company_tags[LANGUAGE_NONE] as $keycomp => $valuecomp) {
+        $user_company[$valuecomp['tid']] = $valuecomp['tid'];
       }
     }
     switch ($term->vocabulary_machine_name) { 
       case 'company_tags':
         $parents = taxonomy_get_parents($term->tid);
-        if(!empty($user_company)) {
+        if (!empty($user_company)) {
           foreach ($user_company as $key => $value) {
-            if(in_array($term->tid, $user_company)) {
+            if (in_array($term->tid, $user_company)) {
               $comp = taxonomy_term_load($term->tid);
-              if(in_array(strtolower($comp->name[0]), $arrATOM)) {
-                  $user_comp[$term->tid] = $comp->name;
-                  $company_url = $base_url . '/my-page/tracked-companies?company_tag='. $term->tid .'&company_tag1=All';
+              if (in_array(strtolower($comp->name[0]), $arr_a_to_m)) {
+                $user_comp[$term->tid] = $comp->name;
+                $company_url = $base_url . '/my-page/tracked-companies?company_tag=' . $term->tid . '&company_tag1=All';
               }
-              else if(in_array($comp->name[0], $arrMTOZ)) {
-                  $user_comp1[$term->tid] = $comp->name;
-                  $company_url = $base_url . '/my-page/tracked-companies?company_tag=All&company_tag1='. $term->tid;
+              elseif (in_array($comp->name[0], $arr_m_to_z)) {
+                $user_comp1[$term->tid] = $comp->name;
+                $company_url = $base_url . '/my-page/tracked-companies?company_tag=All&company_tag1=' . $term->tid;
               }
             }
             else {
@@ -181,7 +180,7 @@ function mortgage_misc_taxonomy_term_uri($term) {
           $company_url = $base_url . '/my-page/tracked-companies';
         }
         return array(
-            'path' => $company_url,
+          'path' => $company_url,
         );
       break;
     }

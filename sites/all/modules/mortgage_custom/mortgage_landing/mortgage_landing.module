@@ -10,17 +10,19 @@
 /**
 * Implements hook_block_info().
 */
+
 function mortgage_landing_block_info() {
   $blocks = array();
   $blocks['randomtext'] = array(
     'info' => t('Random text for Welcome page'),
   );
-  
   return $blocks;
 }
+
 /**
 * Implements hook_block_view().
 */
+
 function mortgage_landing_block_view($delta = '') {
   $block = array();
   switch ($delta) {
@@ -32,50 +34,51 @@ function mortgage_landing_block_view($delta = '') {
   return $block;
 }
 
-function mortgage_landing_randomtext_block(){
-	$output = "MortgageSpeak";
-	$fieldseparator = ",";
-	$lineseparator = "\n";
-	$theme_path = drupal_get_path('theme', 'mortgagespeak');
-	$txtfile = $theme_path. DIRECTORY_SEPARATOR ."welcome.txt";
+function mortgage_landing_randomtext_block() {
+  $output = "MortgageSpeak";
+  $fieldseparator = ",";
+  $lineseparator = "\n";
+  $theme_path = drupal_get_path('theme', 'mortgagespeak');
+  $txtfile = $theme_path . DIRECTORY_SEPARATOR . "welcome.txt";
 
-	if (!file_exists($txtfile)) {
-			print("File not found. Make sure you specified the correct path.\n");
-			exit;
-	}
+  if (!file_exists($txtfile)) {
+    print("File not found. Make sure you specified the correct path.\n");
+    exit;
+  }
 
-	$file = fopen($txtfile, "r");
+  $file = fopen($txtfile, "r");
 
-	if (!$file) {
-		print("Error opening data file.\n");
-		exit;
-	}
+  if (!$file) {
+    print("Error opening data file.\n");
+    exit;
+  }
 
-	$size = filesize($txtfile);
-	if (!$size) {
-		print("File is empty.\n");
-		exit;
-	}
+  $size = filesize($txtfile);
+  if (!$size) {
+    print("File is empty.\n");
+    exit;
+  }
 
-	$txtcontent = fread($file, $size);
-	fclose($file);
+  $txtcontent = fread($file, $size);
+  fclose($file);
 
-	foreach(explode($lineseparator, $txtcontent) as $key => $line) {
-		$text_arr[] = $line;
-	}
+  foreach (explode($lineseparator, $txtcontent) as $key => $line) {
+   $text_arr[] = $line;
+  }
 
-	if(isset($text_arr) && !empty($text_arr)){
-		$random_text = array_rand($text_arr,1);
-	}
-	$explode_quote = explode('-', $text_arr[$random_text]);
-	if(!isset($explode_quote[1])){
-		$explode_quote[1] = 'Anonymous';
-	}
-	$output = '<div class="quote-main-container">
-							<h2>MortgageSpeak</h2>
-							<span>Quote of the day</span>
-							<div class="quote">'. $explode_quote[0] .'</div>
-							<span class="quote-author">'.$explode_quote[1].'</span>
-						</div>';
-	return $output;
+  if (isset($text_arr) && !empty($text_arr)) {
+    $random_text = array_rand($text_arr, 1);
+  }
+
+  $explode_quote = explode('-', $text_arr[$random_text]);
+  if (!isset($explode_quote[1])) {
+    $explode_quote[1] = 'Anonymous';
+  }
+  $output = '<div class="quote-main-container">
+                <h2>MortgageSpeak</h2>
+                <span>Quote of the day</span>
+                <div class="quote">' . $explode_quote[0] . '</div>
+                <span class="quote-author">' . $explode_quote[1] . '</span>
+            </div>';
+  return $output;
 }

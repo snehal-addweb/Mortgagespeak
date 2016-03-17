@@ -1,7 +1,16 @@
 <?php
 
+
+/**
+ * @file
+ * Main file for the Mortagage Newsletter module, which containg logics for generating newsletter according to selected user's data.
+ * 
+ * @ingroup mortgage_newsletter
+ */
+
+
 /*
-    implements hook_menu() to create handle newletter hook
+  implements hook_menu() to create handle newletter hook
 */
 function mortgage_newsletter_menu() {
   $items['create-newsletter'] = array(
@@ -27,7 +36,6 @@ function mortgage_newsletter_menu() {
     'page callback' => 'newsletter_edit_forms',
     'access callback' => TRUE,
   );
- 
   return $items;
 }
 
@@ -35,18 +43,18 @@ function mortgage_newsletter_menu() {
 /* 
     This function is used to select users list for newsletter
 */
-function select_user_list_form($form, &$form_state){
-  drupal_set_title("Newsletter Form");
+function select_user_list_form($form, &$form_state) {
+  drupal_set_title(t("Newsletter Form"));
 
   $query = db_select('users', 'u');
-  $query->fields('u', array('uid','name'));
-  $query->condition('u.status','1','=');
+  $query->fields('u', array('uid', 'name'));
+  $query->condition('u.status', '1', '=');
   $query->orderBy('name', 'ASC');
   $result = $query->execute(); 
-  while($record = $result->fetchAssoc()) {
+  while ($record = $result->fetchAssoc()) {
     $uid[$record['uid']] = $record['name'];
   }  
-  
+
   $multiple = 20;
   $form['select_user'] = array(
     '#type' => 'select',
@@ -54,7 +62,7 @@ function select_user_list_form($form, &$form_state){
     '#options' => $uid,
     '#multiple' => $multiple, 
     #'#size' => $multiple ? min(12, count($uid)) : 0,
-    '#size' => 0
+    '#size' => 0,
   );
   $form['submit'] = array(
     '#type' => 'submit',
@@ -64,7 +72,7 @@ function select_user_list_form($form, &$form_state){
 }
 
 
-function newsletter_edit_forms(){
+function newsletter_edit_forms() {
   $content ="";
   $content .= render(drupal_get_form('newsletter_add_usercustom_form'));
   // $content .= render(drupal_get_form('newsletter_remove_usercustom_form'));
@@ -73,7 +81,7 @@ function newsletter_edit_forms(){
 }
 
 function select_user_list_form_validate($form, &$form_state) {
-  if(empty($form_state['values']['select_user'])) {
+  if (empty($form_state['values']['select_user'])) {
     form_set_error('user', t('select user from dropdowm.'));
   }
 }
@@ -84,33 +92,33 @@ function select_user_list_form_submit($form, &$form_state) {
   $debug = FALSE;
   $body = '';
   $pass = '';
-  $categoryName = '';
-  $arrNewstopics = array();
-  $arrCompanytags = array();
-  $arrTabplacements = array();
+  $category_name = '';
+  $arr_newstopics = array();
+  $arr_companytags = array();
+  $arr_tabplacements = array();
 
-  $abbrTimeZone = "CST";
-  date_default_timezone_set(timezone_name_from_abbr($abbrTimeZone));
+  $abbrtimezone = "CST";
+  date_default_timezone_set(timezone_name_from_abbr($abbrtimezone));
   $today              = strtotime("00:00:01");
   $yesterday          = strtotime("-1 day", $today);
   $current            = strtotime("now");
   
-  $arrNewsList = array();
-  $url_pressrelease = 'http://' .$_SERVER['HTTP_HOST'];
+  $arr_newslist = array();
+  $url_pressrelease = 'http://' . $_SERVER['HTTP_HOST'];
 
 
 
-  foreach($form_state['values']['select_user'] as $key => $vals) {    
+  foreach ($form_state['values']['select_user'] as $key => $vals) {    
     $userid = $vals;
     $user = user_load($userid);
 
-    if($debug) {
+    if ($debug) {
       print("<pre> :: User ::");
       print_r($user);
       print("</pre>");
     }
 
-    switch($user->name) {
+    switch ($user->name) {
       case "Forsythe Appraisals":
         $pass = "Forsythe@1234";
         break;
@@ -174,8 +182,8 @@ function select_user_list_form_submit($form, &$form_state) {
     #################################################################
 
     $arr_user_company_tags = array();
-    if(!empty($user->field_company_tags)) {
-      foreach($user->field_company_tags['und'] as $key => $val) {
+    if (!empty($user->field_company_tags)) {
+      foreach ($user->field_company_tags['und'] as $key => $val) {
         $arr_user_company_tags[] = $val['tid'];
       }
     }
@@ -186,30 +194,30 @@ function select_user_list_form_submit($form, &$form_state) {
     $query->condition('n.status', '1', '=');
     $query->condition('n.type', 'alpha_content', '=');
 
-    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
       $yesterday  = strtotime("-7 day", $current);
-      $query->condition('n.created',array($yesterday,$current),'BETWEEN');
+      $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
     }
     else {
-      if($form_state['complete form']['#action'] == '/create-newsletter') {
+      if ($form_state['complete form']['#action'] == '/create-newsletter') {
         $query->condition('n.created', array($today, $current), 'BETWEEN');
       }
     }
     
 
-    if(!empty($arr_user_company_tags))
+    if (!empty($arr_user_company_tags))
       $query->condition('fct.field_company_tag_tid', $arr_user_company_tags, 'IN');
 
     $query->orderBy('n.created', 'DESC');    
     $result = $query->execute();
 
     $arr_user_company_tags_nids = array();
-    if($result->rowCount() != 0 && (!empty($arr_user_company_tags))){
+    if ($result->rowCount() != 0 && (!empty($arr_user_company_tags))) {
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
-        if(!array_key_exists($record['nid'], $arrNewsList)) {
-          $arrNewsList[$record['nid']] = $record['nid'];
-          $arrCompanytags[$record['nid']] = $record['nid'];
+        if (!array_key_exists($record['nid'], $arr_newslist)) {
+          $arr_newslist[$record['nid']] = $record['nid'];
+          $arr_companytags[$record['nid']] = $record['nid'];
         }
         $arr_user_company_tags_nids[$record['nid']] = $record['nid'];
       }    
@@ -225,8 +233,8 @@ function select_user_list_form_submit($form, &$form_state) {
     # Fetch Selected Newstopics related content section start....
     #################################################################
     $arr_user_news_topics = array();
-    if(!empty($user->field_news_topics)) {
-      foreach($user->field_news_topics['und'] as $key => $val) {
+    if (!empty($user->field_news_topics)) {
+      foreach ($user->field_news_topics['und'] as $key => $val) {
         $arr_user_news_topics[] = $val['tid'];
       }
     }   
@@ -238,29 +246,29 @@ function select_user_list_form_submit($form, &$form_state) {
     $query->fields('n', array('nid'));
     $query->condition('n.type', 'alpha_content', '=');
     $query->condition('n.status', '1', '=');
-    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
       $yesterday  = strtotime("-7 day", $current);
-      $query->condition('n.created',array($yesterday,$current),'BETWEEN');
+      $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
     }
     else {
-      if($form_state['complete form']['#action'] == '/create-newsletter') {
+      if ($form_state['complete form']['#action'] == '/create-newsletter') {
         $query->condition('n.created', array($today, $current), 'BETWEEN');
       }
     }
 
-    if(!empty($arr_user_news_topics))
+    if (!empty($arr_user_news_topics))
       $query->condition('fnt.field_alpha_news_topics_tid', $arr_user_news_topics, 'IN');
 
     $query->orderBy('n.created', 'DESC');    
     $result = $query->execute();
 
     $arr_user_news_topics_nids = array();
-    if($result->rowCount() != 0 && (!empty($arr_user_news_topics))) {
+    if ($result->rowCount() != 0 && (!empty($arr_user_news_topics))) {
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
-        if(!array_key_exists($record['nid'], $arrNewsList)) {
-            $arrNewsList[$record['nid']] = $record['nid'];
-            $arrNewstopics[$record['nid']] = $record['nid'];
+        if (!array_key_exists($record['nid'], $arr_newslist)) {
+            $arr_newslist[$record['nid']] = $record['nid'];
+            $arr_newstopics[$record['nid']] = $record['nid'];
           }
         $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
       }    
@@ -274,19 +282,19 @@ function select_user_list_form_submit($form, &$form_state) {
     # Fetch Selected Perspective & Press Release content section start....
     ########################################################################    
 
-    $tab_placement = array('705','706');
+    $tab_placement = array('705', '706');
     $query = db_select('node', 'n');    
     $query->fields('n', array('nid'));
     $query->join('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
     $query->condition('n.type', 'alpha_content', '=');
     $query->condition('n.status', '1', '=');
     $query->condition('fct.field_tab_placement_tid', $tab_placement, 'IN');
-    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
       $yesterday  = strtotime("-7 day", $current);
-      $query->condition('n.created',array($yesterday,$current),'BETWEEN');
+      $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
     }
     else {
-      if($form_state['complete form']['#action'] == '/create-newsletter') {
+      if ($form_state['complete form']['#action'] == '/create-newsletter') {
         $query->condition('n.created', array($today, $current), 'BETWEEN');
       }
     }
@@ -295,14 +303,14 @@ function select_user_list_form_submit($form, &$form_state) {
     $result = $query->execute();
 
     $arr_perspective_content = array();
-    if($result->rowCount() != 0){
+    if ($result->rowCount() != 0) {
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
-        if(!array_key_exists($record['nid'], $arrNewsList)) {
-          //if(!array_key_exists($record['nid'], $arrCompanytags)) {
-            $arrNewsList[$record['nid']] = $record['nid'];
-            $arrTabplacements[$record['nid']] = $record['nid'];
-          }
+        if (!array_key_exists($record['nid'], $arr_newslist)) {
+          //if(!array_key_exists($record['nid'], $arr_companytags)) {
+            $arr_newslist[$record['nid']] = $record['nid'];
+            $arr_tabplacements[$record['nid']] = $record['nid'];
+        }
         //}
         $arr_perspective_content[$record['nid']] = $record['nid'];
       }    
@@ -321,8 +329,8 @@ function select_user_list_form_submit($form, &$form_state) {
     if($result->rowCount() != 0){
       $i = 1;        
       while ($record = $result->fetchAssoc()) {
-        if(!array_key_exists($record['nid'], $arrNewsList)) {
-          $arrNewsList[$record['nid']] = $record['nid'];
+        if(!array_key_exists($record['nid'], $arr_newslist)) {
+          $arr_newslist[$record['nid']] = $record['nid'];
         }
         $arr_press_releases[$record['nid']] = $record['nid'];
       }    
@@ -335,7 +343,7 @@ function select_user_list_form_submit($form, &$form_state) {
     #################################################################
     # Debug Variables section start....
     #################################################################
-    if($debug) {
+    if ($debug) {
 
       print("<pre> :: arr_user_news_topics ::");
       print_r($arr_user_news_topics);
@@ -365,16 +373,16 @@ function select_user_list_form_submit($form, &$form_state) {
       print_r($arr_perspective_content);
       print("</pre>");
 
-      print('<pre :: arrTabplacements style="color:red;">');
-      print_r($arrTabplacements);
+      print('<pre :: arr_tabplacements style="color:red;">');
+      print_r($arr_tabplacements);
       print('</pre>');
 
       print("<pre> :: arr_press_releases ::");
       print_r($arr_press_releases);
       print("</pre>");
 
-      print("<pre> :: arrNewsList (FOR UNIQUE NODES ONLY) ::");
-      print_r($arrNewsList);
+      print("<pre> :: arr_newslist (FOR UNIQUE NODES ONLY) ::");
+      print_r($arr_newslist);
       print("</pre>");
     }
     #################################################################
@@ -390,18 +398,18 @@ function select_user_list_form_submit($form, &$form_state) {
     $node->status = 1;
     $node->uid = 1;
     $node->language = LANGUAGE_NONE;
-    if($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
       $node->title = "Weekly Newsletter";
     } 
     else {
-      if($form_state['complete form']['#action'] == '/create-newsletter') {
+      if ($form_state['complete form']['#action'] == '/create-newsletter') {
        $node->title = "Newsletter";
       }
     }
     $node->body['und'][0]['format'] = 'full_html';
 
-    $primg = $base_url.'/sites/default/files/PR.png';
-    $tracked_topicimg = $base_url.'/sites/default/files/Key.png'; 
+    $primg = $base_url . '/sites/default/files/PR.png';
+    $tracked_topicimg = $base_url . '/sites/default/files/Key.png'; 
 
     # Template Main Section Start...
     $body .= '<table style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
@@ -449,7 +457,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
             # Template Sub Header Section Start...
             $body .= '<tr class="sub-header-section">
-                        <td style="padding: 0; margin: 0;" align="center"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">'. date("F") .'&nbsp;'.date("j").',&nbsp;'.date("Y").'</span></span>
+                        <td style="padding: 0; margin: 0;" align="center"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">' . date("F") . '&nbsp;' . date("j") . ',&nbsp;' . date("Y") . '</span></span>
                         </td>
                       </tr>';
 
@@ -527,7 +535,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                       <tbody>
                                                         <tr style="width: 100%;">
                                                           <td style="font-weight: bold; text-decoration: none; font-size: 12px; font-family: arial; border-radius: 3px; padding:20px 10px 0 10px; color: #4c99ee; text-align: left; height: 15px; line-height: normal; width: 100%;" align="left">
-                                                            <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a style="text-decoration: none; font-family: arial; color: #4c99ee; border-radius: 3px; font-size: 12px; padding: 0; text-align: left; display: block; line-height: normal;" href="http://www.mortgagespeak.com" target="_blank"><span style="text-decoration: underline; color: #4c99ee;"><a href="'.$base_url.'/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in</a></span></a></span></div>
+                                                            <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a style="text-decoration: none; font-family: arial; color: #4c99ee; border-radius: 3px; font-size: 12px; padding: 0; text-align: left; display: block; line-height: normal;" href="http://www.mortgagespeak.com" target="_blank"><span style="text-decoration: underline; color: #4c99ee;"><a href="' . $base_url . '/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in</a></span></a></span></div>
                                                           </td>
                                                         </tr>
                                                         <tr style="width:100%;">                                                       <td style="padding:0px 10px 20px 10px;">
@@ -565,85 +573,85 @@ function select_user_list_form_submit($form, &$form_state) {
                                         <td style="padding: 0 20px 20px 20px; width: 100%;">
                                           <table class="both_table" style=" margin: 0px auto; border-collapse: collapse; border: none;">
                                             <tbody>';*/
-                                    if(!empty($arrNewsList)) {
+                                    if (!empty($arr_newslist)) {
                                      $body .= '<tr>
                                                 <td style="width: 100%;padding: 10px 20px;">
                                                   <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
                                                     <tbody>';
-                                                                              foreach($arrNewsList as $node_id => $value) {
-                                                                                $topicsName = '';
-                                                                                $categoryName = '';
+                                                                              foreach ($arr_newslist as $node_id => $value) {
+                                                                                $topics_name = '';
+                                                                                $category_name = '';
                                                                                 $nodeloads = node_load($node_id);
-                                                                                if(!empty($nodeloads->field_url)){
-                                                                                  $urlAlias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+                                                                                if (!empty($nodeloads->field_url)) {
+                                                                                  $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                                                                                 }
-                                                                                else{
-                                                                                  $urlAlias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                                                                else {
+                                                                                  $urlalias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                                                                                 }
                                                                                 
-                                                                                $nodeTitle = '';
-                                                                                if(!empty($nodeloads->title)) {
-                                                                                  $dataTitle = strip_tags($nodeloads->title);
-                                                                                  $nodeTitle = truncate_utf8($dataTitle, 80, FALSE, TRUE, 1);
+                                                                                $nodetitle = '';
+                                                                                if (!empty($nodeloads->title)) {
+                                                                                  $data_title = strip_tags($nodeloads->title);
+                                                                                  $nodetitle = truncate_utf8($data_title, 80, FALSE, TRUE, 1);
                                                                                 }
 
                                                                                 $nodedata = '';
-                                                                                if(!empty($nodeloads->body)) {
+                                                                                if (!empty($nodeloads->body)) {
                                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
                                                                                   $nodedata = truncate_utf8($datanode, 80, FALSE, TRUE, 1); 
                                                                                 }
 
                                                                                 $company_image = '';
-                                                                                if(in_array($node_id, $arrCompanytags)) {
-                                                                                  if(isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
-                                                                                    $companyTid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
-                                                                                    $taxo_info = taxonomy_term_load($companyTid);
-                                                                                    if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
+                                                                                if (in_array($node_id, $arr_companytags)) {
+                                                                                  if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
+                                                                                    $company_tid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+                                                                                    $taxo_info = taxonomy_term_load($company_tid);
+                                                                                    if (isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)) {
                                                                                       $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
                                                                                       $company_image = image_style_url("tracked_images", $img_url);
                                                                                     }
-                                                                                    $categoryName = 'Tracked Company';
+                                                                                    $category_name = 'Tracked Company';
                                                                                   }
                                                                                 }
-                                                                                else if(in_array($node_id, $arrNewstopics)) {
+                                                                                elseif (in_array($node_id, $arr_newstopics)) {
                                                                                   if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-                                                                                    $topicsName = '';
-                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
+                                                                                    $topics_name = '';
+                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
                                                                                       // News Topics
-                                                                                      if($tabvalue['tid'] == '701') {
-                                                                                        if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-                                                                                          foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
+                                                                                      if ($tabvalue['tid'] == '701') {
+                                                                                        if (isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+                                                                                          foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicskey => $topicvalue) {
                                                                                             $taxomony = taxonomy_term_load($topicvalue['tid']);
-                                                                                            $topicsName .= $taxomony->name . ', ';
+                                                                                            $topics_name .= $taxomony->name . ', ';
                                                                                           }
-                                                                                          $topicsName = rtrim($topicsName, ", ");
+                                                                                          $topics_name = rtrim($topics_name, ", ");
                                                                                         }
-                                                                                        $categoryName = $topicsName;
+                                                                                        $category_name = $topics_name;
                                                                                         $company_image = $tracked_topicimg;
                                                                                       }
                                                                                     }
                                                                                   }
                                                                                 }
-                                                                                else if(in_array($node_id, $arrTabplacements)) {
+                                                                                elseif (in_array($node_id, $arr_tabplacements)) {
                                                                                   if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabKey => $tabvalue) {
-                                                                                      $categoryName = '';
+                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
+                                                                                      $category_name = '';
                                                                                       
                                                                                       // Press Releases
-                                                                                      if(($tabvalue['tid'] == '705')) {
-                                                                                        $categoryName = 'Press Releases';
+                                                                                      if (($tabvalue['tid'] == '705')) {
+                                                                                        $category_name = 'Press Releases';
                                                                                         break;
                                                                                       }
 
                                                                                       //Prespectives
-                                                                                      if(($tabvalue['tid'] == '706')) {
-                                                                                        $categoryName = 'Perspectives';
+                                                                                      if (($tabvalue['tid'] == '706')) {
+                                                                                        $category_name = 'Perspectives';
                                                                                         break;
                                                                                       }
 
                                                                                       //Blogs
-                                                                                      if(($tabvalue['tid'] == '703')) {
-                                                                                        $categoryName = 'Blogs';
+                                                                                      if (($tabvalue['tid'] == '703')) {
+                                                                                        $category_name = 'Blogs';
                                                                                         break;
                                                                                       }
                                                                                     }
@@ -651,31 +659,29 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                   }
                                                                                 }
                                                                                 else {
-                                                                                    if(isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-                                                                                        $topicsName = '';
-                                                                                        foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicsKey => $topicvalue) {
-                                                                                          $taxomony = taxonomy_term_load($topicvalue['tid']);
-                                                                                          $topicsName .= $taxomony->name . ', ';
-                                                                                        }
-                                                                                        $topicsName = rtrim($topicsName, ", ");
+                                                                                  if (isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+                                                                                      $topics_name = '';
+                                                                                      foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicskey => $topicvalue) {
+                                                                                        $taxomony = taxonomy_term_load($topicvalue['tid']);
+                                                                                        $topics_name .= $taxomony->name . ', ';
                                                                                       }
-                                                                                      $categoryName = $topicsName;
-                                                                                      $company_image = $tracked_topicimg;
+                                                                                      $topics_name = rtrim($topics_name, ", ");
+                                                                                  }
+                                                                                  $category_name = $topics_name;
+                                                                                  $company_image = $tracked_topicimg;
                                                                                 }
-
-                                                                                
-                                                                                $url = $urlAlias;
+                                                                                $url = $urlalias;
                                                                                 $body .= '<tr>
                                                 <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
                                                   <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
                                                     <tbody>
                                                       <tr>
                                                         <td style="width: 50px; padding: 0 10px 0 0;" valign="top" height="50">
-                                                          <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img style="width: 50px; height: 50px; vertical-align: top;" src="'. $company_image .'" alt="" width="50" height="50" />&nbsp;</div>
+                                                          <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img style="width: 50px; height: 50px; vertical-align: top;" src="' . $company_image . '" alt="" width="50" height="50" />&nbsp;</div>
                                                         </td>
                                                         <td style="line-height: normal; vertical-align: top; text-align: left; width: 540px; max-width: 540px; padding: 0;">
-                                                          <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 540px; max-width: 540px;"><span style="color: #999999;">' . $categoryName. '</span></div>
-                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodeTitle . '</a></div>
+                                                          <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 540px; max-width: 540px;"><span style="color: #999999;">' . $category_name . '</span></div>
+                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
                                                           <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 540px; max-width: 540px;">' . $nodedata . '</div>
                                                         </td>
                                                       </tr>
@@ -717,7 +723,7 @@ function select_user_list_form_submit($form, &$form_state) {
     $body .= '</tbody></table>';
     # Template Main Section Table Closing  End...
 
-    if($debug) {
+    if ($debug) {
       print("<pre> :: body ::");
       print_r($body);
       print("</pre>");
@@ -733,4 +739,3 @@ function select_user_list_form_submit($form, &$form_state) {
     #################################################################
   }
 }
-?>
