@@ -310,13 +310,13 @@ a {
     z-index: 10;
     display: inline-block;
     height: auto;
-    width: 180px;
+    width: 205px;
     margin: 46px 15px 0 0;
     padding: 15px;
     background-color: $purple;
     color: $white;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     @include border-radius(10px);
     &::before {
       position: absolute;
@@ -340,7 +340,7 @@ a {
     .purple-inner {
       display: inline-block;
       width: 100%;
-      font-size: 12px;
+      font-size: 14px;
       .purple-text {
         display: inline-block;
         width: 100%;
