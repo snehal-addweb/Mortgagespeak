@@ -23,6 +23,12 @@ function mortgage_misc_menu() {
     'page callback' => 'mortgagespeak_my_page',
     'access arguments' => array('access content'),
   );
+  $items['ajax/purplebox'] = array(
+    'title' => 'Purple tooltip',
+    'description' => 'Purple tooltip to update user field',
+    'page callback' => 'mortgagespeak_purple_box',
+    'access arguments' => array('access content'),
+  );
 
   return $items;
 }
@@ -32,6 +38,14 @@ function mortgagespeak_my_page() {
   global $user;
   $output = 'comes';
   return $output;
+}
+
+function mortgagespeak_purple_box() {
+  global $user;
+  $existing = user_load($user->uid);
+  $edit = (array) $existing; 
+  $edit['field_show_got_it_box']['und'][0]['value'] = 0;
+  user_save($existing, $edit);
 }
 
 
