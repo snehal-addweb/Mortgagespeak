@@ -76,8 +76,8 @@ function mortgagespeak_menu_link(array $variables) {
   if ($element['#below']) {
     $sub_menu = drupal_render($element['#below']);
   }
-  $variables['element']['#attributes']['class'][] = 'active active-trail';
-  $variables['element']['#localized_options']['attributes']['class'][] = 'active active-trail';
+  $variables['element']['#attributes']['class'][] = 'active';
+  $variables['element']['#localized_options']['attributes']['class'][] = 'active';
 
   $output = l($element['#title'], $element['#href'], $options = $element['#localized_options']);
   

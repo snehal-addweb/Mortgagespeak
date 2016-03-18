@@ -143,7 +143,12 @@ jQuery(window).bind("load", function() {
   jQuery('#purple-tooltip .purple-button').click(function() {
     jQuery('#purple-tooltip').addClass('hide-purple');
     jQuery('#purple-tooltip').removeClass('show-purple');
+    jQuery.ajax({
+          type:'post',
+          url: '/ajax/purplebox',
+    });
   });
+
   jQuery('#purple-tooltip').removeClass('hide-purple');
   jQuery('#purple-tooltip').addClass('show-purple');
 
