@@ -89,7 +89,8 @@ textarea:focus {
  */
 .page-user-register,
 .page-user-login,
-.page-user-password {
+.page-user-password,
+.not-logged-in.page-user {
   .tabs--primary.nav-tabs {
     display: none;
   }
@@ -97,6 +98,7 @@ textarea:focus {
     display: none;
   }
 }
+
 #user-register-form,
 #user-login,
 #user-profile-form,
@@ -106,7 +108,15 @@ textarea:focus {
   border-top: 1px solid $border-cont;
   border-right: 1px solid $border-cont;
   border-left: 1px solid $border-cont;
-  .help-block { display: none; }
+  .help-block,
+  .password-help {
+    display: none !important;
+  }
+  .glyphicon-remove {
+    &::before {
+      content: '';
+    }
+  }
   .panels-flexible-region-1-user_register_for_upload {
     width: 100%;
   }
