@@ -7,7 +7,7 @@ global $base_url;
 <div class="user-register-pic">
   <div class="register-my-details">
   <div class="my-details-header">My Details</div>
-  <?php
+    <?php
 
     print render($form['account']['name']);?>
     <div class="field-type-wrap"><?php
@@ -17,6 +17,7 @@ global $base_url;
       print render($form['account']['mail']);
       print render ($form['account']['pass']);
     ?>
+    <hr/>
   </div>
 
   <div class="user-pic-reg">
@@ -26,12 +27,16 @@ global $base_url;
     </div>
     <?php print render($form['picture']); ?>
   </div>
-  <hr/>
+  
 </div>
 
 <div class="register-my-page-details">
-  <div class="my-page-details-header">"My Page" Details</div>
-  <span class="news-text">Follow these "news topics" Tracked in your custom page.</span>
+  <div class="my-page-details-header">"My Page" Details
+
+  </div>
+  <span class="news-text">Follow these "news topics" Tracked in your custom page.
+
+  </span>
 
   <?php 
     print render($form['select_all']);

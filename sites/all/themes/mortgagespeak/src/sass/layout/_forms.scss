@@ -112,6 +112,12 @@ textarea:focus {
   .password-help {
     display: none !important;
   }
+  .register-my-page-details {
+    hr {
+      max-width: 450px;
+      margin: 0 20px 20px;
+    }
+  }
   .glyphicon-remove {
     &::before {
       content: '';
@@ -128,6 +134,66 @@ textarea:focus {
     color: $gray-69;
     font-size: 14px;
   }
+  .my-details-header,
+  .my-page-details-header {
+    padding: 5px 20px;
+    font-size: 25px;
+  }
+  .user-register-pic {
+    display: inline-block;
+    width: 100%;
+    .register-my-details {
+      float: left;
+      display: inline-block;
+      width: 60%;
+      border-right: 1px solid #CCC;
+      hr {
+        max-width: 450px;
+        margin: 30px 0 20px 20px;
+      }
+    }
+    .user-pic-reg {
+      display: inline-block;
+      width: 40%;
+      padding: 50px 0 0 50px;
+      .form-wrapper {
+        margin: 0;
+      }
+      .panel {
+        border: none;
+        box-shadow: none;
+        .panel-heading {
+          display: none;
+        }
+        .panel-body {
+          padding: 15px 0;
+          .form-item {
+            .control-label {
+              color: $black-light;
+            }
+          }
+        }
+        .input-file {
+          .input-file-name {
+            clear: none;
+            min-width: 0;
+          }
+        }
+    }
+      .def-img-text {
+        .default-img {
+          display: inline-block;
+        }
+        .def-text {
+          display: inline-block;
+          margin-left: 10px;
+          span {
+            display: block;
+         }
+        }
+      }
+    }
+  }
   .form-item,
   .field-type-wrap {
     max-width: 540px;
@@ -143,6 +209,7 @@ textarea:focus {
     }
     > .control-label {
       margin: 10px 0 0;
+      color: #7C7E81;
       font-weight: normal;
     }
   }
@@ -220,15 +287,24 @@ textarea:focus {
       font-weight: normal;
     }
     .form-checkboxes {
+      display: block;
+      -webkit-column-count: 2; /* Chrome, Safari, Opera */
+      -moz-column-count: 2; /* Firefox */
+      column-count: 2;
       .form-item {
-        float: left;
-        width: 50%;
+        float: none;
+        display: block;
+        width: auto;
         margin: 0 0 10px;
+        .control-label {
+          float: none;
+        }
         label {
           float: left;
           width: 100%;
           margin: 0;
           padding: 0;
+          color: #7C7E81;
           font-size: 14px;
         }
       }
