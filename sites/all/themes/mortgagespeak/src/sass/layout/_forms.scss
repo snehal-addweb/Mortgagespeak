@@ -115,7 +115,7 @@ textarea:focus {
   .register-my-page-details {
     hr {
       max-width: 450px;
-      margin: 0 20px 30px;
+      margin: 5px 20px 40px;
       border-style: dotted;
       border-width: 2px 0 0;
     }
@@ -153,13 +153,14 @@ textarea:focus {
       width: 60%;
       hr {
         max-width: 450px;
-        margin: 40px 0 28px 20px;
+        margin: 5px 0 28px 20px;
         border-style: dotted;
         border-width: 2px 0 0;
       }
 
     }
     .user-border {
+      height: 230px;
       border-right: 1px solid #EEE;
     }
     .user-pic-reg {
