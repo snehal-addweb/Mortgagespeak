@@ -1221,12 +1221,26 @@ a {
     }
     .user-activity {
       .user-activity-header {
+        display: inline-block;
+        width: 100%;
         padding: 8px;
         background-color: $gray-light-f4;
         color: #000;
         font-size: 12px;
         font-weight: bold;
+        form {
+          float: right;
+          input[type="submit"] {
+            height: 25px;
+            width: 69px;
+            border: 1px solid #53B558;
+            background-image: url('../images/export.png');
+            background-repeat: no-repeat;
+            text-decoration: none;
+            text-indent: -9999px;
+        }
       }
+    }
       .table-responsive {
         table {
           thead {
