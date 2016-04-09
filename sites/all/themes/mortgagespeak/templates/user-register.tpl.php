@@ -7,6 +7,7 @@ global $base_url;
 <div class="user-register-pic">
   <div class="register-my-details">
   <div class="my-details-header">1. My Details</div>
+  <div class="user-border">
     <?php
 
     print render($form['account']['name']);?>
@@ -17,6 +18,7 @@ global $base_url;
       print render($form['account']['mail']);
       print render ($form['account']['pass']);
     ?>
+    </div>
     <hr/>
   </div>
 

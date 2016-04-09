@@ -115,7 +115,9 @@ textarea:focus {
   .register-my-page-details {
     hr {
       max-width: 450px;
-      margin: 0 20px 20px;
+      margin: 0 20px 30px;
+      border-style: dotted;
+      border-width: 2px 0 0;
     }
   }
   .glyphicon-remove {
@@ -134,7 +136,10 @@ textarea:focus {
     color: $gray-69;
     font-size: 14px;
   }
-  .my-details-header,
+  .my-details-header {
+    padding: 10px 20px 20px;
+    font-size: 25px;
+  }
   .my-page-details-header {
     padding: 5px 20px;
     font-size: 25px;
@@ -146,16 +151,21 @@ textarea:focus {
       float: left;
       display: inline-block;
       width: 60%;
-      border-right: 1px solid #CCC;
       hr {
         max-width: 450px;
-        margin: 30px 0 20px 20px;
+        margin: 40px 0 28px 20px;
+        border-style: dotted;
+        border-width: 2px 0 0;
       }
+
+    }
+    .user-border {
+      border-right: 1px solid #EEE;
     }
     .user-pic-reg {
       display: inline-block;
       width: 40%;
-      padding: 50px 0 0 50px;
+      padding: 60px 0 0 50px;
       .form-wrapper {
         margin: 0;
       }
@@ -186,9 +196,10 @@ textarea:focus {
         }
         .def-text {
           display: inline-block;
-          margin-left: 10px;
+          margin-left: 20px;
           span {
             display: block;
+            font-size: 13px;
          }
         }
       }
@@ -267,8 +278,8 @@ textarea:focus {
   .news-text {
     display: inline-block;
     width: 100%;
-    margin: 0 0 10px;
-    padding: 0 0 0 20px;
+    /*margin: 0 0 10px;*/
+    padding: 10px 20px;
     font-size: 12px;
   }
   .field-name-field-news-topics {
