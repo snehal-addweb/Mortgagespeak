@@ -431,6 +431,20 @@ function mortgage_stats() {
     // Sort array according to timestamp
     $arr_nodelist = msort($arr_nodelist, 'timestamp');
 
+    // Export data into CSV format
+    if($_POST['csvsubmit']){
+      header('Content-Type: text/csv; charset=utf-8');
+      header('Content-Disposition: attachment; filename=data-export-newsclicks-csv.csv');
+      $fh = fopen('php://output', 'w');
+      fputcsv($fh, array(t('Date'), t('User'),t('Company'), t('Topic'),t('Headline'), t('Location')));
+
+      foreach($arr_nodelist as $csvrow){
+        fputcsv($fh, array(date('m/d/y - H:i',$csvrow['timestamp']),$csvrow['email'],$csvrow['company'],$csvrow['topic'],strip_tags($csvrow  ['main_node_title'])));
+      }
+      fclose($fh);
+      exit;
+    }
+
     $output .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">';
     $output .= ' <script>
     						jQuery(function() {
@@ -527,7 +541,7 @@ function mortgage_stats() {
       $per_page = 20;
       $current_page = pager_default_initialize(count($rows), $per_page);
       $chunks = array_chunk($rows, $per_page, TRUE);
-      $output .= '<div class="user-activity"><div class="user-activity-header">User Activity</div>';
+      $output .= '<div class="user-activity"><div class="user-activity-header"><span>User Activity</span><form method="post"><input type="submit" class="csvsubmit" value="Export" name="csvsubmit"></form></div>';
       $output .= theme('table', array('header' => $header, 'rows' => $chunks[$current_page]));
       $output .= theme('pager');
       $output .= '</div>';
