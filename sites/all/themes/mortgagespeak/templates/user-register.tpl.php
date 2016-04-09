@@ -6,7 +6,7 @@ global $base_url;
 
 <div class="user-register-pic">
   <div class="register-my-details">
-  <div class="my-details-header">My Details</div>
+  <div class="my-details-header">1. My Details</div>
     <?php
 
     print render($form['account']['name']);?>
@@ -31,7 +31,7 @@ global $base_url;
 </div>
 
 <div class="register-my-page-details">
-  <div class="my-page-details-header">"My Page" Details
+  <div class="my-page-details-header">2. "My Page" Details
 
   </div>
   <span class="news-text">Follow these "news topics" Tracked in your custom page.
