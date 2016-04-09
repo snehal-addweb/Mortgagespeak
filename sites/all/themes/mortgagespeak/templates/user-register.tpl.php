@@ -18,9 +18,15 @@ global $base_url;
       print render ($form['account']['pass']);
     ?>
   </div>
+
   <div class="user-pic-reg">
+    <div class="def-img-text">
+      <div class="default-img"><img src="<?php print $base_url; ?>/sites/default/files/Default-Headshot.png"></div>
+      <div class="def-text"><span>Image will be resized to fit:</span><span>65w X 65h pixels</span></div>
+    </div>
     <?php print render($form['picture']); ?>
   </div>
+  <hr/>
 </div>
 
 <div class="register-my-page-details">
@@ -31,7 +37,9 @@ global $base_url;
     print render($form['select_all']);
     print render($form['field_news_topics']);
   ?>
+    <hr/>
 </div>
+
 <?php 
   print render($form['captcha']);
 
