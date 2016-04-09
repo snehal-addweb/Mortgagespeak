@@ -34,7 +34,7 @@ global $base_url;
   <div class="my-page-details-header">2. "My Page" Details
 
   </div>
-  <span class="news-text">Follow these "news topics" Tracked in your custom page.
+  <span class="news-text">Follow these "news topics" in your custom page.
 
   </span>
 

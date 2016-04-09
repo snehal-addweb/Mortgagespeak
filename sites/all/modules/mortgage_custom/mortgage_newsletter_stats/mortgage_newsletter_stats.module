@@ -436,7 +436,7 @@ function mortgage_stats() {
       header('Content-Type: text/csv; charset=utf-8');
       header('Content-Disposition: attachment; filename=data-export-newsclicks-csv.csv');
       $fh = fopen('php://output', 'w');
-      fputcsv($fh, array(t('Date'), t('User'),t('Company'), t('Topic'),t('Headline'), t('Location')));
+      fputcsv($fh, array(t('Date'),t('User'),t('Company'),t('Topic'),t('Headline')));
 
       foreach($arr_nodelist as $csvrow){
         fputcsv($fh, array(date('m/d/y',$csvrow['timestamp']),$csvrow['email'],$csvrow['company'],$csvrow['topic'],strip_tags($csvrow  ['main_node_title'])));
