@@ -439,6 +439,19 @@ a {
     color: $gray-69;
     font-size: 14px;
     line-height: 14px;
+
+    .comp-flag {
+      display: inline-block;
+      width: 100%;
+      .comp-name {
+        display: inline-block;
+        padding-right: 7px;
+        border-right: 1px solid;
+      }
+      .comp-fw {
+        display: inline-block;
+      }
+    }
   }
   .view-content {
     display: inline-block;
