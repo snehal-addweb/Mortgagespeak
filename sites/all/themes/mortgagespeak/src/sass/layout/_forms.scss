@@ -250,7 +250,8 @@ textarea:focus {
       padding: 0;
     }
   }
-  #edit-field-news-topics {
+  #edit-field-news-topics,
+  #edit-field-company-tags {
     > .form-item {
       max-width: calc(100% - 40px);
       width: 100%;
@@ -283,7 +284,8 @@ textarea:focus {
     padding: 10px 20px;
     font-size: 12px;
   }
-  .field-name-field-news-topics {
+  .field-name-field-news-topics,
+  .field-name-field-company-tags {
     display: inline-block;
     width: 100%;
     margin: 0;
@@ -475,6 +477,8 @@ textarea:focus {
   }
   .form-item-field-company-tags-und select {
     height: 375px;
+    border: none;
+    box-shadow: none;
   }
 }
 .login-upload-page, /* Upload page class */

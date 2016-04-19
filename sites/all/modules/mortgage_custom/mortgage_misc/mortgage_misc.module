@@ -150,7 +150,7 @@ function mortgage_misc_user_presave(&$edit, $account, $category) {
 
 
 
-function mortgage_misc_entity_info_alter(&$entity_info) {
+/*function mortgage_misc_entity_info_alter(&$entity_info) {
   $entity_info['taxonomy_term']['uri callback'] = 'mortgage_misc_taxonomy_term_uri';
 }
 
@@ -201,4 +201,4 @@ function mortgage_misc_taxonomy_term_uri($term) {
   }
   // default taxonomy term uri
   return taxonomy_term_uri($term);
-}
+}*/
