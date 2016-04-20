@@ -73,6 +73,37 @@
  * @ingroup templates
  */
 ?>
+<?php  
+
+  $company_tags = 'No';
+
+  if(arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
+    $tid = arg(2);
+    $page_url = drupal_get_path_alias('taxonomy/term/' . arg(2)); 
+    $term = taxonomy_term_load($tid);
+    if ($term->vocabulary_machine_name == "company_tags")
+    {
+      $query = new EntityFieldQuery();
+      $query->entityCondition('entity_type', 'taxonomy_term')
+      ->fieldCondition('field_page_url', 'value', $page_url, '=');
+      $result = $query->execute();
+
+      if(isset($result['taxonomy_term'])) {
+        foreach ($result['taxonomy_term'] as $tidKey => $arrVal) {
+          $term_info = taxonomy_term_load($arrVal->tid);
+          if(isset($term_info->field_ads_company_tags) && !empty($term_info->field_ads_company_tags)) {
+            if($term_info->field_ads_company_tags[LANGUAGE_NONE][0]['value'] == 'Yes') {
+              $company_tags = 'Yes';
+            }
+          }
+        }
+      } 
+    }
+  }
+
+?>
+
+
 <div class="top-header">
   <?php if (!empty($page['top_header'])): ?>
     <div>
@@ -141,7 +172,23 @@
 
     <section<?php print $content_column_class; ?>>
       <?php if (!empty($page['highlighted'])): ?>
-        <div class="highlighted"><?php print render($page['highlighted']); ?></div>
+        <div class="highlighted">
+          <?php 
+
+          // Render blocks for company tags taxonomy page and other.
+          if($company_tags == 'Yes') {
+            $block = block_load('views', '899f64e208d341b1043e1a20395c2073');
+          }
+          else {
+            $block = block_load('randomblocks', 'top_page');
+          }
+          $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
+          $output = drupal_render($render_array);
+          print render($output);
+          ?>
+
+        <?php print render($page['highlighted']); ?>
+        </div>
       <?php endif; ?>
       <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
       <a id="main-content"></a>
