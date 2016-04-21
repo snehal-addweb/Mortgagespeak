@@ -76,6 +76,27 @@
 <?php  
 
   $company_tags = 'No';
+  $random_top_display = 'Yes';
+  $block = $left_skyscraper = $left_block_1 = $left_block_2 = $left_block_3 ='';
+
+
+  if (arg(0) == 'welcome') {
+   $random_top_display = 'No';
+  }
+
+  if (arg(0) == 'node' && is_numeric(arg(1)))
+  {
+    $nid = arg(1);
+    $node = node_load($nid);
+
+    if ($node->type == "alpha_content")
+    {
+      $random_top_display = 'No';
+    }
+    else {
+      $random_top_display = 'Yes';
+    }
+  }
 
   if(arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
     $tid = arg(2);
@@ -100,6 +121,60 @@
       } 
     }
   }
+
+// Render blocks for company tags taxonomy page and other.
+  if($company_tags == 'Yes') {
+    $block = block_load('views', '899f64e208d341b1043e1a20395c2073');
+  }
+  else {
+    if($random_top_display == 'Yes') {
+      $block = block_load('randomblocks', 'top_page');
+    }
+  }
+
+// Render Left Skyscraper for company tags taxonomy page and other.
+
+  if($company_tags == 'Yes') {
+    $left_skyscraper = block_load('views', '42101e343498326f9dd68eaf990a394d');
+  }
+  else {
+    if($random_top_display == 'Yes') {
+     $left_skyscraper = block_load('randomblocks', 'left_skyscraper');
+    }
+  }
+  
+// Render Left Block 1 for company tags taxonomy page and other.
+  if($company_tags == 'Yes') {
+    $left_block_1 = block_load('views', 'd1eb806732708cacc3ca61f050433b0b');
+  }
+  else {
+    if($random_top_display == 'Yes') {
+      $left_block_1 = block_load('randomblocks', 'left_block_1');
+    }
+  }
+
+// Render Left Block 2 for company tags taxonomy page and other.
+  if($company_tags == 'Yes') {
+    $left_block_2 = block_load('views', '081393740e200cfc34eeaa39f22a517d');
+  }
+  else {
+    if($random_top_display == 'Yes') {
+      $left_block_2 = block_load('randomblocks', 'left_block_2');
+    }
+  }
+
+
+// Render Left Block 3 for company tags taxonomy page and other.
+  if($company_tags == 'Yes') {
+    $left_block_3 = block_load('views', 'eb34806d60cd56170767ff3f3b731561');
+  }
+  else {
+    if($random_top_display == 'Yes') {
+      $left_block_3 = block_load('randomblocks', 'left_block_3');
+    }
+  }
+
+
 
 ?>
 
@@ -167,6 +242,33 @@
     <?php if (!empty($page['sidebar_first'])): ?>
       <aside class="left-sidebar col-lg-2 col-md-2 col-sm-2 col-xs-12 p0" role="complementary">
         <?php print render($page['sidebar_first']); ?>
+
+          <?php 
+            if(!empty($left_skyscraper)) {
+              $left_sky_render_array = _block_get_renderable_array(_block_render_blocks(array($left_skyscraper)));
+              $output_left_sky = drupal_render($left_sky_render_array);
+              print render($output_left_sky);
+            }
+
+            if(!empty($left_block_1)) {
+              $left_block_1_render_array = _block_get_renderable_array(_block_render_blocks(array($left_block_1)));
+              $output_left_block_1 = drupal_render($left_block_1_render_array);
+              print render($output_left_block_1);
+            }
+
+            if(!empty($left_block_2)) {
+              $left_block_2_render_array = _block_get_renderable_array(_block_render_blocks(array($left_block_2)));
+              $output_left_block_2 = drupal_render($left_block_2_render_array);
+              print render($output_left_block_2);
+            }
+
+            if(!empty($left_block_3)) {
+              $left_block_3_render_array = _block_get_renderable_array(_block_render_blocks(array($left_block_3)));
+              $output_left_block_3 = drupal_render($left_block_3_render_array);
+              print render($output_left_block_3);
+            }
+
+          ?>
       </aside>  <!-- /#sidebar-first -->
     <?php endif; ?>
 
@@ -174,17 +276,11 @@
       <?php if (!empty($page['highlighted'])): ?>
         <div class="highlighted">
           <?php 
-
-          // Render blocks for company tags taxonomy page and other.
-          if($company_tags == 'Yes') {
-            $block = block_load('views', '899f64e208d341b1043e1a20395c2073');
-          }
-          else {
-            $block = block_load('randomblocks', 'top_page');
-          }
-          $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
-          $output = drupal_render($render_array);
-          print render($output);
+            if(!empty($block)) {
+              $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
+              $output = drupal_render($render_array);
+              print render($output);
+            }
           ?>
 
         <?php print render($page['highlighted']); ?>
