@@ -83,7 +83,7 @@
 	</div>
 
 	<div class="pdf-upload-document"><?php 
-		if(isset($node->field_upload_document['und']) && !empty($node->field_upload_document['und'] )){ ?>
+		if(isset($node->field_upload_document['und']) && !empty($node->field_upload_document['und'] )) { ?>
 
 		<div class="document-presc">
 		<?php     
@@ -97,8 +97,21 @@
 		</div><?php 
 	} 
 	?>			
+		<div class="node-comments" id="node-comments"><?php print 'Comments (<span class="comment-count">'. $comment_count .'</span>)'; ?></div>
+		<div id="goal-comments-wrapper" class="goal-comment-wrapper">
+			<?php 
+			$nid = $node->nid;
+			$comment = new stdClass;
+			$comment->nid = $nid;
+			$node = node_load($nid);
+			$form = drupal_get_form('comment_form', $comment);
+			//print render($form);
+			//$node = node_load($id);
+			$node_view = node_view($node);
+			$node_view['comments'] = comment_node_page_additions($node);
+			print drupal_render($node_view['comments']);
+			?>
+		</div>
 	</div>
-
-</div>
 <?php endif; ?>
 
