@@ -1847,6 +1847,9 @@ a {
       background-color: #747474;
       vertical-align: middle;
     }
+    .comment-count {
+      font-weight: normal;
+    }
   }
 }
 #comments {
@@ -1868,6 +1871,18 @@ a {
         border-radius: 3px;
         word-wrap: break-word;
       }
+    }
+    .confirmation {
+      button,
+      a {
+        float: left;
+        margin-top: 10px;
+      }
+      a {
+        margin-top: 20px;
+        margin-left: 10px;
+      }
+
     }
     .permalink {
       display: none;
