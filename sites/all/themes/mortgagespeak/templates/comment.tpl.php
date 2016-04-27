@@ -126,10 +126,17 @@
 
 
 
-
 $uid = user_load($comment->uid);
 $user_fname = $uid->field_first_name['und'][0]['value'];
 $user_lname = $uid->field_last_name['und'][0]['value'];
+
+if(!empty($comment->uid)) {
+  $author_name = $user_fname . " " . $user_lname;
+}
+else {
+  $author_name = $author;
+}
+
 ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print $picture ?>
@@ -140,7 +147,7 @@ $user_lname = $uid->field_last_name['und'][0]['value'];
 
   <div class="submitted">
     <?php print $permalink; ?>
-    <span class="cmt-user"><?php print $user_fname . " " . $user_lname; ?></span>
+    <span class="cmt-user"><?php print $author_name; ?></span>
     <span class="cmt-created"><?php print $left_time; ?></span>
   </div>
 
