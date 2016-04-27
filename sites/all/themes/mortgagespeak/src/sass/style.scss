@@ -1836,6 +1836,7 @@ a {
   .node-comments {
     margin-bottom: 15px;
     color: #747474;
+    font-weight: bold;
     text-transform: uppercase;
     .dot {
       display: inline-block;
@@ -1919,10 +1920,15 @@ a {
   h2 { display: none; }
   .comment-form {
     position: relative;
+    padding-top: 15px;
+    border-top: 2px solid #CCC;
     .grippie {
       position: relative;
       clear: left;
       display: none;
+    }
+    input {
+      @include border-radius(0);
     }
     .form-submit {
       position: absolute;
