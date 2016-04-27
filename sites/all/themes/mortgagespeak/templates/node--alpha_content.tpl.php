@@ -96,8 +96,10 @@
 		?>
 		</div><?php 
 	} 
-	?>			
-		<div class="node-comments" id="node-comments"><?php print 'Comments (<span class="comment-count">'. $comment_count .'</span>)'; ?></div>
+	?>	
+	</div>		
+  <div class="alpha-comments-container">
+		<div class="node-comments" id="node-comments"><?php print 'Comments   <span class="dot"> . </span><span class="comment-count">'. $comment_count .'</span>'; ?></div>
 		<div id="goal-comments-wrapper" class="goal-comment-wrapper">
 			<?php 
 			$nid = $node->nid;
@@ -112,6 +114,7 @@
 			print drupal_render($node_view['comments']);
 			?>
 		</div>
-	</div>
+  </div>
+</div>
 <?php endif; ?>
 
