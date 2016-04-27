@@ -133,11 +133,7 @@ $user_lname = $uid->field_last_name['und'][0]['value'];
 ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print $picture ?>
-
-  <?php if ($new): ?>
-    <span class="new"><?php print $new ?></span>
-  <?php endif; ?>
-
+  
   <?php print render($title_prefix); ?>
   <h3<?php print $title_attributes; ?>><?php print $title ?></h3>
   <?php print render($title_suffix); ?>
