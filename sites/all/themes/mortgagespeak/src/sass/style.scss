@@ -1837,6 +1837,15 @@ a {
     margin-bottom: 15px;
     color: #747474;
     text-transform: uppercase;
+    .dot {
+      display: inline-block;
+      height: 3px;
+      width: 3px;
+      margin: 0 3px 0 0;
+      @include border-radius(10px);
+      background-color: #747474;
+      vertical-align: middle;
+    }
   }
 }
 #comments {
@@ -1930,6 +1939,7 @@ a {
     textarea {
       height: 50px;
       padding: 6px 90px 6px 12px;
+      @include border-radius(0);
     }
   }
   .indented {
@@ -1948,11 +1958,11 @@ a {
           margin-right: 7px;
         }
       }
-      .comment-form {
-        .form-textarea-wrapper {
-          textarea {
-            padding: 6px 170px 6px 12px;
-          }
+    }
+    .comment-form {
+      .form-textarea-wrapper {
+        textarea {
+          padding: 6px 170px 6px 12px;
         }
       }
     }
@@ -1968,14 +1978,15 @@ a {
         }
       }
     }
-    /*.ajax-comments-form-add {
-      .form-item {
-        > div {
-         label {
-           display: none;
+    .ajax-comments-form-add,
+    .ajax-comments-form-reply {
+      > div {
+        > .form-item {
+          label {
+            display: none;
           }
         }
       }
-    }*/
+    }
   }
 }
