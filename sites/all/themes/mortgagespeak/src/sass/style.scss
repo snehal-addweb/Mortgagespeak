@@ -2011,3 +2011,34 @@ a {
     }
   }
 }
+
+
+/**
+ * Responsive design
+ */
+/* Small desktop monitor view */
+@media screen and (max-width: 1200px) {
+  .content-area {
+    width: calc(100% - 190px);
+  }
+} /* 1200px */
+
+/* Tablet and i-pad landscape & portrait view */
+@media screen and (max-width: 1024px) {
+
+} /* 1024px */
+
+/* Tablet and i-pad portrait view only */
+@media screen and (max-width: 992px) {
+
+} /* 992px */
+
+/* Mobile landscape & portrait view */
+@media screen and (max-width: 767px) {
+
+} /* 767px */
+
+/* Mobile portrait view only */
+@media screen and (max-width: 480px) {
+
+} /* 480px */
