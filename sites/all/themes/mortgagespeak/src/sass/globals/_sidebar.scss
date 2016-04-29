@@ -29,6 +29,9 @@ $assets-path: '../..';
     @include border-radius(0);
     @include box-shadow(none);
   }
+  @media screen and (max-width: $mobile) {
+    display: none;
+  }
 }
 
 /* Logo section */
@@ -314,3 +317,41 @@ $assets-path: '../..';
   text-align: center;
 }
 /* End */
+
+
+@media screen and (max-width: $mobile) {
+  .left-sidebar-wrap {
+    position: relative;
+    .left-navbtn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      display: inline-block;
+      height: 15px;
+      width: 23px;
+      margin: 40px 0 0 10px;
+      background-image: url('../images/news-icon-hover.png');
+      content: '';
+    }
+    .left-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      min-height: 100% !important;
+      height: 100%;
+      margin-left: -190px;
+      overflow-y: auto;
+      /*transform: translateX(100%);*/
+      transition: all .5s ease 0s;
+      &.open-sidebar {
+        display: block;
+        margin-left: 0;
+        /*transform: translateX(0);*/
+        transition: all .5s ease 0s;
+        @include box-shadow(-4px 0 10px 0 rgba(0, 0, 0, .8));
+      }
+    }
+  }
+} /* 767 */

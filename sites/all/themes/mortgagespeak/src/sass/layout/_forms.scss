@@ -167,6 +167,9 @@ textarea:focus {
       display: inline-block;
       width: 40%;
       padding: 60px 0 0 50px;
+      @media screen and (max-width: $small-desktop) {
+        padding-left: 20px;
+      }
       .form-wrapper {
         margin: 0;
       }
@@ -198,6 +201,11 @@ textarea:focus {
         .def-text {
           display: inline-block;
           margin-left: 20px;
+          @media screen and (max-width: $ipad-portrait) {
+            width: 100%;
+            margin-top: 10px;
+            margin-left: 0;
+          }
           span {
             display: block;
             font-size: 13px;
@@ -404,11 +412,21 @@ textarea:focus {
     margin: 30px 0;
     padding: 0 80px 0 0;
     border-right: 1px solid $gray;
+    @media screen and (max-width: $ipad-portrait) {
+      padding-right: 40px;
+    }
     input[type='text'],
     input[type='email'],
     input[type='password'] {
       float: right;
       max-width: 270px;
+      @media screen and (max-width: $small-desktop) {
+        width: calc(100% - 90px);
+      }
+      @media screen and (max-width: $ipad-portrait) {
+        max-width: 100%;
+        width: 100%;
+      }
     }
     .login-title {
       float: right;
@@ -435,6 +453,10 @@ textarea:focus {
       padding: 10px 0;
       font-size: 16px;
       line-height: normal;
+      @media screen and (max-width: $small-desktop) {
+        max-width: 100%;
+        width: calc(100% - 20px);
+      }
     }
     .forget-links {
       float: left;
@@ -496,6 +518,12 @@ textarea:focus {
     border: 2px solid $blue-light-font;
     color: #00417F;
     line-height: normal;
+    @media screen and (max-width: $small-desktop) {
+      width: calc(50% - 20px);
+      margin-right: 20px;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
     .upload-benefits {
       h2 {
         margin: 0 0 15px;

@@ -101,7 +101,7 @@ jQuery(document).ready(function() {
   });
 
   jQuery( "#views-exposed-form-tracked-companies-page .views-exposed-widgets select" ).change(function() {
-    var current_val = jQuery(this).val();                                                          
+    var current_val = jQuery(this).val();
     jQuery("#views-exposed-form-tracked-companies-page .views-exposed-widgets select").val("All");
     jQuery(this).val(current_val);
   });
@@ -151,6 +151,23 @@ jQuery(window).bind("load", function() {
 
   jQuery('#purple-tooltip').removeClass('hide-purple');
   jQuery('#purple-tooltip').addClass('show-purple');
+
+  /* Leftside bar nav*/
+  jQuery('.left-sidebar').wrap('<div class="left-sidebar-wrap"></div>');
+  jQuery('.left-sidebar-wrap').append('<a href="#" class="left-navbtn"></a>');
+
+  jQuery(".left-navbtn").click(function() {
+    jQuery('.left-sidebar').toggleClass('open-sidebar');
+  });
+  /* End */
+
+  /* Menu */
+  jQuery('#block-system-main-menu ul.menu').wrap('<div class="menu-wrap"></div>');
+  jQuery('.menu-wrap').append('<a href="#" class="menu-navbtn"></a>');
+
+   jQuery(".menu-navbtn").click(function() {
+    jQuery('#block-system-main-menu ul.menu').toggleClass('open-menu');
+  });
 
 });
 /* End */
