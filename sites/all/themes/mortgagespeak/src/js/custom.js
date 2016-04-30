@@ -154,19 +154,44 @@ jQuery(window).bind("load", function() {
 
   /* Leftside bar nav*/
   jQuery('.left-sidebar').wrap('<div class="left-sidebar-wrap"></div>');
-  jQuery('.left-sidebar-wrap').append('<a href="#" class="left-navbtn"></a>');
+  jQuery('.left-sidebar-wrap').prepend('<a href="javascript:void(0);" class="left-navbtn glyphicon glyphicon-list"></a><div class="left-sidebar-overlay"></div>');
+  jQuery('#block-block-1').prepend('<a href="javascript:void(0);" class="inner-btn left-navbtn glyphicon glyphicon-arrow-right"></a>');
 
-  jQuery(".left-navbtn").click(function() {
+  jQuery(".left-navbtn").on("click", function(event) {
+    event.stopPropagation();
     jQuery('.left-sidebar').toggleClass('open-sidebar');
+    jQuery('.left-sidebar-overlay').toggleClass('left-sidebar-overlay-show');
+    jQuery(this).addClass('left-arrow');
+    if (jQuery('.inner-btn').hasClass('left-arrow')) {
+      //alert('left-arrow+');
+      jQuery('.inner-btn').removeClass('left-arrow');
+    }
+    else {
+      //alert('left-arrow-');
+      jQuery('.inner-btn').addClass('left-arrow');
+    }
+  });
+
+  jQuery('.left-sidebar-overlay').click(function() {
+    jQuery('.left-sidebar').removeClass('open-sidebar');
+    jQuery('.left-sidebar-overlay').removeClass('left-sidebar-overlay-show');
+    if (jQuery('.inner-btn').hasClass('left-arrow')) {
+      //alert('left-arrow+');
+      jQuery('.inner-btn').removeClass('left-arrow');
+    }
+    else {
+      //alert('left-arrow-');
+      jQuery('.inner-btn').addClass('left-arrow');
+    }
   });
   /* End */
 
   /* Menu */
   jQuery('#block-system-main-menu ul.menu').wrap('<div class="menu-wrap"></div>');
-  jQuery('.menu-wrap').append('<a href="#" class="menu-navbtn"></a>');
+  jQuery('.menu-wrap').prepend('<a href="javascript:void(0);" class="menu-navbtn glyphicon glyphicon-menu-hamburger"><span>Menu</span></a>');
 
    jQuery(".menu-navbtn").click(function() {
-    jQuery('#block-system-main-menu ul.menu').toggleClass('open-menu');
+    jQuery('#block-system-main-menu ul.menu').slideToggle().toggleClass('open-menu');
   });
 
 });

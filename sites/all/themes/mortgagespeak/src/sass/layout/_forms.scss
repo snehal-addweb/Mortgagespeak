@@ -151,6 +151,9 @@ textarea:focus {
       float: left;
       display: inline-block;
       width: 60%;
+      @media screen and (max-width: $mobile-landscape) {
+        width: 100%;
+      }
       hr {
         max-width: 450px;
         margin: 5px 0 28px 20px;
@@ -162,6 +165,9 @@ textarea:focus {
     .user-border {
       height: 230px;
       border-right: 1px solid #EEE;
+      @media screen and (max-width: $mobile-landscape) {
+        border-right: none;
+      }
     }
     .user-pic-reg {
       display: inline-block;
@@ -169,6 +175,10 @@ textarea:focus {
       padding: 60px 0 0 50px;
       @media screen and (max-width: $small-desktop) {
         padding-left: 20px;
+      }
+      @media screen and (max-width: $mobile-landscape) {
+        width: 100%;
+        padding: 30px 20px;
       }
       .form-wrapper {
         margin: 0;
@@ -337,6 +347,7 @@ textarea:focus {
       > .row {
         margin: 0;
         .form-item {
+          float: left;
           clear: none;
           width: -webkit-calc(50% - 15px);
           width: -moz-calc(50% - 15px);
@@ -414,6 +425,10 @@ textarea:focus {
     border-right: 1px solid $gray;
     @media screen and (max-width: $ipad-portrait) {
       padding-right: 40px;
+    }
+    @media screen and (max-width: $mobile-landscape) {
+      width: 100%;
+      padding-right: 20px;
     }
     input[type='text'],
     input[type='email'],
@@ -523,6 +538,10 @@ textarea:focus {
       margin-right: 20px;
       padding-right: 20px;
       padding-left: 20px;
+    }
+    @media screen and (max-width: $mobile-landscape) {
+      width: calc(100% - 40px);
+      margin-left: 20px;
     }
     .upload-benefits {
       h2 {

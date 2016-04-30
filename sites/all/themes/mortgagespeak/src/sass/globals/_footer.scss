@@ -23,6 +23,9 @@ $assets-path: '../..';
   padding: 0 0 0 205px;
   border: none;
   background-color: #8E8E8E;
+  @media screen and (max-width: $mobile) {
+    padding-left: 50px;
+  }
   color: $white;
   .region-footer {
     display: inline-block;

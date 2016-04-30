@@ -73,7 +73,27 @@ $assets-path: '../..';
     }
   }
 }
+@media screen and (max-width: $mobile-sm) {
+  #block-block-6 {
+    float: left;
+  }
+}
 
+@media screen and (max-width: $small-mobile-portrait) {
+  #block-block-6 {
+    ul {
+      li {
+        &.twitter,
+        &.facebook {
+          padding-left: 6px;
+        }
+        a {
+          padding: 3px 6px;
+        }
+      }
+    }
+  }
+}
 
 /**
  * Header
