@@ -37,6 +37,7 @@ $assets-path: '../..';
 @media screen and (max-width: $mobile) {
   .left-sidebar-wrap {
     position: relative;
+    clear: left;
     /* Left navigation button */
     .left-navbtn {
       position: absolute;
@@ -46,15 +47,15 @@ $assets-path: '../..';
       display: inline-block;
       /*height: 15px;
       width: 23px;*/
-      margin: 40px 0 0 10px;
+      margin: 40px 0 0 15px;
       /*background-image: url('../images/news-icon-hover.png');*/
       font-size: 24px;
       content: '';
       @include transition(all .5s ease 0s);
       &.inner-btn {
-        left: 130px;
+        left: 140px;
         z-index: 1002;
-        margin-top: 7px;
+        margin-top: 9px;
         @include transition(all .5s ease 0s);
         &.right-arrow { @include transform(rotate(0deg)); }
         &.left-arrow { @include transform(rotate(180deg)); }
@@ -93,13 +94,17 @@ $assets-path: '../..';
         visibility: visible;
         @include box-shadow(-4px 0 10px 0 rgba(0, 0, 0, .8));
       }
+      @media screen and (max-width: $mobile-sm) {
+        @include transition(none);
+      }
     }
   }
 } /* 767 */
 @media screen and (max-width: $mobile-sm) {
   .left-sidebar-wrap {
     .left-navbtn {
-      margin-top: 70px;
+      /*margin-top: 70px;*/
+      margin-top: 10px;
     }
   }
 }
