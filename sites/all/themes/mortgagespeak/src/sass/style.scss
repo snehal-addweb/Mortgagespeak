@@ -557,6 +557,9 @@ a {
     margin: 0;
     padding: 20px 10px 10px 94px;
     border-top: 1px solid $gray-light-f4;
+    @media screen and (max-width: $mobile) {
+      padding-left: 60px;
+    }
     &:first-child {
       border-top: none;
     }
@@ -571,6 +574,9 @@ a {
       height: 100%;
       width: 94px;
       text-align: left;
+      @media screen and (max-width: $mobile) {
+        width: 60px;
+      }
       .field-content {
         display: inline-block;
         padding: 3px 0 0 15px;
@@ -578,6 +584,10 @@ a {
         font-size: 72px;
         line-height: normal;
         /*font-family: verdana;*/
+        @media screen and (max-width: $mobile) {
+          padding-top: 10px;
+          font-size: 50px;
+        }
       }
     }
     .views-field-created {
@@ -672,6 +682,10 @@ a {
             margin: 0 25px 0 0;
             padding: 0;
             background-color: transparent;
+            @media screen and (max-width: $mobile) {
+              margin-right: 15px;
+              margin-bottom: 3px;
+            }
             &.email {
               margin-top: 1px;
             }
@@ -2132,9 +2146,13 @@ a {
 
 
 /* Responsive of Top add's */
-@media screen and (max-width: $small-desktop) {
-  #block-randomblocks-top-page {
+
+#block-randomblocks-top-page {
+  @media screen and (max-width: $small-desktop) {
     overflow-x: auto;
+  }
+  @media screen and (max-width: $mobile) {
+    margin-top: 30px;
   }
 } /* 1200 */
 
@@ -2153,6 +2171,17 @@ a {
       &.open-menu {
         display: block;
         visibility: visible;
+      }
+      li {
+        a {
+          border-right: 1px solid #D7D7D7;
+          border-bottom: none;
+        }
+        &.last {
+          a {
+            border-bottom: 1px solid #D7D7D7;
+          }
+        }
       }
     }
     .menu-navbtn {
