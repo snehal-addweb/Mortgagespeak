@@ -664,6 +664,13 @@ a {
         width: calc(100% - 94px);
       }
     }
+    /* For new social media */
+    .views-field-sharethis {
+      .sharethis-content {
+        .field-content { width: 100%; }
+      }
+    }
+    /* End */
     .views-field-field-alpha-news-topics {
       margin-top: 5px;
     }
