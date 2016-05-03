@@ -516,7 +516,7 @@ a {
   line-height: normal;
   .view-header,
   .upload-upper-contain {
-    display: inline-block;
+    /*display: inline-block;*/
     width: -webkit-calc(100% + 2px);
     width: -moz-calc(100% + 2px);
     width: calc(100% + 2px);
@@ -530,17 +530,47 @@ a {
     color: $gray-69;
     font-size: 14px;
     line-height: 14px;
-
     .comp-flag {
       display: inline-block;
       width: 100%;
       .comp-name {
         display: inline-block;
-        padding-right: 7px;
-        border-right: 1px solid;
       }
       .comp-fw {
         display: inline-block;
+        margin-left: 7px;
+        padding-left: 7px;
+        border-left: 1px solid;
+      }
+    }
+  }
+  .view-filters {
+    #views-exposed-form-newsroom-companies-page {
+      float: right;
+      margin-top: -46px;
+      @media screen and (max-width: $ipad-portrait) {
+        float: none;
+        margin-top: 0;
+        }
+      .views-exposed-form {
+        .input-group {
+          width: 290px;
+          input {
+            border-radius: 0;
+          }
+          > span {
+            border-radius: 0;
+          }
+        }
+        button {
+          &.btn {
+            height: 27px;
+            width: 70px;
+            margin-top: 4px;
+            border-radius: 6px;
+            line-height: 13px;
+          }
+        }
       }
     }
   }
