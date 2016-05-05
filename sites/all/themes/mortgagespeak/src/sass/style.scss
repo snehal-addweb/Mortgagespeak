@@ -586,9 +586,10 @@ a {
         button {
           &.btn {
             height: 27px;
-            width: 70px;
             margin-top: 4px;
-            border-radius: 6px;
+            margin-left: 4px;
+            padding: 6px 15px;
+            @include border-radius(4px);
             line-height: 13px;
           }
         }
