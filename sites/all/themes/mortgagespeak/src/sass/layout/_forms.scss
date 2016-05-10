@@ -424,6 +424,7 @@ textarea:focus {
     padding: 0 80px 0 0;
     border-right: 1px solid $gray;
     @media screen and (max-width: $ipad-portrait) {
+      width: 85%;
       padding-right: 40px;
     }
     @media screen and (max-width: $mobile-landscape) {
@@ -538,6 +539,10 @@ textarea:focus {
       margin-right: 20px;
       padding-right: 20px;
       padding-left: 20px;
+    }
+    @media screen and (max-width: $ipad-portrait) {
+      width: 85%;
+      margin-left: 20px;
     }
     @media screen and (max-width: $mobile-landscape) {
       width: calc(100% - 40px);
