@@ -203,7 +203,7 @@ textarea:focus {
             min-width: 0;
           }
         }
-    }
+      }
       .def-img-text {
         .default-img {
           display: inline-block;
@@ -424,8 +424,8 @@ textarea:focus {
     padding: 0 80px 0 0;
     border-right: 1px solid $gray;
     @media screen and (max-width: $ipad-portrait) {
-      width: 85%;
-      padding-right: 40px;
+      width: 75%;
+      /*padding-right: 0;*/
     }
     @media screen and (max-width: $mobile-landscape) {
       width: 100%;
@@ -439,10 +439,10 @@ textarea:focus {
       @media screen and (max-width: $small-desktop) {
         width: calc(100% - 90px);
       }
-      @media screen and (max-width: $ipad-portrait) {
+      /*@media screen and (max-width: $ipad-portrait) {
         max-width: 100%;
         width: 100%;
-      }
+      }*/
     }
     .login-title {
       float: right;
@@ -469,10 +469,10 @@ textarea:focus {
       padding: 10px 0;
       font-size: 16px;
       line-height: normal;
-      @media screen and (max-width: $small-desktop) {
+      /*@media screen and (max-width: $small-desktop) {
         max-width: 100%;
         width: calc(100% - 20px);
-      }
+      }*/
     }
     .forget-links {
       float: left;
