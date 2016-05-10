@@ -190,8 +190,8 @@ a {
           &::after { background-color: #36D938; }
         }
         a {
-          max-width: 158px;
-          width: 158px;
+          max-width: 156px;
+          width: 156px;
           &:hover { /*border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset);*/ }
           &::before {
             width: 9px;
@@ -209,8 +209,8 @@ a {
           &::after { background-color: #F8E21C; }
         }
         a {
-          max-width: 203px;
-          width: 203px;
+          max-width: 207px;
+          width: 207px;
           &:hover { /*border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset);*/ }
           &::before {
             width: 15px;
@@ -228,8 +228,8 @@ a {
           &::after { background-color: #F8E21C; }
         }
         a {
-          max-width: 183px;
-          width: 183px;
+          max-width: 181px;
+          width: 181px;
           &:hover { /*border-top-color: #F8E21C; @include box-shadow(0 1px 0 0 #F8E21C inset);*/ }
           &::before {
             width: 15px;
@@ -586,12 +586,16 @@ a {
         button {
           &.btn {
             height: 27px;
-            width: 70px;
             margin-top: 4px;
-            border-radius: 6px;
+            margin-left: 4px;
+            padding: 6px 15px;
+            @include border-radius(4px);
             line-height: 13px;
           }
         }
+      }
+      .dropdown-menu > li > a {
+        white-space: normal;
       }
     }
   }

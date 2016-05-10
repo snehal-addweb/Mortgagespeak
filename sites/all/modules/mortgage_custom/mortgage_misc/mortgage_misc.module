@@ -138,6 +138,19 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
     }     
   }
 
+  if($form['#id'] == 'views-exposed-form-newsroom-companies-page') {
+    global $base_url; 
+    if(isset($form_state['view']->exposed_input) && !empty($form_state['view']->exposed_input)) {
+      if(!empty($form_state['view']->exposed_input['tid'])) {
+        $term_info = taxonomy_get_term_by_name($form_state['view']->exposed_input['tid']);
+        //$form['#action'] = '/1st-advantage-mtg';
+        $tid = key($term_info);
+        $term_url = drupal_get_path_alias('taxonomy/term/' . $tid);
+        drupal_goto($term_url);
+      }
+    }
+  }
+
 /*  if($form['#id'] == 'views-exposed-form-company-view-detail-page') {
     print('<pre style="color:red;">');
     print_r($form);
