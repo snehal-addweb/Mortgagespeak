@@ -1879,6 +1879,7 @@ a {
   clear: both;
   padding: 10px;
   text-align: center;
+  -webkit-overflow-scrolling: touch;
 }
 #block-block-7,
 #block-randomblocks-press-perpesctive,
@@ -2309,9 +2310,15 @@ a {
     -webkit-overflow-scrolling: touch;
   }
   @media screen and (max-width: $mobile) {
+    height: auto;
     margin-top: 30px;
+    padding-bottom: 11px;
+    overflow-y: visible;
   }
 } /* 1200 */
+iframe {
+  -webkit-overflow-scrolling: touch;
+}
 
 /* Responsive design of Menu */
 @media screen and (max-width: $mobile-sm) {
@@ -2376,6 +2383,24 @@ a {
       margin-top: -10px;
       padding: 20px;
       border-top: none;
+    }
+  }
+}
+/* End */
+
+/* Responsive pagination */
+@media screen and (max-width: $mobile) {
+  .responsive-pagination {
+    display: inline-block;
+    width: 100%;
+    overflow-x: auto;
+    ul.pagination {
+      padding: 0 20px 0 24px;
+      white-space: nowrap;
+      li {
+        display: inherit;
+        margin-left: -4px;
+      }
     }
   }
 }

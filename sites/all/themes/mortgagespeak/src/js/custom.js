@@ -193,6 +193,11 @@ jQuery(window).bind("load", function() {
    jQuery(".menu-navbtn").click(function() {
     jQuery('#block-system-main-menu ul.menu').slideToggle().toggleClass('open-menu');
   });
+  /* End */
+
+  /* Pagination responsive */
+  jQuery('.pagination').wrap('<div class="responsive-pagination"></div>');
+  /* End */
 
 });
 /* End */
