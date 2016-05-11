@@ -2273,7 +2273,6 @@ a {
 
 
 /* Responsive of Top add's */
-
 #block-randomblocks-top-page {
   @media screen and (max-width: $small-desktop) {
     overflow-x: auto;
@@ -2334,3 +2333,19 @@ a {
     }
   }
 } /* 500 */
+
+
+/* Hide view webform */
+.hide-view-webform {
+  .node-webform {
+    header {
+      display: none;
+    }
+    .webform-client-form {
+      margin-top: -10px;
+      padding: 20px;
+      border-top: none;
+    }
+  }
+}
+/* End */
