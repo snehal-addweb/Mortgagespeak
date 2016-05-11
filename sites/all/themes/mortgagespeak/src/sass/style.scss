@@ -1280,6 +1280,26 @@ a {
     }
   }
 }
+.content-lists .view-filters #views-exposed-form-newsroom-companies-page .views-exposed-form .input-group {
+  max-width: 340px;
+  width: 100%;
+  .input-group-addon {
+    .icon {
+      display: inline-block;
+      height: 17px;
+      width: 18px;
+      background-image: url('../images/search-icon.png');
+      background-position: center;
+      content: '';
+      &::before {
+        content: '';
+      }
+      &.glyphicon-spin {
+        animation: none;
+      }
+    }
+  }
+}
 .content-lists.pr-activity-view,
 #block-block-15.content-lists,
 .pr-block.news-stats { padding-bottom: 0; }
