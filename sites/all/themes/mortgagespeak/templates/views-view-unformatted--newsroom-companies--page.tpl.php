@@ -38,10 +38,12 @@
   $url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
     
   $company_image = image_style_url($THUMBNAIL_STYLE,'All-companies.png');
+
   /*
   * Get Company Images
   *
   */
+  $term_url = '';
   if(isset($alpha_entity->field_company_tag) && !empty($alpha_entity->field_company_tag)) {
       $company_taxo = taxonomy_term_load($alpha_entity->field_company_tag[LANGUAGE_NONE][0]['tid']);
       if(isset($company_taxo->field_large_logo[LANGUAGE_NONE]) && !empty($company_taxo->field_large_logo[LANGUAGE_NONE])) {
@@ -51,7 +53,9 @@
         //$company_logo_url = file_create_url($uri);
         $company_logo_url = image_style_url($THUMBNAIL_STYLE, $file->uri);
         $company_image = $company_logo_url;
+        
       }
+      $term_url = drupal_get_path_alias('taxonomy/term/' . $alpha_entity->field_company_tag[LANGUAGE_NONE][0]['tid']);
   }
 ?>
 
@@ -72,7 +76,7 @@
 </script>
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
     <div class="views-field views-field-php">
-      <span class="field-content"><img src="<?php print $company_image; ?>" /></span>
+      <span class="field-content"><a href="<?php print $term_url; ?>" target="_blank"><img src="<?php print $company_image; ?>" /></a></span>
     </div> 
 
     <div class="views-field views-field-created">
