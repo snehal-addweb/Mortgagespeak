@@ -1880,6 +1880,21 @@ a {
   padding: 10px;
   text-align: center;
   -webkit-overflow-scrolling: touch;
+  @media screen and (max-width: $ipad) {
+    iframe {
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  }
 }
 #block-block-7,
 #block-randomblocks-press-perpesctive,
