@@ -195,6 +195,9 @@ textarea:focus {
             .control-label {
               color: $black-light;
             }
+            @media screen and (max-width: $mobile-landscape) {
+              padding: 0;
+            }
           }
         }
         .input-file {
@@ -242,6 +245,9 @@ textarea:focus {
       color: #7C7E81;
       font-weight: normal;
     }
+    @media screen and (max-width: $ipad-portrait) {
+      max-width: 100%;
+    }
   }
   .field-type-wrap {
     display: inline-block;
@@ -257,6 +263,13 @@ textarea:focus {
       padding: 0;
       &:last-child {
         margin-right: 0;
+      }
+      @media screen and (max-width: $mobile-portrait) {
+        width: 100%;
+        margin: 0 0 20px;
+      }
+      &:last-child {
+        margin: 0;
       }
     }
   }
@@ -340,6 +353,11 @@ textarea:focus {
           font-size: 14px;
         }
       }
+      @media screen and (max-width: $mobile-portrait) {
+        -webkit-column-count: 1; /* Chrome, Safari, Opera */
+        -moz-column-count: 1; /* Firefox */
+        column-count: 1;
+      }
     }
   }
   .register-container {
@@ -356,6 +374,10 @@ textarea:focus {
           padding: 0;
           &.form-item-pass-pass2 {
             margin-right: 0;
+          }
+          @media screen and (max-width: $mobile-portrait) {
+            width: 100%;
+            margin: 0 0 20px;
           }
         }
       }
@@ -425,7 +447,7 @@ textarea:focus {
     border-right: 1px solid $gray;
     @media screen and (max-width: $ipad-portrait) {
       width: 75%;
-      /*padding-right: 0;*/
+      padding-right: 0;
     }
     @media screen and (max-width: $mobile-landscape) {
       width: 100%;
@@ -439,10 +461,12 @@ textarea:focus {
       @media screen and (max-width: $small-desktop) {
         width: calc(100% - 90px);
       }
-      /*@media screen and (max-width: $ipad-portrait) {
+      @media screen and (max-width: $ipad-portrait) {
         max-width: 100%;
+      }
+      @media screen and (max-width: $small-mobile-portrait) {
         width: 100%;
-      }*/
+      }
     }
     .login-title {
       float: right;
@@ -469,10 +493,17 @@ textarea:focus {
       padding: 10px 0;
       font-size: 16px;
       line-height: normal;
-      /*@media screen and (max-width: $small-desktop) {
+      @media screen and (max-width: $small-desktop) {
+        width: calc(100% - 110px);
+      }
+      @media screen and (max-width: $ipad-portrait) {
         max-width: 100%;
+      }
+      @media screen and (max-width: $small-mobile-portrait) {
+        width: -webkit-calc(100% - 20px);
+        width: -moz-calc(100% - 20px);
         width: calc(100% - 20px);
-      }*/
+      }
     }
     .forget-links {
       float: left;
