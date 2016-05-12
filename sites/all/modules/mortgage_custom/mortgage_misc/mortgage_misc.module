@@ -66,7 +66,7 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
   }
 
   if ($form_id == 'webform_client_form_42') {
-    $content_type = array(29 => 'Press Release', 36 => 'Perspective ( e.g White Paper, Thought Leadership, Case Study). Learn about <a href="'. $base_url .'/effective-promotion-white-paper" target="_blank">effective White Paper  Promotion</a>', 37 => 'Blog Post', 35 => 'Other');
+    $content_type = array(29 => 'Press Release', 36 => 'Perspective (e.g White Paper, Thought Leadership, Case Study). Learn about <a href="'. $base_url .'/effective-promotion-white-paper" target="_blank">effective White Paper  Promotion</a>.', 37 => 'Blog Post', 35 => 'Other');
     $form['submitted']['upload_type']['#options'] = $content_type;
     $form['actions']['submit']['#value'] = 'Submit !';
     /*$form['submitted']['content_types']['#empty_option'] = 'Content Types';
@@ -147,19 +147,33 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
       if(!empty($form_state['view']->exposed_input['tid'])) {
         $term_info = taxonomy_get_term_by_name($form_state['view']->exposed_input['tid']);
         //$form['#action'] = '/1st-advantage-mtg';
-        $tid = key($term_info);
-        $term_url = drupal_get_path_alias('taxonomy/term/' . $tid);
-        drupal_goto($term_url);
+       
+        if(isset($term_info) && !empty($term_info)) {
+          $tid = key($term_info);
+          $term_url = drupal_get_path_alias('taxonomy/term/' . $tid);
+          drupal_goto($term_url);
+        }
       }
     }
   }
 
-/*  if($form['#id'] == 'views-exposed-form-company-view-detail-page') {
-    print('<pre style="color:red;">');
-    print_r($form);
-    print('</pre>');
-    exit;
-  }*/
+  if($form['#id'] == 'views-exposed-form-company-view-detail-page') {
+    global $base_url; 
+    $form['tid']['#attributes'] = array('placeholder' => t('Enter company name for look-up'));
+
+    if(isset($form_state['view']->exposed_input) && !empty($form_state['view']->exposed_input)) {
+      if(!empty($form_state['view']->exposed_input['tid'])) {
+        $term_info = taxonomy_get_term_by_name($form_state['view']->exposed_input['tid']);
+        //$form['#action'] = '/1st-advantage-mtg';
+       
+        if(isset($term_info) && !empty($term_info)) {
+          $tid = key($term_info);
+          $term_url = drupal_get_path_alias('taxonomy/term/' . $tid);
+          drupal_goto($term_url);
+        }
+      }
+    }
+  }
 }
 
 /** 

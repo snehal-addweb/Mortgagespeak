@@ -76,7 +76,7 @@
 </script>
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
     <div class="views-field views-field-php">
-      <span class="field-content"><a href="<?php print $term_url; ?>" target="_blank"><img src="<?php print $company_image; ?>" /></a></span>
+      <span class="field-content"><a href="<?php print $term_url; ?>"><img src="<?php print $company_image; ?>" /></a></span>
     </div> 
 
     <div class="views-field views-field-created">
