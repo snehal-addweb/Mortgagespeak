@@ -577,7 +577,8 @@ a {
     }
   }
   .view-filters {
-    #views-exposed-form-newsroom-companies-page {
+    #views-exposed-form-newsroom-companies-page,
+    #views-exposed-form-company-view-detail-page {
       float: right;
       margin-top: -46px;
       @media screen and (max-width: $ipad-portrait) {
@@ -1280,22 +1281,24 @@ a {
     }
   }
 }
-.content-lists .view-filters #views-exposed-form-newsroom-companies-page .views-exposed-form .input-group {
+.content-lists .view-filters #views-exposed-form-newsroom-companies-page .views-exposed-form .input-group,
+.content-lists .view-filters #views-exposed-form-company-view-detail-page .views-exposed-form .input-group {
   max-width: 340px;
   width: 100%;
   .input-group-addon {
     .icon {
       display: inline-block;
-      height: 17px;
-      width: 18px;
-      background-image: url('../images/search-icon.png');
+      height: 13px;
+      width: 15px;
+      background-image: url('../images/search_loading.png');
       background-position: center;
+      background-repeat: no-repeat;
       content: '';
       &::before {
         content: '';
       }
       &.glyphicon-spin {
-        animation: none;
+        background-image: url('../images/search_loading.gif');
       }
     }
   }
