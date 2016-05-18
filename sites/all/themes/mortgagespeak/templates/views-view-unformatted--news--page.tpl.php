@@ -12,13 +12,16 @@
 	global $base_url;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 ?>
+
 <?php if (!empty($title)): ?>
   <h3><?php print $title; ?></h3>
 <?php endif; ?>
+
 <?php foreach ($rows as $id => $row): 
 	$title = $row['title'];
 	$body = strip_tags($row['body']);
 	$nid = $row['nid'];
+	$node_created = '';
 	if(!empty($row['url'])){
 		$url1 = $row['url'];
 	}
@@ -28,6 +31,19 @@
 	$strFinal  =  $row['title'];	//. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
 	$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
+
+	$node_created = $row['created'];
+	$node_created_month = date('M', $node_created);
+	$node_created_date = date('d', $node_created);
+	$node_created_day = date('D', $node_created); 
+
+	$node_date = '';
+	$node_date .= '<div class="node-created">
+									<div class="node-month"> ' . $node_created_month . '</div>
+									<div class="node-date"> ' . $node_created_date . '</div>
+									<div class="node-day"> ' . $node_created_day . '</div>
+								</div>'; 
+
 ?>
 
 <?php // Copy to clipboard script ?>
@@ -47,7 +63,7 @@
 </script>
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
 		<div class="views-field views-field-php">
-			<span class="field-content"><?php print $row['php']; ?></span>
+			<span class="field-content"><?php print $node_date; ?></span>
 		</div> 
 
 		<div class="views-field views-field-created">
