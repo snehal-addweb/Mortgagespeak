@@ -636,7 +636,7 @@ a {
     }
     .views-field-php {
       position: absolute;
-      top: 0;
+      /*top: 0;*/
       left: 0;
       display: inline-block;
       height: 100%;
@@ -649,12 +649,40 @@ a {
         display: inline-block;
         padding: 3px 0 0 15px;
         color: #E5E5E5;
-        font-size: 72px;
+        /*font-size: 72px;*/
         line-height: normal;
         /*font-family: verdana;*/
         @media screen and (max-width: $mobile) {
           padding-top: 10px;
-          font-size: 50px;
+         /* font-size: 50px;*/
+        }
+        .node-created {
+          display: inline-block;
+          width: 53px;
+          border: 1px solid #DEDEDE;
+          font-size: 11px;
+          text-align: center;
+          text-transform: uppercase;
+          @include border-radius(5px);
+          .node-month {
+            display: inline-block;
+            width: 100%;
+            margin-top: -1px;
+            padding: 3px 15px;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            background-color: #FD9F1B;
+            color: $white;
+          }
+          .node-date {
+            color: #2F2F2F;
+            font-size: 20px;
+            line-height: 20px;
+            font-weight: bold;
+          }
+          .node-day {
+            color: #FD9F1B;
+          }
         }
       }
     }
