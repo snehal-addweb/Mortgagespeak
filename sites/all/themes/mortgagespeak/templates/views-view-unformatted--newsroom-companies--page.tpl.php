@@ -95,9 +95,9 @@
       <span class="field-content"><?php print $node_date; ?></span>
     </div> 
     
-    <div class="views-field views-field-created">
+    <!-- <div class="views-field views-field-created">
       <span class="field-content"><?php print $row['created']; ?></span>  
-    </div>
+    </div> -->
 
     <div class="views-field views-field views-field-title">        
       <span class="field-content">
