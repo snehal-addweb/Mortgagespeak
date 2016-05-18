@@ -27,6 +27,7 @@
   $body = strip_tags($row['body']);
   $nid = $row['nid'];
   $alpha_entity = node_load($nid);
+  $node_created = '';
   if(!empty($row['url'])){
     $url1 = $row['url'];
   }
@@ -38,6 +39,17 @@
   $url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
     
   $company_image = image_style_url($THUMBNAIL_STYLE,'All-companies.png');
+  $node_created = $row['created'];
+  $node_created_month = date('M', $node_created);
+  $node_created_date = date('d', $node_created);
+  $node_created_day = date('D', $node_created); 
+
+  $node_date = '';
+  $node_date .= '<div class="node-created">
+                  <div class="node-month"> ' . $node_created_month . '</div>
+                  <div class="node-date"> ' . $node_created_date . '</div>
+                  <div class="node-day"> ' . $node_created_day . '</div>
+                </div>';
 
   /*
   * Get Company Images
@@ -75,10 +87,14 @@
   }
 </script>
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
-    <div class="views-field views-field-php">
+    <!-- <div class="views-field views-field-php">
       <span class="field-content"><a href="<?php print $term_url; ?>"><img src="<?php print $company_image; ?>" /></a></span>
-    </div> 
+    </div> --> 
 
+    <div class="views-field views-field-php">
+      <span class="field-content"><?php print $node_date; ?></span>
+    </div> 
+    
     <div class="views-field views-field-created">
       <span class="field-content"><?php print $row['created']; ?></span>  
     </div>
