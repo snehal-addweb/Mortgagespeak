@@ -29,6 +29,18 @@
 	$strFinal  =  $row['node_title'];	//. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
 	$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
+
+	$node_created = $row['created'];
+	$node_created_month = date('M', $node_created);
+	$node_created_date = date('d', $node_created);
+	$node_created_day = date('D', $node_created); 
+
+	$node_date = '';
+	$node_date .= '<div class="node-created">
+									<div class="node-month"> ' . $node_created_month . '</div>
+									<div class="node-date"> ' . $node_created_date . '</div>
+									<div class="node-day"> ' . $node_created_day . '</div>
+								</div>';
 ?>
 
 <script type="text/javascript">
@@ -47,9 +59,13 @@
 </script>
 
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
-		<div class="views-field views-field-created">
+  	<div class="views-field views-field-php">
+			<span class="field-content"><?php print $node_date; ?></span>
+		</div> 
+
+		<!-- <div class="views-field views-field-created">
 			<span class="field-content"><?php print $row['node_created']; ?></span>  
-		</div>
+		</div> -->
 
 		<div class="views-field views-field views-field-title">        
 			<span class="field-content">
