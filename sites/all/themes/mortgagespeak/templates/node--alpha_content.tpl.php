@@ -70,7 +70,7 @@
 			
 			<div class="share-icon copy-to-clipboard">
 				<textarea class="js-copytextarea" id="copytext_<?php print $node->nid;?>"><?php print $url; ?></textarea>
-	      <a href="javascript:void(0)" class="js-textareacopybtn" title="Copy to Clipboard" onclick="customCopyText('copytext_<?php print $node->nid; ?>');">Copy Textarea</a>
+	      <a href="javascript:void(0)" class="js-textareacopybtn" title="Copy link to clipboard" onclick="customCopyText('copytext_<?php print $node->nid; ?>');">Copy Textarea</a>
       </div>
 			
 			<div class="share-icon save-flag">

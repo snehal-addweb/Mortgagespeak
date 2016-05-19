@@ -66,7 +66,7 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
   }
 
   if ($form_id == 'webform_client_form_42') {
-    $content_type = array(29 => 'Press Release', 36 => 'Perspective (e.g White Paper, Thought Leadership, Case Study). Learn about <a href="'. $base_url .'/effective-promotion-white-paper" target="_blank">effective White Paper  Promotion</a>.', 37 => 'Blog Post', 35 => 'Other');
+    $content_type = array(29 => 'Press Release', 36 => 'Perspective (e.g White Paper, Thought Leadership, Case Study).', 37 => 'Blog Post', 35 => 'Other');
     $form['submitted']['upload_type']['#options'] = $content_type;
     $form['actions']['submit']['#value'] = 'Submit !';
     /*$form['submitted']['content_types']['#empty_option'] = 'Content Types';

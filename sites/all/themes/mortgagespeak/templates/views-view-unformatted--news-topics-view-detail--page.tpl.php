@@ -119,7 +119,7 @@
 
 					<span class="chicklets copy-to-clipboard">
 					  <textarea class="js-copytextarea" id="copytext_<?php print $nid; ?>"><?php print $url1; ?></textarea>
-				    <a href="javascript:void(0)" class="copy-link js-textareacopybtn" title="Copy to Clipboard" onclick="customCopyText('copytext_<?php print $nid; ?>');">Copy Textarea</a>
+				    <a href="javascript:void(0)" class="copy-link js-textareacopybtn" title="Copy link to clipboard" onclick="customCopyText('copytext_<?php print $nid; ?>');">Copy Textarea</a>
 			    </span>
 
 				</div> 

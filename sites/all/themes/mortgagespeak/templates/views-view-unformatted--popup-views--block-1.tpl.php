@@ -75,6 +75,7 @@
 					</a>
 				</div>
 				<div class="views-field views-field-sharethis">
+					<div class="view-on-web"><a href="<?php print $title_link;?>" target="_blank">View on web</a></div>
 					<div class="sharethis-content">
 					  <span class="field-content">
 						  <div class="sharethis-wrapper">
@@ -101,7 +102,7 @@
 
 								<span class="chicklets copy-to-clipboard">
 								  <textarea class="js-copytextarea" id="copypopuptext_<?php print $nid; ?>"><?php print $title_link; ?></textarea>
-							    <a href="javascript:void(0)" class="copy-link js-textareacopybtn" title="Copy to Clipboard" onclick="customCopyText('copypopuptext_<?php print $nid; ?>');">Copy Textarea</a>
+							    <a href="javascript:void(0)" class="copy-link js-textareacopybtn" title="Copy link to clipboard" onclick="customCopyText('copypopuptext_<?php print $nid; ?>');">Copy Textarea</a>
 			    			</span>
 
 							</div> 
