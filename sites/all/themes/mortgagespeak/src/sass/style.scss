@@ -668,13 +668,14 @@ a {
             display: inline-block;
             width: 100%;
             margin-top: -1px;
-            padding: 3px 15px;
+            padding: 3px 0;
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
             background-color: #FD9F1B;
             color: $white;
           }
           .node-date {
+            padding-right: 1px;
             color: #2F2F2F;
             font-size: 20px;
             line-height: 20px;
@@ -965,7 +966,9 @@ a {
             background-color: $white;
             text-align: center;
             .sharethis-content {
+              float: left;
               display: inline-block;
+              margin-left: 50px;
               .chicklets {
                 margin-right: 15px;
                 &:last-child {
@@ -978,6 +981,21 @@ a {
               .flag-saved-articles {
                 a {
                   margin: 0 0 0 15px;
+                }
+              }
+            }
+            .view-on-web {
+              float: left;
+              a {
+                display: inline-block;
+                margin-top: -7px;
+                padding: 7px 13px;
+                border: 1px solid #126EDC;
+                @include border-radius(4px);
+                &:hover,
+                &:focus {
+                  color: #126EDC;
+                  text-decoration: none;
                 }
               }
             }
