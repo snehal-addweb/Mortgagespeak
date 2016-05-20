@@ -81,12 +81,12 @@
 			</div>  
 		</div> 
 
-		<?php if(in_array('News Intelligence', $user->roles) || in_array('administrator', $user->roles)) {?>
+		<?php //if(in_array('News Intelligence', $user->roles) || in_array('administrator', $user->roles)) {?>
 			<div class="views-field views-field-field-company-tag">    
 				<span class="views-label views-label-field-company-tag">Company: </span>    
 				<div class="field-content"><?php print $row['field_company_tag']; ?></div>  
 			</div><?php
-		 } ?>
+		 //} ?>
 
 		<div class="views-field views-field-sharethis">    
 		  <span class="views-label views-label-sharethis">More: </span>    
