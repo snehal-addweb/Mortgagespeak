@@ -43,7 +43,7 @@ global $base_url;
 ?>
 <div class="upload-main-container">
 	<div class="upload-upper-contain">
-		<label>Upload | Learn about <a href="<?php print $base_url ?>/effective-promotion-white-paper" target="_blank">effective White Paper  Promotion</a>.</label>
+		<label>Upload | Learn about <a href="<?php print $base_url ?>/effective-promotion-white-paper" target="_blank">effective White Paper  promotion</a>.</label>
 	</div>
 
 	<div class="upload-below-contain">
