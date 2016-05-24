@@ -1,3 +1,20 @@
+<?php
+	global $base_url;
+	$register_link = '';
+	$flag_dest = '';
+	$get_destination = drupal_get_destination();
+	if(isset($get_destination['destination']) && !empty($get_destination['destination'])) {
+		$flag_dest = $get_destination['destination'];
+	}
+
+	if($user->uid) {
+	  $register_link = flag_create_link('company_follow_unflollow', arg(2));
+	}
+	else {
+	  $register_link =  l(t('REGISTER (free)'), 'user/register', array('query'=> array('destination' => $flag_dest)));
+	}
+?>
+
 <div class="register-container login-form">
 	<div class="register-text login-text">Welcome to MortgageSpeak.com!</div>
 		<div class="login-left">			
@@ -14,7 +31,7 @@
 			<?php $block = module_invoke('block', 'block_view', '14');
 				print render($block['content']);;
 			?>
-			<div class="register-free"><a href="/user/register">REGISTER (free)</a></div> 
+			<div class="register-free"><?php print $register_link; ?></div> 
 		</div>
 	</div>
 </div>
