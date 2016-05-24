@@ -13,6 +13,7 @@
 	global $base_url;
 	global $user;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
+	$save_img = $base_url . '/sites/all/themes/mortgagespeak/images/star-blank-sm.png';
 ?>
 <?php if (!empty($title)): ?>
   <h3><?php print $title; ?></h3>
@@ -21,6 +22,22 @@
 	$title = $row['title'];
 	$body = strip_tags($row['body']);
 	$nid = $row['nid'];
+
+	$flag_link = '';
+  $flag_dest = '';
+
+  $get_destination = drupal_get_destination();
+  if(isset($get_destination['destination']) && !empty($get_destination['destination'])) {
+    $flag_dest = $get_destination['destination'];
+  }
+
+  if($user->uid) {
+    $flag_link = $row['ops'];
+  }
+  else {
+    $flag_link =  '<a href="user/?destination='. $flag_dest .'" title="Click to save content" class="flag flag-action flag-link-toggle flag-processed" rel="nofollow"><img src="'.$save_img.'"></a>';
+  }
+
 	$taxo_info = taxonomy_term_load($row['field_company_tag_1'], $vocabulary = NULL);
 
 	if(isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)){
@@ -141,7 +158,7 @@
     			
 				</div> 
 				 <!-- Flag link-->
-				 <?php print $row['ops'];?>
+				 <?php print $flag_link; ?>
 			</span>  
 		</div> 
 		<div class="views-popup-container"><?php print views_embed_view('popup_views','block_1', $nid); ?></div>

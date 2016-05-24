@@ -16,6 +16,7 @@
 
 <?php
 	global $base_url;
+	global $user;
 	$body = '';
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 	$url = $fullurl . '/' . drupal_get_path_alias('node/' . $node->nid);
@@ -23,6 +24,20 @@
 		$node_body = $node->body['und'][0]['value'];
 		$body = strip_tags($node_body);
 	}
+	$flag_link = '';
+  $flag_dest = '';
+
+  $get_destination = drupal_get_destination();
+  if(isset($get_destination['destination']) && !empty($get_destination['destination'])) {
+    $flag_dest = $get_destination['destination'];
+  }
+
+  if($user->uid) {
+    $flag_link = flag_create_link('saved_articles', $node->nid);
+  }
+  else {
+    $flag_link =  '<a href="user/?destination='. $flag_dest .'" title="Click to save content" class="flag flag-action flag-link-toggle flag-processed" rel="nofollow"><img src="'.$save_img.'"></a>';
+  }
 ?>
 
 <?php // Copy to clipboard script ?>
@@ -74,7 +89,7 @@
       </div>
 			
 			<div class="share-icon save-flag">
-				<?php print flag_create_link('saved_articles', $node->nid); ?>
+				<?php print $flag_link; ?>
 			</div>
 	</div>
 

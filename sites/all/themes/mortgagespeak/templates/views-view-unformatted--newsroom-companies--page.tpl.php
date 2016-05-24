@@ -11,8 +11,10 @@
 
   $rows = $view->style_plugin->rendered_fields;
   global $base_url;
+  global $user;
   $fullurl = 'http://' .$_SERVER['HTTP_HOST'];
   $THUMBNAIL_STYLE = 'tracked_images'; 
+  $save_img = $base_url . '/sites/all/themes/mortgagespeak/images/star-blank-sm.png';
 
 
 ?>
@@ -28,6 +30,22 @@
   $nid = $row['nid'];
   $alpha_entity = node_load($nid);
   $node_created = '';
+  $flag_link = '';
+  $flag_dest = '';
+
+  $get_destination = drupal_get_destination();
+  if(isset($get_destination['destination']) && !empty($get_destination['destination'])) {
+    $flag_dest = $get_destination['destination'];
+  }
+
+  if($user->uid) {
+    $flag_link = $row['ops'];
+  }
+  else {
+    $flag_link =  '<a href="user/?destination='. $flag_dest .'" title="Click to save content" class="flag flag-action flag-link-toggle flag-processed" rel="nofollow"><img src="'.$save_img.'"></a>';
+  }
+
+  
   if(!empty($row['url'])){
     $url1 = $row['url'];
   }
@@ -152,7 +170,7 @@
             </span>
         </div> 
          <!-- Flag link-->
-         <?php print $row['ops'];?>
+        <?php print $flag_link; ?>
       </span>  
     </div> 
     <div class="views-popup-container"><?php print views_embed_view('popup_views','block_1', $nid); ?></div>

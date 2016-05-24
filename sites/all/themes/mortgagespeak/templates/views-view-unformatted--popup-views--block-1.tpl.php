@@ -15,6 +15,7 @@
 	global $base_url;
 	global $user;
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
+	$save_img = $base_url . '/sites/all/themes/mortgagespeak/images/star-blank-sm.png';
 ?>
 
 <script type="text/javascript">
@@ -48,6 +49,23 @@
 		$title = $row['title'];
 		$body = $row['body'];
 		$nid = $row['nid'];
+
+		$flag_link = '';
+		$flag_dest = '';
+
+		$get_destination = drupal_get_destination();
+		if(isset($get_destination['destination']) && !empty($get_destination['destination'])) {
+		  $flag_dest = $get_destination['destination'];
+		}
+
+		if($user->uid) {
+		  $flag_link = $row['ops'];
+		}
+		else {
+		  $flag_link =  '<a href="user/?destination='. $flag_dest .'" title="Click to save content" class="flag flag-action flag-link-toggle flag-processed" rel="nofollow"><img src="'.$save_img.'"></a>';
+		}
+
+  
 		if(!empty($row['field_upload_document'])){
 			//$title_link = 'https://docs.google.com/viewerng/viewer?url=' .$row['field_upload_document'];
 			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
@@ -107,7 +125,7 @@
 
 							</div> 
 							 <!-- Flag link-->
-							 <?php print $row['ops'];?>
+							 <?php print $flag_link; ?>
 						</span>
 					</div>
 				</div>
