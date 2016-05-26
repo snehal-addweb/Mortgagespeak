@@ -578,21 +578,24 @@ a {
   }
   .view-filters {
     #views-exposed-form-newsroom-companies-page,
-    #views-exposed-form-company-view-detail-page {
+    #views-exposed-form-company-view-detail-page,
+    #views-exposed-form-news-page,
+    #views-exposed-form-press-releases-page,
+    #views-exposed-form-perpesctive-page {
       float: right;
       margin-top: -46px;
-      @media screen and (max-width: $ipad-portrait) {
+      @media screen and (max-width: $ipad) {
         float: none;
         margin-top: 0;
         }
       .views-exposed-form {
+        input {
+          @include border-radius(0);
+        }
         .input-group {
           width: 290px;
-          input {
-            border-radius: 0;
-          }
           > span {
-            border-radius: 0;
+            @include border-radius(0);
           }
         }
         button {
@@ -611,6 +614,43 @@ a {
         white-space: normal;
       }
     }
+    #views-exposed-form-news-page,
+    #views-exposed-form-press-releases-page {
+      .views-exposed-form {
+        input {
+          width: 340px;
+        }
+      }
+    }
+    #views-exposed-form-perpesctive-page {
+      .views-exposed-form {
+        input {
+          width: 220px;
+        }
+      }
+    }
+
+    /*#views-exposed-form-news-page {
+      float: right;
+      display: inline-block;
+      margin-top: -46px;
+      input {
+        @include border-radius(0);
+      }
+      .views-submit-button {
+        button {
+          &#edit-submit-news {
+            margin-top: 1px;
+            height: 27px;
+            margin-top: 4px;
+            margin-left: 4px;
+            padding: 6px 15px;
+            @include border-radius(4px);
+            line-height: 13px;
+          }
+        }
+      }
+    }*/
   }
   .view-content {
     display: inline-block;
