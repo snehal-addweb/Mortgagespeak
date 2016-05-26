@@ -625,9 +625,9 @@ a {
     margin: 0;
     padding: 20px 10px 10px 94px;
     border-top: 1px solid $gray-light-f4;
-    @media screen and (max-width: $mobile) {
+    /*@media screen and (max-width: $mobile) {
       padding-left: 60px;
-    }
+    }*/
     &:first-child {
       border-top: none;
     }
@@ -969,18 +969,22 @@ a {
               float: left;
               display: inline-block;
               margin-left: 50px;
+              @media screen and (max-width: $mobile-portrait) {
+                float: none;
+                margin: 0;
+              }
               .chicklets {
                 margin-right: 15px;
-                &:last-child {
+                /*&:last-child {
                   margin-right: 0;
-                }
+                }*/
                 &.email {
                   margin-top: 1px;
                 }
               }
               .flag-saved-articles {
                 a {
-                  margin: 0 0 0 15px;
+                  /*margin: 0 0 0 15px;*/
                 }
               }
             }
@@ -997,6 +1001,10 @@ a {
                   color: #126EDC;
                   text-decoration: none;
                 }
+              }
+              @media screen and (max-width: $mobile-portrait) {
+                float: none;
+                margin-bottom: 10px;
               }
             }
           }
