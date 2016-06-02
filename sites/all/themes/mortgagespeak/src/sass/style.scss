@@ -584,10 +584,11 @@ a {
     #views-exposed-form-perpesctive-page {
       float: right;
       margin-top: -46px;
-      @media screen and (max-width: $ipad) {
+      @media screen and (max-width: 900px) {
         float: none;
         margin-top: 0;
-        }
+        margin-left: 10px;
+      }
       .views-exposed-form {
         input {
           @include border-radius(0);
@@ -615,42 +616,33 @@ a {
       }
     }
     #views-exposed-form-news-page,
-    #views-exposed-form-press-releases-page {
-      .views-exposed-form {
-        input {
-          width: 340px;
-        }
-      }
-    }
+    #views-exposed-form-press-releases-page,
     #views-exposed-form-perpesctive-page {
       .views-exposed-form {
         input {
-          width: 220px;
+          width: 340px;
+          @media screen and (max-width: $ipad-portrait) {
+            width: 290px;
+          }
+          @media screen and (max-width: $mobile-portrait) {
+            width: 100%;
+          }
         }
-      }
-    }
-
-    /*#views-exposed-form-news-page {
-      float: right;
-      display: inline-block;
-      margin-top: -46px;
-      input {
-        @include border-radius(0);
-      }
-      .views-submit-button {
-        button {
-          &#edit-submit-news {
-            margin-top: 1px;
-            height: 27px;
-            margin-top: 4px;
-            margin-left: 4px;
-            padding: 6px 15px;
-            @include border-radius(4px);
-            line-height: 13px;
+        .views-exposed-widget {
+          @media screen and (max-width: $mobile-portrait) {
+            width: 100%;
           }
         }
       }
-    }*/
+    }
+    @media screen and (max-width: 900px) {
+      width: calc(100% + 2px);
+      margin-top: -1px;
+      margin-left: -1px;
+      border: 1px solid $border;
+      border-top: none;
+      background-color: $gray-light-f4;
+    }
   }
   .view-content {
     display: inline-block;
@@ -1380,6 +1372,12 @@ a {
 .content-lists .view-filters #views-exposed-form-company-view-detail-page .views-exposed-form .input-group {
   max-width: 340px;
   width: 100%;
+  @media screen and (max-width: $ipad-portrait) {
+    max-width: 290px;
+  }
+  @media screen and (max-width: $mobile-portrait) {
+    max-width: 100%;
+  }
   .input-group-addon {
     .icon {
       display: inline-block;
@@ -1851,10 +1849,6 @@ a {
   display: inline-block;
   width: 100%;
   margin: 15px 0 20px;
-  @media screen and (max-width: $ipad) {
-    max-width: 360px;
-    width: 100%;
-  }
   a {
     float: right;
     padding: 16px 28px 16px 42px;
@@ -1947,19 +1941,38 @@ a {
     #block-mortgage-landing-randomtext {
       width: 40%;
     }
+    #block-views-home-page-ad-block-block {
+      float: left;
+      width: 60%;
+    }
   }
 }
 @media screen and (max-width: $ipad-portrait) {
   .page-welcome {
-    #block-mortgage-landing-randomtext {
+    #block-mortgage-landing-randomtext,
+    #block-views-home-page-ad-block-block {
       width: 50%;
     }
   }
 }
+@media screen and (max-width: $ipad-portrait) {
+  .quote-main-container span {
+    margin-bottom: 30px;
+    font-size: 30px;
+  }
+  .quote {
+    line-height: 38px;
+  }
+}
 @media screen and (max-width: $mobile) {
   .page-welcome {
-    #block-mortgage-landing-randomtext {
+    #block-mortgage-landing-randomtext,
+    #block-views-home-page-ad-block-block {
       width: 100%;
+      padding-right: 0;
+    }
+    #block-mortgage-landing-randomtext {
+      margin-bottom: 30px;
     }
   }
 }
