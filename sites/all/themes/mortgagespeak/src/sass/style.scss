@@ -1425,6 +1425,39 @@ a {
   }
 }
 
+/* RGA ADs content header */
+.rga-ads {
+  .view-header {
+    float: left;
+  }
+  .rga-text {
+    float: left;
+    margin: 0;
+    padding: 20px 0;
+    color: #35383D;
+    font-size: 30px;
+  }
+  .pr-ads {
+    float: right;
+    /*height: 55px;*/
+    margin: 0;
+    padding: 0 13px;
+    background-color: #F07A22;
+    color: $white;
+    font-size: 12px;
+    text-align: center;
+    @include border-radius(3px);
+    .totalsum {
+      padding: 10px 0;
+      font-size: 25px;
+      letter-spacing: 1px;
+    }
+    .totaltext {
+      padding-bottom: 3px;
+      font-size: 10px;
+    }
+  }
+}
 
 /* Pr activity */
 #block-block-15 {
