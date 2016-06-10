@@ -1429,13 +1429,15 @@ a {
 .rga-ads {
   .view-header {
     float: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .rga-text {
     float: left;
     margin: 0;
-    padding: 20px 0;
+    padding: 13px 0;
     color: #35383D;
-    font-size: 30px;
+    font-size: 20px;
   }
   .pr-ads {
     float: right;
@@ -1448,8 +1450,8 @@ a {
     text-align: center;
     @include border-radius(3px);
     .totalsum {
-      padding: 10px 0;
-      font-size: 25px;
+      padding: 7px 0 3px;
+      font-size: 20px;
       letter-spacing: 1px;
     }
     .totaltext {
