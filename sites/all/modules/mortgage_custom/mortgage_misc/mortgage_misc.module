@@ -62,7 +62,7 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
     '#type' => 'checkbox',
     '#title' => t('Select All'),
     );
-    $form['actions']['submit']['#value'] = 'Register';
+    //$form['actions']['submit']['#value'] = 'Register';
   }
 
   if ($form_id == 'webform_client_form_42') {
@@ -319,3 +319,46 @@ function mortgage_misc_taxonomy_term_uri($term) {
   // default taxonomy term uri
   return taxonomy_term_uri($term);
 }*/
+
+
+function mortgage_misc_mail_alter(&$message) {
+  $arr_simple_news = array();
+
+  if ($message['id'] == 'simplenews_node' || $message['id'] == 'simplenews_test') {
+    $userName = '';
+    $password = '';
+
+    //$tid = 28;
+    $tid = 791;
+    $arr_simple_news = simplenews_get_subscriptions_by_list($tid);
+
+    if(!empty($arr_simple_news)) {
+
+      foreach ($arr_simple_news as $key => $value) {
+        $arrNew[$key] = (array)$value;
+        $mail_id[] = $key;
+      }
+
+      if(in_array($message['to'],$mail_id)){
+        $users = user_load_by_mail($message['to']);
+        $userName = $users->name;
+
+        if(empty($users->field_newsletter_password)){
+          $password = "Your Password";
+        }
+        else{
+          $password = $users->field_newsletter_password['und'][0]['value'];
+        }
+      }
+
+      if(!empty($userName)){
+        $message['body'] = str_replace("#FAF#", $userName, $message['body']);
+        $message['body'] = str_replace("#FAF@1234#",$password, $message['body']);
+      }
+      else{
+        $message['body'] = str_replace("#FAF#", "FAF", $message['body']);
+        $message['body'] = str_replace("#FAF@1234#","FAF123", $message['body']);
+      }
+    }
+  }
+}
