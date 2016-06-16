@@ -328,8 +328,8 @@ function mortgage_misc_mail_alter(&$message) {
     $userName = '';
     $password = '';
 
-    //$tid = 28;
-    $tid = 791;
+    $tid = 28;
+    //$tid = 791;
     $arr_simple_news = simplenews_get_subscriptions_by_list($tid);
 
     if(!empty($arr_simple_news)) {
@@ -341,7 +341,14 @@ function mortgage_misc_mail_alter(&$message) {
 
       if(in_array($message['to'],$mail_id)){
         $users = user_load_by_mail($message['to']);
+
         $userName = $users->name;
+        if(!empty($users->field_first_name[LANGUAGE_NONE][0]['value'])) {
+          $user_fullname = $users->field_first_name[LANGUAGE_NONE][0]['value'];
+        }
+        else {
+          $user_fullname = $userName;
+        }
 
         if(empty($users->field_newsletter_password)){
           $password = "Your Password";
@@ -354,10 +361,12 @@ function mortgage_misc_mail_alter(&$message) {
       if(!empty($userName)){
         $message['body'] = str_replace("#FAF#", $userName, $message['body']);
         $message['body'] = str_replace("#FAF@1234#",$password, $message['body']);
+        $message['body'] = str_replace("#username#", $user_fullname, $message['body']);
       }
       else{
         $message['body'] = str_replace("#FAF#", "FAF", $message['body']);
         $message['body'] = str_replace("#FAF@1234#","FAF123", $message['body']);
+        $message['body'] = str_replace("#username#", $message['to'], $message['body']);
       }
     }
   }

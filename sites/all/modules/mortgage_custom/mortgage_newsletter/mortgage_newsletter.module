@@ -56,6 +56,20 @@ function select_user_list_form($form, &$form_state) {
   }  
 
   $multiple = 20;
+  $default_newsletter = "cn";
+
+  $options = array(
+    'cn' => t('Client Newsletter'),
+    'pn' => t('Public Newsletter'),
+  );
+
+  $form['newsletter_type'] = array(
+    '#type' => 'radios',
+    '#title' => t('Newsletter Type'),
+    '#options' => $options,
+    '#default_value' => $default_newsletter,
+  );
+
   $form['select_user'] = array(
     '#type' => 'select',
     '#title' => t('Select User'),
@@ -64,6 +78,7 @@ function select_user_list_form($form, &$form_state) {
     #'#size' => $multiple ? min(12, count($uid)) : 0,
     '#size' => 0,
   );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
@@ -81,8 +96,10 @@ function newsletter_edit_forms() {
 }
 
 function select_user_list_form_validate($form, &$form_state) {
-  if (empty($form_state['values']['select_user'])) {
-    form_set_error('user', t('select user from dropdowm.'));
+  if($form_state['values']['newsletter_type'] == 'cn') {
+    if (empty($form_state['values']['select_user'])) {
+     form_set_error('user', t('select user from dropdowm.'));
+    }
   }
 }
 
@@ -106,334 +123,337 @@ function select_user_list_form_submit($form, &$form_state) {
   $arr_newslist = array();
   $url_pressrelease = 'http://' . $_SERVER['HTTP_HOST'];
 
+  if($form_state['values']['newsletter_type'] == 'cn') {
+    foreach ($form_state['values']['select_user'] as $key => $vals) {    
+          $userid = $vals;
+          $user = user_load($userid);
 
-
-  foreach ($form_state['values']['select_user'] as $key => $vals) {    
-    $userid = $vals;
-    $user = user_load($userid);
-
-    if ($debug) {
-      print("<pre> :: User ::");
-      print_r($user);
-      print("</pre>");
-    }
-
-    switch ($user->name) {
-      case "Forsythe Appraisals":
-        $pass = "Forsythe@1234";
-        break;
-      case "Valocity":
-        $pass = "Valocity@1234";
-        break;
-      case "FAF":
-        $user->name = "#FAF#";
-        $pass = "#FAF@1234#";
-        break;
-      case "Data Tree":
-        $pass = "DataTree@1234";
-        break;
-      case "Global DMS":
-        $pass = "GlobalDMS@1234";
-        break;
-      case "a la mode-mn":
-        $pass = "alamode-mn@1234";
-        break;
-      case "Profundity":
-        $pass = "Crispy1";
-        break;
-      case "RGA Public Relations":
-        $pass = "RGA@1234";
-        break;
-      case "Platinum":
-        $pass = "Platinum@1234";
-        break;
-      case "Pro Teck":
-        $pass = "ProTeck@1234";
-        break;
-      case "Pro Teck JD Team":
-        $pass = "Pro Teck JD Team1234";
-        break;
-      case "Pro Teck SB Team":
-        $pass = "Pro Teck SB Team1234";
-        break;
-      case "Pro Teck DH Team":
-        $pass = "Pro Teck DH Team1234";
-        break;
-      case "mahipal":
-        $pass = "mahipal";
-        break;
-      case "MortgageFlex":
-        $pass = "MortgageFlex32207";
-        break;
-      case "Valocity-BT":
-        $pass = "Valocity-BT@1234";
-        break;
-      case "Forsythe-BT":
-        $pass = "Forsythe@1234";
-        break;
-      case "mercuryvmp":
-        $pass = "mercuryvmp@1234";
-        break;
-    }
-
-
-    #################################################################
-    # Fetch Selected Company Tags related content section start....
-    #################################################################
-
-    $arr_user_company_tags = array();
-    if (!empty($user->field_company_tags)) {
-      foreach ($user->field_company_tags['und'] as $key => $val) {
-        $arr_user_company_tags[] = $val['tid'];
-      }
-    }
-
-    $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
-    $query->fields('n', array('nid'));
-    $query->condition('n.status', '1', '=');
-    $query->condition('n.type', 'alpha_content', '=');
-
-    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
-      $yesterday  = strtotime("-7 day", $current);
-      $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
-    }
-    else {
-      if ($form_state['complete form']['#action'] == '/create-newsletter') {
-        $query->condition('n.created', array($today, $current), 'BETWEEN');
-      }
-    }
-    
-
-    if (!empty($arr_user_company_tags))
-      $query->condition('fct.field_company_tag_tid', $arr_user_company_tags, 'IN');
-
-    $query->orderBy('n.created', 'DESC');    
-    $result = $query->execute();
-
-    $arr_user_company_tags_nids = array();
-    if ($result->rowCount() != 0 && (!empty($arr_user_company_tags))) {
-      $i = 1;        
-      while ($record = $result->fetchAssoc()) {
-        if (!array_key_exists($record['nid'], $arr_newslist)) {
-          $arr_newslist[$record['nid']] = $record['nid'];
-          $arr_companytags[$record['nid']] = $record['nid'];
-        }
-        $arr_user_company_tags_nids[$record['nid']] = $record['nid'];
-      }    
-    } 
- 
-
-    #################################################################
-    # Fetch Selected Company Tags related content section end....
-    #################################################################
-
-
-    #################################################################
-    # Fetch Selected Newstopics related content section start....
-    #################################################################
-    $arr_user_news_topics = array();
-    if (!empty($user->field_news_topics)) {
-      foreach ($user->field_news_topics['und'] as $key => $val) {
-        $arr_user_news_topics[] = $val['tid'];
-      }
-    }   
-
-    $query = db_select('node', 'n');
-    $query->leftJoin('field_data_field_alpha_news_topics', 'fnt', 'fnt.entity_id = n.nid');
-    $query->leftjoin('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
-    $query->condition('fct.field_tab_placement_tid', '701', '=');
-    $query->fields('n', array('nid'));
-    $query->condition('n.type', 'alpha_content', '=');
-    $query->condition('n.status', '1', '=');
-    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
-      $yesterday  = strtotime("-7 day", $current);
-      $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
-    }
-    else {
-      if ($form_state['complete form']['#action'] == '/create-newsletter') {
-        $query->condition('n.created', array($today, $current), 'BETWEEN');
-      }
-    }
-
-    if (!empty($arr_user_news_topics))
-      $query->condition('fnt.field_alpha_news_topics_tid', $arr_user_news_topics, 'IN');
-
-    $query->orderBy('n.created', 'DESC');    
-    $result = $query->execute();
-
-    $arr_user_news_topics_nids = array();
-    if ($result->rowCount() != 0 && (!empty($arr_user_news_topics))) {
-      $i = 1;        
-      while ($record = $result->fetchAssoc()) {
-        if (!array_key_exists($record['nid'], $arr_newslist)) {
-            $arr_newslist[$record['nid']] = $record['nid'];
-            $arr_newstopics[$record['nid']] = $record['nid'];
+          if ($debug) {
+            print("<pre> :: User ::");
+            print_r($user);
+            print("</pre>");
           }
-        $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
-      }    
-    }
-    #################################################################
-    # Fetch Selected Newstopics related content section end....
-    #################################################################
+
+          switch ($user->name) {
+            case "Forsythe Appraisals":
+              $pass = "Forsythe@1234";
+              break;
+            case "Valocity":
+              $pass = "Valocity@1234";
+              break;
+            case "FAF":
+              $user->name = "#FAF#";
+              $pass = "#FAF@1234#";
+              break;
+            case "Data Tree":
+              $pass = "DataTree@1234";
+              break;
+            case "Global DMS":
+              $pass = "GlobalDMS@1234";
+              break;
+            case "a la mode-mn":
+              $pass = "alamode-mn@1234";
+              break;
+            case "Profundity":
+              $pass = "Crispy1";
+              break;
+            case "RGA Public Relations":
+              $pass = "RGA@1234";
+              break;
+            case "Platinum":
+              $pass = "Platinum@1234";
+              break;
+            case "Pro Teck":
+              $pass = "ProTeck@1234";
+              break;
+            case "Pro Teck JD Team":
+              $pass = "Pro Teck JD Team1234";
+              break;
+            case "Pro Teck SB Team":
+              $pass = "Pro Teck SB Team1234";
+              break;
+            case "Pro Teck DH Team":
+              $pass = "Pro Teck DH Team1234";
+              break;
+            case "mahipal":
+              $pass = "mahipal";
+              break;
+            case "MortgageFlex":
+              $pass = "MortgageFlex32207";
+              break;
+            case "Valocity-BT":
+              $pass = "Valocity-BT@1234";
+              break;
+            case "Forsythe-BT":
+              $pass = "Forsythe@1234";
+              break;
+            case "mercuryvmp":
+              $pass = "mercuryvmp@1234";
+              break;
+          }
 
 
-    #######################################################################
-    # Fetch Selected Perspective & Press Release content section start....
-    ########################################################################    
+          #################################################################
+          # Fetch Selected Company Tags related content section start....
+          #################################################################
 
-    $tab_placement = array('705', '706');
-    $query = db_select('node', 'n');    
-    $query->fields('n', array('nid'));
-    $query->join('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
-    $query->condition('n.type', 'alpha_content', '=');
-    $query->condition('n.status', '1', '=');
-    $query->condition('fct.field_tab_placement_tid', $tab_placement, 'IN');
-    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
-      $yesterday  = strtotime("-7 day", $current);
-      $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
-    }
-    else {
-      if ($form_state['complete form']['#action'] == '/create-newsletter') {
-        $query->condition('n.created', array($today, $current), 'BETWEEN');
-      }
-    }
+          $arr_user_company_tags = array();
+          if (!empty($user->field_company_tags)) {
+            foreach ($user->field_company_tags['und'] as $key => $val) {
+              $arr_user_company_tags[] = $val['tid'];
+            }
+          }
 
-    $query->orderBy('n.created', 'DESC');    
-    $result = $query->execute();
+          $query = db_select('node', 'n');
+          $query->leftJoin('field_data_field_company_tag', 'fct', 'fct.entity_id = n.nid');
+          $query->fields('n', array('nid'));
+          $query->condition('n.status', '1', '=');
+          $query->condition('n.type', 'alpha_content', '=');
 
-    $arr_perspective_content = array();
-    if ($result->rowCount() != 0) {
-      $i = 1;        
-      while ($record = $result->fetchAssoc()) {
-        if (!array_key_exists($record['nid'], $arr_newslist)) {
-          //if(!array_key_exists($record['nid'], $arr_companytags)) {
-            $arr_newslist[$record['nid']] = $record['nid'];
-            $arr_tabplacements[$record['nid']] = $record['nid'];
-        }
-        //}
-        $arr_perspective_content[$record['nid']] = $record['nid'];
-      }    
-    }    
+          if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+            $yesterday  = strtotime("-7 day", $current);
+            $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
+          }
+          else {
+            if ($form_state['complete form']['#action'] == '/create-newsletter') {
+              $query->condition('n.created', array($today, $current), 'BETWEEN');
+            }
+          }
+          
 
-/*    $query = db_select('node', 'n');
-    $query->join('field_data_field_assign_customas', 'fac', 'fac.entity_id = n.nid');
-    $query->fields('n', array('nid'));
-    $query->condition('n.type', 'alpha_content', '=');
-    $query->condition('n.created', array($today, $current), 'BETWEEN');
+          if (!empty($arr_user_company_tags))
+            $query->condition('fct.field_company_tag_tid', $arr_user_company_tags, 'IN');
 
-    $query->orderBy('n.created', 'DESC');    
-    $result = $query->execute();
+          $query->orderBy('n.created', 'DESC');    
+          $result = $query->execute();
 
-    $arr_press_releases = array();
-    if($result->rowCount() != 0){
-      $i = 1;        
-      while ($record = $result->fetchAssoc()) {
-        if(!array_key_exists($record['nid'], $arr_newslist)) {
-          $arr_newslist[$record['nid']] = $record['nid'];
-        }
-        $arr_press_releases[$record['nid']] = $record['nid'];
-      }    
-    }*/        
-    #################################################################
-    # Fetch Selected Perspective & Press Release content section start....
-    #################################################################*/
+          $arr_user_company_tags_nids = array();
+          if ($result->rowCount() != 0 && (!empty($arr_user_company_tags))) {
+            $i = 1;        
+            while ($record = $result->fetchAssoc()) {
+              if (!array_key_exists($record['nid'], $arr_newslist)) {
+                $arr_newslist[$record['nid']] = $record['nid'];
+                $arr_companytags[$record['nid']] = $record['nid'];
+              }
+              $arr_user_company_tags_nids[$record['nid']] = $record['nid'];
+            }    
+          } 
+       
+
+          #################################################################
+          # Fetch Selected Company Tags related content section end....
+          #################################################################
 
 
-    #################################################################
-    # Debug Variables section start....
-    #################################################################
-    if ($debug) {
+          #################################################################
+          # Fetch Selected Newstopics related content section start....
+          #################################################################
+          $arr_user_news_topics = array();
+          if (!empty($user->field_news_topics)) {
+            foreach ($user->field_news_topics['und'] as $key => $val) {
+              $arr_user_news_topics[] = $val['tid'];
+            }
+          }   
 
-      print("<pre> :: arr_user_news_topics ::");
-      print_r($arr_user_news_topics);
-      print("</pre>"); 
+          $query = db_select('node', 'n');
+          $query->leftJoin('field_data_field_alpha_news_topics', 'fnt', 'fnt.entity_id = n.nid');
+          $query->leftjoin('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
+          $query->condition('fct.field_tab_placement_tid', '701', '=');
+          $query->fields('n', array('nid'));
+          $query->condition('n.type', 'alpha_content', '=');
+          $query->condition('n.status', '1', '=');
+          if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+            $yesterday  = strtotime("-7 day", $current);
+            $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
+          }
+          else {
+            if ($form_state['complete form']['#action'] == '/create-newsletter') {
+              $query->condition('n.created', array($today, $current), 'BETWEEN');
+            }
+          }
 
-      print("<pre> :: arr_user_company_tags ::");
-      print_r($arr_user_company_tags);
-      print("</pre>");
+          if (!empty($arr_user_news_topics))
+            $query->condition('fnt.field_alpha_news_topics_tid', $arr_user_news_topics, 'IN');
 
-      print("<pre> :: arr_user_company_tags ::");
-      print_r($arr_user_company_tags);
-      print("</pre>");
+          $query->orderBy('n.created', 'DESC');    
+          $result = $query->execute();
 
-      print("<pre> :: arr_user_news_topics ::");
-      print_r($arr_user_news_topics);
-      print("</pre>"); 
-
-      print("<pre> :: arr_user_company_tags_nids ::");
-      print_r($arr_user_company_tags_nids);
-      print("</pre>");
-
-      print("<pre> :: arr_user_news_topics_nids ::");
-      print_r($arr_user_news_topics_nids);
-      print("</pre>");
-
-      print("<pre> :: arr_perspective_content ::");
-      print_r($arr_perspective_content);
-      print("</pre>");
-
-      print('<pre :: arr_tabplacements style="color:red;">');
-      print_r($arr_tabplacements);
-      print('</pre>');
-
-      print("<pre> :: arr_press_releases ::");
-      print_r($arr_press_releases);
-      print("</pre>");
-
-      print("<pre> :: arr_newslist (FOR UNIQUE NODES ONLY) ::");
-      print_r($arr_newslist);
-      print("</pre>");
-    }
-    #################################################################
-    # Debug Variables section end....
-    #################################################################
+          $arr_user_news_topics_nids = array();
+          if ($result->rowCount() != 0 && (!empty($arr_user_news_topics))) {
+            $i = 1;        
+            while ($record = $result->fetchAssoc()) {
+              if (!array_key_exists($record['nid'], $arr_newslist)) {
+                  $arr_newslist[$record['nid']] = $record['nid'];
+                  $arr_newstopics[$record['nid']] = $record['nid'];
+                }
+              $arr_user_news_topics_nids[$record['nid']] = $record['nid'];
+            }    
+          }
+          #################################################################
+          # Fetch Selected Newstopics related content section end....
+          #################################################################
 
 
-    #################################################################
-    # Create Newsletter Node/Content section start....
-    #################################################################
-    $node = new StdClass();
-    $node->type = 'simplenews';
-    $node->status = 1;
-    $node->uid = 1;
-    $node->language = LANGUAGE_NONE;
-    if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
-      $node->title = "Weekly Newsletter";
-    } 
-    else {
-      if ($form_state['complete form']['#action'] == '/create-newsletter') {
-       $node->title = "Newsletter";
-      }
-    }
-    $node->body['und'][0]['format'] = 'full_html';
+          #######################################################################
+          # Fetch Selected Perspective & Press Release content section start....
+          ########################################################################    
 
-    $primg = $base_url . '/sites/default/files/PR.png';
-    $tracked_topicimg = $base_url . '/sites/default/files/Key.png'; 
+          $tab_placement = array('705', '706');
+          $query = db_select('node', 'n');    
+          $query->fields('n', array('nid'));
+          $query->join('field_data_field_tab_placement', 'fct', 'fct.entity_id = n.nid');
+          $query->condition('n.type', 'alpha_content', '=');
+          $query->condition('n.status', '1', '=');
+          $query->condition('fct.field_tab_placement_tid', $tab_placement, 'IN');
+          if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+            $yesterday  = strtotime("-7 day", $current);
+            $query->condition('n.created', array($yesterday, $current), 'BETWEEN');
+          }
+          else {
+            if ($form_state['complete form']['#action'] == '/create-newsletter') {
+              $query->condition('n.created', array($today, $current), 'BETWEEN');
+            }
+          }
 
-    # Template Main Section Start...
-    $body .= '<table style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
-              <tbody>';
+          $query->orderBy('n.created', 'DESC');    
+          $result = $query->execute();
 
-        # Template Header Section Start...
-        $body .= '  <tr class="header-section" style="background: #2e8cf0;">
-                      <td style="padding: 0; margin: 0; border: 1px solid #2e8cf0; line-height: normal; ">
-                      <table cellpadding="10" style="width: 100%; margin: 5px auto; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: 1px solid #2e8cf0; ">
-                        <tbody>
-                          <tr>
-                            <td style="padding: 0; margin:0; line-height: normal; ">
-                            <table align="center" class="header-table" style="margin: 0px auto; border-collapse: collapse; padding: 0; border: none; width: 680px; line-height: normal; ">
+          $arr_perspective_content = array();
+          if ($result->rowCount() != 0) {
+            $i = 1;        
+            while ($record = $result->fetchAssoc()) {
+              if (!array_key_exists($record['nid'], $arr_newslist)) {
+                //if(!array_key_exists($record['nid'], $arr_companytags)) {
+                  $arr_newslist[$record['nid']] = $record['nid'];
+                  $arr_tabplacements[$record['nid']] = $record['nid'];
+              }
+              //}
+              $arr_perspective_content[$record['nid']] = $record['nid'];
+            }    
+          }    
+
+         /*    $query = db_select('node', 'n');
+          $query->join('field_data_field_assign_customas', 'fac', 'fac.entity_id = n.nid');
+          $query->fields('n', array('nid'));
+          $query->condition('n.type', 'alpha_content', '=');
+          $query->condition('n.created', array($today, $current), 'BETWEEN');
+
+          $query->orderBy('n.created', 'DESC');    
+          $result = $query->execute();
+
+          $arr_press_releases = array();
+          if($result->rowCount() != 0){
+            $i = 1;        
+            while ($record = $result->fetchAssoc()) {
+              if(!array_key_exists($record['nid'], $arr_newslist)) {
+                $arr_newslist[$record['nid']] = $record['nid'];
+              }
+              $arr_press_releases[$record['nid']] = $record['nid'];
+            }    
+          }*/        
+          #################################################################
+          # Fetch Selected Perspective & Press Release content section start....
+          #################################################################*/
+
+
+          #################################################################
+          # Debug Variables section start....
+          #################################################################
+          if ($debug) {
+
+            print("<pre> :: arr_user_news_topics ::");
+            print_r($arr_user_news_topics);
+            print("</pre>"); 
+
+            print("<pre> :: arr_user_company_tags ::");
+            print_r($arr_user_company_tags);
+            print("</pre>");
+
+            print("<pre> :: arr_user_company_tags ::");
+            print_r($arr_user_company_tags);
+            print("</pre>");
+
+            print("<pre> :: arr_user_news_topics ::");
+            print_r($arr_user_news_topics);
+            print("</pre>"); 
+
+            print("<pre> :: arr_user_company_tags_nids ::");
+            print_r($arr_user_company_tags_nids);
+            print("</pre>");
+
+            print("<pre> :: arr_user_news_topics_nids ::");
+            print_r($arr_user_news_topics_nids);
+            print("</pre>");
+
+            print("<pre> :: arr_perspective_content ::");
+            print_r($arr_perspective_content);
+            print("</pre>");
+
+            print('<pre :: arr_tabplacements style="color:red;">');
+            print_r($arr_tabplacements);
+            print('</pre>');
+
+            print("<pre> :: arr_press_releases ::");
+            print_r($arr_press_releases);
+            print("</pre>");
+
+            print("<pre> :: arr_newslist (FOR UNIQUE NODES ONLY) ::");
+            print_r($arr_newslist);
+            print("</pre>");
+          }
+          #################################################################
+          # Debug Variables section end....
+          #################################################################
+
+
+          #################################################################
+          # Create Newsletter Node/Content section start....
+          #################################################################
+          $node = new StdClass();
+          $node->type = 'simplenews';
+          $node->status = 1;
+          $node->uid = 1;
+          $node->language = LANGUAGE_NONE;
+          if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
+            $node->title = "Weekly Newsletter";
+          } 
+          else {
+            if ($form_state['complete form']['#action'] == '/create-newsletter') {
+             $node->title = "Newsletter";
+            }
+          }
+          $node->body['und'][0]['format'] = 'full_html';
+
+          $primg = $base_url . '/sites/default/files/PR.png';
+          $tracked_topicimg = $base_url . '/sites/default/files/Key.png'; 
+
+          # Template Main Section Start...
+          $body .= '<table style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
+                    <tbody>';
+
+              # Template Header Section Start...
+              $body .= '  <tr class="header-section" style="background: #2e8cf0;">
+                            <td style="padding: 0; margin: 0; border: 1px solid #2e8cf0; line-height: normal; ">
+                            <table cellpadding="10" style="width: 100%; margin: 5px auto; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: 1px solid #2e8cf0; ">
                               <tbody>
                                 <tr>
-                                  <td style="padding: 7px 0; margin:0; line-height: normal; " width="55"><a href="http://mortgagespeak.com" style="text-decoration: none;"><img alt="" src="http://www.mortgagespeak.com/files/ms.png" style="vertical-align: middle;" /></a></td>
-                                  <td style="padding: 7px 0 0; margin: 0; vertical-align: top;">
-                                  <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
+                                  <td style="padding: 0; margin:0; line-height: normal; ">
+                                  <table align="center" class="header-table" style="margin: 0px auto; border-collapse: collapse; padding: 0; border: none; width: 680px; line-height: normal; ">
                                     <tbody>
                                       <tr>
-                                        <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; ">News Intelligence</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
+                                        <td style="padding: 7px 0; margin:0; line-height: normal; " width="55"><a href="http://mortgagespeak.com" style="text-decoration: none;"><img alt="" src="'. $base_url .'/sites/default/files/ms.png" style="vertical-align: middle;" /></a></td>
+                                        <td style="padding: 7px 0 0; margin: 0; vertical-align: top;">
+                                        <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
+                                          <tbody>
+                                            <tr>
+                                              <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; ">News Intelligence</td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        </td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -442,300 +462,423 @@ function select_user_list_form_submit($form, &$form_state) {
                               </tbody>
                             </table>
                             </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      </td>
-                    </tr>';
-        # Template Header Section End...
+                          </tr>';
+              # Template Header Section End...
 
-        # Template Body Section Start
-        $body .= '  <tr style="background: #F4F4F4;" class="body-section">
-                      <td style="padding: 0; border: 1px solid #bebfb9; ">
-                        <table class="main-table" style="width: 100%; margin: 0px auto; border-collapse: collapse; padding: 5px; border: none; background-color: #f4f4f4; border: none; " align="center">
-                          <tbody>';
+              # Template Body Section Start
+              $body .= '  <tr style="background: #F4F4F4;" class="body-section">
+                            <td style="padding: 0; border: 1px solid #bebfb9; ">
+                              <table class="main-table" style="width: 100%; margin: 0px auto; border-collapse: collapse; padding: 5px; border: none; background-color: #f4f4f4; border: none; " align="center">
+                                <tbody>';
 
-            # Template Sub Header Section Start...
-            $body .= '<tr class="sub-header-section">
-                        <td style="padding: 0; margin: 0;" align="center"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">' . date("F") . '&nbsp;' . date("j") . ',&nbsp;' . date("Y") . '</span></span>
-                        </td>
-                      </tr>';
+                  # Template Sub Header Section Start...
+                  $body .= '<tr class="sub-header-section">
+                              <td style="padding: 0; margin: 0;" align="center"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">' . date("F") . '&nbsp;' . date("j") . ',&nbsp;' . date("Y") . '</span></span>
+                              </td>
+                            </tr>';
 
-            $body .= '<tr>
-                       <td style="border: 0px none; border-collapse: collapse; border-spacing: 0px; padding: 0;">
-                      <table style="border-radius: 5px 5px 0 0; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
-                        <tbody>
-                          <tr>
-                            <td style="padding: 15px 20px 10px 20px; text-align: center;"><span style="font-family: arial; color: #666666; font-size: 14px;">Uniting your Client, Competitor, Prospect and Business Line news</span></td>
-                          </tr>
-                          <tr>
-                            <td style=" padding:0 20px;">
-                              <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="padding: 0 20px 15px 20px;">
-                              <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0;">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding: 5px 0; width: 568px; color: #000000;"><strong style="font-family: arial;">Headline Summary</strong></td>
-                                    <td style="color: #000000; padding: 5px 0; text-align: center; width: 130px;"><strong style="font-family: arial;">Today</strong></td>
-                                    <td style="color: #000000; padding: 5px 0px; width: 35px;" align="center"><strong style="font-family: arial;">YTD</strong></td>
-                                  </tr>
-                                  <tr style="background: #e4e4e4;">
-                                    <td style="padding: 7px 0; text-indent: 0px; font-family: arial; width: 568px;">Total</td>
-                                    <td style="padding: 7px 0; text-align: center; font-family: arial;">8</td>
-                                    <td style="padding: 7px 0; text-align: center; font-family: arial;">100</td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 5px 0; text-indent: 0px; font-family: arial; width: 568px;">Tracked Companies</td>
-                                    <td style="padding: 5px 0; text-align: center; font-family: arial;">8</td>
-                                    <td style="padding: 5px 0; text-align: center; font-family: arial;">50</td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 5px 0; text-indent: 0px; font-family: arial; width: 568px;">Tracked Business Lines</td>
-                                    <td style="padding: 5px 0; text-align: center; font-family: arial;">4</td>
-                                    <td style="padding: 5px 0; text-align: center; font-family: arial;">50</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="padding: 0 20px 0 20px;">
-                              <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                       </td>
-                     </tr>';
-            # Template Sub Header Section End... 
+                  $body .= '<tr>
+                             <td style="border: 0px none; border-collapse: collapse; border-spacing: 0px; padding: 0;">
+                            <table style="border-radius: 5px 5px 0 0; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 15px 20px 10px 20px; text-align: center;"><span style="font-family: arial; color: #666666; font-size: 14px;">Uniting your Client, Competitor, Prospect and Business Line news</span></td>
+                                </tr>
+                                <tr>
+                                  <td style=" padding:0 20px;">
+                                    <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 20px 15px 20px;">
+                                    <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0;">
+                                      <tbody>
+                                        <tr>
+                                          <td style="padding: 5px 0; width: 568px; color: #000000;"><strong style="font-family: arial;">Headline Summary</strong></td>
+                                          <td style="color: #000000; padding: 5px 0; text-align: center; width: 130px;"><strong style="font-family: arial;">Today</strong></td>
+                                          <td style="color: #000000; padding: 5px 0px; width: 35px;" align="center"><strong style="font-family: arial;">YTD</strong></td>
+                                        </tr>
+                                        <tr style="background: #e4e4e4;">
+                                          <td style="padding: 7px 0; text-indent: 0px; font-family: arial; width: 568px;">Total</td>
+                                          <td style="padding: 7px 0; text-align: center; font-family: arial;">8</td>
+                                          <td style="padding: 7px 0; text-align: center; font-family: arial;">100</td>
+                                        </tr>
+                                        <tr>
+                                          <td style="padding: 5px 0; text-indent: 0px; font-family: arial; width: 568px;">Tracked Companies</td>
+                                          <td style="padding: 5px 0; text-align: center; font-family: arial;">8</td>
+                                          <td style="padding: 5px 0; text-align: center; font-family: arial;">50</td>
+                                        </tr>
+                                        <tr>
+                                          <td style="padding: 5px 0; text-indent: 0px; font-family: arial; width: 568px;">Tracked Business Lines</td>
+                                          <td style="padding: 5px 0; text-align: center; font-family: arial;">4</td>
+                                          <td style="padding: 5px 0; text-align: center; font-family: arial;">50</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 20px 0 20px;">
+                                    <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                             </td>
+                           </tr>';
+                  # Template Sub Header Section End... 
 
-            # Outer Template Body Section Username & Password Start...
+                  # Outer Template Body Section Username & Password Start...
 
-            $body .= '<tr>
-                        <td style="border-spacing: 0; border-collapse: collapse; width: 100%; padding: 0;">
-                          <table style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
-                            <tbody>';
-                              /* # Template Body Section Start...
-                              $body .= '<tr class="tr-lvl-3" style="width:100%; ">
-                                          <td style="width:100%; background-color: #fff; padding: 5px 20px 15px;border-radius:0 0 5px 5px">
-                                            <table class="tbl-lvl-4" style="border:none;border-spacing:0; border-collapse:collapse;  width:100%;  border-radius:10px">
-                                              <tbody style="width:100%; ">';*/
+                  $body .= '<tr>
+                              <td style="border-spacing: 0; border-collapse: collapse; width: 100%; padding: 0;">
+                                <table style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
+                                  <tbody>';
+                                    /* # Template Body Section Start...
+                                    $body .= '<tr class="tr-lvl-3" style="width:100%; ">
+                                                <td style="width:100%; background-color: #fff; padding: 5px 20px 15px;border-radius:0 0 5px 5px">
+                                                  <table class="tbl-lvl-4" style="border:none;border-spacing:0; border-collapse:collapse;  width:100%;  border-radius:10px">
+                                                    <tbody style="width:100%; ">';*/
 
-                              # Template Body Section Username & Password Start...
-                              $body .= '<tr class="News-intelligence" style="width: 100%;">
-                                          <td style="font-family: arial; font-size: 13px; padding:10px 20px 0 20px; width: 100%; line-height: normal;">
-                                            <table style="width: 100%; margin: 0px auto; border-collapse: collapse; border: none;">
-                                              <tbody>
-                                                <tr style="background: #E4EDFD; width: 100%;">
-                                                  <td style="padding: 0; margin: 0; width:100%;">
-                                                    <table style="width: 100%; border: none; margin: 0;">
-                                                      <tbody>
-                                                        <tr style="width: 100%;">
-                                                          <td style="font-weight: bold; text-decoration: none; font-size: 12px; font-family: arial; border-radius: 3px; padding:20px 10px 0 10px; color: #4c99ee; text-align: left; height: 15px; line-height: normal; width: 100%;" align="left">
-                                                            <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a style="text-decoration: none; font-family: arial; color: #4c99ee; border-radius: 3px; font-size: 12px; padding: 0; text-align: left; display: block; line-height: normal;" href="http://www.mortgagespeak.com" target="_blank"><span style="text-decoration: underline; color: #4c99ee;"><a href="' . $base_url . '/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in</a></span></a></span></div>
-                                                          </td>
-                                                        </tr>
-                                                        <tr style="width:100%;">                                                       <td style="padding:0px 10px 20px 10px;">
-                                                              <table class="tbl-lvl-6" style="border: none; border-spacing: 0; border-collapse: collapse; margin: 0;padding: 0;">
-                                                                <tr class="tr-lvl-6">
-                                                                  <td style="color:#666666; font-family: arial; font-size: 13px;font-weight: bold; padding: 0; margin: 0; width: 30px;">un :</td>
-                                                                  <td style="color:#666666; font-family: arial; font-size: 13px; font-weight: bold; padding: 0; margin: 0;">' . $user->name . '</td>
-                                                                </tr>
-                                                                <tr>
-                                                                  <td style="color: #666666; font-family: arial; font-size: 13px;font-weight: bold; padding: 0; margin: 0; width: 30px;">pw :</td>
-                                                                  <td style="color: #666666; font-family: arial; font-size: 13px;font-weight: bold;padding: 0;margin: 0;">' . $pass . '</td>
-                                                                </tr>
-                                                              </table>
-                                                          </td>
-                                                        </tr>
-                                                      </tbody>
-                                                    </table>
-                                                  </td>
-                                                </tr>
-                                                <tr style="width: 100%;">
-                                                  <td style="width: 100%; margin: 0; padding: 0;">&nbsp;</td>
-                                                </tr>
-                                                <tr style="width: 100%;">
-                                                  <td style="width: 100%; text-align: left; padding: 0; margin: 0; font-family: arial; font-size: 22pt; color: #f07a22;" align="left">News Intelligence
-                                                  </td>
-                                                </tr>
-                                              </tbody>
-                                            </table>
-                                          </td>
-                                        </tr>';
-                              # Template Body Section Username & Password End...
-
-                              # Template Body Section For All Content Type Start...                    
-                             /* $body .= '<tr>
-                                        <td style="padding: 0 20px 20px 20px; width: 100%;">
-                                          <table class="both_table" style=" margin: 0px auto; border-collapse: collapse; border: none;">
-                                            <tbody>';*/
-                                    if (!empty($arr_newslist)) {
-                                     $body .= '<tr>
-                                                <td style="width: 100%;padding: 10px 20px;">
-                                                  <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
-                                                    <tbody>';
-                                                                              foreach ($arr_newslist as $node_id => $value) {
-                                                                                $topics_name = '';
-                                                                                $category_name = '';
-                                                                                $nodeloads = node_load($node_id);
-                                                                                if (!empty($nodeloads->field_url)) {
-                                                                                  $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
-                                                                                }
-                                                                                else {
-                                                                                  $urlalias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                                                                                }
-                                                                                
-                                                                                $nodetitle = '';
-                                                                                if (!empty($nodeloads->title)) {
-                                                                                  $data_title = strip_tags($nodeloads->title);
-                                                                                  $nodetitle = truncate_utf8($data_title, 80, FALSE, TRUE, 1);
-                                                                                }
-
-                                                                                $nodedata = '';
-                                                                                if (!empty($nodeloads->body)) {
-                                                                                  $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                                                                  $nodedata = truncate_utf8($datanode, 80, FALSE, TRUE, 1); 
-                                                                                }
-
-                                                                                $company_image = '';
-                                                                                if (in_array($node_id, $arr_companytags)) {
-                                                                                  if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
-                                                                                    $company_tid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
-                                                                                    $taxo_info = taxonomy_term_load($company_tid);
-                                                                                    if (isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)) {
-                                                                                      $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
-                                                                                      $company_image = image_style_url("tracked_images", $img_url);
-                                                                                    }
-                                                                                    $category_name = 'Tracked Company';
-                                                                                  }
-                                                                                }
-                                                                                elseif (in_array($node_id, $arr_newstopics)) {
-                                                                                  if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-                                                                                    $topics_name = '';
-                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
-                                                                                      // News Topics
-                                                                                      if ($tabvalue['tid'] == '701') {
-                                                                                        if (isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-                                                                                          foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicskey => $topicvalue) {
-                                                                                            $taxomony = taxonomy_term_load($topicvalue['tid']);
-                                                                                            $topics_name .= $taxomony->name . ', ';
-                                                                                          }
-                                                                                          $topics_name = rtrim($topics_name, ", ");
-                                                                                        }
-                                                                                        $category_name = $topics_name;
-                                                                                        $company_image = $tracked_topicimg;
-                                                                                      }
-                                                                                    }
-                                                                                  }
-                                                                                }
-                                                                                elseif (in_array($node_id, $arr_tabplacements)) {
-                                                                                  if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
-                                                                                    foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
-                                                                                      $category_name = '';
-                                                                                      
-                                                                                      // Press Releases
-                                                                                      if (($tabvalue['tid'] == '705')) {
-                                                                                        $category_name = 'Press Releases';
-                                                                                        break;
-                                                                                      }
-
-                                                                                      //Prespectives
-                                                                                      if (($tabvalue['tid'] == '706')) {
-                                                                                        $category_name = 'Perspectives';
-                                                                                        break;
-                                                                                      }
-
-                                                                                      //Blogs
-                                                                                      if (($tabvalue['tid'] == '703')) {
-                                                                                        $category_name = 'Blogs';
-                                                                                        break;
-                                                                                      }
-                                                                                    }
-                                                                                    $company_image = $tracked_topicimg;
-                                                                                  }
-                                                                                }
-                                                                                else {
-                                                                                  if (isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
-                                                                                      $topics_name = '';
-                                                                                      foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicskey => $topicvalue) {
-                                                                                        $taxomony = taxonomy_term_load($topicvalue['tid']);
-                                                                                        $topics_name .= $taxomony->name . ', ';
-                                                                                      }
-                                                                                      $topics_name = rtrim($topics_name, ", ");
-                                                                                  }
-                                                                                  $category_name = $topics_name;
-                                                                                  $company_image = $tracked_topicimg;
-                                                                                }
-                                                                                $url = $urlalias;
-                                                                                $body .= '<tr>
-                                                <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
-                                                  <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
+                                    # Template Body Section Username & Password Start...
+                                    $body .= '<tr class="News-intelligence" style="width: 100%;">
+                                                <td style="font-family: arial; font-size: 13px; padding:10px 20px 0 20px; width: 100%; line-height: normal;">
+                                                  <table style="width: 100%; margin: 0px auto; border-collapse: collapse; border: none;">
                                                     <tbody>
-                                                      <tr>
-                                                        <td style="width: 50px; padding: 0 10px 0 0;" valign="top" height="50">
-                                                          <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img style="width: 50px; height: 50px; vertical-align: top;" src="' . $company_image . '" alt="" width="50" height="50" />&nbsp;</div>
+                                                      <tr style="background: #E4EDFD; width: 100%;">
+                                                        <td style="padding: 0; margin: 0; width:100%;">
+                                                          <table style="width: 100%; border: none; margin: 0;">
+                                                            <tbody>
+                                                              <tr style="width: 100%;">
+                                                                <td style="font-weight: bold; text-decoration: none; font-size: 12px; font-family: arial; border-radius: 3px; padding:20px 10px 0 10px; color: #4c99ee; text-align: left; height: 15px; line-height: normal; width: 100%;" align="left">
+                                                                  <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a style="text-decoration: none; font-family: arial; color: #4c99ee; border-radius: 3px; font-size: 12px; padding: 0; text-align: left; display: block; line-height: normal;" href="http://www.mortgagespeak.com" target="_blank"><span style="text-decoration: underline; color: #4c99ee;"><a href="' . $base_url . '/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in</a></span></a></span></div>
+                                                                </td>
+                                                              </tr>
+                                                              <tr style="width:100%;">                                                       <td style="padding:0px 10px 20px 10px;">
+                                                                    <table class="tbl-lvl-6" style="border: none; border-spacing: 0; border-collapse: collapse; margin: 0;padding: 0;">
+                                                                      <tr class="tr-lvl-6">
+                                                                        <td style="color:#666666; font-family: arial; font-size: 13px;font-weight: bold; padding: 0; margin: 0; width: 30px;">un :</td>
+                                                                        <td style="color:#666666; font-family: arial; font-size: 13px; font-weight: bold; padding: 0; margin: 0;">' . $user->name . '</td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                        <td style="color: #666666; font-family: arial; font-size: 13px;font-weight: bold; padding: 0; margin: 0; width: 30px;">pw :</td>
+                                                                        <td style="color: #666666; font-family: arial; font-size: 13px;font-weight: bold;padding: 0;margin: 0;">' . $pass . '</td>
+                                                                      </tr>
+                                                                    </table>
+                                                                </td>
+                                                              </tr>
+                                                            </tbody>
+                                                          </table>
                                                         </td>
-                                                        <td style="line-height: normal; vertical-align: top; text-align: left; width: 540px; max-width: 540px; padding: 0;">
-                                                          <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 540px; max-width: 540px;"><span style="color: #999999;">' . $category_name . '</span></div>
-                                                          <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
-                                                          <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 540px; max-width: 540px;">' . $nodedata . '</div>
+                                                      </tr>
+                                                      <tr style="width: 100%;">
+                                                        <td style="width: 100%; margin: 0; padding: 0;">&nbsp;</td>
+                                                      </tr>
+                                                      <tr style="width: 100%;">
+                                                        <td style="width: 100%; text-align: left; padding: 0; margin: 0; font-family: arial; font-size: 22pt; color: #f07a22;" align="left">News Intelligence
                                                         </td>
                                                       </tr>
                                                     </tbody>
                                                   </table>
                                                 </td>
-                                             ';
-                                              }
-                                    $body .= '</tbody></table></td></tr>';
-                                    }
-                                    else {
-                                      $body .= '<tr>
-                                        <td style="padding: 10px 20px 20px 20px; width: 100%;">
-                                          <table class="both_table" style=" width:100%;margin: 0px auto; border-collapse: collapse; border: none;">
-                                            <tbody><tr class="tr-lvl-5"><td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;"><div style="font-size:12px; color: #b8b8b8; font-family:arial;">No headlines today.</div></td></tr></tbody></table></td></tr>';
-                                    }
-                              /*$body .= '</tbody></table></td></tr>';*/
-                              # Template Body Section For All Content Type End...
-            $body .= '</tbody></table></td></tr>';
-           # Outer Template Body Section Username & Password End...
-             $body .= '<tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="center" style="padding: 0 0 20px 0;"><a href="http://mortgagespeak.com/content/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
-          </tr>';
+                                              </tr>';
+                                    # Template Body Section Username & Password End...
 
-        $body .= '</tbody></table></td></tr>';      
-        # Template Body Section End...
+                                    # Template Body Section For All Content Type Start...                    
+                                   /* $body .= '<tr>
+                                              <td style="padding: 0 20px 20px 20px; width: 100%;">
+                                                <table class="both_table" style=" margin: 0px auto; border-collapse: collapse; border: none;">
+                                                  <tbody>';*/
+                                          if (!empty($arr_newslist)) {
+                                           $body .= '<tr>
+                                                      <td style="width: 100%;padding: 10px 20px;">
+                                                        <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
+                                                          <tbody>';
+                                                                                    foreach ($arr_newslist as $node_id => $value) {
+                                                                                      $topics_name = '';
+                                                                                      $category_name = '';
+                                                                                      $nodeloads = node_load($node_id);
+                                                                                      if (!empty($nodeloads->field_url)) {
+                                                                                        $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
+                                                                                      }
+                                                                                      else {
+                                                                                        $urlalias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                                                                      }
+                                                                                      
+                                                                                      $nodetitle = '';
+                                                                                      if (!empty($nodeloads->title)) {
+                                                                                        $data_title = strip_tags($nodeloads->title);
+                                                                                        $nodetitle = truncate_utf8($data_title, 80, FALSE, TRUE, 1);
+                                                                                      }
 
-         /*  # Template Sub Header Section Table Closing Start...
-        $body .= '</tbody></table></td></tr>';
-        # Template Sub Header Section Table Closing End...
+                                                                                      $nodedata = '';
+                                                                                      if (!empty($nodeloads->body)) {
+                                                                                        $datanode = strip_tags($nodeloads->body['und'][0]['value']);
+                                                                                        $nodedata = truncate_utf8($datanode, 80, FALSE, TRUE, 1); 
+                                                                                      }
 
-      # Template Main Section Table Closing Start...
-      $body .= '</tbody></table>';*/
-                   
-    // Main outer table closing
-    $body .= '</tbody></table>';
-    # Template Main Section Table Closing  End...
+                                                                                      $company_image = '';
+                                                                                      if (in_array($node_id, $arr_companytags)) {
+                                                                                        if (isset($nodeloads->field_company_tag[LANGUAGE_NONE]) && !empty($nodeloads->field_company_tag[LANGUAGE_NONE])) {
+                                                                                          $company_tid = $nodeloads->field_company_tag[LANGUAGE_NONE][0]['tid'];
+                                                                                          $taxo_info = taxonomy_term_load($company_tid);
+                                                                                          if (isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)) {
+                                                                                            $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
+                                                                                            $company_image = image_style_url("tracked_images", $img_url);
+                                                                                          }
+                                                                                          $category_name = 'Tracked Company';
+                                                                                        }
+                                                                                      }
+                                                                                      elseif (in_array($node_id, $arr_newstopics)) {
+                                                                                        if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
+                                                                                          $topics_name = '';
+                                                                                          foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
+                                                                                            // News Topics
+                                                                                            if ($tabvalue['tid'] == '701') {
+                                                                                              if (isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+                                                                                                foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicskey => $topicvalue) {
+                                                                                                  $taxomony = taxonomy_term_load($topicvalue['tid']);
+                                                                                                  $topics_name .= $taxomony->name . ', ';
+                                                                                                }
+                                                                                                $topics_name = rtrim($topics_name, ", ");
+                                                                                              }
+                                                                                              $category_name = $topics_name;
+                                                                                              $company_image = $tracked_topicimg;
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                      elseif (in_array($node_id, $arr_tabplacements)) {
+                                                                                        if (isset($nodeloads->field_tab_placement[LANGUAGE_NONE]) && !empty($nodeloads->field_tab_placement[LANGUAGE_NONE])) {
+                                                                                          foreach ($nodeloads->field_tab_placement[LANGUAGE_NONE] as $tabkey => $tabvalue) {
+                                                                                            $category_name = '';
+                                                                                            
+                                                                                            // Press Releases
+                                                                                            if (($tabvalue['tid'] == '705')) {
+                                                                                              $category_name = 'Press Releases';
+                                                                                              break;
+                                                                                            }
 
-    if ($debug) {
-      print("<pre> :: body ::");
-      print_r($body);
-      print("</pre>");
-      exit;
+                                                                                            //Prespectives
+                                                                                            if (($tabvalue['tid'] == '706')) {
+                                                                                              $category_name = 'Perspectives';
+                                                                                              break;
+                                                                                            }
+
+                                                                                            //Blogs
+                                                                                            if (($tabvalue['tid'] == '703')) {
+                                                                                              $category_name = 'Blogs';
+                                                                                              break;
+                                                                                            }
+                                                                                          }
+                                                                                          $company_image = $tracked_topicimg;
+                                                                                        }
+                                                                                      }
+                                                                                      else {
+                                                                                        if (isset($nodeloads->field_alpha_news_topics[LANGUAGE_NONE]) && !empty($nodeloads->field_alpha_news_topics[LANGUAGE_NONE])) {
+                                                                                            $topics_name = '';
+                                                                                            foreach ($nodeloads->field_alpha_news_topics[LANGUAGE_NONE] as $topicskey => $topicvalue) {
+                                                                                              $taxomony = taxonomy_term_load($topicvalue['tid']);
+                                                                                              $topics_name .= $taxomony->name . ', ';
+                                                                                            }
+                                                                                            $topics_name = rtrim($topics_name, ", ");
+                                                                                        }
+                                                                                        $category_name = $topics_name;
+                                                                                        $company_image = $tracked_topicimg;
+                                                                                      }
+                                                                                      $url = $urlalias;
+                                                                                      $body .= '<tr>
+                                                      <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
+                                                        <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td style="width: 50px; padding: 0 10px 0 0;" valign="top" height="50">
+                                                                <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img style="width: 50px; height: 50px; vertical-align: top;" src="' . $company_image . '" alt="" width="50" height="50" />&nbsp;</div>
+                                                              </td>
+                                                              <td style="line-height: normal; vertical-align: top; text-align: left; width: 540px; max-width: 540px; padding: 0;">
+                                                                <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 540px; max-width: 540px;"><span style="color: #999999;">' . $category_name . '</span></div>
+                                                                <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 540px; max-width: 540px;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
+                                                                <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 540px; max-width: 540px;">' . $nodedata . '</div>
+                                                              </td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                      </td>
+                                                   ';
+                                                    }
+                                          $body .= '</tbody></table></td></tr>';
+                                          }
+                                          else {
+                                            $body .= '<tr>
+                                              <td style="padding: 10px 20px 20px 20px; width: 100%;">
+                                                <table class="both_table" style=" width:100%;margin: 0px auto; border-collapse: collapse; border: none;">
+                                                  <tbody><tr class="tr-lvl-5"><td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;"><div style="font-size:12px; color: #b8b8b8; font-family:arial;">No headlines today.</div></td></tr></tbody></table></td></tr>';
+                                          }
+                                    /*$body .= '</tbody></table></td></tr>';*/
+                                    # Template Body Section For All Content Type End...
+                  $body .= '</tbody></table></td></tr>';
+                 # Outer Template Body Section Username & Password End...
+                   $body .= '<tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding: 0 0 20px 0;"><a href="http://mortgagespeak.com/content/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
+                </tr>';
+
+              $body .= '</tbody></table></td></tr>';      
+              # Template Body Section End...
+
+               /*  # Template Sub Header Section Table Closing Start...
+              $body .= '</tbody></table></td></tr>';
+              # Template Sub Header Section Table Closing End...
+
+            # Template Main Section Table Closing Start...
+            $body .= '</tbody></table>';*/
+                         
+          // Main outer table closing
+          $body .= '</tbody></table>';
+          # Template Main Section Table Closing  End...
+
+          if ($debug) {
+            print("<pre> :: body ::");
+            print_r($body);
+            print("</pre>");
+            exit;
+          }
+          $node->body['und'][0]['value'] = $body;
+          node_save($node);
+          drupal_set_message(t("Newsletter content created succesfully!"));
+          drupal_goto("admin/content");
+          # Template Main Section End...
+          #################################################################
+          # Create Newsletter Node/Content section end....
+          #################################################################
     }
+  }
+  else {
+    $public_newsletter = mortgage_newsletter_public_users();
+  }
+
+}
+
+/*
+* Function to create Public news letter
+*
+*/
+
+function mortgage_newsletter_public_users() {
+  global $user;
+  global $base_url;
+  $body = '';
+  $abbrtimezone = "CST";
+  date_default_timezone_set(timezone_name_from_abbr($abbrtimezone));
+  $today              = strtotime("00:00:01");
+  $yesterday          = strtotime("-1 day", $today);
+  $current            = strtotime("now");
+
+  #################################################################
+  # Create Newsletter For Public Users
+  #################################################################
+    $node = new StdClass();
+    $node->type = 'simplenews';
+    $node->status = 1;
+    $node->uid = 1;
+    $node->language = LANGUAGE_NONE;
+    $node->title = "Daily Newsletter";
+    $node->body['und'][0]['format'] = 'full_html';
+    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 787;
+
+    $body .= '<table class="main-outer-table" style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center">
+        <tbody>
+          <tr class="header-section" style="background: #2e8cf0;">
+            <td style="padding: 0; margin: 0; border: 1px solid #2e8cf0; line-height: normal;">
+              <table style="width: 100%; margin: 5px auto; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: 1px solid #2e8cf0;" cellpadding="10">
+                <tbody>
+                  <tr>
+                    <td style="padding: 0; margin: 0; line-height: normal;">
+                      <table class="header-table" style="margin: 0px auto; border-collapse: collapse; padding: 0; border: none; width: 680px; line-height: normal;" align="center">
+                        <tbody>
+                          <tr>
+                            <td style="padding: 7px 0; margin: 0; line-height: normal;" width="55"><a style="text-decoration: none;" href="' . $base_url . '"><img style="vertical-align: middle;" src="' . $base_url . '/sites/default/files/ms.png" alt="" /></a></td>
+                            <td style="padding: 7px 0 0; margin: 0; vertical-align: top;">
+                              <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold;">Daily Newsletter</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">&nbsp;</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr class="body-section" style="background: #F4F4F4;">
+            <td style="padding: 0; border: 1px solid #bebfb9;">
+              <table class="main-table" style="width: 100%; margin: 0px auto; border-collapse: collapse; padding: 5px; border: none; background-color: #f4f4f4;" align="center">
+                <tbody>
+                  <tr class="sub-header-section">
+                    <td style="padding: 0; margin: 0;" align="center"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">' . date("F") . '&nbsp;' . date("j") . ',&nbsp;' . date("Y") . '</span></span>
+                   </td>
+                  </tr>
+                  <tr>
+                    <td style="border-spacing: 0; border-collapse: collapse; width: 100%; padding: 0;">
+                      <table style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
+                        <tbody>
+                          <tr>
+                            <td style="padding: 10px 20px 20px 20px; width: 100%;">
+                              <table class="both_table" style="width: 100%; margin: 0px auto; border-collapse: collapse; border: none;">
+                                <tbody>
+                                  <tr class="tr-lvl-5">
+                                    <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Dear #username# :</span></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Your custom news page is <strong>updated.</strong><br /></span></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Click</span> <a href="' . $base_url . '/my-page/tracked-news">My Page</a> <span style="color: #000000;">to view all your tracked topics and companies.</span></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">--</span></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Thank you,</span></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">The MortgageSpeak Team</span></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;"><em>Have content?</em></span> <a href="' . $base_url . '/upload" target="_blank">Upload it here</a></div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
+                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #88b748;">Sponsor:</span> <a href="' . $base_url . '/effective-promotion-white-paper" target="_blank">Learn about effective white paper promotion</a></div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0 0 20px 0;" align="center"><a href="' . $base_url . '/content/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>';
+
     $node->body['und'][0]['value'] = $body;
     node_save($node);
-    drupal_set_message(t("Newsletter content created succesfully!"));
+    drupal_set_message(t("Public Newsletter content created succesfully!"));
     drupal_goto("admin/content");
-    # Template Main Section End...
-    #################################################################
-    # Create Newsletter Node/Content section end....
-    #################################################################
-  }
 }
