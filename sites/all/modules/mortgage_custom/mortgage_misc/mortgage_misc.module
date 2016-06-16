@@ -322,50 +322,89 @@ function mortgage_misc_taxonomy_term_uri($term) {
 
 
 function mortgage_misc_mail_alter(&$message) {
-  $arr_simple_news = array();
+  $arr_faf_simple_news = array();
+  $arr_public_simple_news = array();
 
   if ($message['id'] == 'simplenews_node' || $message['id'] == 'simplenews_test') {
     $userName = '';
     $password = '';
 
-    $tid = 28;
-    //$tid = 791;
-    $arr_simple_news = simplenews_get_subscriptions_by_list($tid);
+    //$faf_tid = 28; //TEst tid dev
+    $faf_tid = 791; // Mortgage Solutions "News Intelligence" tid for live
 
-    if(!empty($arr_simple_news)) {
+    $arr_faf_simple_news = simplenews_get_subscriptions_by_list($faf_tid);
 
-      foreach ($arr_simple_news as $key => $value) {
+    if(!empty($arr_faf_simple_news)) {
+
+      foreach ($arr_faf_simple_news as $key => $value) {
         $arrNew[$key] = (array)$value;
         $mail_id[] = $key;
       }
 
       if(in_array($message['to'],$mail_id)){
-        $users = user_load_by_mail($message['to']);
+        $user_entity = user_load_by_mail($message['to']);
 
-        $userName = $users->name;
-        if(!empty($users->field_first_name[LANGUAGE_NONE][0]['value'])) {
-          $user_fullname = $users->field_first_name[LANGUAGE_NONE][0]['value'];
+        $userName = $user_entity->name;
+        if(!empty($user_entity->field_first_name[LANGUAGE_NONE][0]['value'])) {
+          $user_fullname = $user_entity->field_first_name[LANGUAGE_NONE][0]['value'];
         }
         else {
           $user_fullname = $userName;
         }
 
-        if(empty($users->field_newsletter_password)){
+        if(empty($user_entity->field_newsletter_password)){
           $password = "Your Password";
         }
         else{
-          $password = $users->field_newsletter_password['und'][0]['value'];
+          $password = $user_entity->field_newsletter_password['und'][0]['value'];
         }
-      }
-
+      } 
+ 
       if(!empty($userName)){
         $message['body'] = str_replace("#FAF#", $userName, $message['body']);
         $message['body'] = str_replace("#FAF@1234#",$password, $message['body']);
-        $message['body'] = str_replace("#username#", $user_fullname, $message['body']);
       }
       else{
         $message['body'] = str_replace("#FAF#", "FAF", $message['body']);
         $message['body'] = str_replace("#FAF@1234#","FAF123", $message['body']);
+      }
+    }
+
+    //Public News letter
+    // Public Newsletter changes
+    //$public_tid = 787; //dev tid
+    $public_tid = 794;
+    $arr_public_simple_news = simplenews_get_subscriptions_by_list($public_tid);
+    if(!empty($arr_public_simple_news)) {
+
+      foreach ($arr_public_simple_news as $key => $value) {
+        $arrNew[$key] = (array)$value;
+        $mail_id[] = $key;
+      }
+
+      if(in_array($message['to'],$mail_id)){
+        $user_entity = user_load_by_mail($message['to']);
+
+        $userName = $user_entity->name;
+        if(!empty($user_entity->field_first_name[LANGUAGE_NONE][0]['value'])) {
+          $user_fullname = $user_entity->field_first_name[LANGUAGE_NONE][0]['value'];
+        }
+        else {
+          $user_fullname = $userName;
+        }
+
+        if(empty($user_entity->field_newsletter_password)){
+          $password = "Your Password";
+        }
+        else{
+          $password = $user_entity->field_newsletter_password['und'][0]['value'];
+        }
+      } 
+ 
+      if(!empty($userName)){
+        $message['body'] = str_replace("#username#", $user_fullname, $message['body']);
+      }
+      else{
         $message['body'] = str_replace("#username#", $message['to'], $message['body']);
       }
     }

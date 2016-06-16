@@ -97,7 +97,7 @@ function mortgage_stats() {
 
   if (empty($subscriber_emailid)) {
     //$output = "No NewsLetter Assigned";
-    $output .= '<div class="bg-success empty-div">No NewsLetter Assigned</div>';
+    $output .= '<div class="bg-success empty-div">No statistics at this time</div>';
     return $output;
   }
   else {

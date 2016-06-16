@@ -98,7 +98,7 @@ function newsletter_edit_forms() {
 function select_user_list_form_validate($form, &$form_state) {
   if($form_state['values']['newsletter_type'] == 'cn') {
     if (empty($form_state['values']['select_user'])) {
-     form_set_error('user', t('select user from dropdowm.'));
+     form_set_error('user', t('select user from dropdown.'));
     }
   }
 }
@@ -722,7 +722,7 @@ function select_user_list_form_submit($form, &$form_state) {
                   <td>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td align="center" style="padding: 0 0 20px 0;"><a href="http://mortgagespeak.com/content/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
+                  <td align="center" style="padding: 0 0 20px 0;"><a href="'. $base_url .'/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
                 </tr>';
 
               $body .= '</tbody></table></td></tr>';      
@@ -868,7 +868,7 @@ function mortgage_newsletter_public_users() {
                     <td>&nbsp;</td>
                   </tr>
                   <tr>
-                    <td style="padding: 0 0 20px 0;" align="center"><a href="' . $base_url . '/content/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
+                    <td style="padding: 0 0 20px 0;" align="center"><a href="' . $base_url . '/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
                   </tr>
                 </tbody>
               </table>
