@@ -105,6 +105,16 @@ jQuery(document).ready(function() {
     jQuery("#views-exposed-form-tracked-companies-page .views-exposed-widgets select").val("All");
     jQuery(this).val(current_val);
   });
+
+  /* hide Newsletter Users list on click of Daily Newsletter*/
+  jQuery('input:radio[name="newsletter_type"]').click(function(){
+      if(jQuery(this).attr("value") == "pn"){
+          jQuery(".form-item-select-user").hide();
+      }
+      else {
+          jQuery(".form-item-select-user").show();
+      }
+  });
 });
 
 /* Set Max height to Sidebar and Content */
