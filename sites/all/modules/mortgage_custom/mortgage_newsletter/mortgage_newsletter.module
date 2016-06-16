@@ -786,7 +786,7 @@ function mortgage_newsletter_public_users() {
     $node->language = LANGUAGE_NONE;
     $node->title = "Daily Newsletter";
     $node->body['und'][0]['format'] = 'full_html';
-    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 787;
+    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 794;
 
     $body .= '<table class="main-outer-table" style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center">
         <tbody>
