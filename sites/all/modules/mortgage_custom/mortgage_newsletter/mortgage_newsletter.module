@@ -624,7 +624,8 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                           $taxo_info = taxonomy_term_load($company_tid);
                                                                                           if (isset($taxo_info->field_large_logo) && !empty($taxo_info->field_large_logo)) {
                                                                                             $img_url = $taxo_info->field_large_logo['und'][0]['uri'];
-                                                                                            $company_image = image_style_url("tracked_images", $img_url);
+                                                                                            
+                                                                                            $company_image = file_create_url($img_url);
                                                                                           }
                                                                                           $category_name = 'Tracked Company';
                                                                                         }
