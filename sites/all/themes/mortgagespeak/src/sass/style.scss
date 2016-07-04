@@ -2244,6 +2244,19 @@ a {
           }
         }
       }
+      .ext-read-more {
+        display: inline-block;
+        width: 100%;
+        padding: 0 20px;
+        a {
+          display: inline-block;
+          width: auto;
+          padding: 5px 10px;
+          background-color: $blue;
+          color: $white;
+          @include border-radius(3px);
+        }
+      }
     }
     .alpha-content-body {
       display: inline-block;
