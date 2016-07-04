@@ -112,7 +112,15 @@
 		</div><?php 
 	} 
 	?>	
-	</div>		
+	</div>
+  <div><?php
+  if(isset($node->field_url[LANGUAGE_NONE]) && !empty($node->field_url[LANGUAGE_NONE])) {
+    $ext_url = $node->field_url[LANGUAGE_NONE][0]['value'];
+    ?>
+      <div class="ext-read-more"><a href="<?php print $ext_url?>" target="_blank">Read More</a></div>
+    <?php
+  }
+  ?></div>
   <div class="alpha-comments-container">
 		<div class="node-comments" id="node-comments"><?php print 'Comments   <span class="dot"></span><span class="comment-count">'. $comment_count .'</span>'; ?></div>
 		<div id="goal-comments-wrapper" class="goal-comment-wrapper">

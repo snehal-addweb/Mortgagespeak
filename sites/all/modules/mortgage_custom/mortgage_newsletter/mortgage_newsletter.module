@@ -109,6 +109,7 @@ function select_user_list_form_submit($form, &$form_state) {
   $debug = FALSE;
   $body = '';
   $pass = '';
+  $user_pass = '';
   $category_name = '';
   $arr_newstopics = array();
   $arr_companytags = array();
@@ -127,6 +128,12 @@ function select_user_list_form_submit($form, &$form_state) {
     foreach ($form_state['values']['select_user'] as $key => $vals) {    
           $userid = $vals;
           $user = user_load($userid);
+          if(!empty($user->field_newsletter_password)){
+            $user_pass = $user->field_newsletter_password['und'][0]['value'];
+          }
+          else{
+            $user_pass = "";
+          }
 
           if ($debug) {
             print("<pre> :: User ::");
@@ -135,61 +142,14 @@ function select_user_list_form_submit($form, &$form_state) {
           }
 
           switch ($user->name) {
-            case "Forsythe Appraisals":
-              $pass = "Forsythe@1234";
-              break;
-            case "Valocity":
-              $pass = "Valocity@1234";
-              break;
             case "FAF":
               $user->name = "#FAF#";
               $pass = "#FAF@1234#";
               break;
-            case "Data Tree":
-              $pass = "DataTree@1234";
-              break;
-            case "Global DMS":
-              $pass = "GlobalDMS@1234";
-              break;
-            case "a la mode-mn":
-              $pass = "alamode-mn@1234";
-              break;
-            case "Profundity":
-              $pass = "Crispy1";
-              break;
-            case "RGA Public Relations":
-              $pass = "RGA@1234";
-              break;
-            case "Platinum":
-              $pass = "Platinum@1234";
-              break;
-            case "Pro Teck":
-              $pass = "ProTeck@1234";
-              break;
-            case "Pro Teck JD Team":
-              $pass = "Pro Teck JD Team1234";
-              break;
-            case "Pro Teck SB Team":
-              $pass = "Pro Teck SB Team1234";
-              break;
-            case "Pro Teck DH Team":
-              $pass = "Pro Teck DH Team1234";
-              break;
-            case "mahipal":
-              $pass = "mahipal";
-              break;
-            case "MortgageFlex":
-              $pass = "MortgageFlex32207";
-              break;
-            case "Valocity-BT":
-              $pass = "Valocity-BT@1234";
-              break;
-            case "Forsythe-BT":
-              $pass = "Forsythe@1234";
-              break;
-            case "mercuryvmp":
-              $pass = "mercuryvmp@1234";
-              break;
+            default:
+              $user->name = $user->name;
+              $pass = $user_pass;
+            
           }
 
 
