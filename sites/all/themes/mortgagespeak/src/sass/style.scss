@@ -2251,10 +2251,25 @@ a {
         a {
           display: inline-block;
           width: auto;
-          padding: 5px 10px;
-          background-color: $blue;
+          padding: 4px 10px;
+          background-color: #126EDC;
           color: $white;
+          font-size: 14px;
+          letter-spacing: 1px;
           @include border-radius(3px);
+          &:hover,
+          &:focus {
+            text-decoration: none;
+          }
+          &::after {
+            display: inline-block;
+            height: 10px;
+            width: 18px;
+            margin: 0 0 0 7px;
+            background-image: url('../images/arrow-icon.png');
+            background-repeat: no-repeat;
+            content: '';
+          }
         }
       }
     }
