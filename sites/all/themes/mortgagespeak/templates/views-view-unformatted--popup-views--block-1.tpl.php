@@ -65,20 +65,22 @@
 		  $flag_link =  '<a href="user/?destination='. $flag_dest .'" title="Click to save content" class="flag flag-action flag-link-toggle flag-processed" rel="nofollow"><img src="'.$save_img.'"></a>';
 		}
 
-  
-		//if(!empty($row['field_upload_document'])){
+  	$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
+		$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+
+		if(!empty($row['field_upload_document'])){
 			//$title_link = 'https://docs.google.com/viewerng/viewer?url=' .$row['field_upload_document'];
-			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
-			$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
-		/*}
+			$pop_title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
+			//$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+		}
 		else if(!empty($row['field_url'])){
-			$url1 = $row['field_url'];
-			$title_link = $row['field_url'];
+			//$url1 = $row['field_url'];
+			$pop_title_link = $row['field_url'];
 		}
 		else{
-			$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
-			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
-		}*/
+			//$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
+			$pop_title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
+		}
 
 		$strFinal  =  $row['title'];	//. '   ' . $row['body'];
 		$strFinal = str_replace("\"", "'", $strFinal);
@@ -89,7 +91,7 @@
 	  
 			<div class="pop-up-content">
 				<div class="views-field views-field views-field-title">        
-					<a href="<?php print $title_link;?>" target="_blank"><?php print $title; ?>
+					<a href="<?php print $pop_title_link;?>" target="_blank"><?php print $title; ?>
 					</a>
 				</div>
 				<div class="views-field views-field-sharethis">
