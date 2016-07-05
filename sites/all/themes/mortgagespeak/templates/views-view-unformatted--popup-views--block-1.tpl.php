@@ -66,11 +66,11 @@
 		}
 
   
-		if(!empty($row['field_upload_document'])){
+		//if(!empty($row['field_upload_document'])){
 			//$title_link = 'https://docs.google.com/viewerng/viewer?url=' .$row['field_upload_document'];
 			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
 			$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
-		}
+		/*}
 		else if(!empty($row['field_url'])){
 			$url1 = $row['field_url'];
 			$title_link = $row['field_url'];
@@ -78,7 +78,7 @@
 		else{
 			$url1 = $fullurl .'/'. drupal_get_path_alias('node/' . $row['nid']);
 			$title_link = $base_url .'/'. drupal_get_path_alias('node/' . $row['nid']);
-		}
+		}*/
 
 		$strFinal  =  $row['title'];	//. '   ' . $row['body'];
 		$strFinal = str_replace("\"", "'", $strFinal);
