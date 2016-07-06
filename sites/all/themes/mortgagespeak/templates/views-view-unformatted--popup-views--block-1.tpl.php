@@ -95,7 +95,7 @@
 					</a>
 				</div>
 				<div class="views-field views-field-sharethis">
-					<div class="view-on-web"><a href="<?php print $title_link;?>" target="_blank">View on web</a></div>
+					<div class="view-on-web"><a href="<?php print $pop_title_link;?>" target="_blank">View on web</a></div>
 					<div class="sharethis-content">
 					  <span class="field-content">
 						  <div class="sharethis-wrapper">
