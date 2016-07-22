@@ -328,9 +328,16 @@ function mortgage_misc_mail_alter(&$message) {
   if ($message['id'] == 'simplenews_node' || $message['id'] == 'simplenews_test') {
     $userName = '';
     $password = '';
+    $faf_tid = '';
+    $pub_tid = '';
 
-    //$faf_tid = 28; //TEst tid dev
-    $faf_tid = 791; // Mortgage Solutions "News Intelligence" tid for live
+    // Mortgage Solutions "News Intelligence" tid for FAF
+    $faf_tid_obj = taxonomy_get_term_by_name('Mortgage Solutions "News Intelligence"');
+    if(isset($faf_tid_obj) && !empty($faf_tid_obj)) {
+      foreach ($faf_tid_obj as $faf_key => $faf_value) {
+       $faf_tid = $faf_value->tid;
+      }
+    }
 
     $arr_faf_simple_news = simplenews_get_subscriptions_by_list($faf_tid);
 
@@ -370,11 +377,17 @@ function mortgage_misc_mail_alter(&$message) {
       }
     }
 
-    //Public News letter
     // Public Newsletter changes
-    //$public_tid = 787; //dev tid
-    $public_tid = 794;
-    $arr_public_simple_news = simplenews_get_subscriptions_by_list($public_tid);
+
+    $pub_tid_obj = taxonomy_get_term_by_name('Daily Newsletter');
+
+    if(isset($pub_tid_obj) && !empty($pub_tid_obj)) {
+      foreach ($pub_tid_obj as $pub_key => $pub_value) {
+       $pub_tid = $pub_value->tid;
+      }
+    }
+
+    $arr_public_simple_news = simplenews_get_subscriptions_by_list($pub_tid);
     if(!empty($arr_public_simple_news)) {
 
       foreach ($arr_public_simple_news as $key => $value) {
