@@ -749,86 +749,67 @@ function mortgage_newsletter_public_users() {
     $node->body['und'][0]['format'] = 'full_html';
     $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 794;
 
-    $body .= '<table class="main-outer-table" style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center">
-        <tbody>
-          <tr class="header-section" style="background: #2e8cf0;">
-            <td style="padding: 0; margin: 0; border: 1px solid #2e8cf0; line-height: normal;">
-              <table style="width: 100%; margin: 5px auto; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: 1px solid #2e8cf0;" cellpadding="10">
-                <tbody>
-                  <tr>
-                    <td style="padding: 10px; margin: 0; line-height: normal;">
-                      <table align="center" class="header-table" style="margin: 0px auto; border-collapse: collapse; padding: 0; border: none; width: 680px; line-height: normal;">
-                        <tbody>
-                          <tr>
-                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 17pt; font-weight: bold;">Daily Newsletter
-                            </td>
-                            <td align="right" style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: normal;">
-                              <a href="'. $base_url .'" style="text-decoration: none;"><img alt="" src="'. $base_url .'/sites/default/files/MortgageSpeak-Logo.png" style="vertical-align: middle;" /></a>
-                            </td>
-                          </tr>
-                        </tbody>
+    $body .= '<div style="background-color: #f2f2f2; padding: 10px;">
+  <div style="max-width: 660px; width: 98%; display: block; margin: 0 auto;  color: #444444;">
+
+    <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; font-family: arial; color: #444444; font-size: 15px;">
+      <tr class="tr-lvl-1">
+        <td style="color: #444444; font-size: 15px;  border:1px solid #cccccc; background-color: #FFF; padding:20px 20px 50px 20px; ">
+          <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none;">
+            <tr class="tr-lvl-2">
+              <td style="padding: 0 0 20px 0;">
+                <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none;"">
+                  <tr class="tr-lvl-3">
+                    <td>
+                      <a href="'. $base_url .'" style="text-decoration: none;"><img src="'. $base_url .'/sites/default/files/ms.png"" style="vertical-align: top;"><img src="'. $base_url .'/sites/all/themes/mortgagespeak/images/logo-text.png" style="vertical-align: top; padding: 15px 0 0 15px;">
+                      </a>
+                    </td>
+                    <td style="text-align: right; font-size: 12px;"><a href="'. $base_url .'/upload" style="color: #126EDC; text-decoration: none;">+ Upload</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr class="tr-lvl-2">
+              <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;"> Hi, #username#</td>
+            </tr>
+            <tr class="tr-lvl-2">
+              <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;"> MortgageSpeak is <b>Updated</b> for ' . date("l") . ',&nbsp; ' . date("F") . '&nbsp;'. date("j") . ',&nbsp; ' . date("Y") .' </td>
+            </tr>
+            <tr class="tr-lvl-2">
+              <td style="padding: 0 0 20px 0;"><a href="'. $base_url .'/my-page/tracked-news" style="width: 100%; display: inline-block; padding: 13px 0; background-color: #2E8CF0; color: #FFF; text-align: center; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; text-decoration: none;"> Click Here For The Latest News and Information</a></td>
+            </tr>
+            <tr class="tr-lvl-2">
+              <td style="padding: 0 0 15px 0; color: #444444; font-size: 15px; line-height: 22px;">Thank you, <br> Greg</td>
+            </tr>
+            <tr class="tr-lvl-2">
+              <td>
+                <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none;">
+                  <tr class="tr-lvl-3">
+                    <td style="width:110px;">
+                      <img src="'. $base_url .'/sites/all/themes/mortgagespeak/images/icon1.png" height="100" width="100" style="border: 1px solid #2E8CF0; height:100px; width:100px;">
+                    </td>
+                    <td>
+                      <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none;">
+                        <tr class="tr-lvl-4"><td style="padding: 0 0 5px 0; color: #444444; font-size: 16px; font-weight: bold"> Greg janecka</td></tr>
+                        <tr class="tr-lvl-4"><td style="padding: 0 0 5px 0; color: #444444; font-size: 15px;"> Founder and President </td></tr>
+                        <tr class="tr-lvl-4"><td style="padding: 0 0 5px 0; color: #444444; font-size: 15px;"> <a href="'. $base_url .'" style="color: #126EDC; text-decoration: none;"> MortgageSpeck.com</a></td></tr>
+                        <tr class="tr-lvl-4"><td style="padding: 0 0 5px 0; font-size: 15px;"><span style="color: #88b748;">Sponsor:</span> <a href="'. $base_url .'effective-promotion-white-paper" style="color: #126EDC; text-decoration: none;">Learn About Effective White Paper Promotion</a></td></tr>
                       </table>
                     </td>
                   </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr class="body-section" style="background: #F4F4F4;">
-            <td style="padding: 0; border: 1px solid #bebfb9;">
-              <table class="main-table" style="width: 100%; margin: 0px auto; border-collapse: collapse; padding: 5px; border: none; background-color: #f4f4f4;" align="center">
-                <tbody>
-                  <tr class="sub-header-section">
-                    <td style="padding: 0; margin: 0;" align="center"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">' . date("F") . '&nbsp;' . date("j") . ',&nbsp;' . date("Y") . '</span></span>
-                   </td>
-                  </tr>
-                  <tr>
-                    <td style="border-spacing: 0; border-collapse: collapse; width: 100%; padding: 0;">
-                      <table style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%; max-width: 680px;" align="center">
-                        <tbody>
-                          <tr>
-                            <td style="padding: 10px 20px 20px 20px; width: 100%;">
-                              <table class="both_table" style="width: 100%; margin: 0px auto; border-collapse: collapse; border: none;">
-                                <tbody>
-                                  <tr class="tr-lvl-5">
-                                    <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Dear #username# :</span></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Your custom news page is <strong>updated.</strong><br /></span></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Click</span> <a href="' . $base_url . '/my-page/tracked-news">My Page</a> <span style="color: #000000;">to view all your tracked topics and companies.</span></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">--</span></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">Thank you,</span></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;">The MortgageSpeak Team</span></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #000000;"><em>Have content?</em></span> <a href="' . $base_url . '/upload" target="_blank">Upload it here</a></div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;">&nbsp;</div>
-                                      <div style="font-size: 12px; color: #b8b8b8; font-family: arial;"><span style="color: #88b748;">Sponsor:</span> <a href="' . $base_url . '/effective-promotion-white-paper" target="_blank">Learn about effective white paper promotion</a></div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 0 0 20px 0;" align="center"><a href="' . $base_url . '/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>';
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr class="tr-lvl-1">
+        <td style="padding: 50px 0 50px 0;"><a href="'. $base_url .'/contact" style="color: #126EDC; text-decoration: none;"> Question? Contact Us</a></td>
+      </tr>
+    </table>
+  </div>
+
+</div>';
 
     $node->body['und'][0]['value'] = $body;
     node_save($node);
