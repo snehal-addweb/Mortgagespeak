@@ -415,10 +415,10 @@ function mortgage_misc_mail_alter(&$message) {
       } 
  
       if(!empty($userName)){
-        $message['body'] = str_replace("#username#", $user_fullname, $message['body']);
+        $message['body'] = str_replace("#userfirstname#", $user_fullname, $message['body']);
       }
       else{
-        $message['body'] = str_replace("#username#", $message['to'], $message['body']);
+        $message['body'] = str_replace("#userfirstname#", $message['to'], $message['body']);
       }
     }
   }
