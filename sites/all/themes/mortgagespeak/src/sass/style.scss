@@ -2606,7 +2606,7 @@ iframe {
 .main-tbl {
   a {
     &:hover {
-      text-decoration: underline;
+      text-decoration: underline !important;
     }
   }
 }
