@@ -2600,3 +2600,15 @@ iframe {
   }
 }
 /* End */
+
+
+/* Mail template */
+.main-tbl {
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* End */
