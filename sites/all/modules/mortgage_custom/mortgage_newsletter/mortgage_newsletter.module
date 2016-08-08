@@ -762,7 +762,7 @@ function mortgage_newsletter_public_users() {
             <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
               <tbody>
                 <tr class="tr-lvl-3">
-                  <td style="vertical-align: top;" valign="top"><a href="'. $base_url .'" valign="top" style="text-decoration: none; vertical-align: top;"><img alt="" valign="top" src="'. $base_url .'/sites/default/files/logo.png" style="vertical-align: top;" /></a></td>
+                  <td style="vertical-align: top;" valign="top"><a href="'. $base_url .'" valign="top" style="text-decoration: none; vertical-align: top;"><img alt="" valign="top" src="'. $base_url .'/sites/default/files/dailylogo.png" style="vertical-align: top;" /></a></td>
                   <td style="text-align: right; font-size: 12px;"><a href="'. $base_url .'/upload" style="color: #126EDC; text-decoration: none;">+ Upload</a></td>
                 </tr>
               </tbody>
