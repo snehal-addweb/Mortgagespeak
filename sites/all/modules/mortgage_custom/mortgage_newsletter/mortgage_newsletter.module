@@ -747,14 +747,14 @@ function mortgage_newsletter_public_users() {
     $node->language = LANGUAGE_NONE;
     $node->title = "Daily Newsletter";
     $node->body['und'][0]['format'] = 'full_html';
-    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 794;
+    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 851;
 
-    $body .= '<div style="background-color: #f2f2f2; padding: 10px;">
-<div style="max-width: 660px; width: 98%; display: block; margin: 0 auto;  color: #444444;">
-<table class="main-tbl" style="width: 660px; border-spacing:0; border-collapse:collapse; border: none; font-family: arial; color: #444444; font-size: 15px; letter-spacing: 0.5px; margin: 0;">
+    $body .= '<div style="background-color: #f2f2f2; padding: 10px 0;">
+<div style="width: 95%; max-width: 660px; display: block; margin: 0 auto; color: #444444;">
+<table class="main-tbl" style="width: 100%; max-width: 660px; border-spacing:0; border-collapse:collapse; border: none; font-family: arial; color: #444444; font-size: 15px; letter-spacing: 0.5px; margin: 0;">
   <tbody>
     <tr class="tr-lvl-1">
-      <td style="color: #444444; font-size: 15px;  border:1px solid #cccccc; background-color: #FFF; padding:20px 20px 45px 20px; ">
+      <td style="color: #444444; font-size: 15px; border:1px solid #cccccc; background-color: #FFF; padding: 20px 20px 45px 20px; ">
       <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
         <tbody>
           <tr class="tr-lvl-2">
@@ -762,8 +762,8 @@ function mortgage_newsletter_public_users() {
             <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
               <tbody>
                 <tr class="tr-lvl-3">
-                  <td style="vertical-align: top;" valign="top"><a href="'. $base_url .'" valign="top" style="text-decoration: none; vertical-align: top;"><img alt="" valign="top" src="'. $base_url .'/sites/default/files/dailylogo.png" style="vertical-align: top;" /></a></td>
-                  <td style="text-align: right; font-size: 12px;"><a href="'. $base_url .'/upload" style="color: #126EDC; text-decoration: none;">+ Upload</a></td>
+                  <td style="vertical-align: top; padding: 0;" valign="top;"><a href="'. $base_url .'" style="text-decoration: none; vertical-align: top;" valign="top"><img alt="" src="'. $base_url .'/sites/default/files/dailylogo.png" style="vertical-align: top;" valign="top" /></a></td>
+                  <td style="text-align: right; font-size: 12px; padding: 0;"><a href="'. $base_url .'/upload" style="color: #126EDC; text-decoration: none;">+ Upload</a></td>
                 </tr>
               </tbody>
             </table>
@@ -773,11 +773,10 @@ function mortgage_newsletter_public_users() {
             <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">Hi, #userfirstname#</td>
           </tr>
           <tr class="tr-lvl-2">
-            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">MortgageSpeak is <b>updated</b> for ' . date("l") . ',&nbsp; ' . date("F") . '&nbsp;'. date("j") . ',&nbsp; ' . date("Y") .'.</td>
+            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">MortgageSpeak is <b>updated</b> for Monday,&nbsp; August&nbsp;8,&nbsp; 2016.</td>
           </tr>
-          <tr class="tr-lvl-2" >
-            <td style="padding: 0 0 20px 0; width: 100%;"><a href="'. $base_url .'/my-page/tracked-news" style="max-width: 100%; width: 618px; display: block; padding: 0; background-color: #2E8CF0; color: #FFF; text-align: center; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; text-decoration: none;"><img src="'. $base_url .'/sites/all/themes/mortgagespeak/images/btn.png"></a>
-            </td>
+          <tr class="tr-lvl-2">
+            <td style="padding: 0 0 20px 0; width: 100%;"><a href="'. $base_url .'/my-page/tracked-news" style="width: 100%; display:inline-block; text-align: center; text-decoration: none;"><img alt="" src="'. $base_url .'/sites/all/themes/mortgagespeak/images/btn.png" style="display:inline-block; width:100%;" /></a></td>
           </tr>
           <tr class="tr-lvl-2">
             <td style="padding: 0 0 15px 0; color: #444444; font-size: 15px; line-height: 22px;">Thank you,<br />
@@ -785,10 +784,10 @@ function mortgage_newsletter_public_users() {
           </tr>
           <tr class="tr-lvl-2">
             <td style="padding: 0;">
-            <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
+            <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0;">
               <tbody>
                 <tr class="tr-lvl-3">
-                  <td style="width:100px; padding: 0;"><span style="display: inline-block; width: 100px; height: 100px; border: 1px solid #2E8CF0; margin: 0 10px 0 0;"><img alt="" height="100" src="'. $base_url .'/sites/all/themes/mortgagespeak/images/icon1.png" style="display: block; height:100px; width:100px;" width="100" /></span></td>
+                  <td style="width:100px; padding: 0;"><span style="display: inline-block; width: 100px; height: 100px; border: 1px solid #2E8CF0; margin: 0 10px 0 0;"><img alt="" height="100" src="'. $base_url .'/sites/all/themes/mortgagespeak/images/icon1.png" style="display: block; height:auto; width:100%;" width="100" /></span></td>
                   <td>
                   <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
                     <tbody>
@@ -817,12 +816,13 @@ function mortgage_newsletter_public_users() {
       </td>
     </tr>
     <tr class="tr-lvl-1">
-      <td style="padding: 50px 0 50px 0;"><a href="'. $base_url .'/contact" style="color: #126EDC; text-decoration: none;">Questions? Contact Us</a></td>
+      <td style="padding: 50px 0 50px 0;"><a href="http://mortgagespeak.com/contact" style="color: #126EDC; text-decoration: none;">Questions? Contact Us</a></td>
     </tr>
   </tbody>
 </table>
 </div>
-</div>';
+</div>
+';
 
     $node->body['und'][0]['value'] = $body;
     node_save($node);
