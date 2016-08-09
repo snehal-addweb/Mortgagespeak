@@ -420,6 +420,10 @@ function mortgage_misc_mail_alter(&$message) {
       else{
         $message['body'] = str_replace("#userfirstname#", $message['to'], $message['body']);
       }
+
+      $current_date = date("l") . ',&nbsp; ' . date("F") . '&nbsp;'. date("j") . ',&nbsp; ' . date("Y");
+
+      $message['body'] = str_replace("#currentdate#", $current_date, $message['body']);
     }
   }
 }

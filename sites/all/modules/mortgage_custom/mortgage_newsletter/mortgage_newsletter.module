@@ -773,7 +773,7 @@ function mortgage_newsletter_public_users() {
             <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">Hi, #userfirstname#</td>
           </tr>
           <tr class="tr-lvl-2">
-            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">MortgageSpeak is <b>updated</b> for Monday,&nbsp; August&nbsp;8,&nbsp; 2016.</td>
+            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">MortgageSpeak is <b>updated</b> for #currentdate#.</td>
           </tr>
           <tr class="tr-lvl-2">
             <td style="padding: 0 0 20px 0; width: 100%;"><a href="'. $base_url .'/my-page/tracked-news" style="width: 100%; display:inline-block; text-align: center; text-decoration: none;"><img alt="" src="'. $base_url .'/sites/all/themes/mortgagespeak/images/btn.png" style="display:inline-block; width:100%;" /></a></td>
