@@ -814,7 +814,7 @@ function mortgage_newsletter_public_users() {
       <td style="padding: 50px 0 50px 0;">
        <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0;">
           <tr>
-            <td style="width: 70px; padding: 0 5px 0 0; border-right: 1px solid #cccccc;"><a href="'. $base_url .'/upload" style=" color: #126EDC; text-decoration: none; font-size:15px;"">+ Upload</a></td><td style="padding: 0 0 0 7px;"><a href="'. $base_url .'/contact" style="color: #126EDC; text-decoration: none; font-size:15px;">Contact Us</a></td>
+            <td style="width: 65px; padding: 0 5px 0 0; border-right: 1px solid #cccccc;" class="dn-upload-link"><a href="'. $base_url .'/upload" style=" color: #126EDC; text-decoration: none; font-size:15px;"">+ Upload</a></td><td style="padding: 0 0 0 7px;"><a href="'. $base_url .'/contact" style="color: #126EDC; text-decoration: none; font-size:15px;">Contact Us</a></td>
           </tr>
        </table>
       </td>
