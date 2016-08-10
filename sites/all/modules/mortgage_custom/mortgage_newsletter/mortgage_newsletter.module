@@ -758,25 +758,20 @@ function mortgage_newsletter_public_users() {
       <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
         <tbody>
           <tr class="tr-lvl-2">
-            <td style="padding: 0 0 20px 0;">
-            <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0; ">
-              <tbody>
-                <tr class="tr-lvl-3">
-                  <td style="vertical-align: top; padding: 0;" valign="top;"><a href="'. $base_url .'" style="text-decoration: none; vertical-align: top;" valign="top"><img alt="" src="'. $base_url .'/sites/default/files/dailylogo.png" style="vertical-align: top;" valign="top" /></a></td>
-                  <td style="text-align: right; font-size: 12px; padding: 0;"><a href="'. $base_url .'/upload" style="color: #126EDC; text-decoration: none;">+ Upload</a></td>
-                </tr>
-              </tbody>
-            </table>
+            <td style="vertical-align: top; padding: 0 0 20px 0;" valign="top;">
+              <a href="'. $base_url .'" style="text-decoration: none; vertical-align: top;" valign="top">
+                <img alt="" src="'. $base_url .'/sites/default/files/dailylogo.png" style="vertical-align: top;" valign="top" />
+              </a>
             </td>
           </tr>
           <tr class="tr-lvl-2">
-            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">Hi, #userfirstname#</td>
+            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">Hi, #userfirstname#.</td>
           </tr>
           <tr class="tr-lvl-2">
-            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">MortgageSpeak is <b>updated</b> for #currentdate#.</td>
+            <td style="padding: 0 0 20px 0; color: #444444; font-size: 15px;">MortgageSpeak is <b>updated with new content</b> for #currentdate#.</td>
           </tr>
           <tr class="tr-lvl-2">
-            <td style="padding: 0 0 20px 0; width: 100%;"><a href="'. $base_url .'/my-page/tracked-news" style="width: 100%; display:inline-block; text-align: center; text-decoration: none;"><img alt="" src="'. $base_url .'/sites/all/themes/mortgagespeak/images/btn.png" style="display:inline-block; width:100%;" /></a></td>
+            <td style="padding: 0 0 20px 0; width: 100%;"><a href="'. $base_url .'/news" style="width: 100%; display:inline-block; text-align: center; text-decoration: none;"><img alt="" src="'. $base_url .'/sites/all/themes/mortgagespeak/images/btn1.png" style="display:inline-block; width:100%;" /></a></td>
           </tr>
           <tr class="tr-lvl-2">
             <td style="padding: 0 0 15px 0; color: #444444; font-size: 15px; line-height: 22px;">Thank you,<br />
@@ -816,7 +811,13 @@ function mortgage_newsletter_public_users() {
       </td>
     </tr>
     <tr class="tr-lvl-1">
-      <td style="padding: 50px 0 50px 0;"><a href="http://mortgagespeak.com/contact" style="color: #126EDC; text-decoration: none;">Questions? Contact Us</a></td>
+      <td style="padding: 50px 0 50px 0;">
+       <table style="width: 100%; border-spacing:0; border-collapse:collapse; border: none; margin:0;">
+          <tr>
+            <td style="width: 70px; padding: 0 5px 0 0; border-right: 1px solid #cccccc;"><a href="'. $base_url .'/upload" style=" color: #126EDC; text-decoration: none; font-size:15px;"">+ Upload</a></td><td style="padding: 0 0 0 7px;"><a href="'. $base_url .'/contact" style="color: #126EDC; text-decoration: none; font-size:15px;">Contact Us</a></td>
+          </tr>
+       </table>
+      </td>
     </tr>
   </tbody>
 </table>
