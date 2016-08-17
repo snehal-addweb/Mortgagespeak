@@ -760,7 +760,7 @@ function mortgage_newsletter_public_users() {
           <tr class="tr-lvl-2">
             <td style="vertical-align: top; padding: 0 0 20px 0;" valign="top;">
               <a href="'. $base_url .'" style="text-decoration: none; vertical-align: top;" valign="top">
-                <img alt="" src="'. $base_url .'/sites/default/files/dailylogo.png" style="vertical-align: top;" valign="top" />
+                <img alt="" src="'. $base_url .'/sites/default/files/newdailylogo.png" style="vertical-align: top;" valign="top" />
               </a>
             </td>
           </tr>
