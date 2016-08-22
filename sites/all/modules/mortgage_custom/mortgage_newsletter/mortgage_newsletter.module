@@ -386,7 +386,8 @@ function select_user_list_form_submit($form, &$form_state) {
           $node->body['und'][0]['format'] = 'full_html';
 
           $primg = $base_url . '/sites/default/files/pr.png';
-          $tracked_topicimg = $base_url . '/sites/default/files/track_news.png'; 
+          //$tracked_topicimg = $base_url . '/sites/default/files/track_news.png'; 
+          $tracked_topicimg = $base_url . '/sites/default/files/Key.png'; 
 
           # Template Main Section Start...
           $body .= '<table style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
@@ -617,7 +618,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                             
                                                                                             // Press Releases
                                                                                             if (($tabvalue['tid'] == '705')) {
-                                                                                              $category_name = 'Press Release';
+                                                                                              $category_name = 'Press Releases';
                                                                                               break;
                                                                                             }
 
@@ -633,7 +634,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                               break;
                                                                                             }
                                                                                           }
-                                                                                          $company_image = $primg;
+                                                                                          $company_image = $tracked_topicimg;
                                                                                         }
                                                                                       }
                                                                                       else {
