@@ -374,6 +374,7 @@ function select_user_list_form_submit($form, &$form_state) {
           $node->status = 1;
           $node->uid = 1;
           $node->language = LANGUAGE_NONE;
+
           if ($form_state['complete form']['#action'] == '/create-weekly-newsletter') {
             $node->title = "Weekly Newsletter";
           } 
@@ -384,8 +385,8 @@ function select_user_list_form_submit($form, &$form_state) {
           }
           $node->body['und'][0]['format'] = 'full_html';
 
-          $primg = $base_url . '/sites/default/files/PR.png';
-          $tracked_topicimg = $base_url . '/sites/default/files/Key.png'; 
+          $primg = $base_url . '/sites/default/files/pr.png';
+          $tracked_topicimg = $base_url . '/sites/default/files/track_news.png'; 
 
           # Template Main Section Start...
           $body .= '<table style="width: 100%; max-width: 800px; margin-top: 50px; border-collapse: collapse; border: none;" align="center" class="main-outer-table">
@@ -616,7 +617,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                             
                                                                                             // Press Releases
                                                                                             if (($tabvalue['tid'] == '705')) {
-                                                                                              $category_name = 'Press Releases';
+                                                                                              $category_name = 'Press Release';
                                                                                               break;
                                                                                             }
 
@@ -632,7 +633,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                               break;
                                                                                             }
                                                                                           }
-                                                                                          $company_image = $tracked_topicimg;
+                                                                                          $company_image = $primg;
                                                                                         }
                                                                                       }
                                                                                       else {
@@ -747,7 +748,9 @@ function mortgage_newsletter_public_users() {
     $node->language = LANGUAGE_NONE;
     $node->title = "Daily Newsletter";
     $node->body['und'][0]['format'] = 'full_html';
-    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = 851;
+    $daily_new_cat = taxonomy_get_term_by_name('Daily Newsletter');
+    $daily_new_cat_tid = max(array_keys($daily_new_cat));
+    $node->field_simplenews_term[LANGUAGE_NONE][0]['tid'] = $daily_new_cat_tid;
 
     $body .= '<div style="background-color: #f2f2f2; padding: 10px 0;">
 <div style="width: 95%; max-width: 660px; display: block; margin: 0 auto; color: #444444;">
