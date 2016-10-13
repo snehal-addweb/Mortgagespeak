@@ -418,10 +418,10 @@ function select_user_list_form_submit($form, &$form_state) {
                                       <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
                                         <tbody>
                                           <tr>
-                                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; ">News Intelligence</td>
+                                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold;"><span>Newsletter</span></td>
                                           </tr>
                                           <tr>
-                                            <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
+                                            <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">Multiple news sources. <strong>One</strong>&nbsp;newsletter.</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -561,7 +561,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                       </tr>
                                                       <tr>
                                                         <td style="padding: 7px; color: #000000; background-color: #ffffff; border-color: #0077b5; border-style: solid; border-width: 1px;">
-                                                          <p style="text-align: center;"><span style="color: #126edc; font-size: medium;"><span style="color: #126edc; text-decoration: none; font-family: arial, helvetica, sans-serif;"><strong><span style="font-size: large; color: #0000ff;">50</span> <span style="color: #333333;">Linked</span><span style="color: #0077b5;">IN</span></strong> <span style="color: #333333;">recommendations</span></span></span></p>
+                                                          <p style="text-align: center;"><span style="color: #126edc; font-size: medium;"><span style="color: #126edc; text-decoration: none; font-family: arial, helvetica, sans-serif;"><strong><span style="font-size: large; color: #0000ff;">'. $linkedin_cnt .'</span> <span style="color: #333333;">Linked</span><span style="color: #0077b5;">IN</span></strong> <span style="color: #333333;">recommendations</span></span></span></p>
                                                           <p style="text-align: center;"><a style="color: #0000ff; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url .'" target="_blank"><span style="color: #126edc;"><span style="color: #126edc; font-family: arial, helvetica, sans-serif; font-size: small;">Click Here For All Headlines!</span></span></a></p>
                                                         </td>
                                                       </tr>
@@ -731,9 +731,9 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                           <td style="padding: 7px 0 0 0; vertical-align:middle;">
                                                                                             <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
                                                                                               <tr>
-                                                                                                <td style="padding: 0;"><a href="http://www.linkedin.com/shareArticle?mini=true&url='. $social_url .'&summary='. $nodedata.'" style="display:inline-block;">'. $linkedin_recommendations .'</a></td>
+                                                                                                <td style="padding: 0;"><a href="http://www.linkedin.com/shareArticle?mini=true&url='. $social_url .'&summary='. $nodedata.'" style="display:inline-block;" target="_blank">'. $linkedin_recommendations .'</a></td>
                                                                                                 <td style="text-align: right;color: #999; font-size:12px; padding: 0;">
-                                                                                                  Share on: <a href="'. $share_linked.'" style="display:inline-block; color:#2e8cf0; font-size:12px;">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Google+</a>
+                                                                                                  Share on: <a href="'. $share_linked.'" style="display:inline-block; color:#2e8cf0; font-size:12px;" target="_blank">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Google+</a>
                                                                                                 </td>
                                                                                               </tr>
                                                                                             </table>
@@ -794,11 +794,7 @@ function select_user_list_form_submit($form, &$form_state) {
             exit;
           }
           $node->body['und'][0]['value'] = $body;
-          //node_save($node);
-          print('<pre style="color:red;">');
-          print_r($node);
-          print('</pre>');
-          exit;
+          node_save($node);
 
           drupal_set_message(t("Newsletter content created succesfully!"));
           drupal_goto("admin/content");
