@@ -732,8 +732,8 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                             <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
                                                                                               <tr>
                                                                                                 <td style="padding: 0;"><a href="http://www.linkedin.com/shareArticle?mini=true&url='. $social_url .'&summary='. $nodedata.'" style="display:inline-block;" target="_blank">'. $linkedin_recommendations .'</a></td>
-                                                                                                <td style="text-align: right;color: #999; font-size:12px; padding: 0;">
-                                                                                                  Share on: <a href="'. $share_linked.'" style="display:inline-block; color:#2e8cf0; font-size:12px;" target="_blank">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Google+</a>
+                                                                                                <td style="text-align: right;color: #999; font-size:12px; padding: 0; font-family: arial;">
+                                                                                                  Share on:&nbsp;&nbsp; <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px;" target="_blank">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Google+</a>
                                                                                                 </td>
                                                                                               </tr>
                                                                                             </table>
@@ -764,11 +764,11 @@ function select_user_list_form_submit($form, &$form_state) {
                 </tr>
                 <tr>
                   <td style="padding: 0 0 20px 0; text-align: center;" align="center">
-                    <p style="text-align: center;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="'. $base_url . '/contact" target="_blank"><span style="color: #2e8cf0; text-align: center; border:none;"><span style="border:none; text-align: center; font-family: arial, helvetica, sans-serif; font-size: x-small;">Have a question? Contact Us</span></span></a></p>
-                    <p style="text-align: center; border:none; color: #999999; font-size: x-small;">MortgageSpeak</p>
-                    <p style="text-align: center; border:none; color: #999999; font-size: x-small;">1625 W. Balmoral Avenue</p>
-                    <p style="text-align: center; border:none; color: #999999; font-size: x-small;">Suite #2</p>
-                    <p style="text-align: center; border:none; color: #999999; font-size: x-small;">Chicago, IL &nbsp;60640</p>
+                    <p style="text-align: center;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="'. $base_url . '/contact" target="_blank"><span style="color: #2e8cf0; text-align: center; border:none; font-family: arial;"><span style="border:none; text-align: center; font-family: arial, helvetica, sans-serif; font-size: 13px;">Have a question? Contact Us</span></span></a></p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">MortgageSpeak</p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">1625 W. Balmoral Avenue</p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">Suite #2</p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">Chicago, IL &nbsp;60640</p>
                   </td>
               </td>
                 </tr>';
