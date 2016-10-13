@@ -562,7 +562,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                       <tr>
                                                         <td style="padding: 7px; color: #000000; background-color: #ffffff; border-color: #0077b5; border-style: solid; border-width: 1px;">
                                                           <p style="text-align: center;"><span style="color: #126edc; font-size: medium;"><span style="color: #126edc; text-decoration: none; font-family: arial, helvetica, sans-serif;"><strong><span style="font-size: large; color: #0000ff;">50</span> <span style="color: #333333;">Linked</span><span style="color: #0077b5;">IN</span></strong> <span style="color: #333333;">recommendations</span></span></span></p>
-                                                          <p style="text-align: center;"><a style="color: #0000ff; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url . '/linkedin-recommendations" target="_blank"><span style="color: #126edc;"><span style="color: #126edc; font-family: arial, helvetica, sans-serif; font-size: small;">Click Here For All Headlines!</span></span></a></p>
+                                                          <p style="text-align: center;"><a style="color: #0000ff; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url .'" target="_blank"><span style="color: #126edc;"><span style="color: #126edc; font-family: arial, helvetica, sans-serif; font-size: small;">Click Here For All Headlines!</span></span></a></p>
                                                         </td>
                                                       </tr>
                                                     </tbody>
@@ -594,8 +594,25 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $topics_name = '';
                                                                 $category_name = '';
                                                                 $linkedin_recommendations = '';
+                                                                $share_linked = '';
+                                                                $share_twitter = '';
+                                                                $share_fb = '';
+                                                                $share_google = '';
                                                                 $nodeloads = node_load($node_id);
- 
+
+                                                                // google short url
+                                                                $social_url = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                                                $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='.$social_url,'twitter'=>'https://twitter.com/intent/tweet?&summary='.$nodeloads->title.'&url='.$social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $nodeloads->title, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $nodeloads->title);
+
+                                                                $getshorturl = googleGenerateShortURL($longurl);
+                                                                 
+                                                                foreach($getshorturl as $key => $shrturl) {
+                                                                  $share_linked = $getshorturl['linked'];
+                                                                  $share_twitter = $getshorturl['twitter'];
+                                                                  $share_google = $getshorturl['google'];
+                                                                  $share_fb = $getshorturl['fb'];
+                                                                }
+
                                                                 // Link Recommendations image
                                                                 if(isset($nodeloads->field_recommended_for_linkedin) && !empty($nodeloads->field_recommended_for_linkedin)) {
                                                                   if($nodeloads->field_recommended_for_linkedin[LANGUAGE_NONE][0]['value'] == 1) {
@@ -603,7 +620,6 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                   }
                                                                 }
 
-                                                                $social_url = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                                                                 if (!empty($nodeloads->field_url)) {
                                                                   $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                                                                 }
@@ -717,7 +733,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                               <tr>
                                                                                                 <td style="padding: 0;"><a href="http://www.linkedin.com/shareArticle?mini=true&url='. $social_url .'&summary='. $nodedata.'" style="display:inline-block;">'. $linkedin_recommendations .'</a></td>
                                                                                                 <td style="text-align: right;color: #999; font-size:12px; padding: 0;">
-                                                                                                  Share on: <a href="http://www.linkedin.com/shareArticle?mini=true&url='. $social_url .'&summary='. $nodedata.'" style="display:inline-block; color:#2e8cf0; font-size:12px;">LinkedIN</a>&nbsp;&nbsp;<a href="https://twitter.com/share?&url='. $social_url .'&text='. $nodedata.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Twitter</a>&nbsp;&nbsp;<a href="http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $nodedata.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Facebook</a>&nbsp;&nbsp;<a href="https://plus.google.com/share?url='. $social_url .'&body='. $nodedata.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Google+</a>
+                                                                                                  Share on: <a href="'. $share_linked.'" style="display:inline-block; color:#2e8cf0; font-size:12px;">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="color:#2e8cf0; font-size:12px; display:inline-block;">Google+</a>
                                                                                                 </td>
                                                                                               </tr>
                                                                                             </table>
@@ -778,7 +794,11 @@ function select_user_list_form_submit($form, &$form_state) {
             exit;
           }
           $node->body['und'][0]['value'] = $body;
-          node_save($node);
+          //node_save($node);
+          print('<pre style="color:red;">');
+          print_r($node);
+          print('</pre>');
+          exit;
 
           drupal_set_message(t("Newsletter content created succesfully!"));
           drupal_goto("admin/content");
@@ -903,4 +923,45 @@ function mortgage_newsletter_public_users() {
     node_save($node);
     drupal_set_message(t("Public Newsletter content created succesfully!"));
     drupal_goto("admin/content");
+}
+
+
+function googleGenerateShortURL($longurl) {
+ //result object to be returned at the end of the function
+    $result = array('status' => '0', 'short-url' => '', 'long-url' => '', 'message' => 'Failed to shorten URL.');
+
+    if (!empty($longurl)) {
+  foreach($longurl as $key=>$val){
+
+        //build up the options array to be fed into the stream_context object
+        $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => "Content-type: application/json",
+                'content' => json_encode(array('longUrl' => $val))
+            )
+        );
+
+        //attempt to hit the Google API url using a file_get_contents call using our crafted stream context
+        try {
+            //create stream context using our special options
+            $context = stream_context_create($opts);
+            $queryreturn = file_get_contents("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCPseeK7nca6HTuidF6UeZZjDvcwBEunbM", false, $context);
+            //decode the returned JSON object
+            $jsondata = json_decode($queryreturn, true);
+  
+            if ((key_exists('id', $jsondata)) && (strlen($jsondata['id']) > 0)) {
+                $result[$key] = array('status' => '1', 'short-url' => $jsondata['id'], 'long-url' => $jsondata['longUrl'], 'message' => 'Succesfully generated short URL.');
+                $shorturl[$key] = $jsondata['id'];
+            }
+        } catch (Exception $e) {
+            $result[$key]['message'] = 'Failed to shorten URL. Unable to connect to Google\'s API service.';
+            $result[$key]['exception'] = $e->getMessage();
+          }
+      } 
+    }else {
+        $result[$key]['message'] = 'Failed to shorten URL. No long URL provided.';
+    }
+
+   return $shorturl;
 }
