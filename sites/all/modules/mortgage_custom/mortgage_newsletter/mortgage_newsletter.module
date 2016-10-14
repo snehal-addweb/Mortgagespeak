@@ -315,6 +315,15 @@ function select_user_list_form_submit($form, &$form_state) {
           # Fetch Selected Perspective & Press Release content section start....
           #################################################################*/
 
+          // Fetch linked Recommendations count
+
+          $qry_linkin = db_query("SELECT count(node.nid) AS nid
+          FROM 
+          node node
+          INNER JOIN field_data_field_recommended_for_linkedin field_data_field_recommended_for_linkedin ON node.nid = field_data_field_recommended_for_linkedin.entity_id AND (field_data_field_recommended_for_linkedin.entity_type = 'node' AND field_data_field_recommended_for_linkedin.deleted = '0')
+          WHERE node.status = '1' AND node.type = 'alpha_content' AND field_data_field_recommended_for_linkedin.field_recommended_for_linkedin_value = '1'");
+          $res_linkin = $qry_linkin->fetchAssoc();
+          $linkedin_cnt = $res_linkin['nid'];
 
           #################################################################
           # Debug Variables section start....
@@ -387,6 +396,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
           $primg = $base_url . '/sites/default/files/pr.png';
           $tracked_topicimg = $base_url . '/sites/default/files/track_news.png'; 
+          $linkcheck_mark = $base_url . '/sites/default/files/linked-in-check.png';
           //$tracked_topicimg = $base_url . '/sites/default/files/Key.png'; 
 
           # Template Main Section Start...
@@ -408,10 +418,10 @@ function select_user_list_form_submit($form, &$form_state) {
                                       <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
                                         <tbody>
                                           <tr>
-                                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold; ">News Intelligence</td>
+                                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold;"><span>Newsletter</span></td>
                                           </tr>
                                           <tr>
-                                            <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">by MortgageSpeak</td>
+                                            <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">Multiple news sources. <strong>One</strong>&nbsp;newsletter.</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -434,65 +444,103 @@ function select_user_list_form_submit($form, &$form_state) {
                                 <tbody>';
 
                   # Template Sub Header Section Start...
-                  $body .= '<tr class="sub-header-section">
-                              <td align="center" style="padding: 0; margin: 0;"><span style="margin: 0; padding: 0; line-height: 25px;"><span style="font-family: arial; font-style: normal; text-align: center; color: #35383d; font-size: 12px; margin: 0;">' . date("F") . '&nbsp;' . date("j") . ',&nbsp;' . date("Y") . '</span></span></td>
-                            </tr>';
 
                   $body .= '<tr>
-                              <td style="border: 0px none; border-collapse: collapse; border-spacing: 0px; padding: 0 40px;">
-                              <table align="center" style="border-radius: 5px 5px 0 0; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: none; margin: 0 auto; width: 100%;">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding: 15px 20px 10px 20px; text-align: center;"><span style="font-family: arial; color: #666666; font-size: 14px;">Uniting your Client, Competitor, Prospect and Business Line news</span></td>
-                                  </tr>
-                                  <tr>
-                                    <td style=" padding:0 20px;">
-                                    <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 0 20px 15px 20px;">
-                                    <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0;">
-                                      <tbody>
-                                        <tr>
-                                          <td style="padding: 5px 3px; color: #000000;"><strong style="font-family: arial;">Headline Summary</strong></td>
-                                          <td style="color: #000000; padding: 5px 3px; text-align: center;"><strong style="font-family: arial;">Today</strong></td>
-                                          <td align="center" style="color: #000000; padding: 5px 3px;"><strong style="font-family: arial;">YTD</strong></td>
-                                        </tr>
-                                        <tr style="background: #e4e4e4;">
-                                          <td style="padding: 7px 3px; text-indent: 0px; font-family: arial;">Total</td>
-                                          <td style="padding: 7px 3px; text-align: center; font-family: arial;">8</td>
-                                          <td style="padding: 7px 3px; text-align: center; font-family: arial;">100</td>
-                                        </tr>
-                                        <tr>
-                                          <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;">Tracked Companies</td>
-                                          <td style="padding: 5px 3px; text-align: center; font-family: arial;">8</td>
-                                          <td style="padding: 5px 3px; text-align: center; font-family: arial;">50</td>
-                                        </tr>
-                                        <tr>
-                                          <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;">Tracked Business Lines</td>
-                                          <td style="padding: 5px 3px; text-align: center; font-family: arial;">4</td>
-                                          <td style="padding: 5px 3px; text-align: center; font-family: arial;">50</td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 0 20px 0 20px;">
-                                    <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                              <td style="border: 0px none; border-collapse: collapse; border-spacing: 0px; padding: 0 40px;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td style="border: 0px none; border-collapse: collapse; border-spacing: 0px; padding: 0px 5px;">
+                                <table style="border-radius: 5px 5px 0 0; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #ffffff; border: none; margin: 0 auto; width: 100%;" align="center">
+                                  <tbody>
+                                    <tr>
+                                      <td style="padding: 0 20px;">
+                                        <div style="width: 100%; border-top: 2px solid #ffffff;">&nbsp;</div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding: 0 20px 15px 20px;">
+                                        <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0;">
+                                          <tbody>
+                                            <tr>
+                                              <td style="padding: 7px 3px; text-indent: 0px; font-family: arial; background-color: #fefce5;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><strong style="font-family: arial;">Headlines</strong></span></td>
+                                              <td style="background-color: #fefce5; text-align: center;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><strong style="font-family: arial;">Today</strong></span></td>
+                                              <td style="background-color: #fefce5; text-align: center;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><strong style="font-family: arial;">YTD</strong></span></td>
+                                            </tr>
+                                            <tr style="background-image: url(\'initial\'); background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">
+                                              <td style="padding: 7px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">LinkedIN Recommendations</span></td>
+                                              <td style="padding: 7px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">2</span></td>
+                                              <td style="padding: 7px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">25</span></td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">Company Headlines</span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">2</span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">25</span></td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">Sector Headlines</span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">2</span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">25</span></td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;"><strong>Total</strong></span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="color: #333333;"><strong><span style="font-size: small; font-family: arial, helvetica, sans-serif;">2</span></strong></span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="color: #333333;"><strong><span style="font-size: small; font-family: arial, helvetica, sans-serif;">25</span></strong></span></td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;">&nbsp;</td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 7px 3px; text-indent: 0px; font-family: arial; background-color: #edfcf2;"><span style="font-family: arial, helvetica, sans-serif; font-size: small;"><strong>Login</strong></span></td>
+                                              <td style="background-color: #edfcf2;">&nbsp;</td>
+                                              <td style="background-color: #edfcf2;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="color: #126edc;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url . '/user"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #126edc;"><span style="color: #2e8cf0;"><span style="color: #126edc;">Your custom "My Page":</span></span></span></a></span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><span style="color: #888888;">un:</span> &nbsp;' . $user->name . '</span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><span style="color: #888888;">pw:</span> &nbsp;' . $pass . '</span></td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                              <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style="padding: 0 20px 15px 20px;">
+                                        <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0; border-color: #ffffff; border-width: 0px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style="padding: 5px 3px; color: #000000;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding: 0 20px 0 20px;">
+                                                <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
                               </td>
-                           </tr>'; 
+                            </tr>'; 
                   # Template Sub Header Section End... 
 
                   # Outer Template Body Section Username & Password Start...
 
                   $body .= '<tr>
-                              <td style="border-spacing: 0; border-collapse: collapse; width: 100%; padding: 0 40px;">
+                              <td style="border-spacing: 0px; border-collapse: collapse; width: 100%; padding: 0px 5px;">
                                 <table align="center" style="border-radius: 0 0 5px 5px; padding: 0; border-spacing: 0; border-collapse: collapse; background-color: #fff; border: none; margin: 0 auto; width: 100%;">
                                   <tbody>';
                                     /* # Template Body Section Start...
@@ -503,46 +551,31 @@ function select_user_list_form_submit($form, &$form_state) {
 
                                     # Template Body Section Username & Password Start...
                                     $body .= '<tr class="News-intelligence" style="width: 100%;">
-                                                <td style="font-family: arial; font-size: 13px; padding:10px 20px 0 20px; width: 100%; line-height: normal;">
-                                                <table style="width: 100%; margin: 0px auto; border-collapse: collapse; border: none;">
-                                                  <tbody>
-                                                    <tr style="background: #E4EDFD; width: 100%;">
-                                                      <td style="padding: 0; margin: 0; width:100%;">
-                                                      <table style="width: 100%; border: none; margin: 0;">
-                                                        <tbody>
-                                                          <tr style="width: 100%;">
-                                                            <td align="left" style="font-weight: bold; text-decoration: none; font-size: 12px; font-family: arial; border-radius: 3px; padding:20px 10px 0 10px; color: #4c99ee; text-align: left; height: 15px; line-height: normal; width: 100%;">
-                                                            <div style="width: 100%;"><span style="float: left;">Have a client call or prospect visit?&nbsp;</span><span style="float: left;"><a href="' . $base_url . '/user/login" style="color:#4c99ee;text-decoration:underline;font-size:12px;font-weight:bold;">Log in</a></span></div>
-                                                            </td>
-                                                          </tr>
-                                                          <tr style="width:100%;">
-                                                            <td style="padding:0px 10px 20px 10px;">
-                                                            <table class="tbl-lvl-6" style="border: none; border-spacing: 0; border-collapse: collapse; margin: 0;padding: 0;">
-                                                              <tbody>
-                                                                <tr class="tr-lvl-6">
-                                                                  <td style="color:#666666; font-family: arial; font-size: 13px;font-weight: bold; padding: 0; margin: 0;" width="30">un :</td>
-                                                                  <td style="color:#666666; font-family: arial; font-size: 13px; font-weight: bold; padding: 0; margin: 0;">' . $user->name . '</td>
-                                                                </tr>
-                                                                <tr>
-                                                                  <td style="color: #666666; font-family: arial; font-size: 13px;font-weight: bold; padding: 0; margin: 0;" width="30">pw :</td>
-                                                                  <td style="color: #666666; font-family: arial; font-size: 13px;font-weight: bold;padding: 0;margin: 0;">' . $pass . '</td>
-                                                                </tr>
-                                                              </tbody>
-                                                            </table>
-                                                            </td>
-                                                          </tr>
-                                                        </tbody>
-                                                      </table>
-                                                      </td>
-                                                    </tr>
-                                                    <tr style="width: 100%;">
-                                                      <td style="width: 100%; margin: 0; padding: 0;">&nbsp;</td>
-                                                    </tr>
-                                                    <tr style="width: 100%;">
-                                                      <td align="left" style="width: 100%; text-align: left; padding: 0; margin: 0; font-family: arial; font-size: 22pt; color: #f07a22;">News Intelligence</td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
+                                                <td style="font-family: arial; font-size: 13px; padding: 10px 20px 0 20px; width: 100%; line-height: normal;">
+                                                  <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0; border-color: #ffffff; border-width: 0px;" border="0" cellpadding="10" align="center">
+                                                    <tbody>
+                                                      <tr>
+                                                        <td style="padding: 7px; color: #000000; background-color: #0077b5; border-color: #0077b5; border-style: solid; border-width: 1px;">
+                                                          <p style="text-align: center;"><span style="color: #ffffff; font-family: tahoma, arial, helvetica, sans-serif; font-size: small;"><strong>Grow </strong>your brand. Look like a <strong>genius</strong>.<br /></span></p>
+                                                        </td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style="padding: 7px; color: #000000; background-color: #ffffff; border-color: #0077b5; border-style: solid; border-width: 1px;">
+                                                          <p style="text-align: center;"><span style="color: #126edc; font-size: medium;"><span style="color: #126edc; text-decoration: none; font-family: arial, helvetica, sans-serif;"><strong><span style="font-size: large; color: #0000ff;">'. $linkedin_cnt .'</span> <span style="color: #333333;">Linked</span><span style="color: #0077b5;">IN</span></strong> <span style="color: #333333;">recommendations</span></span></span></p>
+                                                          <p style="text-align: center;"><a style="color: #0000ff; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url .'/linkedin-recommendations" target="_blank"><span style="color: #126edc;"><span style="color: #126edc; font-family: arial, helvetica, sans-serif; font-size: small;">Click Here For All Headlines!</span></span></a></p>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </td>
+                                              </tr>
+                                              <tr class="News-intelligence" style="width: 100%;">
+                                                <td style="font-family: arial; font-size: 13px; padding: 10px 20px 0 20px; width: 100%; line-height: normal;">&nbsp;</td>
+                                              </tr>
+                                              <tr>
+                                                <td style="width: 100%; padding: 10px 20px;">
+                                                  <p><span style="font-family: arial, helvetica, sans-serif; font-size: x-large; color: #ff6600;"><span style="font-size: x-small;"><span style="color: #808080;"><span style="color: #ff6600; font-size: x-large;">Headlines</span></span></span></span></p>
+                                                  <p><span style="font-family: arial, helvetica, sans-serif; font-size: xx-small; color: #ff6600;"><span style="color: #808080; font-size: x-small;">More:</span>&nbsp;&nbsp;&nbsp;<span style="font-size: small;"><a style="color: #0000ff; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url . '/news" target="_blank"><span style="color: #2e8cf0;">News</span></a>&nbsp;&nbsp;<span style="color: #808080;">|</span>&nbsp;&nbsp;<a style="color: #0000ff; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url . '/press-releases" target="_blank"><span style="color: #2e8cf0;">Press Releases</span></a></span></span></p>
                                                 </td>
                                               </tr>';
                                     # Template Body Section Username & Password End...
@@ -560,7 +593,33 @@ function select_user_list_form_submit($form, &$form_state) {
                                                               foreach ($arr_newslist as $node_id => $value) {
                                                                 $topics_name = '';
                                                                 $category_name = '';
+                                                                $linkedin_recommendations = '';
+                                                                $share_linked = '';
+                                                                $share_twitter = '';
+                                                                $share_fb = '';
+                                                                $share_google = '';
                                                                 $nodeloads = node_load($node_id);
+
+                                                                // google short url
+                                                                $social_url = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
+                                                                $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='.$social_url,'twitter'=>'https://twitter.com/intent/tweet?&summary='.$nodeloads->title.'&url='.$social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $nodeloads->title, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $nodeloads->title);
+
+                                                                $getshorturl = googleGenerateShortURL($longurl);
+                                                                 
+                                                                foreach($getshorturl as $key => $shrturl) {
+                                                                  $share_linked = $getshorturl['linked'];
+                                                                  $share_twitter = $getshorturl['twitter'];
+                                                                  $share_google = $getshorturl['google'];
+                                                                  $share_fb = $getshorturl['fb'];
+                                                                }
+
+                                                                // Link Recommendations image
+                                                                if(isset($nodeloads->field_recommended_for_linkedin) && !empty($nodeloads->field_recommended_for_linkedin)) {
+                                                                  if($nodeloads->field_recommended_for_linkedin[LANGUAGE_NONE][0]['value'] == 1) {
+                                                                    $linkedin_recommendations = '<img src="' . $linkcheck_mark . '" alt="linkedin"/>';
+                                                                  }
+                                                                }
+
                                                                 if (!empty($nodeloads->field_url)) {
                                                                   $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                                                                 }
@@ -571,13 +630,13 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $nodetitle = '';
                                                                 if (!empty($nodeloads->title)) {
                                                                   $data_title = strip_tags($nodeloads->title);
-                                                                  $nodetitle = truncate_utf8($data_title, 80, FALSE, TRUE, 1);
+                                                                  $nodetitle = truncate_utf8($data_title, 100, FALSE, TRUE, 1);
                                                                 }
 
                                                                 $nodedata = '';
                                                                 if (!empty($nodeloads->body)) {
                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                                                  $nodedata = truncate_utf8($datanode, 80, FALSE, TRUE, 1); 
+                                                                  $nodedata = truncate_utf8($datanode, 100, FALSE, TRUE, 1); 
                                                                 }
 
                                                                 $company_image = '';
@@ -653,22 +712,38 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $url = $urlalias;
                                                                 $body .= '<tr>
                                                                             <td style="width: 100%; border-top: 1px solid #e5e6e9; border-bottom: 1px solid #e5e6e9; padding: 10px;">
-                                                                            <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
-                                                                              <tbody>
-                                                                                <tr>
-                                                                                  <td height="50" style="width: 50px; padding: 0 10px 0 0; vertical-align: top;" valign="top">
-                                                                                  <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img alt="" height="50" src="' . $company_image . '" style="width: 50px; height: 50px; vertical-align: top;" width="50" /></div>
-                                                                                  </td>
-                                                                                  <td style="line-height: normal; vertical-align: top; text-align: left; width: 100%; max-width: 540px; padding: 0;">
-                                                                                  <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 100%; max-width: 540px;"><span style="color: #999999;">' . $category_name . '</span></div>
-
-                                                                                  <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 100%; max-width: 540px;"><a href="' . $url . '" style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" target="_blank">' . $nodetitle . '</a></div>
-
-                                                                                  <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 100%; max-width: 540px;">' . $nodedata . '</div>
-                                                                                  </td>
-                                                                                </tr>
-                                                                              </tbody>
-                                                                            </table>
+                                                                              <table style="margin: 0px auto; border-collapse: collapse; width: 100%; border: none;">
+                                                                                <tbody>
+                                                                                  <tr>
+                                                                                    <td style="width: 50px; padding: 0 10px 0 0; vertical-align: top;" valign="top" height="50">
+                                                                                      <div style="vertical-align: top; height: 50px; max-height: 50px; width: 100%;"><img style="width: 50px; height: 50px; vertical-align: top;" src="' . $company_image . '" alt="" width="50" height="50" /></div>
+                                                                                    </td>
+                                                                                    <td style="line-height: normal; vertical-align: top; text-align: left; width: 100%; max-width: 540px; padding: 0;">
+                                                                                      <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
+                                                                                        <tr>
+                                                                                          <td style="padding: 0;">
+                                                                                            <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 100%;"><span style="color: #999999;">' . $category_name . '</span></div>
+                                                                                            <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 100%;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
+                                                                                            <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 100%;">' . $nodedata . '</div>
+                                                                                          </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                          <td style="padding: 7px 0 0 0; vertical-align:middle;">
+                                                                                            <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
+                                                                                              <tr>
+                                                                                                <td style="padding: 0;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank">'. $linkedin_recommendations .'</a></td>
+                                                                                                <td style="text-align: right;color: #999; font-size:12px; padding: 0; font-family: arial;">
+                                                                                                  Share on:&nbsp;&nbsp; <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px;" target="_blank">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Google+</a>
+                                                                                                </td>
+                                                                                              </tr>
+                                                                                            </table>
+                                                                                          </td>
+                                                                                        </tr>
+                                                                                      </table>
+                                                                                    </td>
+                                                                                  </tr>
+                                                                                </tbody>
+                                                                              </table>
                                                                             </td>
                                                                           </tr>';
                                                               }
@@ -688,7 +763,14 @@ function select_user_list_form_submit($form, &$form_state) {
                   <td>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td align="center" style="padding: 0 0 20px 0;"><a href="'. $base_url .'/contact" target="_blank"><span style="font-family: arial, helvetica, sans-serif; font-size: x-small;">Questions? Contact Us</span></a></td>
+                  <td style="padding: 0 0 20px 0; text-align: center;" align="center">
+                    <p style="text-align: center;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="'. $base_url . '/contact" target="_blank"><span style="color: #2e8cf0; text-align: center; border:none; font-family: arial;"><span style="border:none; text-align: center; font-family: arial, helvetica, sans-serif; font-size: 13px;">Have a question? Contact Us</span></span></a></p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">MortgageSpeak</p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">1625 W. Balmoral Avenue</p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">Suite #2</p>
+                    <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">Chicago, IL &nbsp;60640</p>
+                  </td>
+              </td>
                 </tr>';
 
               $body .= '</tbody></table></td></tr>';      
@@ -713,6 +795,7 @@ function select_user_list_form_submit($form, &$form_state) {
           }
           $node->body['und'][0]['value'] = $body;
           node_save($node);
+
           drupal_set_message(t("Newsletter content created succesfully!"));
           drupal_goto("admin/content");
           # Template Main Section End...
@@ -836,4 +919,45 @@ function mortgage_newsletter_public_users() {
     node_save($node);
     drupal_set_message(t("Public Newsletter content created succesfully!"));
     drupal_goto("admin/content");
+}
+
+
+function googleGenerateShortURL($longurl) {
+ //result object to be returned at the end of the function
+    $result = array('status' => '0', 'short-url' => '', 'long-url' => '', 'message' => 'Failed to shorten URL.');
+
+    if (!empty($longurl)) {
+  foreach($longurl as $key=>$val){
+
+        //build up the options array to be fed into the stream_context object
+        $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => "Content-type: application/json",
+                'content' => json_encode(array('longUrl' => $val))
+            )
+        );
+
+        //attempt to hit the Google API url using a file_get_contents call using our crafted stream context
+        try {
+            //create stream context using our special options
+            $context = stream_context_create($opts);
+            $queryreturn = file_get_contents("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCPseeK7nca6HTuidF6UeZZjDvcwBEunbM", false, $context);
+            //decode the returned JSON object
+            $jsondata = json_decode($queryreturn, true);
+  
+            if ((key_exists('id', $jsondata)) && (strlen($jsondata['id']) > 0)) {
+                $result[$key] = array('status' => '1', 'short-url' => $jsondata['id'], 'long-url' => $jsondata['longUrl'], 'message' => 'Succesfully generated short URL.');
+                $shorturl[$key] = $jsondata['id'];
+            }
+        } catch (Exception $e) {
+            $result[$key]['message'] = 'Failed to shorten URL. Unable to connect to Google\'s API service.';
+            $result[$key]['exception'] = $e->getMessage();
+          }
+      } 
+    }else {
+        $result[$key]['message'] = 'Failed to shorten URL. No long URL provided.';
+    }
+
+   return $shorturl;
 }
