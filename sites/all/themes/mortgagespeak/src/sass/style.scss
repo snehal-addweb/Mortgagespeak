@@ -1858,13 +1858,23 @@ a {
       content: '';
     }
   }
+}
+
+/**
+ * Header fillter section 
+ *
+ * - LinkedIN recommendations
+ * - connected-companies
+ */
+
+.page-connected-companies {
   .content-lists {
     .view-header {
       position: relative;
       display: inline-block;
-      width: 100%;
       padding: 5px;
       border-bottom: 1px solid $border;
+      .header-text,
       .linked-in-share-content {
         display: inline-block;
         padding: 10px;
@@ -1952,6 +1962,8 @@ a {
     }
   }
 }
+
+
 
 /**
  * Welcome page
