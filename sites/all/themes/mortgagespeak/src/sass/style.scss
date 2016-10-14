@@ -813,7 +813,7 @@ a {
           float: left;
           span.chicklets {
             float: left;
-            height: 15px;
+            height: 20px;
             /*width: 15px;*/
             margin: 0 25px 0 0;
             padding: 0;
@@ -877,10 +877,10 @@ a {
     .views-popup-container {
       position: fixed;
       bottom: 0;
-      left: 625px;
+      left: 605px;
       z-index: 999;
       display: none;
-      max-width: 550px;
+      max-width: 570px;
       width: 100%;
       margin-top: -20px;
       background-color: $white;
@@ -1852,6 +1852,7 @@ a {
       display: inline-block;
       height: 58px;
       width: 240px;
+      margin-top: -10px;
       background-image: url('../images/linkedin-title-img.png');
       vertical-align: middle;
       content: '';
@@ -1860,6 +1861,8 @@ a {
   .content-lists {
     .view-header {
       position: relative;
+      display: inline-block;
+      width: 100%;
       padding: 5px;
       border-bottom: 1px solid $border;
       .linked-in-share-content {
@@ -1868,10 +1871,10 @@ a {
       }
       .view-filters {
         float: right;
-        @media screen and (max-width: $small-desktop) {
+        /*@media screen and (max-width: $small-desktop) {
           float: left;
           margin-top: 5px;
-        }
+        }*/
         .views-exposed-widgets {
           margin: 0;
           .views-exposed-widget {
@@ -1933,6 +1936,7 @@ a {
         padding: 20px 10px;
         background-color: #ECF4FD;
         color: $black;
+        font-weight: bold; 
         text-align: center;
         @include border-radius(5px);
         span {
@@ -1941,6 +1945,7 @@ a {
           margin-bottom: 5px;
           font-size: 66px;
           line-height: normal;
+          font-weight: normal;
           letter-spacing: 2px;
         }
       }
