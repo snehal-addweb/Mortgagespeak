@@ -835,7 +835,7 @@ a {
                 display: none;
               }
             }
-            .linkedinshare { width: 15px; background-image: url('../images/linkedin-sm.png'); }
+            .linkedinshare { height: 24px; width: 144px; margin-top: -3px; background-image: url('../images/linked-in.png'); }
             .facebook { width: 8px; background-image: url('../images/facebook-sm.png'); }
             .twitter-share-button { width: 14px; background-image: url('../images/twitter-sm.png'); }
             .google { width: 22px; background-image: url('../images/google-plus-sm.png'); }
@@ -877,10 +877,10 @@ a {
     .views-popup-container {
       position: fixed;
       bottom: 0;
-      left: 655px;
+      left: 625px;
       z-index: 999;
       display: none;
-      max-width: 520px;
+      max-width: 550px;
       width: 100%;
       margin-top: -20px;
       background-color: $white;
