@@ -630,7 +630,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
                                                                 if (!empty($nodeloads->body)) {
                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                                                  $nodedata = truncate_utf8($datanode, 240, FALSE, TRUE, 1); 
+                                                                  $nodedata = truncate_utf8($datanode, 150, FALSE, TRUE, 1); 
                                                                 }
 
                                                                 $company_image = '';
