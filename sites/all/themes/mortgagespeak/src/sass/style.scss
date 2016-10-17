@@ -1861,7 +1861,7 @@ a {
 }
 
 /**
- * Header fillter section 
+ * Header fillter section
  *
  * - LinkedIN recommendations
  * - connected-companies
@@ -1946,7 +1946,7 @@ a {
         padding: 20px 10px;
         background-color: #ECF4FD;
         color: $black;
-        font-weight: bold; 
+        font-weight: normal;
         text-align: center;
         @include border-radius(5px);
         span {
@@ -1955,7 +1955,7 @@ a {
           margin-bottom: 5px;
           font-size: 66px;
           line-height: normal;
-          font-weight: normal;
+          font-weight: bold;
           letter-spacing: 2px;
         }
       }
