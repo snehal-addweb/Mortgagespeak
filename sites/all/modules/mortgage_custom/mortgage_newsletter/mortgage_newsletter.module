@@ -556,7 +556,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                     <tbody>
                                                       <tr>
                                                         <td style="padding: 7px; color: #000000; background-color: #0077b5; border-color: #0077b5; border-style: solid; border-width: 1px;">
-                                                          <p style="text-align: center;"><span style="color: #ffffff; font-family: tahoma, arial, helvetica, sans-serif; font-size: small;"><strong>Grow </strong>your brand. Look like a <strong>genius</strong>.<br /></span></p>
+                                                          <p style="text-align: center;"><span style="color: #ffffff; font-family: arial, helvetica, sans-serif; font-size: small;"><strong>Grow </strong>your brand. Look like a <strong>genius</strong>.<br /></span></p>
                                                         </td>
                                                       </tr>
                                                       <tr>
