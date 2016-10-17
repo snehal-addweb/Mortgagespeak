@@ -585,6 +585,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $nodetitle = '';
                                                                 $nodedata = '';
                                                                 $nodeloads = node_load($node_id);
+                                                                $linkedin_recommendations = '';
 
                                                                 $strtitle =  $nodetitle;
                                                                 $strtitle = str_replace("\"", "'", $strtitle);
@@ -605,7 +606,13 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 // Link Recommendations image
                                                                 if(isset($nodeloads->field_recommended_for_linkedin) && !empty($nodeloads->field_recommended_for_linkedin)) {
                                                                   if($nodeloads->field_recommended_for_linkedin[LANGUAGE_NONE][0]['value'] == 1) {
-                                                                    $linkedin_recommendations = '<img src="' . $linkcheck_mark . '" alt="linkedin"/>';
+                                                                    $linkedin_recommendations =  '<tr>
+                                                                        <td style="padding: 7px 0 4px 0; vertical-align:middle;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank"><img src="' . $linkcheck_mark . '" alt="linkedin"/></a></td>
+                                                                      </tr>';
+                                                                    //$linkedin_recommendations = '<img src="' . $linkcheck_mark . '" alt="linkedin"/>';
+                                                                  }
+                                                                  else {
+                                                                    $linkedin_recommendations = '';
                                                                   }
                                                                 }
 
@@ -623,7 +630,7 @@ function select_user_list_form_submit($form, &$form_state) {
 
                                                                 if (!empty($nodeloads->body)) {
                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
-                                                                  $nodedata = truncate_utf8($datanode, 120, FALSE, TRUE, 1); 
+                                                                  $nodedata = truncate_utf8($datanode, 240, FALSE, TRUE, 1); 
                                                                 }
 
                                                                 $company_image = '';
@@ -708,17 +715,15 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                     <td style="line-height: normal; vertical-align: top; text-align: left; width: 100%; max-width: 540px; padding: 0;">
                                                                                       <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
                                                                                         <tr>
-                                                                                          <td style="padding: 0 0 7px 0;">
+                                                                                          <td style="padding: 0 0 0 0;">
                                                                                             <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 100%;"><span style="color: #999999;">' . $category_name . '</span></div>
                                                                                             <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 100%;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
                                                                                             <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 100%;">' . $nodedata . '</div>
                                                                                           </td>
                                                                                         </tr>
+                                                                                        '. $linkedin_recommendations .'
                                                                                         <tr>
-                                                                                          <td style="padding: 0; vertical-align:middle;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank">'. $linkedin_recommendations .'</a></td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                          <td style="color: #999; font-size:12px; padding: 15px 0 7px 0; font-family: arial;">
+                                                                                          <td style="color: #999; font-size:12px; padding: 10px 0 7px 0; font-family: arial;">
                                                                                             <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px; text-decoration:none;" target="_blank">LinkedIN</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Twitter</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Facebook</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">G+</a>
                                                                                           </td>
                                                                                         </tr>
