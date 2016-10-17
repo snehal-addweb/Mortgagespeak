@@ -418,10 +418,10 @@ function select_user_list_form_submit($form, &$form_state) {
                                       <table style="padding: 0; margin: 0; border-spacing: 0; border-collapse: collapse; width: 100%; border: none;">
                                         <tbody>
                                           <tr>
-                                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold;"><span>Newsletter</span></td>
+                                            <td style="padding: 0; margin: 0; letter-spacing: 1px; font-family: arial; color: #ffffff; font-size: 14pt; font-weight: bold;"><span>News Intelligence</span></td>
                                           </tr>
                                           <tr>
-                                            <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">Multiple news sources. <strong>One</strong>&nbsp;newsletter.</td>
+                                            <td style="padding: 7px 0 0; vertical-align: bottom; margin: 0; line-height: normal; letter-spacing: 1px; font-family: arial; font-size: 10pt; color: #ffffff;">The news that matters most.</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -467,17 +467,17 @@ function select_user_list_form_submit($form, &$form_state) {
                                               <td style="background-color: #fefce5; text-align: center;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><strong style="font-family: arial;">YTD</strong></span></td>
                                             </tr>
                                             <tr style="background-image: url(\'initial\'); background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">
-                                              <td style="padding: 7px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">LinkedIN Recommendations</span></td>
+                                              <td style="padding: 7px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333; font-weight: bold;">Linked<span style="color: #0077b5  ">IN</span> Recommendations</span></td>
                                               <td style="padding: 7px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">2</span></td>
                                               <td style="padding: 7px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">25</span></td>
                                             </tr>
                                             <tr>
-                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">Company Headlines</span></td>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">Tracked Companies</span></td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">2</span></td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">25</span></td>
                                             </tr>
                                             <tr>
-                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">Sector Headlines</span></td>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">Tracked Sectors</span></td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">2</span></td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #333333;">25</span></td>
                                             </tr>
@@ -497,7 +497,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                               <td style="background-color: #edfcf2;">&nbsp;</td>
                                             </tr>
                                             <tr>
-                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="color: #126edc;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url . '/user"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #126edc;"><span style="color: #2e8cf0;"><span style="color: #126edc;">Your custom "My Page":</span></span></span></a></span></td>
+                                              <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="color: #126edc;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $base_url . '/user"><span style="font-size: small; font-family: arial, helvetica, sans-serif; color: #126edc;"><span style="color: #2e8cf0;"><span style="color: #126edc;">Your custom news page:</span></span></span></a></span></td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
                                             </tr>
@@ -510,22 +510,6 @@ function select_user_list_form_submit($form, &$form_state) {
                                               <td style="padding: 5px 3px; text-indent: 0px; font-family: arial;"><span style="font-size: small; font-family: arial, helvetica, sans-serif;"><span style="color: #888888;">pw:</span> &nbsp;' . $pass . '</span></td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
                                               <td style="padding: 5px 3px; text-align: center; font-family: arial;">&nbsp;</td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td style="padding: 0 20px 15px 20px;">
-                                        <table style="width: 100%; font-size: 13px; color: #666666; border: 0px solid #fff; border-collapse: collapse; border-spacing: 0; box-sizing: border-box; border-style: none; margin: 0; border-color: #ffffff; border-width: 0px;">
-                                          <tbody>
-                                            <tr>
-                                              <td style="padding: 5px 3px; color: #000000;">&nbsp;</td>
-                                            </tr>
-                                            <tr>
-                                              <td style="padding: 0 20px 0 20px;">
-                                                <div style="width: 100%; border-top: 2px solid #F07A22;">&nbsp;</div>
-                                              </td>
                                             </tr>
                                           </tbody>
                                         </table>
@@ -598,11 +582,16 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $share_twitter = '';
                                                                 $share_fb = '';
                                                                 $share_google = '';
+                                                                $nodetitle = '';
+                                                                $nodedata = '';
                                                                 $nodeloads = node_load($node_id);
+
+                                                                $strtitle =  $nodetitle;
+                                                                $strtitle = str_replace("\"", "'", $strtitle);
 
                                                                 // google short url
                                                                 $social_url = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                                                                $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='.$social_url,'twitter'=>'https://twitter.com/intent/tweet?&summary='.$nodeloads->title.'&url='.$social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $nodeloads->title, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $nodeloads->title);
+                                                                $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='.$social_url. '&summary='. $strtitle,'twitter'=>'https://twitter.com/intent/tweet?&summary='. $strtitle .'&url='. $social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $strtitle, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $strtitle);
 
                                                                 $getshorturl = googleGenerateShortURL($longurl);
                                                                  
@@ -626,14 +615,12 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 else {
                                                                   $urlalias = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                                                                 }
-                                                                
-                                                                $nodetitle = '';
+
                                                                 if (!empty($nodeloads->title)) {
                                                                   $data_title = strip_tags($nodeloads->title);
                                                                   $nodetitle = truncate_utf8($data_title, 120, FALSE, TRUE, 1);
                                                                 }
 
-                                                                $nodedata = '';
                                                                 if (!empty($nodeloads->body)) {
                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
                                                                   $nodedata = truncate_utf8($datanode, 120, FALSE, TRUE, 1); 
@@ -721,22 +708,18 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                     <td style="line-height: normal; vertical-align: top; text-align: left; width: 100%; max-width: 540px; padding: 0;">
                                                                                       <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
                                                                                         <tr>
-                                                                                          <td style="padding: 0;">
+                                                                                          <td style="padding: 0 0 7px 0;">
                                                                                             <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 100%;"><span style="color: #999999;">' . $category_name . '</span></div>
                                                                                             <div style="display: block; color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 100%;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
                                                                                             <div style="display: block; font-family: arial; font-size: 13px; color: #808080; width: 100%;">' . $nodedata . '</div>
                                                                                           </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                          <td style="padding: 7px 0 0 0; vertical-align:middle;">
-                                                                                            <table style="border: none; width: 100%; margin: 0px auto; border-collapse: collapse;">
-                                                                                              <tr>
-                                                                                                <td style="padding: 0;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank">'. $linkedin_recommendations .'</a></td>
-                                                                                                <td style="text-align: right;color: #999; font-size:12px; padding: 0; font-family: arial;">
-                                                                                                  Share on:&nbsp;&nbsp; <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px;" target="_blank">LinkedIN</a>&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Twitter</a>&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Facebook</a>&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block;" target="_blank">Google+</a>
-                                                                                                </td>
-                                                                                              </tr>
-                                                                                            </table>
+                                                                                          <td style="padding: 0; vertical-align:middle;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank">'. $linkedin_recommendations .'</a></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                          <td style="color: #999; font-size:12px; padding: 15px 0 7px 0; font-family: arial;">
+                                                                                            <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px; text-decoration:none;" target="_blank">LinkedIN</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Twitter</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Facebook</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">G+</a>
                                                                                           </td>
                                                                                         </tr>
                                                                                       </table>
@@ -764,7 +747,7 @@ function select_user_list_form_submit($form, &$form_state) {
                 </tr>
                 <tr>
                   <td style="padding: 0 0 20px 0; text-align: center;" align="center">
-                    <p style="text-align: center;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="'. $base_url . '/contact" target="_blank"><span style="color: #2e8cf0; text-align: center; border:none; font-family: arial;"><span style="border:none; text-align: center; font-family: arial, helvetica, sans-serif; font-size: 13px;">Have a question? Contact Us</span></span></a></p>
+                    <p style="text-align: center;"><a style="color: #2e8cf0; font-size: 13px; text-decoration: none; font-family: arial;" href="'. $base_url . '/contact" target="_blank"><span style="color: #2e8cf0; text-align: center; border:none; font-family: arial;"><span style="border:none; text-align: center; font-family: arial, helvetica, sans-serif; font-size: 13px;">Have a question? Contact us!</span></span></a></p>
                     <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">MortgageSpeak</p>
                     <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">1625 W. Balmoral Avenue</p>
                     <p style="font-family: arial; text-align: center; border:none; color: #999999; font-size: 13px;">Suite #2</p>
