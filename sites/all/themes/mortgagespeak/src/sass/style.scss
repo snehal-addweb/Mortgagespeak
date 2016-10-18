@@ -1841,20 +1841,6 @@ a {
 }
 /* End */
 
-/* LinkedIN recommendations */
-.page-linkedin-recommendations {
-  h1.page-header {
-    &::before {
-      display: inline-block;
-      height: 58px;
-      width: 240px;
-      margin-top: -10px;
-      background-image: url('../images/linkedin-title-img.png');
-      vertical-align: middle;
-      content: '';
-    }
-  }
-}
 
 /**
  * Header fillter section
@@ -1865,7 +1851,7 @@ a {
 .page-linkedin-recommendations,
 .page-connected-companies {
   h1.page-header {
-    padding: 40px 0 40px 10px;
+    padding: 43px 0 43px 10px;
     border-bottom: none;
     font-size: 40px;
     text-transform: capitalize;
@@ -1965,6 +1951,22 @@ a {
   }
 }
 
+/* LinkedIN recommendations */
+.page-linkedin-recommendations {
+  h1.page-header {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    &::before {
+      display: inline-block;
+      height: 58px;
+      width: 240px;
+      margin-top: -10px;
+      background-image: url('../images/linkedin-title-img.png');
+      vertical-align: middle;
+      content: '';
+    }
+  }
+}
 
 
 /**
