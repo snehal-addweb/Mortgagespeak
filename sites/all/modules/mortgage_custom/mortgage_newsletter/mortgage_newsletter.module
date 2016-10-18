@@ -409,7 +409,7 @@ function select_user_list_form_submit($form, &$form_state) {
                           <table cellpadding="10" style="width: 100%; margin: 5px auto; border-spacing:0; border-collapse: collapse; padding: 0; background-color: #2e8cf0; border: 1px solid #2e8cf0; ">
                             <tbody>
                               <tr>
-                                <td style="padding: 0 40px; margin:0; line-height: normal; ">
+                                <td style="padding: 0 20px; margin:0; line-height: normal; ">
                                 <table align="center" class="header-table" style="margin: 0px auto; width: 100%; border-collapse: collapse; padding: 0; border: none; line-height: normal; ">
                                   <tbody>
                                     <tr>
@@ -724,7 +724,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                         '. $linkedin_recommendations .'
                                                                                         <tr>
                                                                                           <td style="color: #999; font-size:12px; padding: 10px 0 7px 0; font-family: arial;">
-                                                                                            <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px; text-decoration:none;" target="_blank">LinkedIN</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Twitter</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Facebook</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">G+</a>
+                                                                                            <a href="'. $share_linked.'" style="display:inline-block; font-family: arial; color:#2e8cf0; font-size:12px; text-decoration:none;" target="_blank">LinkedIN</a>&nbsp;&nbsp;&nbsp;<a href="'. $share_twitter.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Twitter</a>&nbsp;&nbsp;&nbsp;<a href="'. $share_fb.'" style="font-family: arial; color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">Facebook</a>&nbsp;&nbsp;&nbsp;<a href="'. $share_google .'" style="font-family: arial;color:#2e8cf0; font-size:12px; display:inline-block; text-decoration:none;" target="_blank">G+</a>
                                                                                           </td>
                                                                                         </tr>
                                                                                       </table>
