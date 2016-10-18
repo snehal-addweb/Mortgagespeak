@@ -1844,10 +1844,6 @@ a {
 /* LinkedIN recommendations */
 .page-linkedin-recommendations {
   h1.page-header {
-    padding: 40px 0;
-    border-bottom: none;
-    font-size: 40px;
-    text-transform: capitalize;
     &::before {
       display: inline-block;
       height: 58px;
@@ -1868,6 +1864,12 @@ a {
  */
 .page-linkedin-recommendations,
 .page-connected-companies {
+  h1.page-header {
+    padding: 40px 0 40px 10px;
+    border-bottom: none;
+    font-size: 40px;
+    text-transform: capitalize;
+  }
   .content-lists {
     .view-header {
       position: relative;
