@@ -614,13 +614,13 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 if (!empty($nodeloads->body)) {
                                                                   $datanode = strip_tags($nodeloads->body['und'][0]['value']);
                                                                   $nodedata = truncate_utf8($datanode, 150, FALSE, TRUE, 1); 
-                                                                  $share_linked_data = trim(html_entity_decode($datanode));
+                                                                  $share_linked_data = trim(html_entity_decode($nodedata));
                                                                 }
 
                                                                 $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='. $social_url. '&summary='. $share_linked_data, 'twitter'=>'https://twitter.com/intent/tweet?&text='. $strtitle .'&url='. $social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $strtitle, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $strtitle);
 
                                                                 $getshorturl = googleGenerateShortURL($longurl);
-                                                                 
+
                                                                 foreach($getshorturl as $key => $shrturl) {
                                                                   $share_linked = $getshorturl['linked'];
                                                                   $share_twitter = $getshorturl['twitter'];
