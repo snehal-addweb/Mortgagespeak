@@ -584,6 +584,10 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $share_google = '';
                                                                 $nodetitle = '';
                                                                 $nodedata = '';
+                                                                $strtitle = '';
+                                                                $social_url = '';
+                                                                $getshorturl = '';
+                                                                $longurl = '';
                                                                 $nodeloads = node_load($node_id);
                                                                 $linkedin_recommendations = '';
 
@@ -592,7 +596,9 @@ function select_user_list_form_submit($form, &$form_state) {
 
                                                                 // google short url
                                                                 $social_url = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
-                                                                $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='.$social_url. '&summary='. $strtitle,'twitter'=>'https://twitter.com/intent/tweet?&text='. $strtitle .'&url='. $social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $strtitle, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $strtitle);
+                                                                $social_url = urlencode(html_entity_decode($social_url, ENT_COMPAT, 'UTF-8'));
+
+                                                                $longurl = array('linked'=>'http://www.linkedin.com/shareArticle?mini=true&url='. $social_url. '&summary='. $strtitle, 'twitter'=>'https://twitter.com/intent/tweet?&text='. $strtitle .'&url='. $social_url, 'google' => 'https://plus.google.com/share?url='. $social_url .'&body='. $strtitle, 'fb'=>'http://www.facebook.com/sharer.php?u='. $social_url .'&t='. $strtitle);
 
                                                                 $getshorturl = googleGenerateShortURL($longurl);
                                                                  
