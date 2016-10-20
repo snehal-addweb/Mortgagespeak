@@ -599,19 +599,6 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 $social_url = $url_pressrelease . '/' . drupal_get_path_alias('node/' . $nodeloads->nid);
                                                                 $social_url = urlencode(html_entity_decode($social_url, ENT_COMPAT, 'UTF-8'));
 
-                                                                // Link Recommendations image
-                                                                if(isset($nodeloads->field_recommended_for_linkedin) && !empty($nodeloads->field_recommended_for_linkedin)) {
-                                                                  if($nodeloads->field_recommended_for_linkedin[LANGUAGE_NONE][0]['value'] == 1) {
-                                                                    $linkedin_recommendations =  '<tr>
-                                                                        <td style="padding: 7px 0 4px 0; vertical-align:middle;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank"><img src="' . $linkcheck_mark . '" alt="linkedin"/></a></td>
-                                                                      </tr>';
-                                                                    //$linkedin_recommendations = '<img src="' . $linkcheck_mark . '" alt="linkedin"/>';
-                                                                  }
-                                                                  else {
-                                                                    $linkedin_recommendations = '';
-                                                                  }
-                                                                }
-
                                                                 if (!empty($nodeloads->field_url)) {
                                                                   $urlalias = $nodeloads->field_url[LANGUAGE_NONE][0]['value'];
                                                                 }
@@ -639,6 +626,20 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                   $share_twitter = $getshorturl['twitter'];
                                                                   $share_google = $getshorturl['google'];
                                                                   $share_fb = $getshorturl['fb'];
+                                                                }
+
+                                                                
+                                                                // Link Recommendations image
+                                                                if(isset($nodeloads->field_recommended_for_linkedin) && !empty($nodeloads->field_recommended_for_linkedin)) {
+                                                                  if($nodeloads->field_recommended_for_linkedin[LANGUAGE_NONE][0]['value'] == 1) {
+                                                                    $linkedin_recommendations =  '<tr>
+                                                                        <td style="padding: 7px 0 4px 0; vertical-align:middle;"><a href="'. $share_linked .'" style="display:inline-block;" target="_blank"><img src="' . $linkcheck_mark . '" alt="linkedin"/></a></td>
+                                                                      </tr>';
+                                                                    //$linkedin_recommendations = '<img src="' . $linkcheck_mark . '" alt="linkedin"/>';
+                                                                  }
+                                                                  else {
+                                                                    $linkedin_recommendations = '';
+                                                                  }
                                                                 }
 
                                                                 $company_image = '';
