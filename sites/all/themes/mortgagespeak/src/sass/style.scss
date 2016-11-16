@@ -497,6 +497,9 @@ a {
 }
 
 /* Common Content lists */
+#block-views-editors-pick-block-1 {
+  clear: left;
+}
 .view-editors-pick {
   display: inline-block;
   width: 100%;
@@ -2403,8 +2406,10 @@ a {
       display: inline-block;
       width: 100%;
       padding: 20px;
+      color: #333333;
+      font-family: arial;
       font-size: 16px;
-      line-height: normal;
+      line-height: 2.25;
     }
   }
 }
