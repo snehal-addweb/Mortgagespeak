@@ -79,7 +79,7 @@
 			<div class="share-icon linkedin-share" title="Share on LinkedIN">
 				<!-- <script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
 				<script type="IN/Share"></script> -->
-        <a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $share_linked_data; ?>" target="_blank" class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+        <a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $share_linked_data; ?>" target="_blank" class="linkedinshare" title="Share on LinkedIN">twitter</a>
 			</div>
 
 			<div class="share-icon google-plus-share">
