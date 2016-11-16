@@ -21,6 +21,8 @@
 
 	$title = $row['title'];
 	$body = strip_tags($row['body']);
+  $nodedata = truncate_utf8($body, 150, FALSE, TRUE, 1); 
+  $share_linked_data = trim(html_entity_decode($nodedata));
 	$nid = $row['nid'];
 	$url1 = $fullurl . '/' . drupal_get_path_alias('node/' . $row['nid']);
 	$strFinal  =  $row['title'];	//. '   ' . $body;
@@ -111,7 +113,7 @@
 			  <div class="sharethis-wrapper">
 
 					<span class="chicklets linkedin">
-						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $strFinal; ?>" target="_blank" class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $share_linked_data; ?>" target="_blank" class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
 					</span>
 
 					<span class="chicklets facebook">

@@ -40,7 +40,7 @@
 <div class="popup-header">
 	<div class="popup-title">Excerpt</div>
 	<div class="tooltips">
-		<div class="whats-this">(<span>What's this?</span>)</div>
+		<!-- <div class="whats-this">(<span>What's this?</span>)</div> -->
 		<div class="tooltip-content">Save time. Article key point.</div>
 	</div>
 	<a href="javascript:void(0);" class="close-popup">x</a>
@@ -48,6 +48,8 @@
 	<?php foreach ($rows as $id => $row): 
 		$title = $row['title'];
 		$body = $row['body'];
+		$nodedata = truncate_utf8($body, 150, FALSE, TRUE, 1); 
+  	$share_linked_data = trim(html_entity_decode($nodedata));
 		$nid = $row['nid'];
 
 		$flag_link = '';
@@ -95,13 +97,13 @@
 					</a>
 				</div>
 				<div class="views-field views-field-sharethis">
-					<div class="view-on-web"><a href="<?php print $pop_title_link;?>" target="_blank">View on web</a></div>
+					<div class="view-on-web"><a href="<?php print $pop_title_link;?>" target="_blank">Read full article</a></div>
 					<div class="sharethis-content">
 					  <span class="field-content">
 						  <div class="sharethis-wrapper">
 
 								<span class="chicklets linkedin">
-									<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $strFinal; ?>" target='_blank' class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
+									<a href="http://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&summary=<?php print $share_linked_data; ?>" target='_blank' class="linkedinshare" title="Share on LinkedIN"><img src="/sites/all/themes/mortgage_new_theme/images/link.png"/></a>
 								</span>
 
 								<span class="chicklets facebook">
