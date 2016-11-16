@@ -633,7 +633,7 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                 if(isset($nodeloads->field_recommended_for_linkedin) && !empty($nodeloads->field_recommended_for_linkedin)) {
                                                                   if($nodeloads->field_recommended_for_linkedin[LANGUAGE_NONE][0]['value'] == 1) {
                                                                     $linkedin_recommendations =  '<tr>
-                                                                        <td style="padding: 7px 0 4px 0; vertical-align:middle;"><a href="#" style="display:inline-block;" target="_blank"><img src="' . $linkcheck_mark . '" alt="Share this on LinkedIN." title="Share this on LinkedIN."/></a></td>
+                                                                        <td style="padding: 7px 0 4px 0; vertical-align:middle;"><img src="' . $linkcheck_mark . '" alt="Share this on LinkedIN." title="Share this on LinkedIN." style="display:inline-block;"/></td>
                                                                       </tr>';
                                                                     //$linkedin_recommendations = '<img src="' . $linkcheck_mark . '" alt="linkedin"/>';
                                                                   }
