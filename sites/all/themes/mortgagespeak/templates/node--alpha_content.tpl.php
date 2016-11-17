@@ -20,6 +20,9 @@
 	$body = '';
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 	$url = $fullurl . '/' . drupal_get_path_alias('node/' . $node->nid);
+  $strFinal  =  $node->title;
+  $strFinal = str_replace("\"", "'", $strFinal);
+  $strFinal = str_replace("%", "%25", $strFinal);
 	if(!empty($node->body['und']) && isset($node->body['und'])){
 		$node_body = $node->body['und'][0]['value'];
 		$body = strip_tags($node_body);
@@ -71,11 +74,11 @@
 		</div>
 		<div class="share-icons">
 			<div class="share-icon facebook-share">
-				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $node->title; ?>" class="prfacebook" target="_blank" title="Share on Facebook">fb</a>
+				<a href="http://www.facebook.com/sharer.php?u=<?php echo $url; ?>&t=<?php echo $strFinal ?>" class="prfacebook" target="_blank" title="Share on Facebook">fb</a>
 			</div>
 
 			<div class="share-icon twitter-share">
-				<a href="https://twitter.com/share?&text=<?php print $node->title;?>&url=<?php print $url; ?>" target="_blank" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none" title="Share on Twitter">twitter</a>
+				<a href="https://twitter.com/share?&text=<?php print $strFinal;?>&url=<?php print $url; ?>" target="_blank" class="prtwitter-share-button" data-via="MortgageSpeak" data-count="none" title="Share on Twitter">twitter</a>
 			</div>
 
 			<div class="share-icon linkedin-share" title="Share on LinkedIN">
