@@ -50,6 +50,7 @@
 	}
 	$strFinal  =  $row['title'];	//. '   ' . $body;
 	$strFinal = str_replace("\"", "'", $strFinal);
+	$strFinal = str_replace("%", "%25", $strFinal);
 	$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
 
 	$node_created = $row['created'];

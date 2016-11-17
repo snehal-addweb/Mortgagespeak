@@ -86,8 +86,13 @@
 		}
 
 		$strFinal  =  $row['title'];	//. '   ' . $row['body'];
+		$strFinal = htmlspecialchars_decode($strFinal, ENT_QUOTES);
+
 		$strFinal = str_replace("\"", "'", $strFinal);
+		$strFinal = str_replace("%", "%25", $strFinal);
+
 		$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
+
 		?>
 
 	  <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
