@@ -726,8 +726,8 @@ function select_user_list_form_submit($form, &$form_state) {
                                                                                         <tr>
                                                                                           <td style="padding: 0 0 0 0;">
                                                                                             <div style="vertical-align: top; color: #b8b8b8; font-family: arial; font-size: 10px; margin-bottom: 3px; width: 100%;"><span style="color: #999999;">' . $category_name . '</span></div>
-                                                                                            <div style="display: block; color: #2e8cf0; font-size: 14px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 100%;"><a style="color: #2e8cf0; font-size: 20px; text-decoration: none; font-family: arial;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
-                                                                                            <div style="display: block; font-family: arial; font-size: 14px; color: #808080; width: 100%;">' . $nodedata . '</div>
+                                                                                            <div style="display: block; color: #2e8cf0; font-size: 14px; text-decoration: none; font-family: arial; margin-bottom: 3px; width: 100%;"><a style="color: #2e8cf0; font-size: 20px; text-decoration: none; font-family: arial; line-height: 1.5;" href="' . $url . '" target="_blank">' . $nodetitle . '</a></div>
+                                                                                            <div style="display: block; font-family: arial; font-size: 14px; color: #808080; width: 100%; line-height: 1.5;">' . $nodedata . '</div>
                                                                                           </td>
                                                                                         </tr>
                                                                                         '. $linkedin_recommendations .'
