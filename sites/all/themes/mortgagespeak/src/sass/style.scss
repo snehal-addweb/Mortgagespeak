@@ -815,10 +815,9 @@ a {
       .field-content {
         .sharethis-wrapper {
           float: left;
-          span.chicklets {
+          /*span.chicklets {
             float: left;
             height: 20px;
-            /*width: 15px;*/
             margin: 0 25px 0 0;
             padding: 0;
             background-color: transparent;
@@ -850,7 +849,7 @@ a {
               background-image: url('../images/copysmall.png');
               color: transparent;
             }
-          }
+          }*/
         }
         .flag-saved-articles {
           float: left;
@@ -1374,6 +1373,76 @@ a {
     margin-left: 15px;
   }
 }
+/* End */
+
+/* Social icon */
+.sharethis-wrapper {
+  float: left;
+  span.chicklets {
+    float: left;
+    height: 20px;
+    /*width: 15px;*/
+    margin: 0 25px 0 0;
+    padding: 0;
+    background-color: transparent;
+    @media screen and (max-width: $mobile) {
+      margin-right: 15px;
+      margin-bottom: 3px;
+    }
+    &.email {
+      margin-top: 1px;
+    }
+    a {
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      img {
+        display: none;
+      }
+    }
+    .linkedinshare { height: 24px; width: 144px; margin-top: -3px; background-image: url('../images/linked-in.png'); }
+    .facebook { width: 8px; background-image: url('../images/facebook-sm.png'); }
+    .twitter-share-button { width: 14px; background-image: url('../images/twitter-sm.png'); }
+    .google { width: 22px; background-image: url('../images/google-plus-sm.png'); }
+    .email { width: 20px; background-image: url('../images/email-sm.png'); }
+    .copy-link {
+      width: 20px;
+      padding: 0 20px 0 0;
+      background-image: url('../images/copysmall.png');
+      color: transparent;
+    }
+    &.copy-to-clipboard {
+      .js-copytextarea {
+        position: absolute;
+        top: 0;
+        left: -2000px;
+      }
+    }
+  }
+}
+.flag-saved-articles {
+  float: left;
+  a {
+    float: left;
+    height: 16px;
+    width: 15px;
+    margin: 0 15px 0 0;
+    background-image: url('../images/star-sm.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+    &.flag-action {
+      background-image: url('../images/star-blank-sm.png');
+    }
+  }
+  .flag-throbber {
+    float: left;
+    width: auto;
+  }
+}
+/* End */
 
 
 .content-lists .view-filters #views-exposed-form-newsroom-companies-page .views-exposed-form .input-group,

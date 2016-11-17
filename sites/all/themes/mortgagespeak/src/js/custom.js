@@ -64,15 +64,15 @@ jQuery(document).ready(function() {
   /* Editor pick popup */
   jQuery('.click-title').click(function(e) {
     e.stopPropagation();
-    jQuery(this).parents('.views-row').children('.views-popup-container').addClass('open-popup');
+    // jQuery(this).parents('.views-row').children('.views-popup-container').addClass('open-popup');
     
-    // if(jQuery(this).parents('.views-row').children('.views-popup-container').hasClass('open-popup')) {
-    //     jQuery(this).parents('.views-row').children('.open-popup').removeClass('open-popup');
-    // }
-    // else {
-    //   jQuery('.views-popup-container').removeClass('open-popup');
-    //   jQuery(this).parents('.views-row').children('.views-popup-container').addClass('open-popup');
-    // }
+    if(jQuery(this).parents('.views-row').children('.views-popup-container').hasClass('open-popup')) {
+        jQuery(this).parents('.views-row').children('.open-popup').removeClass('open-popup');
+    }
+    else {
+      jQuery('.views-popup-container').removeClass('open-popup');
+      jQuery(this).parents('.views-row').children('.views-popup-container').addClass('open-popup');
+    }
   });
 
   jQuery('.views-popup-container .popup-header .close-popup').click(function() {
