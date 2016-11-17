@@ -16,10 +16,12 @@
     <div class="views-field views-field-title">
       <span class="field-content">
         <!-- <a href="<?php print $row['field_url']; ?>"> -->
+        <div class="editor-title click-title">
           <div class="editor-pick">
             <div class="ed-img"></div>
             <span><?php print $row['title']; ?></span>
           </div>
+        </div>
       <!--   </a> -->
       </span>
     </div>
