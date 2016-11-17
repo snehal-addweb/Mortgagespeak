@@ -25,6 +25,8 @@
 		$body = strip_tags($node_body);
     $nodedata = truncate_utf8($body, 150, FALSE, TRUE, 1); 
     $share_linked_data = trim(html_entity_decode($nodedata));
+    $share_linked_data = str_replace("\"", "'", $share_linked_data);
+
 	}
 	$flag_link = '';
   $flag_dest = '';
