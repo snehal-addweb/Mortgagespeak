@@ -183,7 +183,8 @@ function mortgage_stats() {
 
     $newsletter_urls = db_query($qry_news_sel);
 
-    $base_url1 = 'http://mortgage.saurabhdhariwal.com/';
+    $base_url1 = array('http://mortgagespeak.com/','http://www.mortgagespeak.com/');
+    //$base_url1 = $base_url;
     $arr_newsletter_nids = array();
     $index = 0;
     $index1 = 0;
@@ -209,7 +210,7 @@ function mortgage_stats() {
 
       foreach ($rowinfo1 as $key => $value) {
         $nid = $value->nid;
-        //$arrNewsletterNids[$nid] = $nid;
+        $arrNewsletterNids[$nid] = $nid;
         $arr_newsletter_nids[$index]['nid'] = $nid;
         $arr_newsletter_nids[$index]['created'] = $news_rowinfo['created'];
         $arr_newsletter_nids[$index]['mail'] = $news_rowinfo['mail'];
@@ -230,8 +231,6 @@ function mortgage_stats() {
         $index++;
       }
     }
-
-
 
     // Fetch Data from Newsletter Nids
     $final = 0;
