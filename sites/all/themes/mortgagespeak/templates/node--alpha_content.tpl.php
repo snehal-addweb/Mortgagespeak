@@ -21,14 +21,12 @@
 	$fullurl = 'http://' .$_SERVER['HTTP_HOST'];
 	$url = $fullurl . '/' . drupal_get_path_alias('node/' . $node->nid);
   $strFinal  =  $node->title;
-  $strFinal = str_replace("\"", "'", $strFinal);
-  $strFinal = str_replace("%", "%25", $strFinal);
+  $strFinal = urlencode(html_entity_decode($strFinal, ENT_COMPAT, 'UTF-8'));
 	if(!empty($node->body['und']) && isset($node->body['und'])){
 		$node_body = $node->body['und'][0]['value'];
 		$body = strip_tags($node_body);
     $nodedata = truncate_utf8($body, 150, FALSE, TRUE, 1); 
-    $share_linked_data = trim(html_entity_decode($nodedata));
-    $share_linked_data = str_replace("\"", "'", $share_linked_data);
+    $share_linked_data = urlencode(html_entity_decode($nodedata, ENT_COMPAT, 'UTF-8'));
 
 	}
 	$flag_link = '';

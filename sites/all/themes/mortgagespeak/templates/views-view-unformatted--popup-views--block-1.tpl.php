@@ -49,8 +49,7 @@
 		$title = $row['title'];
 		$body = $row['body'];
 		$nodedata = truncate_utf8($body, 150, FALSE, TRUE, 1); 
-	  $share_linked_data = trim(html_entity_decode($nodedata));
-	  $share_linked_data = str_replace("\"", "'", $share_linked_data);
+  	$share_linked_data = urlencode(html_entity_decode($nodedata, ENT_COMPAT, 'UTF-8'));
 		$nid = $row['nid'];
 
 		$flag_link = '';

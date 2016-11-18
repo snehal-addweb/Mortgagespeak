@@ -22,13 +22,11 @@
 	$title = $row['title'];
 	$body = strip_tags($row['body']);
   $nodedata = truncate_utf8($body, 150, FALSE, TRUE, 1); 
-  $share_linked_data = trim(html_entity_decode($nodedata));
-  $share_linked_data = str_replace("\"", "'", $share_linked_data);
+  $share_linked_data = urlencode(html_entity_decode($nodedata, ENT_COMPAT, 'UTF-8'));
 	$nid = $row['nid'];
 	$url1 = $fullurl . '/' . drupal_get_path_alias('node/' . $row['nid']);
 	$strFinal  =  $row['title'];	//. '   ' . $body;
-	$strFinal = str_replace("\"", "'", $strFinal);
-  $strFinal = str_replace("%", "%25", $strFinal);
+  $strFinal = urlencode(html_entity_decode($strFinal, ENT_COMPAT, 'UTF-8'));
 	$url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
 	$node_created = '';
 
