@@ -330,16 +330,40 @@ function mortgage_misc_mail_alter(&$message) {
     $password = '';
     $faf_tid = '';
     $pub_tid = '';
+    $str_ms_tids = 0;
+    $arr_faf_simple_news = array();
 
     // Mortgage Solutions "News Intelligence" tid for FAF
-    $faf_tid_obj = taxonomy_get_term_by_name('Mortgage Solutions "News Intelligence"');
-    if(isset($faf_tid_obj) && !empty($faf_tid_obj)) {
+    //$faf_tid_obj = taxonomy_get_term_by_name('Mortgage Solutions "News Intelligence"');
+    $mort_solutions_tids = "'Mortgage Solutions \"News Intelligence\"', 'Mortgage Solutions \"News Intelligence\" - Staff', 'Mortgage Solutions \"News Intelligence\" - Admin'";
+    $arr_mort_solutions_tids = db_query("SELECT tid from taxonomy_term_data WHERE name IN ($mort_solutions_tids)");
+    $mort_sol_results = $arr_mort_solutions_tids->fetchAll(); 
+    foreach ($mort_sol_results as $mskey => $msvalue) {
+      $arr_ms_tids[] = $msvalue->tid;
+    }
+
+    if(!empty($arr_ms_tids)) {
+      $str_ms_tids = implode(',', $arr_ms_tids);
+    }
+
+    /*if(isset($faf_tid_obj) && !empty($faf_tid_obj)) {
       foreach ($faf_tid_obj as $faf_key => $faf_value) {
        $faf_tid = $faf_value->tid;
       }
-    }
+    }*/
 
-    $arr_faf_simple_news = simplenews_get_subscriptions_by_list($faf_tid);
+    //$arr_faf_simple_news = simplenews_get_subscriptions_by_list($faf_tid);
+
+    if(!empty($arr_ms_tids)) {
+      $query = db_select('simplenews_subscriber', 'sn');
+      $query->innerJoin('simplenews_subscription', 'ss', 'ss.snid = sn.snid');
+      $query->fields('sn', array('mail', 'uid', 'language', 'snid'))
+      ->fields('ss', array('status'))
+      ->condition('sn.activated', 1)
+      ->condition('ss.tid', $arr_ms_tids,'IN')
+      ->condition('ss.status', SIMPLENEWS_SUBSCRIPTION_STATUS_SUBSCRIBED);
+      $arr_faf_simple_news = $query->execute()->fetchAllAssoc('mail');
+    }
 
     if(!empty($arr_faf_simple_news)) {
 
