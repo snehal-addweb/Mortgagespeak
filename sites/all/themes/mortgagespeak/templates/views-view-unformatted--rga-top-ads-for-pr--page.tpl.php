@@ -44,14 +44,13 @@
 
   $node_created = $row['created'];
   $node_created_month = date('M', $node_created);
-  $node_created_date = date('d', $node_created);
+  $node_created_date = date('Y', $node_created);
   $node_created_day = date('D', $node_created); 
 
   $node_date = '';
   $node_date .= '<div class="node-created">
                   <div class="node-month"> ' . $node_created_month . '</div>
                   <div class="node-date"> ' . $node_created_date . '</div>
-                  <div class="node-day"> ' . $node_created_day . '</div>
                 </div>';
 ?>
 
