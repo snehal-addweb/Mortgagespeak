@@ -711,15 +711,17 @@ a {
             color: $white;
           }
           .node-date {
+            padding-top: 7px;
             padding-right: 1px;
+            padding-bottom: 7px;
             color: #2F2F2F;
-            font-size: 20px;
+            font-size: 16px;
             line-height: 20px;
             font-weight: bold;
           }
-          .node-day {
+          /*.node-day {
             color: #FD9F1B;
-          }
+          }*/
         }
       }
     }
@@ -2451,20 +2453,26 @@ a {
         display: inline-block;
         width: 100%;
         padding: 0 20px;
+        text-align: center;
         a {
           display: inline-block;
-          width: auto;
-          padding: 4px 10px;
-          background-color: #126EDC;
-          color: $white;
-          font-size: 14px;
-          letter-spacing: 1px;
-          @include border-radius(3px);
+          max-width: 615px;
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #126EDC;
+          background-color: $white;
+          color: #126EDC;
+          font-size: 15px;
+          text-transform: uppercase;
+          @include border-radius(5px);
+          @include transition(all .5s ease 0s);
           &:hover,
           &:focus {
+            background-color: #126EDC;
+            color: $white;
             text-decoration: none;
           }
-          &::after {
+          /*&::after {
             display: inline-block;
             height: 10px;
             width: 18px;
@@ -2472,7 +2480,7 @@ a {
             background-image: url('../images/arrow-icon.png');
             background-repeat: no-repeat;
             content: '';
-          }
+          }*/
         }
       }
     }

@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
     jQuery('.views-popup-container').removeClass('open-popup');
   });
 
-  jQuery('.views-popup-container').click(function(e) {
+  /*jQuery('.views-popup-container').click(function(e) {
     e.stopPropagation();
   });
 
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 
   jQuery('.views-popup-container .popup-header .close-popup').click(function() {
     jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
-  });
+  });*/
 
   jQuery(document).keydown(function(e) {
     if (e.keyCode == 27) {

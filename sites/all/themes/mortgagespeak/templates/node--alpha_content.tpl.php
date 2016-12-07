@@ -123,7 +123,7 @@
   if(isset($node->field_url[LANGUAGE_NONE]) && !empty($node->field_url[LANGUAGE_NONE])) {
     $ext_url = $node->field_url[LANGUAGE_NONE][0]['value'];
     ?>
-      <div class="ext-read-more"><a href="<?php print $ext_url?>" target="_blank">Read More</a></div>
+      <div class="ext-read-more"><a href="<?php print $ext_url?>" target="_blank">Read full article</a></div>
     <?php
   }
   ?></div>
