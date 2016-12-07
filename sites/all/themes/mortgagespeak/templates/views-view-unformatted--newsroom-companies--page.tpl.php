@@ -53,7 +53,7 @@
     $url1 = $fullurl . '/' . drupal_get_path_alias('node/' . $row['nid']);
   }
   $strFinal  =  $row['title'];  //. '   ' . $body;
-  $strFinal = str_replace("\"", "'", $strFinal);
+  $strFinal = urlencode(html_entity_decode($strFinal, ENT_COMPAT, 'UTF-8'));
   $url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
     
   $company_image = image_style_url($THUMBNAIL_STYLE,'All-companies.png');
