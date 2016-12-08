@@ -31,15 +31,17 @@
   $url = urlencode(html_entity_decode($url1, ENT_COMPAT, 'UTF-8'));
 
 	$node_created = $row['created'];
-	$node_created_month = date('M', $node_created);
-  $node_created_date = date('Y', $node_created);
-	$node_created_day = date('D', $node_created); 
+  $node_created_month = date('M', $node_created);
+  $node_created_year = date('Y', $node_created);
+  $node_created_date = date('d', $node_created); 
 
   $node_date = '';
   $node_date .= '<div class="node-created">
                   <div class="node-month"> ' . $node_created_month . '</div>
                   <div class="node-date"> ' . $node_created_date . '</div>
+                  <div class="node-year"> ' . $node_created_year . '</div>
                 </div>';
+
 ?>
 
 <script type="text/javascript">
