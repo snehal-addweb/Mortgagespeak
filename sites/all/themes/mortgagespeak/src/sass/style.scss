@@ -711,17 +711,19 @@ a {
             color: $white;
           }
           .node-date {
-            padding-top: 7px;
+            padding-top: 3px;
             padding-right: 1px;
-            padding-bottom: 7px;
-            color: #2F2F2F;
+            color: #696B6F;
             font-size: 16px;
             line-height: 20px;
             font-weight: bold;
           }
-          /*.node-day {
+          .node-year {
+            padding-bottom: 2px;
             color: #FD9F1B;
-          }*/
+            font-size: 14px;
+            line-height: 16px;
+          }
         }
       }
     }

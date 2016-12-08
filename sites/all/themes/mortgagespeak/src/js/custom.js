@@ -31,11 +31,11 @@ jQuery(document).ready(function() {
   jQuery('.page-my-page-saved-articles ul.menu li:nth-child(2) a').addClass('active-trail active');
 
   /* Popup design */
-  jQuery('body').click(function() {
+  /*jQuery('body').click(function() {
     jQuery('.views-popup-container').removeClass('open-popup');
   });
 
-  /*jQuery('.views-popup-container').click(function(e) {
+  jQuery('.views-popup-container').click(function(e) {
     e.stopPropagation();
   });
 
@@ -52,20 +52,17 @@ jQuery(document).ready(function() {
 
   jQuery('.views-popup-container .popup-header .close-popup').click(function() {
     jQuery('.content-lists .content-list .views-popup-container').removeClass('open-popup');
-  });*/
+  });
 
   jQuery(document).keydown(function(e) {
     if (e.keyCode == 27) {
-        /*window.close();*/
         jQuery('.views-popup-container').removeClass('open-popup');
     }
-  });
+  });*/
 
   /* Editor pick popup */
-  jQuery('.click-title').click(function(e) {
+  /*jQuery('.click-title').click(function(e) {
     e.stopPropagation();
-    // jQuery(this).parents('.views-row').children('.views-popup-container').addClass('open-popup');
-    
     if(jQuery(this).parents('.views-row').children('.views-popup-container').hasClass('open-popup')) {
         jQuery(this).parents('.views-row').children('.open-popup').removeClass('open-popup');
     }
@@ -77,7 +74,7 @@ jQuery(document).ready(function() {
 
   jQuery('.views-popup-container .popup-header .close-popup').click(function() {
     jQuery('.views-popup-container').removeClass('open-popup');
-  });
+  });*/
   /* End */
 
   /* Custom input type file design */
