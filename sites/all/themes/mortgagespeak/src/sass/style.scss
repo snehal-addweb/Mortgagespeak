@@ -1759,8 +1759,8 @@ a {
         display: inline-block;
         padding: 4px 0;
         @media (min-width: 992px) {
-          -webkit-width: calc('100% - 420px');
-          -moz-width: calc('100% - 420px');
+          width: -webkit-calc('100% - 420px');
+          width: -moz-calc('100% - 420px');
           width: calc('100% - 420px');
         }
         .tracked-news-lists {
