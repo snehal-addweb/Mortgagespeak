@@ -304,7 +304,7 @@ a {
         float: left;
         height: 42px;
         margin: 0;
-        padding: 10px 22px;
+        padding: 10px 20px;
         border-top: 1px solid $border;
         border-bottom: 1px solid $border;
         border-left: 1px solid $border;
@@ -1757,13 +1757,19 @@ a {
       }
       .main-link-container {
         display: inline-block;
-        padding: 7px 0;
+        padding: 4px 0;
+        @media (min-width: 992px) {
+          -webkit-width: calc('100% - 420px');
+          -moz-width: calc('100% - 420px');
+          width: calc('100% - 420px');
+        }
         .tracked-news-lists {
           float: left;
           padding-top: 4px;
         }
         .tracked-news {
           display: inline-block;
+          margin: 3px 0;
           &.active {
             a {
               color: $gray-69;
@@ -1790,7 +1796,7 @@ a {
       .view-filters {
         float: right;
         /*padding-right: 30px;*/
-        @media screen and (max-width: $small-desktop) {
+        @media screen and (max-width: 992px) {
           float: left;
           margin-top: 5px;
         }
