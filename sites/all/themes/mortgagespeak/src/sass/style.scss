@@ -517,8 +517,16 @@ a {
       text-decoration: none;
     }
     .editor-pick {
+      position: relative;
       display: inline-block;
+      padding-left: 135px;
+      @media (max-width: 480px) {
+        padding-left: 0;
+      }
       .ed-img {
+        position: absolute;
+        top: 0;
+        left: 0;
         display: inline-block;
         height: 16px;
         width: 79px;
@@ -528,6 +536,14 @@ a {
         background-repeat: no-repeat;
         vertical-align: top;
         content: '';
+      }
+      @media (max-width: 480px) {
+        .ed-img { position: relative; }
+        > span {
+          display: inline-block;
+          width: 100%;
+          margin-top: 10px;
+        }
       }
     }
   }
