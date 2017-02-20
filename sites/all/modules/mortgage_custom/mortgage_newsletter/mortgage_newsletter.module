@@ -117,10 +117,25 @@ function select_user_list_form_submit($form, &$form_state) {
 
   $abbrtimezone = "CST";
   date_default_timezone_set(timezone_name_from_abbr($abbrtimezone));
-  $today              = strtotime("00:00:01");
-  $yesterday          = strtotime("-1 day", $today);
+  //$today              = strtotime("-1 day", strtotime(date("Y-m-d 07:00:01")));
+  $today              = strtotime(date("Y-m-d 19:00:01"));
+  //$today              = strtotime("00:00:01");
+  $yesterday          = strtotime("-24 hours", $today);
   $current            = strtotime("now");
-  
+
+/*  print('<pre style="color:red;">');
+  print_r($today);
+  print('</pre>');
+  print('yesterday<pre style="color:red;">');
+  print_r($yesterday);
+  print('</pre>');
+  print('current<pre style="color:red;">');
+  print_r($current);
+  print('</pre>');
+  exit;
+  exit;
+  exit;*/
+
   $arr_newslist = array();
   $url_pressrelease = 'http://' . $_SERVER['HTTP_HOST'];
 
@@ -176,7 +191,7 @@ function select_user_list_form_submit($form, &$form_state) {
           }
           else {
             if ($form_state['complete form']['#action'] == '/create-newsletter') {
-              $query->condition('n.created', array($today, $current), 'BETWEEN');
+              $query->condition('n.created', array($yesterday, $today), 'BETWEEN');
             }
           }
           
@@ -228,7 +243,7 @@ function select_user_list_form_submit($form, &$form_state) {
           }
           else {
             if ($form_state['complete form']['#action'] == '/create-newsletter') {
-              $query->condition('n.created', array($today, $current), 'BETWEEN');
+              $query->condition('n.created', array($yesterday, $today), 'BETWEEN');
             }
           }
 
@@ -271,7 +286,7 @@ function select_user_list_form_submit($form, &$form_state) {
           }
           else {
             if ($form_state['complete form']['#action'] == '/create-newsletter') {
-              $query->condition('n.created', array($today, $current), 'BETWEEN');
+              $query->condition('n.created', array($yesterday, $today), 'BETWEEN');
             }
           }
 
@@ -818,7 +833,7 @@ function mortgage_newsletter_public_users() {
   $body = '';
   $abbrtimezone = "CST";
   date_default_timezone_set(timezone_name_from_abbr($abbrtimezone));
-  $today              = strtotime("00:00:01");
+  $today              = strtotime(date("Y-m-d 19:00:01"));
   $yesterday          = strtotime("-1 day", $today);
   $current            = strtotime("now");
 
