@@ -119,6 +119,10 @@
 	} 
 	?>	
 	</div>
+  <div class="podcast-container"><?php
+    $podcast_content = views_embed_view('podcast_audio','block', $node->nid);
+    print $podcast_content;
+  ?></div>
   <div><?php
   if(isset($node->field_url[LANGUAGE_NONE]) && !empty($node->field_url[LANGUAGE_NONE])) {
     $ext_url = $node->field_url[LANGUAGE_NONE][0]['value'];
