@@ -2473,6 +2473,19 @@ a {
           }
         }
       }
+      .podcast-container {
+        .view {
+          display: inline-block;
+          width: 100%;
+          padding: 20px;
+          .views-label {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 16px;
+          }
+        }
+      }
       .ext-read-more {
         display: inline-block;
         width: 100%;
