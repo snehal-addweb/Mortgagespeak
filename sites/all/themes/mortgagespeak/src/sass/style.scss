@@ -2864,3 +2864,24 @@ iframe {
   }
 }
 /* End */
+
+/* Chart Design */
+#pie_chart_div,
+#bar_chart_div {
+  float: left;
+  width: 50% !important;
+  max-width: 500px;
+  margin-bottom: 20px;
+  @media (max-width: 992px) {
+    width: 100% !important;
+  }
+}
+#pie_chart_div {
+  g {
+    text {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+}
+/* End */
