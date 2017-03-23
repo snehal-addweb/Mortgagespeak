@@ -1,0 +1,5 @@
+name = Mortgage charts 
+description = Used for Making Custom Charts
+package = Mortgage Custom
+core = 7.x
+version = 7.x

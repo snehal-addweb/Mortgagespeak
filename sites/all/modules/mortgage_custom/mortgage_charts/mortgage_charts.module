@@ -1,0 +1,178 @@
+
+<?php
+
+/**
+ * @file
+ * Main file for the Mortgage Charts module, which containg different logics for custom charts related actions.
+ *
+ * @ingroup mortgage_charts
+ */
+
+
+/**
+* Implements hook_block_info().
+*/
+function mortgage_charts_block_info() {
+  $blocks = array();
+
+  $blocks['rga-pie-chart'] = array(
+    'info' => t('rga-pie-chart'),
+  );
+
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function mortgage_charts_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'rga-pie-chart':
+      $block['subject'] = '';
+      $block['content'] = mortgage_charts_pie_chart_block();
+      break;
+  }
+  return $block;
+}
+
+function mortgage_charts_pie_chart_block(){
+  global $user;
+  global $base_url;
+  $output = '';
+  $arr_rga_nodes['RGA'] = 0;
+  $arr_rga_nodes['Without RGA'] = 0;
+
+
+  // Get all ads_for_pr nids
+  $view = views_get_view('ads_for_pr');
+  $view->set_display('block_1');
+  $view->execute();
+  $objects = $view->result;
+
+  $terms = array();
+  foreach ($view->result as $node_data) {
+    $ads_for_pr_nids[$node_data->nid] = $node_data->nid;
+  }
+
+  $str_pr_nids =implode(',', $ads_for_pr_nids);
+
+ ########################################################
+  ###### Pie Chart
+ ########################################################
+  $rga_query = new EntityFieldQuery();
+  $rga_query
+  ->entityCondition('entity_type', 'node', '=')
+  ->propertyCondition('type', 'alpha_content')
+  ->propertyCondition('status', NODE_PUBLISHED)
+  ->fieldCondition('field_company_tag', 'tid', '552');
+
+  $result_rga_nodes = $rga_query->execute();
+
+  $wt_rga_query = new EntityFieldQuery();
+  $wt_rga_query
+  ->entityCondition('entity_type', 'node', '=')
+  ->propertyCondition('type', 'alpha_content')
+  ->propertyCondition('status', NODE_PUBLISHED)
+  ->fieldCondition('field_company_tag', 'tid', '552', '!=');
+
+  $result_wt_rga_nodes = $wt_rga_query->execute();
+
+  if (!empty($result_rga_nodes)){
+    $arr_rga_nodes['Releases with RGA'] = count($result_rga_nodes['node']);
+  }
+
+  if (!empty($result_wt_rga_nodes)) {
+    $arr_rga_nodes['Releases without RGA'] = count($result_wt_rga_nodes['node']);
+  }
+
+
+  // PIE chart
+  $output .= '<script type="text/javascript" src="https://www.google.com/jsapi"></script>';
+  $output .= '<script type="text/javascript">
+    google.load("visualization", "1.1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {';
+  foreach ($arr_rga_nodes as $key => $val) {
+
+    $str_row1 .= '["' . $key. '",' . $val. '],';
+  }
+  $str_row1 = trim($str_row1, ",");
+
+  $output .= 'var data = google.visualization.arrayToDataTable([
+              [\'Task\', \'Hours per Day\'],';
+  $output .=  $str_row1 . ']);';
+
+  $output .= ' var options = {
+              chartArea: {left:160,width:\'90%\'},
+              legend : {textStyle: {fontSize: 18}},
+            };
+            var chart = new google.visualization.PieChart(document.getElementById("pie_chart_div"));
+            chart.draw(data,options); 
+  }
+  </script>';
+
+
+ ########################################################
+  ###### BAr Chart
+ ########################################################
+
+
+  // Query for Bar chart
+  $com_tags = db_query("SELECT t.name , count(entity_id) nids 
+                        FROM field_data_field_company_tag ct, node n, taxonomy_term_data t 
+                        WHERE ct.entity_id = n.nid AND ct.field_company_tag_tid = t.tid 
+                        AND ct.field_company_tag_tid IN ('552', '212', '604', '685') 
+                        AND n.status = '1'
+                        AND n.nid IN ($str_pr_nids)
+                        GROUP by ct.field_company_tag_tid")->fetchAll();
+
+  if(!empty($com_tags)) {
+    foreach ($com_tags as $ckey => $cvalue) {
+       $arr_com_tags[$cvalue->name] = $cvalue->nids;
+    }
+  }
+
+  $non_tags_query = db_query("SELECT count(n.nid) AS nid
+                              FROM node n
+                              LEFT JOIN field_data_field_company_tag ct ON n.nid = ct.entity_id AND ct.entity_type = 'node' AND ct.deleted = '0' WHERE n.status = '1'AND n.nid IN ($str_pr_nids) AND n.type IN ('alpha_content') AND ct.field_company_tag_tid IS NULL")->fetchAll();
+
+
+  if (!empty($non_tags_query)){
+    $arr_com_tags['No company tags'] = $non_tags_query[0]->nid;
+  }
+
+    // Bar chart
+  $output .= '<script type="text/javascript">';
+  $output .= '
+    google.load("visualization", "1.1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {';
+  foreach ($arr_com_tags as $bkey => $bval) {
+
+    $str_row2 .= '["' . $bkey. '",' . $bval. '],';
+  }
+  $str_row2 = trim($str_row2, ",");
+
+  $output .= 'var bardata = google.visualization.arrayToDataTable([
+              [\'Task\', \'No of Releases\'],';
+  $output .=  $str_row2 . ']);';
+
+  $output .= 'var options = {
+              chartArea: {left:160,width:\'90%\'},
+              legend : {textStyle: {fontSize: 18}},
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById("bar_chart_div"));
+            chart.draw(bardata,options); 
+  }
+  </script>';
+
+  $output .=  '<div class="rga-charts"><div id="pie_chart_div" style="width: 500px; height: 300px"></div>';
+  $output .=  '<div id="bar_chart_div" style="width: 500px; height: 300px"></div></div>';
+  return $output;
+}
+
+
+
