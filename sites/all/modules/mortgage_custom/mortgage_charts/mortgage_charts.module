@@ -173,10 +173,10 @@ function mortgage_charts_pie_chart_block(){
 
 
   // Query for Bar chart
-  $com_tags_query .= "SELECT t.name , count(DISTINCT ct.entity_id) nids 
+  $com_tags_query .= "SELECT t.name, count(DISTINCT ct.entity_id) nids,  ct.field_company_tag_tid tid
                         FROM field_data_field_company_tag ct, node n, taxonomy_term_data t 
                         WHERE ct.entity_id = n.nid AND ct.field_company_tag_tid = t.tid 
-                        AND ct.field_company_tag_tid IN ('552', '212', '604', '685') 
+                        AND ct.field_company_tag_tid IN ('552', '212', '685', '604') 
                         AND n.status = '1'
                         AND n.type = 'alpha_content'
                         AND n.nid IN ($str_pr_nids)";
@@ -187,9 +187,26 @@ function mortgage_charts_pie_chart_block(){
 
   if(!empty($com_tags)) {
     foreach ($com_tags as $ckey => $cvalue) {
-       $arr_com_tags[$cvalue->name] = $cvalue->nids;
+       $arr_com_tags[$cvalue->tid] = $cvalue->nids;
     }
   }
+
+  if(isset($arr_com_tags['552'])) {
+    $arrg_com['Depth Public Relations'] = $arr_com_tags['212'];
+  }
+
+  if(isset($arr_com_tags['552'])) {
+    $arrg_com['RGA Public Relations'] = $arr_com_tags['552'];
+  }
+
+  if(isset($arr_com_tags['685'])) {
+    $arrg_com['William Mills Agency'] = $arr_com_tags['685'];
+  }
+
+  if(isset($arr_com_tags['604'])) {
+    $arrg_com['Strategic Vantage'] = $arr_com_tags['604'];
+  }
+
 
   $non_tags_query = '';
   $non_tags_query .= "SELECT DISTINCT node.nid AS nid FROM node node
@@ -204,11 +221,11 @@ function mortgage_charts_pie_chart_block(){
   $non_tags_results = db_query($non_tags_query)->fetchAll();
 
   if (!empty($non_tags_results)){
-    $arr_com_tags['Other'] = count($non_tags_results);
+    $arrg_com['Other'] = count($non_tags_results);
   }
 
 
-  if(!empty($arr_com_tags)) {
+  if(!empty($arrg_com)) {
 
     // Bar chart
     $output .= '<script type="text/javascript">';
@@ -217,7 +234,7 @@ function mortgage_charts_pie_chart_block(){
       google.setOnLoadCallback(drawChart);
 
       function drawChart() {';
-    foreach ($arr_com_tags as $bkey => $bval) {
+    foreach ($arrg_com as $bkey => $bval) {
 
       $str_row2 .= '["' . $bkey. '",' . $bval. '],';
     }
@@ -244,114 +261,5 @@ function mortgage_charts_pie_chart_block(){
   $output .=  '</div>';
   return $output;
 }
-
-/*
-* Filters for RGA Ads charts
-*/
-
-function mortgage_charts_rga_filter_form ($form, &$form_state) {
-
-  global $base_url;
-  $format = 'm/d/Y';
-
-  if(isset($_GET['from_date'])) {
-    $from_date = $_GET['from_date'];
-  }
-  
-  if(isset($_GET['to_date'])) {
-    $to_date = $_GET['to_date'];
-  }
-
-  if(!empty($from_date)) {
-    $frm_date = date($format, $from_date);
-  }
-
-  if(!empty($to_date)) {
-    $to_dt = date($format, $to_date);
-  }
-
-  $form['#prefix'] = '<div class="rga-filters-container">';
-  $form['#suffix'] = '</div>';
-
-  $form['rga_from_date'] = array(
-    '#title' => t('Start Date'),
-    '#id' => t('rga_from_date'),
-    '#name' => t('rga_from_date'),
-    '#type' => 'textfield',
-    '#default_value' => $frm_date, 
-    '#date_format' => $format,
-    '#date_label_position' => 'within',
-    '#datepicker_options' => array(),
-    '#prefix' => '<div id="div_rga_frm_date">',
-    '#suffix' => '</div>',
-    '#attributes' => array(
-      'autocomplete' =>'off',
-      'placeholder' => '00/00/0000',
-      'readonly' => 'readonly',
-      //'class' => array('cus_calender'),
-    ),
-  );
-
-  $form['rga_to_date'] = array(
-    '#title' => t('End Date'),
-    '#id' => t('rga_to_date'),
-    '#name' => t('rga_to_date'),
-    '#type' => 'textfield',
-    '#default_value' => $to_dt, 
-    '#date_format' => $format,
-    '#date_label_position' => 'within',
-    '#datepicker_options' => array('maxDate' => 0),
-    '#prefix' => '<div id="div_rga_to_date">',
-    '#suffix' => '</div>',
-    '#attributes' => array(
-      'autocomplete' =>'off',
-      'placeholder' => '00/00/0000',
-      'readonly' => 'readonly',
-      //'class' => array('cus_calender'),
-    ),
-
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Apply'),
-    '#submit' => array('mortgage_charts_rga_filter_form_submit'),
-    '#prefix' => '<div class="reset-btn">',
-    '#suffix' => '<a href="/my-page/ads-for-pr"> Reset </a></div>'
-    );
-
-  return $form;
-
-}
-
-
-function mortgage_charts_rga_filter_form_submit ($form, &$form_state, $params = array()) {
-
-  $form_inputs = $form_state['input'];
-  $current_path = current_path();
-
-  if((isset($form_inputs['rga_from_date']) && !empty($form_inputs['rga_from_date'])) && (isset($form_inputs['rga_to_date']) && !empty($form_inputs['rga_to_date']))) {
-
-    $from_date = $form_inputs['rga_from_date'];
-    $to_date = $form_inputs['rga_to_date'];
-
-
-    $str_frm_expld = explode('/', $from_date);
-
-    $str_frm_date =  $str_frm_expld[2] . '-' . $str_frm_expld[0] . '-' . $str_frm_expld[1] . ' 00:00:00';
-
-    $str_to_expld = explode('/', $to_date);
-    $str_to_date =  $str_to_expld[2] . '-' . $str_to_expld[0] . '-' . $str_to_expld[1] . ' 23:59:59';
-
-    $query['from_date'] = strtotime($str_frm_date);
-    $query['to_date'] = strtotime($str_to_date);
-
-    drupal_goto($current_path, array(
-        'query'=>array($query),
-    ));
-  }
-
-}
-
 
 
