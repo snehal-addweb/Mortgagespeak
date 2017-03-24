@@ -51,11 +51,15 @@ function mortgage_charts_pie_chart_block(){
   $query_str = drupal_get_query_parameters();
 
   if(!empty($query_str)) {
-   $st_date = date('Y-m-d', strtotime($query_str['date_filter']['min']['date'] ));
-   $end_date = date('Y-m-d', strtotime($query_str['date_filter']['max']['date']));
+    if(!empty($query_str['date_filter']['min'])) {
+      $st_date = date('Y-m-d', strtotime($query_str['date_filter']['min']['date']));
+      $from_date = strtotime($st_date . ' 00:00:00');
+    }
 
-   $from_date = strtotime($st_date . ' 00:00:00');
-   $to_date = strtotime($end_date . ' 23:59:59');
+    if($query_str['date_filter']['max']) {
+      $end_date = date('Y-m-d', strtotime($query_str['date_filter']['max']['date']));
+      $to_date = strtotime($end_date . ' 23:59:59');
+    }
   }
 
 
@@ -191,7 +195,7 @@ function mortgage_charts_pie_chart_block(){
     }
   }
 
-  if(isset($arr_com_tags['552'])) {
+  if(isset($arr_com_tags['212'])) {
     $arrg_com['Depth Public Relations'] = $arr_com_tags['212'];
   }
 
