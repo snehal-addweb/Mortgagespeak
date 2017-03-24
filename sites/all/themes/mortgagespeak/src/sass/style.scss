@@ -1529,6 +1529,41 @@ a {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+  .view-filters {
+    display: inline-block;
+    width: 100%;
+    padding: 15px 15px 0;
+    .views-widget-filter-date_filter {
+      padding-right: 0;
+      .views-widget {
+        display: inline-block;
+        width: 100%;
+        #edit-date-filter-min-wrapper,
+        #edit-date-filter-max-wrapper {
+          float: left;
+          margin-right: 15px;
+        }
+      }
+      .form-item {
+        > .control-label {
+          float: left;
+          padding-top: 7px;
+          padding-right: 5px;
+          font-size: 14px;
+          font-weight: 400;
+        }
+        .date-padding {
+          .form-item { width: 100%; }
+          .form-control {
+            width: 100%;
+            margin-top: 0;
+          }
+          .help-block { display: none; }
+        }
+      }
+    }
+    .btn { margin-top: 0; }
+  }
   .rga-text {
     float: left;
     margin: 0;
