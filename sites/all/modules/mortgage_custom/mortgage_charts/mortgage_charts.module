@@ -40,9 +40,23 @@ function mortgage_charts_pie_chart_block(){
   global $user;
   global $base_url;
   $output = '';
-  $arr_rga_nodes['RGA'] = 0;
-  $arr_rga_nodes['Without RGA'] = 0;
-  $str_pr_nids = 0;
+  $arr_rga_nodes['From RGA'] = 0;
+  $arr_rga_nodes['Not From RGA'] = 0;
+  $str_pr_nids = $str_rga = 0;
+  $from_date = '';
+  $to_date = $com_tags_limit_query = $non_tags_limit_query = '';
+  $arr_all_rga = $arr_rga = array();
+
+
+  $query_str = drupal_get_query_parameters();
+
+  if(!empty($query_str)) {
+   $st_date = date('Y-m-d', strtotime($query_str['date_filter']['min']['date'] ));
+   $end_date = date('Y-m-d', strtotime($query_str['date_filter']['max']['date']));
+
+   $from_date = strtotime($st_date . ' 00:00:00');
+   $to_date = strtotime($end_date . ' 23:59:59');
+  }
 
 
   // Get all ads_for_pr nids
@@ -56,6 +70,7 @@ function mortgage_charts_pie_chart_block(){
     $ads_for_pr_nids[$node_data->nid] = $node_data->nid;
   }
 
+
   if (!empty($ads_for_pr_nids)) {
     $str_pr_nids = implode(',', $ads_for_pr_nids);
   }
@@ -65,33 +80,55 @@ function mortgage_charts_pie_chart_block(){
   ###### Pie Chart
  ########################################################
 
- $result_rga_nodes =  db_query("SELECT count(n.nid) AS nid
-                              FROM node n, field_data_field_company_tag ct
-                              WHERE n.status = '1' AND n.nid = ct.entity_id AND n.nid IN ($str_pr_nids) AND ct.field_company_tag_tid = '552'")->fetchAll();
+  $rga_nodes_query = '';
+  $rga_nodes_query .= "SELECT DISTINCT(n.nid) AS nid
+                                FROM node n, field_data_field_company_tag ct
+                                WHERE n.status = '1' AND n.type = 'alpha_content' AND n.nid = ct.entity_id AND n.nid IN ($str_pr_nids) AND ct.field_company_tag_tid = '552'";
 
-  //->fieldCondition('field_players', 'uid', array($user->uid), 'NOT IN');
+  $not_rga_nodes_query = '';
+  $not_rga_nodes_query .= "SELECT DISTINCT node.nid AS nid FROM node node
+                          LEFT JOIN flagging flagging_node ON node.nid = flagging_node.entity_id AND flagging_node.fid = '2'
+                          INNER JOIN field_data_field_tab_placement field_data_field_tab_placement ON node.nid = field_data_field_tab_placement.entity_id AND (field_data_field_tab_placement.entity_type = 'node' AND field_data_field_tab_placement.deleted = '0')
+                          LEFT JOIN field_data_field_custom_ads field_data_field_custom_ads ON node.nid = field_data_field_custom_ads.entity_id AND (field_data_field_custom_ads.entity_type = 'node' AND field_data_field_custom_ads.deleted = '0')
+                          LEFT JOIN flagging flagging_current_user_2 ON node.nid = flagging_current_user_2.entity_id AND (flagging_current_user_2.fid = '2' AND flagging_current_user_2.uid = '1' AND flagging_current_user_2.sid = '0')
+                          WHERE field_data_field_custom_ads.field_custom_ads_target_id IN('395', '324', '376', '197', '193', '192', '190', '137') AND node.status = '1' AND node.type IN  ('alpha_content') AND field_data_field_tab_placement.field_tab_placement_tid = '705'";
 
-  //$result_rga_nodes = $rga_query->execute();
 
-/*  $wt_rga_query = new EntityFieldQuery();
-  $wt_rga_query
-  ->entityCondition('entity_type', 'node', '=')
-  ->propertyCondition('type', 'alpha_content')
-  ->propertyCondition('status', NODE_PUBLISHED)
-  ->propertyCondition('nid', array($str_pr_nids), 'IN')
-  ->fieldCondition('field_company_tag', 'tid', '552', '!=');*/
-
-  $result_wt_rga_nodes = db_query("SELECT count(n.nid) AS nid
-                              FROM node n, field_data_field_company_tag ct
-                              WHERE n.status = '1' AND n.nid = ct.entity_id AND n.nid IN ($str_pr_nids) AND ct.field_company_tag_tid != '552'")->fetchAll();
-
-  if (!empty($result_rga_nodes[0]->nid)){
-    $arr_rga_nodes['Releases with RGA'] = $result_rga_nodes[0]->nid;
+  if(!empty ($from_date) && !empty($from_date)) {
+     $rga_nodes_query .= ' AND n.created >= ' . $from_date .' AND n.created <= ' . $to_date;
+     $com_tags_limit_query = ' AND n.created >= ' . $from_date .' AND n.created <= ' . $to_date;
+     $not_rga_nodes_query .= ' AND node.created >= ' . $from_date .' AND node.created <= ' . $to_date;
+     $non_tags_limit_query .= ' AND node.created >= ' . $from_date .' AND node.created <= ' . $to_date;
   }
 
-  if (!empty($result_wt_rga_nodes[0]->nid)){
-    $arr_rga_nodes['Releases without RGA'] = $result_wt_rga_nodes[0]->nid;
+
+  // RGA RESULTS
+  $result_rga_nodes =  db_query($rga_nodes_query)->fetchAll();
+
+  if (!empty($result_rga_nodes)){
+    foreach ($result_rga_nodes as $rgkey => $rgvalue) {
+      $arr_rga[$rgvalue->nid] = $rgvalue->nid;
+    }
+    $arr_rga_nodes['From RGA'] = count($result_rga_nodes);
   }
+  // RGA RESULTS ENDS
+
+
+  // NON RGA RESULTS
+  $result_nt_rga_nodes = db_query($not_rga_nodes_query)->fetchAll();
+
+  if(!empty($result_nt_rga_nodes)) {
+    foreach ($result_nt_rga_nodes as $ntkey => $ntvalue) {
+      $arr_all_rga[$ntvalue->nid] = $ntvalue->nid;
+    }
+  }
+
+  $nt_rga_nodes = array_diff($arr_all_rga, $arr_rga);
+
+  if (!empty($nt_rga_nodes)){
+    $arr_rga_nodes['Not From RGA'] = count($nt_rga_nodes);
+  }
+  // NON RGA RESULTS ENDS
 
 
   $output .=  '<div class="rga-charts">';
@@ -111,12 +148,15 @@ function mortgage_charts_pie_chart_block(){
     $str_row1 = trim($str_row1, ",");
 
     $output .= 'var data = google.visualization.arrayToDataTable([
-                [\'Task\', \'Hours per Day\'],';
+                [\'Task\', \'RGA count\'],';
     $output .=  $str_row1 . ']);';
 
     $output .= ' var options = {
                 chartArea: {left:20, width:\'100%\'},
-                legend : {textStyle: {fontSize: 18}},
+                legend : {textStyle: {fontSize: 14} },
+                tooltip: { isHtml: true },
+                title: \'RGA-Branded Press Releases\',
+      
               };
               var chart = new google.visualization.PieChart(document.getElementById("pie_chart_div"));
               chart.draw(data,options); 
@@ -133,13 +173,17 @@ function mortgage_charts_pie_chart_block(){
 
 
   // Query for Bar chart
-  $com_tags = db_query("SELECT t.name , count(entity_id) nids 
+  $com_tags_query .= "SELECT t.name , count(DISTINCT ct.entity_id) nids 
                         FROM field_data_field_company_tag ct, node n, taxonomy_term_data t 
                         WHERE ct.entity_id = n.nid AND ct.field_company_tag_tid = t.tid 
                         AND ct.field_company_tag_tid IN ('552', '212', '604', '685') 
                         AND n.status = '1'
-                        AND n.nid IN ($str_pr_nids)
-                        GROUP by ct.field_company_tag_tid")->fetchAll();
+                        AND n.type = 'alpha_content'
+                        AND n.nid IN ($str_pr_nids)";
+  $com_tags_query .= $com_tags_limit_query;
+
+  $com_tags_query .= " GROUP by ct.field_company_tag_tid";
+  $com_tags = db_query($com_tags_query)->fetchAll();
 
   if(!empty($com_tags)) {
     foreach ($com_tags as $ckey => $cvalue) {
@@ -147,20 +191,20 @@ function mortgage_charts_pie_chart_block(){
     }
   }
 
-  /* $non_tags_query = db_query("SELECT count(n.nid) AS nid
-                                FROM node n
-                              LEFT JOIN field_data_field_company_tag ct ON n.nid = ct.entity_id AND ct.entity_type = 'node' WHERE n.status = '1'AND n.nid IN ($str_pr_nids) AND ct.field_company_tag_tid NOT IN ('552', '212', '604', '685') AND n.type IN ('alpha_content') AND ct.field_company_tag_tid IS NULL")->fetchAll();*/
+  $non_tags_query = '';
+  $non_tags_query .= "SELECT DISTINCT node.nid AS nid FROM node node
+                    LEFT JOIN flagging flagging_node ON node.nid = flagging_node.entity_id AND flagging_node.fid = '2'
+                    INNER JOIN field_data_field_tab_placement field_data_field_tab_placement ON node.nid = field_data_field_tab_placement.entity_id AND (field_data_field_tab_placement.entity_type = 'node' AND field_data_field_tab_placement.deleted = '0')
+                    LEFT JOIN field_data_field_company_tag field_data_field_company_tag ON node.nid = field_data_field_company_tag.entity_id AND (field_data_field_company_tag.field_company_tag_tid = '212' OR field_data_field_company_tag.field_company_tag_tid = '552' OR field_data_field_company_tag.field_company_tag_tid = '604' OR field_data_field_company_tag.field_company_tag_tid = '685')
+                    LEFT JOIN field_data_field_custom_ads field_data_field_custom_ads ON node.nid = field_data_field_custom_ads.entity_id AND (field_data_field_custom_ads.entity_type = 'node' AND field_data_field_custom_ads.deleted = '0')
+                    LEFT JOIN flagging flagging_current_user_2 ON node.nid = flagging_current_user_2.entity_id AND (flagging_current_user_2.fid = '2' AND flagging_current_user_2.uid = '1' AND flagging_current_user_2.sid = '0')
+                    WHERE field_data_field_custom_ads.field_custom_ads_target_id IN ('395', '324', '376', '197', '193', '192', '190', '137') AND node.status = '1' AND node.type IN ('alpha_content') AND (field_data_field_tab_placement.field_tab_placement_tid = '705') AND field_data_field_company_tag.field_company_tag_tid IS NULL";
 
-  $non_tags_query = db_query("SELECT count(n.nid) AS nid
-                              FROM field_data_field_company_tag ct, node n, taxonomy_term_data t 
-                              WHERE ct.entity_id = n.nid AND ct.field_company_tag_tid = t.tid 
-                              AND ct.field_company_tag_tid NOT IN ('552', '212', '604', '685') 
-                              AND n.status = '1'
-                              AND n.nid IN ($str_pr_nids)")->fetchAll();
+  $non_tags_query .= $non_tags_limit_query;
+  $non_tags_results = db_query($non_tags_query)->fetchAll();
 
-
-  if (!empty($non_tags_query[0]->nid)){
-    $arr_com_tags['No company tags'] = $non_tags_query[0]->nid;
+  if (!empty($non_tags_results)){
+    $arr_com_tags['Other'] = count($non_tags_results);
   }
 
 
@@ -180,12 +224,14 @@ function mortgage_charts_pie_chart_block(){
     $str_row2 = trim($str_row2, ",");
 
     $output .= 'var bardata = google.visualization.arrayToDataTable([
-                [\'Task\', \'No of Releases\'],';
+                [\'Task\', \'No. of Releases\'],';
     $output .=  $str_row2 . ']);';
 
     $output .= 'var options = {
                 chartArea: {left:10, width:\'95%\'},
                 legend : {textStyle: {fontSize: 18}},
+                tooltip: { isHtml: true },
+                title: \'RGA-Branded By Company\',
               };
               var chart = new google.visualization.ColumnChart(document.getElementById("bar_chart_div"));
               chart.draw(bardata,options); 
@@ -197,6 +243,114 @@ function mortgage_charts_pie_chart_block(){
   
   $output .=  '</div>';
   return $output;
+}
+
+/*
+* Filters for RGA Ads charts
+*/
+
+function mortgage_charts_rga_filter_form ($form, &$form_state) {
+
+  global $base_url;
+  $format = 'm/d/Y';
+
+  if(isset($_GET['from_date'])) {
+    $from_date = $_GET['from_date'];
+  }
+  
+  if(isset($_GET['to_date'])) {
+    $to_date = $_GET['to_date'];
+  }
+
+  if(!empty($from_date)) {
+    $frm_date = date($format, $from_date);
+  }
+
+  if(!empty($to_date)) {
+    $to_dt = date($format, $to_date);
+  }
+
+  $form['#prefix'] = '<div class="rga-filters-container">';
+  $form['#suffix'] = '</div>';
+
+  $form['rga_from_date'] = array(
+    '#title' => t('Start Date'),
+    '#id' => t('rga_from_date'),
+    '#name' => t('rga_from_date'),
+    '#type' => 'textfield',
+    '#default_value' => $frm_date, 
+    '#date_format' => $format,
+    '#date_label_position' => 'within',
+    '#datepicker_options' => array(),
+    '#prefix' => '<div id="div_rga_frm_date">',
+    '#suffix' => '</div>',
+    '#attributes' => array(
+      'autocomplete' =>'off',
+      'placeholder' => '00/00/0000',
+      'readonly' => 'readonly',
+      //'class' => array('cus_calender'),
+    ),
+  );
+
+  $form['rga_to_date'] = array(
+    '#title' => t('End Date'),
+    '#id' => t('rga_to_date'),
+    '#name' => t('rga_to_date'),
+    '#type' => 'textfield',
+    '#default_value' => $to_dt, 
+    '#date_format' => $format,
+    '#date_label_position' => 'within',
+    '#datepicker_options' => array('maxDate' => 0),
+    '#prefix' => '<div id="div_rga_to_date">',
+    '#suffix' => '</div>',
+    '#attributes' => array(
+      'autocomplete' =>'off',
+      'placeholder' => '00/00/0000',
+      'readonly' => 'readonly',
+      //'class' => array('cus_calender'),
+    ),
+
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Apply'),
+    '#submit' => array('mortgage_charts_rga_filter_form_submit'),
+    '#prefix' => '<div class="reset-btn">',
+    '#suffix' => '<a href="/my-page/ads-for-pr"> Reset </a></div>'
+    );
+
+  return $form;
+
+}
+
+
+function mortgage_charts_rga_filter_form_submit ($form, &$form_state, $params = array()) {
+
+  $form_inputs = $form_state['input'];
+  $current_path = current_path();
+
+  if((isset($form_inputs['rga_from_date']) && !empty($form_inputs['rga_from_date'])) && (isset($form_inputs['rga_to_date']) && !empty($form_inputs['rga_to_date']))) {
+
+    $from_date = $form_inputs['rga_from_date'];
+    $to_date = $form_inputs['rga_to_date'];
+
+
+    $str_frm_expld = explode('/', $from_date);
+
+    $str_frm_date =  $str_frm_expld[2] . '-' . $str_frm_expld[0] . '-' . $str_frm_expld[1] . ' 00:00:00';
+
+    $str_to_expld = explode('/', $to_date);
+    $str_to_date =  $str_to_expld[2] . '-' . $str_to_expld[0] . '-' . $str_to_expld[1] . ' 23:59:59';
+
+    $query['from_date'] = strtotime($str_frm_date);
+    $query['to_date'] = strtotime($str_to_date);
+
+    drupal_goto($current_path, array(
+        'query'=>array($query),
+    ));
+  }
+
 }
 
 
