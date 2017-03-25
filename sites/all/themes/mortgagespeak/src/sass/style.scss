@@ -1578,17 +1578,21 @@ a {
     padding: 0 13px;
     background-color: #F07A22;
     color: $white;
-    font-size: 12px;
     text-align: center;
     @include border-radius(3px);
     .totalsum {
+      display: inline-block;
       padding: 7px 0 3px;
-      font-size: 20px;
-      letter-spacing: 1px;
+      font-size: 26px;
+      letter-spacing: 2px;
     }
     .totaltext {
+      display: inline-block;
+      max-width: 50px;
       padding-bottom: 3px;
-      font-size: 10px;
+      padding-left: 5px;
+      font-size: 12px;
+      text-align: left;
     }
   }
 }
