@@ -186,6 +186,14 @@ function mortgage_misc_form_views_exposed_form_alter(&$form, $form_state, $form_
   if($form['#id'] == 'views-exposed-form-perpesctive-page') {
     $form['combine']['#attributes'] = array('placeholder' => t('Search Perspectives...'));
   }
+
+  if($form['#id'] == 'views-exposed-form-ads-for-pr-page') {
+
+    //$current_path = current_path();
+    $form['submit']['#prefix'] = '<div class="reset-btn">';
+    $form['submit']['#suffix'] = '<a href="/my-page/ads-for-pr" class="btn"> Reset </a></div>';
+  }
+
 }
 
 /** 

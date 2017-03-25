@@ -51,12 +51,9 @@ function mortgage_charts_pie_chart_block(){
   $query_str = drupal_get_query_parameters();
 
   if(!empty($query_str)) {
-    if(!empty($query_str['date_filter']['min'])) {
+    if(!empty($query_str['date_filter']['min']['date']) && !empty($query_str['date_filter']['max']['date'])) {
       $st_date = date('Y-m-d', strtotime($query_str['date_filter']['min']['date']));
       $from_date = strtotime($st_date . ' 00:00:00');
-    }
-
-    if($query_str['date_filter']['max']) {
       $end_date = date('Y-m-d', strtotime($query_str['date_filter']['max']['date']));
       $to_date = strtotime($end_date . ' 23:59:59');
     }
@@ -160,7 +157,7 @@ function mortgage_charts_pie_chart_block(){
                 legend : {textStyle: {fontSize: 14} },
                 tooltip: { isHtml: true },
                 title: \'RGA-Branded Press Releases\',
-      
+                pieSliceText: \'value-and-percentage\',
               };
               var chart = new google.visualization.PieChart(document.getElementById("pie_chart_div"));
               chart.draw(data,options); 
