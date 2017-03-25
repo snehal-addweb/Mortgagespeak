@@ -131,7 +131,6 @@ function mortgage_charts_pie_chart_block(){
   }
   // NON RGA RESULTS ENDS
 
-
   $output .=  '<div class="rga-charts">';
   if(count(array_filter($arr_rga_nodes)) != 0) {
 
@@ -158,13 +157,14 @@ function mortgage_charts_pie_chart_block(){
                 tooltip: { isHtml: true },
                 title: \'RGA-Branded Press Releases\',
                 pieSliceText: \'value-and-percentage\',
+                pieSliceTextStyle: {fontSize:10},
               };
               var chart = new google.visualization.PieChart(document.getElementById("pie_chart_div"));
               chart.draw(data,options); 
     }
     </script>';
 
-    $output .=  '<div id="pie_chart_div" style="width: 400px; height: 300px"></div>';
+    $output .=  '<div id="pie_chart_div" style="width: 500px; height: 300px"></div>';
   }
 
 
