@@ -247,7 +247,7 @@ function mortgage_charts_pie_chart_block(){
                 chartArea: {left:10, width:\'95%\'},
                 legend : {textStyle: {fontSize: 18}},
                 tooltip: { isHtml: true },
-                title: \'RGA-Branded By Company\',
+                title: \'Company Press Releases with RGA AD\',
               };
               var chart = new google.visualization.ColumnChart(document.getElementById("bar_chart_div"));
               chart.draw(bardata,options); 
