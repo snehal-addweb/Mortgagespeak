@@ -80,7 +80,7 @@
       <span class="field-content"><?php print $row['created']; ?></span>  
     </div> -->
 
-    <div class="views-field views-field views-field-title">        
+    <div class="views-field views-field views-field-title">
       <span class="field-content">
         <a href="<?php print $url1; ?>" target="_blank"><?php print $title; ?></a>
     </div> 

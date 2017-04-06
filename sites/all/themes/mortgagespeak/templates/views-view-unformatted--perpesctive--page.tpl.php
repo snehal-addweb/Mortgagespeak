@@ -85,7 +85,7 @@
 
 		<div class="views-field views-field views-field-title">        
 			<span class="field-content">
-				<?php print $title; ?>
+				<a href="<?php print $url1; ?>"><?php print $title; ?></a>
 		</div>
 
 		<div class="views-field views-field-body">
