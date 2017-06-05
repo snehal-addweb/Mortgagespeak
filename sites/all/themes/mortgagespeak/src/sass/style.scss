@@ -2256,6 +2256,7 @@ a {
       h2 { font-size: 20px; }
       .ms-text { font-size: 18px; }
       .mob-btn-wrap {
+        max-width: 230px;
         a {
           img {
             max-width: 40px;
@@ -2268,6 +2269,9 @@ a {
             letter-spacing: 0;
           }
         }
+      }
+      .cont-link {
+        max-width: 220px;
       }
     }
   }
