@@ -2186,41 +2186,89 @@ a {
       font-size: 12px;
     }
   }
-  .mobile-buttons-wrapper {
+  .mobile-wrapper {
     display: none;
-    a {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 10px solid $blue;
+    h2 {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .ms-text {
       display: inline-block;
-      width: 50px;
-      margin-right: 10px;
-      img {
-        height: auto;
+      width: 100%;
+      margin: 20px 0 30px;
+      font-size: 20px;
+    }
+    .mob-btn-wrap {
+      display: block;
+      max-width: 360px;
+      margin: 0 auto;
+      a {
+        display: inline-block;
         width: 100%;
+        margin-bottom: 10px;
+        img {
+          height: auto;
+          max-width: 50px;
+          width: 100%;
+          margin-right: 15px;
+        }
+        span {
+          display: inline-block;
+          min-width: 280px;
+          padding: 15px 20px;
+          background-color: $blue;
+          color: $white;
+          font-size: 18px;
+          line-height: normal;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          letter-spacing: 2px;
+          text-decoration: none;
+          @include border-radius(5px);
+        }
       }
+    }
+    .cont-link {
+      display: block;
+      max-width: 350px;
+      margin: 0 auto;
+      color: $blue;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: right;
     }
   }
   @media (max-width: 767px) {
     text-align: center;
     .welcome-redirect {
-      display: inline-block;
-      a {
-        width: 100%;
-        padding-right: 20px;
-        padding-left: 20px;
-        font-size: 18px;
-        &::after {
-          margin-left: 20px;
-        }
-      }
+      display: none;
     }
-    .mobile-buttons-wrapper {
+    .mobile-wrapper {
       display: inline-block;
+      width: 100%;
       vertical-align: top;
     }
   }
-  @media (max-width: 480px) {
-    .mobile-buttons-wrapper {
-      width: 100%;
-      margin-bottom: 15px;
+  @media (max-width: 420px) {
+    .mobile-wrapper {
+      h2 { font-size: 20px; }
+      .ms-text { font-size: 18px; }
+      .mob-btn-wrap {
+        a {
+          img {
+            max-width: 40px;
+            margin-right: 10px;
+          }
+          span {
+            min-width: 175px;
+            padding: 10px;
+            font-size: 16px;
+            letter-spacing: 0;
+          }
+        }
+      }
     }
   }
 }
