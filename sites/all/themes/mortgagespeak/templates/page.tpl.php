@@ -180,11 +180,13 @@
 
 
 <div class="top-header">
-  <?php if (!empty($page['top_header'])): ?>
-    <div>
-      <?php print render($page['top_header']); ?>
-    </div>
-  <?php endif; ?>
+  <div class="container">
+    <?php if (!empty($page['top_header'])): ?>
+      <div>
+        <?php print render($page['top_header']); ?>
+      </div>
+    <?php endif; ?>
+  </div>
 </div>
 
 <header id="navbar" role="banner" class="navbar<?php /*print $navbar_classes;*/ ?>">
@@ -228,7 +230,7 @@
   </div>
 </header>
 
-<div class="main-container container-fluid p0 <?php /*print $container_class;*/ ?>">
+<div class="main-container <?php print $container_class; ?>">  <!-- container-fluid p0 -->
 
   <header role="banner" id="page-header">
     <?php if (!empty($site_slogan)): ?>
@@ -238,7 +240,7 @@
     <?php print render($page['header']); ?>
   </header> <!-- /#page-header -->
 
-  <div class="row m0">
+  <div class="row"> <!-- m0 -->
     <?php if (!empty($page['sidebar_first'])): ?>
       <aside class="left-sidebar col-lg-2 col-md-2 col-sm-2 col-xs-12 p0" role="complementary">
         <?php print render($page['sidebar_first']); ?>

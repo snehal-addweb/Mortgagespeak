@@ -190,8 +190,8 @@ a {
           &::after { background-color: #36D938; }
         }
         a {
-          max-width: 156px;
-          width: 156px;
+          max-width: 145px;
+          width: 145px;
           &:hover { /*border-top-color: #36D938; @include box-shadow(0 1px 0 0 #36D938 inset);*/ }
           &::before {
             width: 9px;
@@ -209,8 +209,8 @@ a {
           &::after { background-color: #3383CC; }
         }
         a {
-          max-width: 207px;
-          width: 207px;
+          max-width: 193px;
+          width: 193px;
           &:hover { /*border-top-color: #3383CC; @include box-shadow(0 1px 0 0 #F8E21C inset);*/ }
           &::before {
             width: 15px;
@@ -304,7 +304,7 @@ a {
         float: left;
         height: 42px;
         margin: 0;
-        padding: 10px 20px;
+        padding: 10px 15px;
         border-top: 1px solid $border;
         border-bottom: 1px solid $border;
         border-left: 1px solid $border;
@@ -484,8 +484,8 @@ a {
  * Main content area
  */
 .content-area {
-  max-width: 1000px;
-  width: 100%;
+ /* max-width: 1000px;
+  width: 100%;*/
   /*padding: 15px;*/
   padding: 15px 15px 20px;
   @media screen and (max-width:  $small-desktop) {
