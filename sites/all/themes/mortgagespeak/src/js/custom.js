@@ -130,6 +130,16 @@ jQuery(document).ready(function() {
           jQuery(".form-item-select-user").show();
       }
   });
+
+  // Get window height and set it in welcome screen for mobile device
+  var window_h = jQuery(window).height();
+  jQuery('.page-welcome .content-area').css('min-height' , window_h);
+
+  jQuery(window).resize(function() {
+    var window_h = jQuery(window).height();
+    jQuery('.page-welcome .content-area').css('min-height' , window_h);
+  });
+
 });
 
 /* Set Max height to Sidebar and Content */
