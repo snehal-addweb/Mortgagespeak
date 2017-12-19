@@ -601,6 +601,7 @@ a {
     #views-exposed-form-company-view-detail-page,
     #views-exposed-form-news-page,
     #views-exposed-form-press-releases-page,
+    #views-exposed-form-blog-page,
     #views-exposed-form-perpesctive-page {
       float: right;
       margin-top: -46px;
@@ -637,6 +638,7 @@ a {
     }
     #views-exposed-form-news-page,
     #views-exposed-form-press-releases-page,
+    #views-exposed-form-blog-page,
     #views-exposed-form-perpesctive-page {
       .views-exposed-form {
         input {
@@ -2476,8 +2478,9 @@ a {
 }
 /* End */
 
-/* Alpha content page */
-.node-type-alpha-content {
+/* Alpha content page and Blog inner page */
+.node-type-alpha-content,
+.node-type-blog {
   .page-header {
     display: none;
   }
@@ -3033,3 +3036,20 @@ iframe {
   }
 }*/
 /* End */
+
+/* Hide button for blog page */
+.page-blog {
+  ul.action-links {
+    display: none;
+  }
+}
+/* End */
+.node-type-blog {
+  .node-blog-form {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 15px;
+  }
+}
+
+
