@@ -96,7 +96,9 @@
         <?php print $flag_link; ?>
       </div>
   </div>
-
+  <div class="blog-image">
+    <?php print render($content['field_blog_image']);?>
+  </div>
   <div class="alpha-content-body">
     <?php print $node_body;?>
   </div>
