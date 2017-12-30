@@ -3054,9 +3054,35 @@ iframe {
 }
 
 .node-type-blog {
-  .blog-image {
-    padding: 25px 5px 0;
+  display: inline-block;
+  width: 100%;
+  .blog-image-body {
+    .blog-image {
+      float: right;
+      margin: 0 0 10px 10px;
+      padding: 30px 22px 0 0;
+      @media (max-width: 767px) {
+        float: none;
+        width: 100%;
+        margin: 0 0 20px 0;
+        padding: 25px 0 0;
+        text-align: center;
+      }
+      img {
+        @media (max-width: 767px) {
+          margin: 0 auto;
+        }
+      }
+    }
+    .alpha-content-body {
+      display: block;
+      width: auto;
+      @media (max-width: 767px) {
+        width: 100%;
+      }
+    }
   }
 }
+
 
 
