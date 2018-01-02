@@ -65,6 +65,10 @@ function mortgage_misc_form_alter(&$form, &$form_state, $form_id) {
     //$form['actions']['submit']['#value'] = 'Register';
   }
 
+  if ($form_id == 'blog_node_form') {
+    unset ($form['actions']['preview']);
+  }
+
   if ($form_id == 'webform_client_form_42') {
     $content_type = array(29 => 'Press Release', 36 => 'Perspective (e.g White Paper, Thought Leadership, Case Study).', 37 => 'Blog Post', 35 => 'Other');
     $form['submitted']['upload_type']['#options'] = $content_type;
