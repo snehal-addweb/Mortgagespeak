@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * Implement hook_form_alter(()
+ */
+
+function mortgage_site_alter_form_alter(&$form, &$form_state, $form_id){
+  if ($form_id == 'alpha_content_node_form') {
+
+     global $user;
+     $currentUserId = $user->uid;
+     $user_fields = user_load($currentUserId);
+     $currentUserRoles = $user->roles;
+     $currentUserCompanhy = $user_fields->field_company_tags['und'];
+     foreach ($currentUserCompanhy as $key => $value) {
+       $defaulrCom[] = $value['tid'];
+     }
+
+     // Check if user has Role
+
+     if (in_array('Press release', $currentUserRoles)) {
+       
+       // Set default values
+         $form['field_company_tag']['und']['#default_value'] = $defaulrCom;
+         $form['field_article_source']['und'][0]['value']['#default_value'] = t('MortgageSpeak');
+         $form['field_tab_placement']['und']['#default_value']['0'] = '705';
+         $form['field_recommended_for_linkedin']['und']['#default_value'] = '0';
+         
+       // Make access false for other fields
+         $form['field_url']['#access'] = FALSE;
+         $form['field_alpha_news_topics']['#access'] = FALSE;
+         $form['field_company_tag']['#access'] = FALSE;
+         $form['field_upload_document']['#access'] = FALSE;
+         $form['field_tab_placement']['#access'] = FALSE;
+         $form['field_editors_pick1']['#access'] = FALSE;
+         $form['field_custom_ads']['#access'] = FALSE;
+         $form['field_recommended_for_linkedin']['#access'] = FALSE;
+         $form['field_person_1']['#access'] = FALSE;
+         $form['field_person_1_company']['#access'] = FALSE;
+         $form['field_person_2']['#access'] = FALSE;
+         $form['field_person_2_company']['#access'] = FALSE;
+         $form['field_person_3']['#access'] = FALSE;
+         $form['field_person_3_company']['#access'] = FALSE;
+         $form['field_person_1_title']['#access'] = FALSE;
+         $form['field_person_2_title']['#access'] = FALSE;
+         $form['field_person_3_title']['#access'] = FALSE;
+         $form['field_recommended_for_linkedin']['#access'] = FALSE;
+         $form['field_article_source']['#access'] = FALSE;
+         $form['field_podcast']['#access'] = FALSE;
+         $form['field_image_pics']['#access'] = FALSE;
+     }
+
+  }
+}
+
+/**
+ * Implement hook_node_insert()
+ */
+
+function mortgage_site_alter_node_insert($node) {
+
+  if ($node->type == 'alpha_content') {
+    $customAd = $node->field_custom_ads;
+    $nodeId = $node->nid;
+    global $user;
+    $currentUserId = $user->uid;
+    $currentUserRoles = $user->roles;
+
+    if (in_array('Press release', $currentUserRoles)) { 
+
+      if (empty($customAd[LANGUAGE_NONE])) {
+        notify_insert_statuspost($nodeId);
+      }
+    }
+  }
+}
+
+/**
+ * Custom call back function;;;
+ */
+
+function notify_insert_statuspost($nodeId) {
+  
+  global $user;
+  $currentUserId = $user->uid;
+  $CurrentUserAdId = db_query("SELECT `entity_id` FROM `field_data_field_user_reference` WHERE `field_user_reference_target_id` = $currentUserId")->fetchAll();
+
+  foreach ($CurrentUserAdId as $key => $value) {
+    $AdnodesId[] = $value->entity_id;
+  }
+
+  $node = node_load($nodeId);
+  foreach ($AdnodesId as $key => $value) {
+    $node->field_custom_ads[LANGUAGE_NONE][$key]['target_id'] = $value;
+  }
+  
+  field_attach_update('node', $node);
+}
