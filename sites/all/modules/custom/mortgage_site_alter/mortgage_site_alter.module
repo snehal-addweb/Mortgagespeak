@@ -29,7 +29,7 @@ function mortgage_site_alter_form_alter(&$form, &$form_state, $form_id){
        // Make access false for other fields
          $form['field_url']['#access'] = FALSE;
          $form['field_alpha_news_topics']['#access'] = FALSE;
-         $form['field_company_tag']['#access'] = FALSE;
+        // $form['field_company_tag']['#access'] = FALSE;
          $form['field_upload_document']['#access'] = FALSE;
          $form['field_tab_placement']['#access'] = FALSE;
          $form['field_editors_pick1']['#access'] = FALSE;
