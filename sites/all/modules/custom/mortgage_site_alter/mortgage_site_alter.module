@@ -21,7 +21,7 @@ function mortgage_site_alter_form_alter(&$form, &$form_state, $form_id){
      if (in_array('Press release', $currentUserRoles)) {
        
        // Set default values
-         $form['field_company_tag']['und']['#default_value'] = $defaulrCom;
+        // $form['field_company_tag']['und']['#default_value'] = $defaulrCom;
          $form['field_article_source']['und'][0]['value']['#default_value'] = t('MortgageSpeak');
          $form['field_tab_placement']['und']['#default_value']['0'] = '705';
          $form['field_recommended_for_linkedin']['und']['#default_value'] = '0';
