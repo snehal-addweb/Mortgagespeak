@@ -686,3 +686,12 @@ textarea:focus {
     padding: 0 20px;
   }
 }
+
+
+.page-node.page-node-add-alpha-content {
+  .field-name-field-company-tag {
+    select {
+      height: 375px;
+    }
+  }
+}
