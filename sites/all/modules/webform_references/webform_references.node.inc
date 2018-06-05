@@ -20,11 +20,16 @@ function _webform_defaults_node_reference() {
       'title_display' => 0,
       'private' => FALSE,
       'attributes' => array(),
+      'default_value' => NULL,
       'description' => '',
       'referenceable_types' => array(),
       'widget_type' => '',
+      'empty_option' => 'None',
       'multiple' => NULL,
       'sort' => array('sort_by' => 'nid', 'order' => 'ASC'),
+      'use_view' => FALSE,
+      'reference_view' => NULL,
+      'view_args' => NULL,
     ),
   );
 }
@@ -46,14 +51,6 @@ function _webform_defaults_node_reference() {
  */
 function _webform_edit_node_reference(array $component) {
   $form = array();
-  $form['extra']['referenceable_types'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Content types that can be referenced'),
-    '#multiple' => TRUE,
-    '#default_value' => $component['extra']['referenceable_types'],
-    '#options' => node_type_get_names(),
-    '#required' => TRUE,
-  );
   $form['extra']['widget_type'] = array(
     '#type' => 'select',
     '#title' => t('Field Type'),
@@ -68,9 +65,91 @@ function _webform_edit_node_reference(array $component) {
     '#default_value' => $component['extra']['multiple'],
     '#description' => t('Check this option if the user should be allowed to choose multiple values.'),
     '#states' => array(
-      // Display this field when the widget_type is select list.
+      // Hide this field when the widget_type is autocomplete.
       'invisible' => array(
         ':input[name="extra[widget_type]"]' => array('value' => 'autocomplete'),
+      ),
+    ),
+  );
+  $form['extra']['use_view'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use a view'),
+    '#default_value' => $component['extra']['use_view'],
+    '#description' => t('Use an entity reference view to select options.'),
+  );
+  if (!module_exists('entityreference')) {
+    $form['extra']['use_view']['#disabled'] = 'disabled';
+    $form['extra']['use_view']['#description'] = t('The entityreference module must be enabled to use this feature.');
+  }
+
+  $form['extra']['referenceable_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Content types that can be referenced'),
+    '#multiple' => TRUE,
+    '#default_value' => $component['extra']['referenceable_types'],
+    '#options' => node_type_get_names(),
+    '#element_validate' => array('_webform_reference_node_types_validate'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="extra[use_view]"]' => array('checked' => FALSE),
+      ),
+      'required' => array(
+        ':input[name="extra[use_view]"]' => array('checked' => FALSE),
+      )
+    ),
+  );
+  // Filter views that list the entity type we want, and group the separate
+  // displays by view.
+  $displays = views_get_applicable_views('entityreference display');
+  $options = array();
+  foreach ($displays as $data) {
+    list($view, $display_id) = $data;
+    if ($view->base_table == 'node') {
+        $options[$view->name . ':' . $display_id] = $view->name . ' - ' . $view->display[$display_id]->display_title;
+    }
+  }
+  $form['extra']['reference_view'] = array(
+    '#type' => 'select',
+    '#title' => t('Select a view'),
+    '#multiple' => FALSE,
+    '#default_value' => $component['extra']['reference_view'],
+    '#options' => $options,
+    '#element_validate' => array('_webform_references_node_reference_view_validate'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="extra[use_view]"]' => array('checked' => TRUE),
+      ),
+      'required' => array(
+        ':input[name="extra[use_view]"]' => array('checked' => TRUE),
+      )
+    ),
+  );
+  $form['extra']['view_args'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Arguments to pass to the view'),
+    '#description' => t('Arguments in the form arg1/arg2/arg3'),
+    '#default_value' => $component['extra']['view_args'],
+    '#states' => array(
+      'visible' => array(
+        ':input[name="extra[use_view]"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
+  $form['extra']['default_value'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Default value'),
+    '#default_value' => $component['extra']['default_value'],
+    '#description' => t('The default value of the field.') . ' ' . theme('webform_token_help'),
+  );
+  $form['extra']['empty_option'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Empty Option'),
+    '#default_value' => $component['extra']['empty_option'],
+    '#description' => t('Empty option value for select list.'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="extra[widget_type]"]' => array('value' => 'select'),
+        ':input[name="extra[multiple]"]' => array('checked' => FALSE),
       ),
     ),
   );
@@ -88,7 +167,7 @@ function _webform_edit_node_reference(array $component) {
     '#options' => array('nid' => t('Node Id'), 'title' => t('Title')),
     '#required' => TRUE,
     '#states' => array(
-      // Display this field when the widget_type is select list.
+      // Hide this field when the widget_type is autocomplete.
       'invisible' => array(
         ':input[name="extra[widget_type]"]' => array('value' => 'autocomplete'),
       ),
@@ -102,13 +181,39 @@ function _webform_edit_node_reference(array $component) {
     '#options' => array('ASC' => t('Ascending'), 'DESC' => t('Descending')),
     '#required' => TRUE,
     '#states' => array(
-      // Display this field when the widget_type is select list.
+      // Hide this field when the widget_type is autocomplete.
       'invisible' => array(
         ':input[name="extra[widget_type]"]' => array('value' => 'autocomplete'),
       ),
     ),
   );
+
   return $form;
+}
+
+/**
+ * This is a workaround, because currently FAPI states 'required' only
+ * adds an asterisk but does not do validation. If we use the '#required'
+ * attribute on the element itself then validation will fail on the invisible
+ * referenceable type element
+ *
+ * @see _webform_edit_node_reference()
+ */
+function _webform_reference_node_types_validate($element, &$form_state) {
+  $use_view = $form_state['complete form']['extra']['use_view']['#value'];
+  if (!$use_view && empty($element['#value'])) {
+    form_set_error($element['#name'], t('Please select at least one content type to be referenced.'));
+  }
+}
+
+/**
+ * To validate the reference view element in case of empty list.
+ */
+function _webform_references_node_reference_view_validate($element, &$form_state) {
+  $use_view = $form_state['complete form']['extra']['use_view']['#value'];
+  if ($use_view && empty($element['#value'])) {
+    form_set_error($element['#name'], t('Please select any view to be referenced.'));
+  }
 }
 
 /**
@@ -129,29 +234,50 @@ function _webform_edit_node_reference(array $component) {
  * @see _webform_client_form_add_component()
  */
 function _webform_render_node_reference(array $component, array $value = NULL, $filter = TRUE) {
+  $default_value = array ($filter ? webform_replace_tokens($component['extra']['default_value']) : $component['extra']['default_value']);
   switch ($component['extra']['widget_type']) {
     case 'autocomplete':
+      if (!empty($component['extra']['use_view'])) {
+        $path = 'webform_references/view/autocomplete/node/' . str_replace(':', '/', $component['extra']['reference_view']);
+        if (!empty($component['extra']['view_args'])) {
+          $path .= '/' . $component['extra']['view_args'];
+        }
+      }
+      else {
+        $path = 'webform_references/node/autocomplete/' . implode('+', array_filter($component['extra']['referenceable_types']));
+      }
       $form_item = array(
         '#type' => 'textfield',
-        '#autocomplete_path' => 'webform_references/node/autocomplete/' . implode('+', array_filter($component['extra']['referenceable_types'])),
+        '#autocomplete_path' => $path,
         '#description' => $filter ? _webform_filter_descriptions($component['extra']['description']) : $component['extra']['description'],
         '#required'         => $component['required'] || $component['mandatory'],
         // Either one being true will could as required...
         // because webform changed in 4.x-alpha8
+        '#maxlength' => NULL,
         '#title' => $filter ? _webform_filter_xss($component['name']) : $component['name'],
         '#title_display' => $component['extra']['title_display'] ? $component['extra']['title_display'] : 'before',
         '#weight' => $component['weight'],
         '#element_validate' => array('webform_references_validate_node_reference'),
         '#theme_wrappers' => array('webform_element'),
+        '#translatable' => array('title', 'description'),
       );
       if (isset($value)) {
         $selected_node = node_load($value[0]);
         $form_item['#default_value'] = ($selected_node) ? $selected_node->title . " [id:$selected_node->nid]" : '';
       }
+      elseif (isset($default_value)) {
+        $selected_node = node_load($default_value[0]);
+        $form_item['#default_value'] = ($selected_node) ? $selected_node->title . " [id:$selected_node->nid]" : '';
+      }
       break;
 
     case 'checkbox_radio':
-      $node_list = _webform_references_get_node_list($component['extra']['referenceable_types'], $component['extra']['sort']['sort_by'], $component['extra']['sort']['order']);
+      if (empty($component['extra']['use_view'])) {
+        $node_list = _webform_references_get_node_list($component['extra']['referenceable_types'], $component['extra']['sort']['sort_by'], $component['extra']['sort']['order']);
+      }
+      else {
+        $node_list = _webform_references_list_from_view($component['extra']['reference_view'], 'node', $component['extra']['view_args']);
+      }
       $form_item = array(
         '#type' => ($component['extra']['multiple']) ? 'checkboxes' : 'radios',
         '#description' => $filter ? _webform_filter_descriptions($component['extra']['description']) : $component['extra']['description'],
@@ -164,6 +290,7 @@ function _webform_render_node_reference(array $component, array $value = NULL, $
         '#multiple' => $component['extra']['multiple'],
         '#weight' => $component['weight'],
         '#pre_render' => array(),
+        '#translatable' => array('title', 'description'),
       );
       $form_item['#theme_wrappers'] = array($form_item['#type'], 'webform_element');
       if (isset($value)) {
@@ -174,10 +301,23 @@ function _webform_render_node_reference(array $component, array $value = NULL, $
           $form_item['#default_value'] = $value[0];
         }
       }
+      elseif (isset($default_value)) {
+        if ($form_item['#type'] == 'checkboxes') {
+          $form_item['#default_value'] = $default_value;
+        }
+        else {
+          $form_item['#default_value'] = $default_value[0];
+        }
+      }
       break;
 
     default:
-      $node_list = _webform_references_get_node_list($component['extra']['referenceable_types'], $component['extra']['sort']['sort_by'], $component['extra']['sort']['order']);
+      if (empty($component['extra']['use_view'])) {
+        $node_list = _webform_references_get_node_list($component['extra']['referenceable_types'], $component['extra']['sort']['sort_by'], $component['extra']['sort']['order']);
+      }
+      else {
+        $node_list = _webform_references_list_from_view($component['extra']['reference_view'], 'node', $component['extra']['view_args']);
+      }
       $form_item = array(
         '#type' => 'select',
         '#description' => $filter ? _webform_filter_descriptions($component['extra']['description']) : $component['extra']['description'],
@@ -187,13 +327,17 @@ function _webform_render_node_reference(array $component, array $value = NULL, $
         '#title' => $filter ? _webform_filter_xss($component['name']) : $component['name'],
         '#title_display' => $component['extra']['title_display'] ? $component['extra']['title_display'] : 'before',
         '#options' => $node_list,
-        '#empty_option' => t('No Value'),
+        '#empty_option' => (trim($component['extra']['empty_option']) != '') ? $component['extra']['empty_option'] : t('No Value'),
         '#weight' => $component['weight'],
         '#multiple' => $component['extra']['multiple'],
         '#theme_wrappers' => array('webform_element'),
+        '#translatable' => array('title', 'description'),
       );
       if (isset($value)) {
         $form_item['#default_value'] = $value;
+      }
+      elseif (isset($default_value)) {
+        $form_item['#default_value'] = $default_value;
       }
       break;
   }
@@ -210,15 +354,26 @@ function webform_references_validate_node_reference($element, $form_state) {
     preg_match('/^(?:\s*|(.*) )?\[\s*id\s*:\s*(\d+)\s*\]$/', $value, $matches);
     if (!empty($matches)) {
       list(, $title, $nid) = $matches;
-      if (!empty($title)) {
-        $real_title = db_select('node', 'n')
-          ->fields('n', array('title'))
-          ->condition('n.nid', $nid)
-          ->addTag('node_access')
-          ->execute()
-          ->fetchField();
-        if (trim($title) != trim($real_title)) {
-          form_error($element, t('Please check your selection.'));
+      $extra = $element['#webform_component']['extra'];
+      if (!empty($extra['use_view'])) {
+        list($view_name, $display_name) = explode(':', $extra['reference_view']);
+        $args = !empty($extra['view_args']) ? explode('/', token_replace($extra['view_args'], array())) : NULL;
+        $result = webform_references_execute_view($view_name, $display_name, 'node', $args, '', 'CONTAINS', 0, $matches[2]);
+        if (count($result) != 1) {
+          form_error($element, t('Please check your selection - views.'));
+        }
+      }
+      else {
+        if (!empty($title)) {
+          $real_title = db_select('node', 'n')
+            ->fields('n', array('title'))
+            ->condition('n.nid', $nid)
+            ->addTag('node_access')
+            ->execute()
+            ->fetchField();
+          if (trim($title) != trim($real_title)) {
+            form_error($element, t('Please check your selection.'));
+          }
         }
       }
     }
@@ -346,7 +501,10 @@ function _webform_references_get_node_title($nid, $link = FALSE) {
     ->condition('nid', $nid)
     ->execute()
     ->fetchAssoc();
-  $title = ($link == TRUE) ? l($node_items['title'], 'node/' . $nid) : check_plain($node_items['title']);
+  $title = NULL;
+  if (!empty($node_items)) {
+    $title = ($link == TRUE) ? l($node_items['title'], 'node/' . $nid) : check_plain($node_items['title']);
+  }
   return $title;
 }
 

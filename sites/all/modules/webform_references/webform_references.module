@@ -33,6 +33,12 @@ function webform_references_menu() {
     'file' => 'webform_references.user.inc',
     'file path' => drupal_get_path('module', 'webform_references'),
   );
+  $items['webform_references/view/autocomplete/%/%/%'] = array(
+    'page callback' => 'webform_references_autocomplete_view',
+    'page arguments' => array(3,4,5),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -108,4 +114,81 @@ function webform_references_system_info_alter(&$info, $file, $type) {
       $info['description'] = t("Defines a webform component type for referencing the node/term/user. <span class='error'>(Warning: Don't disable/uninstall the module because some components of this module are in used.)</span>");
     }
   }
+}
+
+/**
+ * Implements hook_webform_validator_alter().
+ */
+function webform_references_webform_validator_alter(&$validators) {
+  $allowed_validators = array(
+    'specific_value',
+    'unique',
+    'equal',
+    'comparison',
+  );
+  foreach ($allowed_validators as $validator) {
+    $validators[$validator]['component_types'][] = 'node_reference';
+    $validators[$validator]['component_types'][] = 'term_reference';
+    $validators[$validator]['component_types'][] = 'user_reference';
+  }
+}
+
+/*
+ * Helper function to retrieve options from a view
+ */
+function webform_references_execute_view($view_name, $display_name, $entity_type, $args = array(), $match = NULL, $match_operator = 'CONTAINS', $limit = 0, $ids = NULL) {
+  $result = array();
+  // Check that the view is valid and the display still exists.
+  $view = views_get_view($view_name);
+  if (!$view || !isset($view->display[$display_name]) || !$view->access($display_name)) {
+    watchdog('entityreference', 'The view %view_name is no longer eligible.', array('%view_name' => $view_name), WATCHDOG_WARNING);
+    return FALSE;
+  }
+
+  $view->set_display($display_name);
+  // Make sure the query is not cached.
+  $view->is_cacheable = FALSE;
+  // Set the options for the display handler.
+  $entityreference_options = array(
+    'match' => $match,
+    'match_operator' => $match_operator,
+    'limit' => $limit,
+    'ids' => $ids,
+  );
+  $view->display_handler->set_option('entityreference_options', $entityreference_options);
+  $result = $view->execute_display($display_name, $args);
+  return $result;
+}
+
+/*
+ * Callback function to find autocomplete matches from a view.
+ */
+function webform_references_autocomplete_view($type, $view_name, $display_name, $args = NULL, $string = '') {
+  // need to gather the arguments to figure out what needs to be sent to the view
+  $args = func_get_args();
+  // Shift off the $type, $view_name, $display_name
+  $args = array_slice($args, 3);
+  // Get the string and pass the remainder as view arguments
+  $string = array_pop($args);
+  $result = webform_references_execute_view($view_name, $display_name, $type, $args, $string);
+  $matches = array();
+  foreach ($result as $id => $value) {
+    $name = trim(strip_tags($value));
+    $matches[$name . " [id:$id]"] = $name;
+  }
+  drupal_json_output($matches);
+}
+
+/**
+ * Helper function to get node list from a view.
+ */
+function _webform_references_list_from_view($reference_view, $type, $view_args = '') {
+  list($view_name, $display_name) = explode(':', $reference_view);
+  $args = !empty($view_args) ? explode('/', token_replace($view_args, array())) : NULL;
+  $result = webform_references_execute_view($view_name, $display_name, $type, $args);
+  $list = array();
+  foreach ($result as $id => $value) {
+    $list[$id] = decode_entities(trim(strip_tags($value)));
+  }
+  return $list;
 }

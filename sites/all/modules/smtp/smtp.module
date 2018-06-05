@@ -16,17 +16,33 @@
  */
 
 /**
- * Implementation of hook_help().
+ * SMTP logging -- logging is disabled
+ */
+define('SMTP_LOGGING_NONE', 0);
+
+/**
+ * SMTP logging -- all messages are logged
+ */
+define('SMTP_LOGGING_ALL', 1);
+
+/**
+ * SMTP logging -- only errors are logged
+ */
+define('SMTP_LOGGING_ERRORS', 2);
+
+
+/**
+ * Implements hook_help().
  */
 function smtp_help($path, $arg) {
   switch ($path) {
     case 'admin/help#smtp':
       return t('Allow for site emails to be sent through an SMTP server of your choice.');
   }
-}  //  End of smtp_help().
+}
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function smtp_menu() {
   $items['admin/config/system/smtp'] = array(
@@ -38,10 +54,10 @@ function smtp_menu() {
     'file'             => 'smtp.admin.inc',
   );
   return $items;
-}  //  End of smtp_menu().
+}
 
 /**
- * Implementation of hook_permission().
+ * Implements hook_permission().
  */
 function smtp_permission() {
   return array(
@@ -49,15 +65,93 @@ function smtp_permission() {
       'title' => t('Administer SMTP Authentication Support module'),
       'description' => t('Perform administration tasks for SMTP Authentication Support module.'))
   );
-}  //  End of smtp_permission().
+}
 
 
 /**
- * Implementation of hook_mail().
+ * Implements hook_mail().
  */
 function smtp_mail($key, &$message, $params) {
   if ($key == 'smtp-test') {
     $message['subject'] = $params['subject'];
-    $message['body']    = $params['body'];
+    $message['body'] = $params['body'];
   }
-}  //  End of smtp_mail().
+}
+
+/**
+ * Implementation of hook_cron_queue_info().
+ */
+function smtp_cron_queue_info() {
+  $queues['smtp_send_queue'] = array(
+    'worker callback' => 'smtp_send_queue_runner',
+    'time' => 60,
+  );
+
+  $queues['smtp_failure_queue'] = array(
+    'worker callback' => 'smtp_failure_queue_runner',
+    'time' => 30,
+  );
+
+  return $queues;
+}
+
+/**
+ * smtp_send_queue queuer.
+ */
+function smtp_send_queue($mailerObj) {
+  $queue = DrupalQueue::get('smtp_send_queue');
+  $queue->createItem($mailerObj);
+}
+
+function smtp_send_queue_runner($message) {
+  $logging = variable_get('smtp_debugging', SMTP_LOGGING_ERRORS);
+
+  // Legacy for mails queued before 7.x-v1.3
+  // What was passed to the runner used to be a PHPMailer object, not a message array.
+  if (!empty($message['mailer']) && is_object($message['mailer'])) {
+    if (!$message['mailer']->Send()) {
+      if ($logging == SMTP_LOGGING_ALL || $logging == SMTP_LOGGING_ERRORS) {
+        watchdog('smtp', 'Error sending e-mail from @from to @to, will retry on cron run : !error_message.',
+          array(
+            '@from' => $message['from'],
+            '@to' => $message['to'],
+            '!error_message' => $message['mailer']->ErrorInfo,
+          ), WATCHDOG_ERROR);
+      }
+    }
+    return;
+  }
+
+  // Let the people know what is going on.
+  if ($logging == SMTP_LOGGING_ALL) {
+    watchdog('smtp', 'Sending mail to: @to', array('@to' => $message['to']));
+  }
+
+  // Send the message.
+  $mail_system = new SmtpMailSystem();
+  $mail_system->mailWithoutQueue($message);
+}
+
+/**
+ * Store failed messages for later.
+ *
+ * @param array $new_message
+ *
+ * @return array
+ *   All messages that have been saved.
+ */
+function smtp_failed_messages($message) {
+  $queue = DrupalQueue::get('smtp_failure_queue');
+  $queue->createItem($message);
+}
+
+/**
+ * Queue runner for smtp_failure_queue.
+ *
+ * @param $message
+ *   A drupal_mail-formatted message.
+ */
+function smtp_failure_queue_runner($message) {
+  $queue = DrupalQueue::get('smtp_send_queue');
+  $queue->createItem($message);
+}
